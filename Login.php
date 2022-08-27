@@ -43,5 +43,9 @@
     .margin_top{
         margin-top: 10px;
     }
+    body{
+    background-color: black;
+    color: white;
+    }
 </style>
 
