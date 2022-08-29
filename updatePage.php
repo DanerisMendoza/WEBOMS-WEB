@@ -77,7 +77,12 @@
 </div>
 </body>
 </html>
-
+<style>
+    body{
+        background-color: black;
+        color: white;
+    }
+</style>
 <script>
     document.getElementById("cancel").addEventListener("click",function(){
         window.location.replace('admin.php');

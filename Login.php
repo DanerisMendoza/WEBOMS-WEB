@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html><head><title></title></head>
 <body>
@@ -10,6 +9,7 @@
             <input class="margin" type="text" name="username" placeholder="username" ></br>
             <input class="margin" type="password" name="password" placeholder="password" ></br>
             <input class="margin" type="submit" name="login" value="login">  
+            <input class="margin" type="button" id="register" value="Register">  
     </form>
     <?php
         if(isset($_POST['login'])){
@@ -27,8 +27,16 @@
             }
             if($valid)
                 echo "<SCRIPT> window.location.replace('admin.php'); alert('Welcome Admin!'); </SCRIPT>";
-            }     
-            echo "<SCRIPT>  window.location.replace('login.php'); alert('incorrect username or password!');</SCRIPT>";         
+            else
+                echo "<SCRIPT>  window.location.replace('login.php'); alert('incorrect username or password!');</SCRIPT>"; 
+            }
+            else{     
+            // echo '<script>var otp = prompt("Your Account is not yet verified\nPlease input your first otp:");</script>';
+        //     echo '<dialog open>
+        //     <p>Your Account is not yet verified\nPlease input your first otp:</p>
+        //     <button>Cancel</button><button>Resend Otp</button><button>Submit</button>
+        //   </dialog>';    
+            }
         }
 
     ?>
@@ -49,3 +57,9 @@
     }
 </style>
 
+<script>
+
+    document.getElementById("register").addEventListener("click",function(){
+        window.location.replace('register.php');
+    });
+</script>

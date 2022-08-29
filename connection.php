@@ -25,7 +25,13 @@ if (!$db_selected) {
 		$hash = password_hash('password', PASSWORD_DEFAULT);
 		$query3 = "insert into admin_tb(admin, password) values('admin','$hash')";
 
-		if ($conn->query($query) === TRUE && $conn->query($query2) === TRUE && $conn->query($query3) === TRUE) 
+		$queryCreateUserTb = "create table if not exists user_tb(ID int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		email varchar(255),
+		otp varchar(255),
+		password varchar(255))";
+
+		if ($conn->query($query) === TRUE && $conn->query($query2) === TRUE && $conn->query($query3) === TRUE && $conn->query($queryCreateUserTb) === TRUE) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						
