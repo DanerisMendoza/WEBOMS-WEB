@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html>
-    <head><title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-    </head>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> PHP CRUD with Bootstrap Modal </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+</head>
 <body>
 <?php include_once('connection.php');?>
 <div class="container"><div class="row justify-content-center">
@@ -13,6 +26,40 @@
             <input class="margin" type="submit" name="login" value="login">  
             <input class="margin" type="button" id="register" value="Register">  
     </form>
+    
+ 
+  
+    <!-- DELETE POP UP FORM (Bootstrap MODAL) -->
+    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Please enter your otp ?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+
+                <form action="deletecode.php" method="POST">
+
+                    <div class="modal-body">
+                       
+                        <input type="hidden" name="delete_id" id="delete_id">
+                        <input type="text" name="otp" id="otp">
+                        
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancel </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Submit </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <?php
         if(isset($_POST['login'])){
             $username = $_POST['username'];
@@ -42,9 +89,13 @@
                         $otp = $rows['otp'];
                     }
                     if($otp != ""){
-                        echo "<SCRIPT>  window.location.replace('login.php'); alert('Please verify your account first!');</SCRIPT>"; 
+                        //verify otp block
+                        // echo "<SCRIPT>  alert('Please verify your account first!');</SCRIPT>"; 
+                        echo "<script type='text/javascript'>
+                        $('#deletemodal').modal('show');
+                        </script>";
                     }
-                    if($valid){               
+                    if($valid && $otp === ""){               
                         echo "<SCRIPT> window.location.replace('homePage.php?username=$username');  </SCRIPT>";
                     }
                 }
@@ -54,7 +105,8 @@
         }
 
     ?>
-</div></div>
+
+
 </body>
 </html>
 
@@ -72,8 +124,15 @@
 </style>
 
 <script>
+        document.getElementById("register").addEventListener("click",function(){
+            window.location.replace('register.php');
+        });
+        $(document).ready(function () {
 
-    document.getElementById("register").addEventListener("click",function(){
-        window.location.replace('register.php');
-    });
+            $('.deletebtn').on('click', function () {
+
+                $('#deletemodal').modal('show');
+
+            });
+        });
 </script>

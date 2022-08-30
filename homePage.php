@@ -13,7 +13,7 @@
 </html>
 <?php 
     $username = $_GET['username'];
-    echo "<script>alert('$username');</script>";
+    echo "<script>alert('hello $username!');</script>";
 ?>
 <script>
         document.getElementById("logout").addEventListener("click",function(){
