@@ -7,6 +7,7 @@
     <body>
     <div class="container text-center">
     <form method="post">
+        <input type="text" class="form-control" name="username" placeholder="username">
         <input type="text" class="form-control" name="name" placeholder="name">
         <input type="email" class="form-control" name="email" placeholder="email">
         <input type="password" class="form-control" name="password" placeholder="password">
@@ -26,6 +27,7 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
     if(isset($_POST['createAccount'])){
+        $username = $_POST['username'];
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -34,7 +36,7 @@
         include_once('connection.php');
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        if(mysqli_query($conn,"insert into user_tb(name, email, otp, password) values('$name','$email','$otp','$hash')")){
+        if(mysqli_query($conn,"insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')")){
             //Load Composer's autoloader
             require 'vendor/autoload.php';
             //Create an instance; passing `true` enables exceptions
@@ -57,7 +59,7 @@
         
                 //Content
                 $mail->Subject = 'OTP';
-                $mail->Body    = uniqid();
+                $mail->Body    = $otp;
         
                 $mail->send();
                 echo "<script>alert('OTP sent please verify your account first!'); window.location.replace('login.php');</script>";

@@ -26,6 +26,7 @@ if (!$db_selected) {
 		$query3 = "insert into admin_tb(admin, password) values('admin','$hash')";
 
 		$queryCreateUserTb = "create table if not exists user_tb(ID int PRIMARY KEY AUTO_INCREMENT,
+		username varchar(255),
 		name varchar(255),
 		email varchar(255),
 		otp varchar(255),

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,39 +32,27 @@
     
  
   
-    <!-- DELETE POP UP FORM (Bootstrap MODAL) -->
-    <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4>Please enter your otp ?</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <!-- otp (Bootstrap MODAL) -->
+    <div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content container">
+                <div class="modal-body">
+                    <form method="post">
+                        <h3>Please Enter your OTP:</h3>
+                        <input type="text" placeholder="otp" name="otp">          
+                        <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel">
+                        <input type="submit" value="Resend" name="Resend">
+                        <input type="submit" value="Verify" name="Verify">
+                    </form>
                 </div>
-
-                <form action="deletecode.php" method="POST">
-
-                    <div class="modal-body">
-                       
-                        <input type="hidden" name="delete_id" id="delete_id">
-                        <input type="text" name="otp" id="otp">
-                        
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancel </button>
-                        <button type="submit" name="deletedata" class="btn btn-primary"> Submit </button>
-                    </div>
-                </form>
-
             </div>
         </div>
     </div>
 
     <?php
+       
         if(isset($_POST['login'])){
+            $_SESSION["username"]  = $_POST['username'];
             $username = $_POST['username'];
             $password = $_POST['password'];
             if(empty($username) || empty($password)){ 
@@ -81,27 +72,38 @@
                     echo "<SCRIPT>  window.location.replace('login.php'); alert('incorrect username or password!');</SCRIPT>"; 
             }
             else{ //user block
-                $readQuery = "select * from user_tb where name = '$username'";
+                $readQuery = "select * from user_tb where username = '$username'";
                 $result = mysqli_query($conn,$readQuery);  
                 if(mysqli_num_rows($result) === 1){
                     while($rows = mysqli_fetch_assoc($result)){
-                        $valid = password_verify($password, $rows['password']);
+                        $valid = password_verify($password, $rows['password'])?true:false;
                         $otp = $rows['otp'];
                     }
-                    if($otp != ""){
-                        //verify otp block
-                        // echo "<SCRIPT>  alert('Please verify your account first!');</SCRIPT>"; 
-                        echo "<script type='text/javascript'>
-                        $('#deletemodal').modal('show');
-                        </script>";
-                    }
-                    if($valid && $otp === ""){               
+                    if($valid && $valid && $otp === ""){               
                         echo "<SCRIPT> window.location.replace('homePage.php?username=$username');  </SCRIPT>";
                     }
+                    else if($valid && $otp != ""){
+                        echo "<script type='text/javascript'>$('#otpModal').modal('show');</script>";
+                        // echo "<script type='text/javascript'>$('#otpModal').data-toggle('modal');</script>";
+                    }
+                    else 
+                        echo "<SCRIPT>alert('incorrect username or password!');</SCRIPT>"; 
                 }
                 else
                     echo "<SCRIPT>alert('incorrect username or password!');</SCRIPT>"; 
             }
+        }
+        if(isset($_POST['Verify'])){
+            $username = $_SESSION["username"];
+            $otp = $_POST['otp'];
+            $readQuery = "select * from user_tb where username = '$username' && otp = '$otp' ";
+            $result = mysqli_query($conn,$readQuery);
+            if(mysqli_num_rows($result) === 1){
+                $updateQuery = "UPDATE user_tb SET otp='' WHERE otp='$otp'";    
+                if(mysqli_query($conn, $updateQuery))
+                    echo "<SCRIPT> window.location.replace('homePage.php?username=$username'); </SCRIPT>";
+            }else
+            echo  '<script type="text/javascript">alert("Incorrect Otp!"); window.location.replace("login.php");</script>'; 
         }
 
     ?>
@@ -131,7 +133,7 @@
 
             $('.deletebtn').on('click', function () {
 
-                $('#deletemodal').modal('show');
+                $('#otpModal').modal('show');
 
             });
         });
