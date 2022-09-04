@@ -133,7 +133,7 @@
 
             $('.deletebtn').on('click', function () {
 
-                $('#otpModal').modal('show');
+                // $('#otpModal').modal('show');
 
             });
         });

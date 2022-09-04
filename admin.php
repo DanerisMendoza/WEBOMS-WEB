@@ -7,9 +7,13 @@
 <body>
   <div class="container text-center">
     <button id="addButton" type="button" class="btn" data-toggle="modal" data-target="#loginModal">Add new dish</button>
-
+    <button class="btn" id="pos">POS</button>
     <button class="btn" id="Logout">Logout</button>
-    <script>document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); };</script>
+    <script>
+    document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
+    document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
+    };</script>
+   
 		<div class="col-lg-12">
 			<?php 
       include_once('connection.php');
@@ -33,7 +37,7 @@
 				 
 			    <tr>	   
           <td><?=$rows['dish']?></td>
-          <td><?php echo $rows['cost']; ?></td>
+          <td><?php echo '₱'.$rows['cost']; ?></td>
 				  <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
 				  <td><a href="?idAndPicnameDelete=<?php echo $rows['ID']." ".$rows['picName'] ?>">Delete</a></td>
 				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['ID']." ".$rows['dish']." ".$rows['cost']." ".$rows['picName']." update" ?>"  >Update</a></td>
