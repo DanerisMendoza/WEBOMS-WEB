@@ -1,8 +1,9 @@
 <?php 
         session_start();
-          
-        if(!isset($_SESSION["dishes"]))
+        if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
         $_SESSION["dishes"] = array();
+        $_SESSION["price"] = array(); 
+        }
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@
 			?>
 			<table class="table table-striped" border="10">
 			    <tr>	
-			      	<th scope="col">Dishes</th>
+          <th scope="col">Dishes</th>
 					<th scope="col">Price</th>
 					<th scope="col">picture</th>
 			    </tr>
@@ -57,9 +58,9 @@
     if(isset($_GET['order'])){
         $order = explode(',',$_GET['order']);  
         $dish = $order[0];
-        $cost = $order[1];
-
-        array_push($_SESSION['dishes'], array('dish'=>"$dish",'cost'=>$cost));
+        $price = $order[1];
+        array_push($_SESSION['dishes'], $dish);
+        array_push($_SESSION['price'], $price);
     }
 ?>
 
