@@ -116,8 +116,9 @@ $(document).ready(function () {
         $obj_pdf->SetFont('dejavusans', '', 12);  
         $obj_pdf->AddPage();  
         setlocale(LC_CTYPE, 'en_US');
-    
-       $date = date("j-m-Y  h:i:s A");
+        
+        date_default_timezone_set('Asia/Manila');
+        $date = date("j-m-Y  h:i:s A");
 
         $content = '
           
