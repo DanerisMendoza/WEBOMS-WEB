@@ -79,12 +79,11 @@
                         $valid = password_verify($password, $rows['password'])?true:false;
                         $otp = $rows['otp'];
                     }
-                    if($valid && $valid && $otp === ""){               
+                    if($valid && $otp == ""){               
                         echo "<SCRIPT> window.location.replace('homePage.php?username=$username');  </SCRIPT>";
                     }
                     else if($valid && $otp != ""){
                         echo "<script type='text/javascript'>$('#otpModal').modal('show');</script>";
-                        // echo "<script type='text/javascript'>$('#otpModal').data-toggle('modal');</script>";
                     }
                     else 
                         echo "<SCRIPT>alert('incorrect username or password!');</SCRIPT>"; 

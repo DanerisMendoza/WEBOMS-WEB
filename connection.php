@@ -15,24 +15,37 @@ if (!$db_selected) {
 	if ($conn->query($sql) === TRUE){ 
 		//connect to db first then create table
 		$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);	
-		$query = "create table if not exists dishes_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
+
+		$queryCreateDishesTb = "create table if not exists dishes_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		dish varchar(255),
 		cost int,
 		picName varchar(255))";
-		$query2 = "create table if not exists admin_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
+		
+		$queryCreateAdminTb = "create table if not exists admin_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		admin varchar(255),
 		password varchar(255))";
+
 		$hash = password_hash('password', PASSWORD_DEFAULT);
 		$query3 = "insert into admin_tb(admin, password) values('admin','$hash')";
 
-		$queryCreateUserTb = "create table if not exists user_tb(ID int PRIMARY KEY AUTO_INCREMENT,
+		$queryCreateUserTb = "create table if not exists user_tb(linkId int PRIMARY KEY AUTO_INCREMENT,
 		username varchar(255),
 		name varchar(255),
 		email varchar(255),
 		otp varchar(255),
 		password varchar(255))";
 
-		if ($conn->query($query) === TRUE && $conn->query($query2) === TRUE && $conn->query($query3) === TRUE && $conn->query($queryCreateUserTb) === TRUE) 
+		$queryCreateOrderListTb = "create table if not exists orderList_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
+		proofOfPayment varchar(255), 
+		linkId int, 
+		status tinyint)";
+
+		$queryCreateOrderTb = "create table order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
+		orders varchar(255), 
+		linkId int, 
+		quantity int)";
+
+		if ($conn->query($queryCreateDishesTb) === TRUE && $conn->query($queryCreateAdminTb) === TRUE && $conn->query($query3) === TRUE && $conn->query($queryCreateUserTb) === TRUE && $conn->query($queryCreateOrderListTb) === TRUE  && $conn->query($queryCreateOrderTb) === TRUE) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						

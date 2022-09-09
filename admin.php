@@ -12,6 +12,13 @@
     <script>
     document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
+   
+    $.post(
+        "method/clearMethod.php", {
+        }
+    );
+             
+            
     };</script>
    
 		<div class="col-lg-12">
@@ -39,8 +46,8 @@
           <td><?=$rows['dish']?></td>
           <td><?php echo '₱'.$rows['cost']; ?></td>
 				  <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-				  <td><a href="?idAndPicnameDelete=<?php echo $rows['ID']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['ID']." ".$rows['dish']." ".$rows['cost']." ".$rows['picName']." update" ?>"  >Update</a></td>
+				  <td><a href="?idAndPicnameDelete=<?php echo $rows['id']." ".$rows['picName'] ?>">Delete</a></td>
+				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['id']." ".$rows['dish']." ".$rows['cost']." ".$rows['picName']." update" ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
@@ -70,10 +77,11 @@
                 if(isset($_POST['insert'])){
                 $dishes = $_POST['dishes'];
                 $cost = $_POST['cost'];
-                if(empty($dishes) || empty($cost))
+                $file = $_FILES['fileInput'];
+                if(empty($dishes) || empty($cost) || $_FILES['fileInput']['name']=='')
                      echo "<script>alert('Please complete the details!'); window.location.replace('admin.php');</script>";
                 include_once('connection.php');
-                $file = $_FILES['fileInput'];
+           
                 $fileName = $_FILES['fileInput']['name'];
                 $fileTmpName = $_FILES['fileInput']['tmp_name'];
                 $fileSize = $_FILES['fileInput']['size'];

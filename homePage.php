@@ -1,3 +1,10 @@
+<?php 
+        session_start();
+        if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
+        $_SESSION["dishes"] = array();
+        $_SESSION["price"] = array(); 
+        }
+?>
 <!DOCTYPE html>
 <html>
     <head><title></title>
@@ -12,7 +19,7 @@
 <body>
 <div class="container text-center">
         <button type="button" class="btn btn-success col-sm-4" id="logout">Logout</button>
-        <button type="button" class="btn btn-success col-sm-4" id="logout">View Cart</button>
+        <button type="button" class="btn btn-success col-sm-4" id="viewCart">View Cart</button>
         <div class="col-lg-12">
 			<!-- order table -->
 			<?php 
@@ -21,57 +28,44 @@
 			if (mysqli_num_rows($sql)) {  
 			?>
 			<table class="table table-striped" border="10">
-			  <thead>
 			    <tr>	
-			      	<th scope="col">Dishes</th>
-					<th scope="col">cost</th>
+          			<th scope="col">Dishes</th>
+					<th scope="col">Price</th>
 					<th scope="col">picture</th>
 			    </tr>
-			  </thead>
 			  <tbody>
-			  	<?php 
-			  	   $i = 0;
-			  	   while($rows = mysqli_fetch_assoc($sql)){
-			  	   $i++;
-			  	 ?>
-				 
+			  	<?php while($rows = mysqli_fetch_assoc($sql)){ ?>
 			    <tr>	   
 					<td><?=$rows['dish']?></td>
 					<td><?php echo '₱'.$rows['cost']; ?></td>
 					<td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-					<td><a href="?dish=<?php echo $rows['dish']." ".$rows['cost']?>">Add to Cart</a></td>
+					<td><a href="?order=<?php echo $rows['dish'].",".$rows['cost']?>" >Add to Cart</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
 			</table>
-			<?php } ?>
-			
-			<!-- cart table -->
-			<div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-			<div class="modal-dialog">
-				<div class="modal-content container">
-					<div class="modal-body">
-						<form method="post">
-							<h3>Cart</h3>
-							<input data-dismiss="modal" type="submit" value="Cancel" name="Cancel">
-		
-						</form>
-					</div>
-				</div>
-			</div>
+			<?php } ?>	
 		</div>
-	</div>
 </div>
 </body>
 </html>
 <?php 
-    $username = $_GET['username'];
-    echo "<script>alert('hello $username!');</script>";
+	if(isset($_GET['order'])){
+        $order = explode(',',$_GET['order']);  
+        $dish = $order[0];
+        $price = $order[1];
+        array_push($_SESSION['dishes'], $dish);
+        array_push($_SESSION['price'], $price);
+    }				
 ?>
+
 <script>
-        document.getElementById("logout").addEventListener("click",function(){
+	document.getElementById("logout").addEventListener("click",function(){
+		$.post(
+        "method/clearMethod.php");
         window.location.replace('login.php');
     });
+	document.getElementById("viewCart").onclick = function () {window.location.replace('usercart.php'); };
 </script>
 <style>
      .btn{
