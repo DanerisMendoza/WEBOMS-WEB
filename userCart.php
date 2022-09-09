@@ -26,6 +26,7 @@
                     $dishesArr = array();
                     $priceArr = array();
                     $dishesQuantity = array();
+                    $orderType = array();
       
 
                     for($i=0; $i<count($_SESSION['dishes']); $i++){
@@ -37,9 +38,10 @@
                         else{
                             array_push($dishesArr,$_SESSION['dishes'][$i]);
                             array_push($priceArr,$_SESSION['price'][$i]);
+                            array_push($orderType,$_SESSION['orderType'][$i]);
                         }
                     }
-    
+       
                     foreach(array_count_values($_SESSION['dishes']) as $count){
                         array_push($dishesQuantity,$count);
                     }
@@ -106,14 +108,15 @@ $(document).ready(function () {
         if(in_array($fileActualExt,$allowed)){
             if($fileError === 0){
                 if($fileSize < 10000000){
-                    $unique = uniqid();
+                    $linkId = $_SESSION['linkId'];
+                    $ordersLinkId = uniqid();
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into orderList_tb(proofOfPayment, linkId, status) values('$fileNameNew','$unique','0')";
+                    $query1 = "insert into orderList_tb(proofOfPayment, linkId, status, ordersLinkId) values('$fileNameNew','$linkId','0','$ordersLinkId')";
                     
                     for($i=0; $i<count($dishesArr); $i++){
-                        $query2 = "insert into order_tb(orders, linkId, quantity) values('$dishesArr[$i]','$unique',$dishesQuantity[$i])";
+                        $query2 = "insert into order_tb(orderName, orderslinkId, quantity, orderType) values('$dishesArr[$i]','$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
                         mysqli_query($conn,$query2);
                     }
 

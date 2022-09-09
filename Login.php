@@ -78,8 +78,10 @@
                     while($rows = mysqli_fetch_assoc($result)){
                         $valid = password_verify($password, $rows['password'])?true:false;
                         $otp = $rows['otp'];
+                        $linkId = $rows['linkId'];
                     }
                     if($valid && $otp == ""){               
+                        $_SESSION['linkId'] = $linkId;
                         echo "<SCRIPT> window.location.replace('homePage.php?username=$username');  </SCRIPT>";
                     }
                     else if($valid && $otp != ""){

@@ -8,18 +8,17 @@
   <div class="container text-center">
     <button id="addButton" type="button" class="btn" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <button class="btn" id="pos">POS</button>
+    <button class="btn" id="orders">Orders</button>
     <button class="btn" id="Logout">Logout</button>
     <script>
     document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
+    document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
-   
     $.post(
         "method/clearMethod.php", {
         }
-    );
-             
-            
-    };</script>
+    );};
+    </script>
    
 		<div class="col-lg-12">
 			<?php 
@@ -31,7 +30,7 @@
 			  <thead>
 			    <tr>	
 			      <th scope="col">Dishes</th>
-			      <th scope="col">cost</th>
+			      <th scope="col">Price</th>
 				    <th scope="col">picture</th>
 			    </tr>
 			  </thead>
@@ -46,8 +45,8 @@
           <td><?=$rows['dish']?></td>
           <td><?php echo '₱'.$rows['cost']; ?></td>
 				  <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-				  <td><a href="?idAndPicnameDelete=<?php echo $rows['id']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['id']." ".$rows['dish']." ".$rows['cost']." ".$rows['picName']." update" ?>"  >Update</a></td>
+				  <td><a href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
+				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['cost']." ".$rows['picName']." update" ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>

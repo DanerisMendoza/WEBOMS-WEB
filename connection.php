@@ -16,7 +16,9 @@ if (!$db_selected) {
 		//connect to db first then create table
 		$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);	
 
-		$queryCreateDishesTb = "create table if not exists dishes_tb(id int PRIMARY KEY AUTO_INCREMENT, 
+
+
+		$queryCreateDishesTb = "create table if not exists dishes_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
 		dish varchar(255),
 		cost int,
 		picName varchar(255))";
@@ -38,12 +40,16 @@ if (!$db_selected) {
 		$queryCreateOrderListTb = "create table if not exists orderList_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
 		linkId int, 
-		status tinyint)";
+		status tinyint,
+		ordersLinkId varchar(255))";
 
-		$queryCreateOrderTb = "create table order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
-		orders varchar(255), 
-		linkId int, 
-		quantity int)";
+		$queryCreateOrderTb = "create table if not exists order_tb(id int PRIMARY KEY AUTO_INCREMENT, 
+		orderName varchar(255), 
+		ordersLinkId varchar(255), 
+		quantity int,
+		orderType int)";
+
+		
 
 		if ($conn->query($queryCreateDishesTb) === TRUE && $conn->query($queryCreateAdminTb) === TRUE && $conn->query($query3) === TRUE && $conn->query($queryCreateUserTb) === TRUE && $conn->query($queryCreateOrderListTb) === TRUE  && $conn->query($queryCreateOrderTb) === TRUE) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
