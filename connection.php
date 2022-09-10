@@ -41,7 +41,8 @@ if (!$db_selected) {
 		proofOfPayment varchar(255), 
 		linkId int, 
 		status tinyint,
-		ordersLinkId varchar(255))";
+		ordersLinkId varchar(255),
+		totalAmount int)";
 
 		$queryCreateOrderTb = "create table if not exists order_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		orderName varchar(255), 

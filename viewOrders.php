@@ -19,20 +19,16 @@
           document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
         </script> 
         <div class="col-lg-12">
-            <!-- order table -->
             <?php 
             include_once('connection.php');
             $arr = explode(',',$_GET['idAndPic']);
             $id = $arr[0];
             $pic = $arr[1];
-   
+            $total = $arr[2];
             // $sql = mysqli_query($conn,"select user_tb.name, orderList_tb.*  from user_tb inner join orderlist_tb on user_tb.linkid = orderlist_tb.linkid"); 
-
             // $sql = mysqli_query($conn,"select * from order_tb ");  
-            $sql = mysqli_query($conn,"select * from order_tb where ordersLinkId = '$id'");  
             // $sql = mysqli_query($conn,"select dishes_tb.cost, order_tb.* from dishes_tb, order_tb where ordersLinkId = '$id'");  
-            
-          
+            $sql = mysqli_query($conn,"select * from order_tb where ordersLinkId = '$id'");  
             if (mysqli_num_rows($sql)) {  
             ?>
             <table class="table table-striped" border="10">
@@ -47,18 +43,16 @@
                 <td><?php echo $rows['orderName']; ?></td>
                 </tr>
                 <?php } ?>
+                <tr>
+                  <td>Total Amount:</td>
+                  <td><?php echo $total?></td>
+                </tr>
               </tbody>
-              <div>
-       
-              </div>
             </table>
-            <h1>Proof of Payment</h1>
+            <h1>Proof of Payment:</h1>
             <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
             <?php } ?>
           </div>
-
-
-    
 	    </div>
     </body>
 </html>

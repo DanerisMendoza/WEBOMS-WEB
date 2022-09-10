@@ -113,7 +113,7 @@ $(document).ready(function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into orderList_tb(proofOfPayment, linkId, status, ordersLinkId) values('$fileNameNew','$linkId','0','$ordersLinkId')";
+                    $query1 = "insert into orderList_tb(proofOfPayment, linkId, status, ordersLinkId, totalAmount) values('$fileNameNew','$linkId','0','$ordersLinkId','$total')";
                     
                     for($i=0; $i<count($dishesArr); $i++){
                         $query2 = "insert into order_tb(orderName, orderslinkId, quantity, orderType) values('$dishesArr[$i]','$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";

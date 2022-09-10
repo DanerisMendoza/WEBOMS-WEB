@@ -39,8 +39,8 @@
                 <?php while($rows = mysqli_fetch_assoc($sql)){ ?>
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>
-                <td><?php echo ($rows['status'] == 1 ? "Approve": "Pending"); ?></td>
-                <td><a href="viewOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment'] ?>">View Order</a></td>
+                <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
+                <td><a href="viewOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment'].','.$rows['totalAmount'] ?>">View Order</a></td>
                 <td><a href="?status=<?php echo $rows['ID'] ?>">Approve</a></td>
                 <td><a href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
                 </tr>
