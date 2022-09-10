@@ -11,8 +11,9 @@
         <input type="text" class="form-control" name="name" placeholder="name">
         <input type="email" class="form-control" name="email" placeholder="email">
         <input type="password" class="form-control" name="password" placeholder="password">
-        <button type="button" class="btn-success col-sm-12" id="back">Back</button>
         <button type="submit" class="btn-success col-sm-12" name="createAccount">createAccount</button>
+        <button type="button" class="btn-success col-sm-12" id="back">Back</button>
+
     </form>
     </div>
     </body>

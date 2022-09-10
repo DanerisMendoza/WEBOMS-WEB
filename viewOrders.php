@@ -22,8 +22,9 @@
             <!-- order table -->
             <?php 
             include_once('connection.php');
-            
-            $id = $_GET['id'];
+            $arr = explode(',',$_GET['idAndPic']);
+            $id = $arr[0];
+            $pic = $arr[1];
    
             // $sql = mysqli_query($conn,"select user_tb.name, orderList_tb.*  from user_tb inner join orderlist_tb on user_tb.linkid = orderlist_tb.linkid"); 
 
@@ -47,7 +48,12 @@
                 </tr>
                 <?php } ?>
               </tbody>
+              <div>
+       
+              </div>
             </table>
+            <h1>Proof of Payment</h1>
+            <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
             <?php } ?>
           </div>
 
