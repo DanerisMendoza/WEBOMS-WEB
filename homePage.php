@@ -1,6 +1,6 @@
 <?php 
         session_start();
-        if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
+        if(!isset($_SESSION["dishes"]) || !isset($_SESSION["price"]) || !isset($_SESSION["orderType"])){
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array(); 
         $_SESSION["orderType"] = array(); 
