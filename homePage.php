@@ -38,9 +38,9 @@
 			  	<?php while($rows = mysqli_fetch_assoc($sql)){ ?>
 			    <tr>	   
 					<td><?=$rows['dish']?></td>
-					<td><?php echo '₱'.$rows['cost']; ?></td>
+					<td><?php echo '₱'.$rows['price']; ?></td>
 					<td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-					<td><a href="?order=<?php echo $rows['dish'].",".$rows['cost'].",".$rows['orderType']?>" >Add to Cart</a></td>
+					<td><a href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add to Cart</a></td>
 			    </tr>
 			    <?php } ?>
 	

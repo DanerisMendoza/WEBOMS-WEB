@@ -14,15 +14,15 @@
 ?>
  <form method="post" class="form-group" enctype="multipart/form-data">
 <input type="text" class="form-control" name="dish" placeholder="dish"></br>
-<input type="number" class="form-control" name="cost" placeholder="cost"></br>
+<input type="number" class="form-control" name="price" placeholder="price"></br>
 <input type="file"  name="fileInput"></br>
 <button type="button" class="btn-success col-sm-12" id="cancel">Cancel</button>
 <button type="submit" class="btn-success col-sm-12" name="update">Update</button>
 <?php
     if(isset($_POST['update'])){
         $dish = $_POST['dish'];
-        $cost = $_POST['cost'];
-        if(empty($dish) || empty($cost) || $_FILES['fileInput']['name']==''){
+        $price = $_POST['price'];
+        if(empty($dish) || empty($price) || $_FILES['fileInput']['name']==''){
         echo "<script>alert('Please complete the details! ');</script>";
         return;    
         }
@@ -44,7 +44,7 @@
                     move_uploaded_file($fileTmpName,$fileDestination);         
                     $updateQuery = "UPDATE dishes_tb
                     SET dish='$dish', 
-                    cost='$cost',
+                    price='$price',
                     picName = '$fileNameNew'
                     WHERE orderType=$id ";        
                     if(mysqli_query($conn,$updateQuery)){

@@ -45,7 +45,7 @@
                 $total = 0;
                 while($rows = mysqli_fetch_assoc($sql)){ ?>
                 <tr>	   
-                <?php $price = ($rows['cost']*$rows['quantity']);  $total += $price;?>
+                <?php $price = ($rows['price']*$rows['quantity']);  $total += $price;?>
                 <td><?php echo $rows['quantity']; ?></td>
                 <td><?php echo $rows['dish']; ?></td>
                 <td><?php echo $price?></td>

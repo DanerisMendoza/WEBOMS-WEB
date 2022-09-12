@@ -22,7 +22,7 @@
 			    <tr>	
 			      <th scope="col">Dishes</th>
 			      <th scope="col">Price</th>
-                  <th scope="col">picture</th>
+            <th scope="col">picture</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -34,10 +34,10 @@
 				 
 			    <tr>	   
           <td><?=$rows['dish']?></td>
-          <td><?php echo '₱'.$rows['cost']; ?></td>
+          <td><?php echo '₱'.$rows['price']; ?></td>
 				  <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
 				  <td><a href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['cost']." ".$rows['picName']." update" ?>"  >Update</a></td>
+				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." update" ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
@@ -52,7 +52,7 @@
             <div class="modal-body ">
                 <form method="post" class="form-group" enctype="multipart/form-data">
                     <input type="text" class="form-control" name="dishes" placeholder="dishes">
-                    <input type="number" class="form-control" name="cost" placeholder="cost">
+                    <input type="number" class="form-control" name="price" placeholder="price">
                     <input type="file"  name="fileInput">
                     <button type="submit" class="btn-success col-sm-12" name="insert">insert</button>
                 </form>
@@ -66,9 +66,9 @@
                 //insert
                 if(isset($_POST['insert'])){
                 $dishes = $_POST['dishes'];
-                $cost = $_POST['cost'];
+                $price = $_POST['price'];
                 $file = $_FILES['fileInput'];
-                if(empty($dishes) || empty($cost) || $_FILES['fileInput']['name']=='')
+                if(empty($dishes) || empty($price) || $_FILES['fileInput']['name']=='')
                      echo "<script>alert('Please complete the details!'); window.location.replace('inventory.php');</script>";
                 include_once('connection.php');
            
@@ -86,7 +86,7 @@
                             $fileNameNew = uniqid('',true).".".$fileActualExt;
                             $fileDestination = 'dishesPic/'.$fileNameNew;
                             move_uploaded_file($fileTmpName,$fileDestination);                 
-                            if(mysqli_query($conn,"insert into dishes_tb(dish, cost, picName) values('$dishes','$cost','$fileNameNew')")){
+                            if(mysqli_query($conn,"insert into dishes_tb(dish, price, picName) values('$dishes','$price','$fileNameNew')")){
                                 echo '<script>alert("Sucess saving to database!");</script>';                                               
                             }
                             else{

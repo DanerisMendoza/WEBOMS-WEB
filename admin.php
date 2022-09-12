@@ -3,10 +3,12 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 </head>
 <body>
   <div class="container text-center">
-    <button id="addButton" type="button" class="btn" data-toggle="modal" data-target="#loginModal">Add new dish</button>
+
     <button class="btn" id="pos">POS</button>
     <button class="btn" id="orders">Orders</button>
     <button class="btn" id="inventory">Inventory</button>
@@ -17,12 +19,10 @@
     document.getElementById("inventory").onclick = function () {window.location.replace('inventory.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
     $.post(
-        "method/clearMethod.php", {
+        "method/clearSessionMethod.php", {
         }
     );};
     </script>
-   
-
 </body>
 </html>
 
