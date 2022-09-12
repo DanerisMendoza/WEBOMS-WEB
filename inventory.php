@@ -20,24 +20,25 @@
 			<table class="table table-striped" border="10">
 			  <thead>
 			    <tr>	
+            <th scope="col">picture</th>
 			      <th scope="col">Dishes</th>
 			      <th scope="col">Price</th>
-            <th scope="col">picture</th>
+			      <th scope="col">Cost</th>
+        
 			    </tr>
 			  </thead>
 			  <tbody>
 			  	<?php 
-			  	   $i = 0;
 			  	   while($rows = mysqli_fetch_assoc($sql)){
-			  	   $i++;
 			  	 ?>
-				 
 			    <tr>	   
+          <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
           <td><?=$rows['dish']?></td>
           <td><?php echo '₱'.$rows['price']; ?></td>
-				  <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+          <td><?php echo '₱'.$rows['cost']; ?></td>
+
 				  <td><a href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." update" ?>"  >Update</a></td>
+				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost'] ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
@@ -53,6 +54,7 @@
                 <form method="post" class="form-group" enctype="multipart/form-data">
                     <input type="text" class="form-control" name="dishes" placeholder="dishes">
                     <input type="number" class="form-control" name="price" placeholder="price">
+                    <input type="number" class="form-control" name="cost" placeholder="cost">
                     <input type="file"  name="fileInput">
                     <button type="submit" class="btn-success col-sm-12" name="insert">insert</button>
                 </form>
@@ -67,11 +69,17 @@
                 if(isset($_POST['insert'])){
                 $dishes = $_POST['dishes'];
                 $price = $_POST['price'];
+                $cost = $_POST['cost'];
                 $file = $_FILES['fileInput'];
-                if(empty($dishes) || empty($price) || $_FILES['fileInput']['name']=='')
-                     echo "<script>alert('Please complete the details!'); window.location.replace('inventory.php');</script>";
-                include_once('connection.php');
-           
+                if(empty($dishes) || empty($price) || empty($cost) || $_FILES['fileInput']['name']==''){
+                  echo "<script>alert('Please complete the details!'); window.location.replace('inventory.php');</script>";
+                  return;
+                }
+                if($price < $cost){
+                  echo "<script>alert('Cost should be less than price!'); window.location.replace('inventory.php');</script>";
+                  return;
+                }
+                include_once('connection.php');   
                 $fileName = $_FILES['fileInput']['name'];
                 $fileTmpName = $_FILES['fileInput']['tmp_name'];
                 $fileSize = $_FILES['fileInput']['size'];
@@ -86,7 +94,7 @@
                             $fileNameNew = uniqid('',true).".".$fileActualExt;
                             $fileDestination = 'dishesPic/'.$fileNameNew;
                             move_uploaded_file($fileTmpName,$fileDestination);                 
-                            if(mysqli_query($conn,"insert into dishes_tb(dish, price, picName) values('$dishes','$price','$fileNameNew')")){
+                            if(mysqli_query($conn,"insert into dishes_tb(dish, price, picName, cost) values('$dishes','$price','$fileNameNew','$cost')")){
                                 echo '<script>alert("Sucess saving to database!");</script>';                                               
                             }
                             else{

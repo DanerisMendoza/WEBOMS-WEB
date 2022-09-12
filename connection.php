@@ -21,7 +21,8 @@ if (!$db_selected) {
 		$queryCreateDishesTb = "create table if not exists dishes_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
 		dish varchar(255),
 		price int,
-		picName varchar(255))";
+		picName varchar(255),
+		cost int)";
 		
 		$queryCreateAdminTb = "create table if not exists admin_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		admin varchar(255),

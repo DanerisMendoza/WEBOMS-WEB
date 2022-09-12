@@ -12,11 +12,13 @@
     <button class="btn" id="pos">POS</button>
     <button class="btn" id="orders">Orders</button>
     <button class="btn" id="inventory">Inventory</button>
+    <button class="btn" id="salesReport">Sales Report</button>
     <button class="btn" id="Logout">Logout</button>
     <script>
     document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
     document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
     document.getElementById("inventory").onclick = function () {window.location.replace('inventory.php'); };
+    document.getElementById("salesReport").onclick = function () {window.location.replace('salesReport.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
     $.post(
         "method/clearSessionMethod.php", {

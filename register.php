@@ -32,8 +32,10 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if(empty($name) || empty($email) || empty($password))
+        if(empty($name) || empty($email) || empty($password)){
         echo "<script>alert('Please complete the details!'); window.location.replace('register.php');</script>";
+        return;
+        }
         include_once('connection.php');
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
