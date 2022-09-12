@@ -78,10 +78,10 @@
                     while($rows = mysqli_fetch_assoc($result)){
                         $valid = password_verify($password, $rows['password'])?true:false;
                         $otp = $rows['otp'];
-                        $linkId = $rows['linkId'];
+                        $userlinkId = $rows['userlinkId'];
                     }
                     if($valid && $otp == ""){               
-                        $_SESSION['linkId'] = $linkId;
+                        $_SESSION['userlinkId'] = $userlinkId;
                         echo "<SCRIPT> window.location.replace('homePage.php?username=$username');  </SCRIPT>";
                     }
                     else if($valid && $otp != ""){
@@ -100,7 +100,9 @@
             $readQuery = "select * from user_tb where username = '$username' && otp = '$otp' ";
             $result = mysqli_query($conn,$readQuery);
             if(mysqli_num_rows($result) === 1){
-                $updateQuery = "UPDATE user_tb SET otp='' WHERE otp='$otp'";    
+                while($rows = mysqli_fetch_assoc($result))
+                    $_SESSION['userlinkId'] = $rows['userlinkId'];
+                $updateQuery = "UPDATE user_tb SET otp='' WHERE otp='$otp'";   
                 if(mysqli_query($conn, $updateQuery))
                     echo "<SCRIPT> window.location.replace('homePage.php?username=$username'); </SCRIPT>";
             }else

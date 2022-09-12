@@ -24,27 +24,35 @@
             $arr = explode(',',$_GET['idAndPic']);
             $id = $arr[0];
             $pic = $arr[1];
-            $total = $arr[2];
+            // $total = $arr[2];
             // $sql = mysqli_query($conn,"select user_tb.name, orderList_tb.*  from user_tb inner join orderlist_tb on user_tb.linkid = orderlist_tb.linkid"); 
             // $sql = mysqli_query($conn,"select * from order_tb ");  
             // $sql = mysqli_query($conn,"select dishes_tb.cost, order_tb.* from dishes_tb, order_tb where ordersLinkId = '$id'");  
-            $sql = mysqli_query($conn,"select * from order_tb where ordersLinkId = '$id'");  
+            // $sql = mysqli_query($conn,"select * from order_tb where ordersLinkId = '$id'");  
+            // $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb, order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$id' ");  
+            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$id' ");  
             if (mysqli_num_rows($sql)) {  
             ?>
             <table class="table table-striped" border="10">
             <tr>	
+            <!-- <th scope="col">price</th> -->
             <th scope="col">quantity</th>
             <th scope="col">name</th>
+            <th scope="col">price</th>
             </tr>
               <tbody>
-                <?php while($rows = mysqli_fetch_assoc($sql)){ ?>
+                <?php 
+                $total = 0;
+                while($rows = mysqli_fetch_assoc($sql)){ ?>
                 <tr>	   
+                <?php $price = ($rows['cost']*$rows['quantity']);  $total += $price;?>
                 <td><?php echo $rows['quantity']; ?></td>
-                <td><?php echo $rows['orderName']; ?></td>
+                <td><?php echo $rows['dish']; ?></td>
+                <td><?php echo $price?></td>
                 </tr>
-                <?php } ?>
+                <?php }?>
                 <tr>
-                  <td>Total Amount:</td>
+                  <td colspan="2">Total Amount:</td>
                   <td><?php echo $total?></td>
                 </tr>
               </tbody>

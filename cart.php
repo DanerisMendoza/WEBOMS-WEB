@@ -57,8 +57,8 @@
                     </tr>
                     <?php }?>
                     <tr>
-                        <td>Total</td>
-                        <td colspan="2">₱<?php echo $total; ?></td>
+                        <td colspan="2">Total</td>
+                        <td>₱<?php echo $total; ?></td>
                     </tr>
                 </table> 
        

@@ -20,7 +20,7 @@
                     <tr>
                         <th scope="col">quantity</th>
                         <th scope="col">dish</th>
-                        <th scope="col">cost</th>
+                        <th scope="col">price</th>
                     </tr>
                     <?php 
                     $dishesArr = array();
@@ -41,7 +41,7 @@
                             array_push($orderType,$_SESSION['orderType'][$i]);
                         }
                     }
-       
+                    
                     foreach(array_count_values($_SESSION['dishes']) as $count){
                         array_push($dishesQuantity,$count);
                     }
@@ -59,8 +59,8 @@
                     </tr>
                     <?php }?>
                     <tr>
-                        <td>Total</td>
-                        <td colspan="2">₱<?php echo $total; ?></td>
+                        <td colspan="2">Total</td>
+                        <td>₱<?php echo $total; ?></td>
                     </tr>
                 </table> 
        
@@ -108,22 +108,23 @@ $(document).ready(function () {
         if(in_array($fileActualExt,$allowed)){
             if($fileError === 0){
                 if($fileSize < 10000000){
-                    $linkId = $_SESSION['linkId'];
+                    $userlinkId = $_SESSION['userlinkId'];
                     $ordersLinkId = uniqid();
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into orderList_tb(proofOfPayment, linkId, status, ordersLinkId, totalAmount) values('$fileNameNew','$linkId','0','$ordersLinkId','$total')";
+                    $query1 = "insert into orderList_tb(proofOfPayment, userlinkId, status, ordersLinkId) values('$fileNameNew','$userlinkId','0','$ordersLinkId')";
                     
                     for($i=0; $i<count($dishesArr); $i++){
-                        $query2 = "insert into order_tb(orderName, orderslinkId, quantity, orderType) values('$dishesArr[$i]','$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
+                        $query2 = "insert into order_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
                         mysqli_query($conn,$query2);
                     }
 
                     if(mysqli_query($conn,$query1)){
                         echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
                         $_SESSION["dishes"] = array();
-                        $_SESSION["price"] = array();                                         
+                        $_SESSION["price"] = array();      
+                        $_SESSION["orderType"] = array();                                    
                     }
                     else{
                         echo '<script type="text/javascript">alert("failed to save to database");</script>';  

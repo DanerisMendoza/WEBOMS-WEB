@@ -46,7 +46,7 @@
                     SET dish='$dish', 
                     cost='$cost',
                     picName = '$fileNameNew'
-                    WHERE id=$id ";        
+                    WHERE orderType=$id ";        
                     if(mysqli_query($conn,$updateQuery)){
                         echo '<script>alert("Sucess updating the database!");</script>';       
                         unlink("dishespic/".$picName);                                        
@@ -54,7 +54,7 @@
                     else{
                         echo '<script type="text/javascript">alert("failed to save to database");</script>';  
                     }
-                    echo "<script>window.location.replace('admin.php')</script>";                                
+                    echo "<script>window.location.replace('inventory.php')</script>";                                
                 }
                 else
                     echo "your file is too big!";
@@ -85,6 +85,6 @@
 </style>
 <script>
     document.getElementById("cancel").addEventListener("click",function(){
-        window.location.replace('admin.php');
+        window.location.replace('inventory.php');
     });
 </script>

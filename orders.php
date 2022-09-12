@@ -25,7 +25,7 @@
             // $sql = mysqli_query($conn,"select * from orderList_tb");  
             // $sql = mysqli_query($conn,"select user_tb.name, orderList_tb.*,  order_tb.* from user_tb inner join orderlist_tb on user_tb.linkid = orderlist_tb.linkid inner join order_tb on orderlist_tb.linkid = order_tb.linkid;");  
             // $sql = mysqli_query($conn,"select user_tb.name, orderList_tb.*  from user_tb left join orderlist_tb on user_tb.linkid = orderlist_tb.id;");  
-            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.linkid = orderlist_tb.linkid ORDER BY orderlist_tb.id desc; ");  
+            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId ORDER BY orderlist_tb.id asc; ");  
           
             if (mysqli_num_rows($sql)) {  
             ?>
@@ -40,7 +40,7 @@
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
-                <td><a href="viewOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment'].','.$rows['totalAmount'] ?>">View Order</a></td>
+                <td><a href="viewOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><a href="?status=<?php echo $rows['ID'] ?>">Approve</a></td>
                 <td><a href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
                 </tr>
