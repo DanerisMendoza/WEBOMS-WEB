@@ -22,7 +22,8 @@ if (!$db_selected) {
 		dish varchar(255),
 		price int,
 		picName varchar(255),
-		cost int)";
+		cost int,
+		stock int)";
 		
 		$queryCreateAdminTb = "create table if not exists admin_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		admin varchar(255),

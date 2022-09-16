@@ -3,6 +3,8 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
+    <script type="text/javascript" src="js/bootstrap.js"></script>
 </head>
 <body>
   <div class="container text-center">
@@ -24,6 +26,7 @@
 			      <th scope="col">Dishes</th>
 			      <th scope="col">Price</th>
 			      <th scope="col">Cost</th>
+			      <th scope="col">Stock</th>
         
 			    </tr>
 			  </thead>
@@ -36,9 +39,9 @@
           <td><?=$rows['dish']?></td>
           <td><?php echo '₱'.$rows['price']; ?></td>
           <td><?php echo '₱'.$rows['cost']; ?></td>
-
+          <td><?php echo $rows['stock']; ?></td>
 				  <td><a href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost'] ?>"  >Update</a></td>
+				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
@@ -55,6 +58,7 @@
                     <input type="text" class="form-control" name="dishes" placeholder="dishes">
                     <input type="number" class="form-control" name="price" placeholder="price">
                     <input type="number" class="form-control" name="cost" placeholder="cost">
+                    <input type="number" class="form-control" name="stock" placeholder="stock">
                     <input type="file"  name="fileInput">
                     <button type="submit" class="btn-success col-sm-12" name="insert">insert</button>
                 </form>
@@ -71,7 +75,8 @@
                 $price = $_POST['price'];
                 $cost = $_POST['cost'];
                 $file = $_FILES['fileInput'];
-                if(empty($dishes) || empty($price) || empty($cost) || $_FILES['fileInput']['name']==''){
+                $stock = $_POST['stock'];
+                if(empty($dishes) || empty($price) || empty($cost) || empty($stock) || $_FILES['fileInput']['name']==''){
                   echo "<script>alert('Please complete the details!'); window.location.replace('inventory.php');</script>";
                   return;
                 }
@@ -94,7 +99,7 @@
                             $fileNameNew = uniqid('',true).".".$fileActualExt;
                             $fileDestination = 'dishesPic/'.$fileNameNew;
                             move_uploaded_file($fileTmpName,$fileDestination);                 
-                            if(mysqli_query($conn,"insert into dishes_tb(dish, price, picName, cost) values('$dishes','$price','$fileNameNew','$cost')")){
+                            if(mysqli_query($conn,"insert into dishes_tb(dish, price, picName, cost, stock) values('$dishes','$price','$fileNameNew','$cost','$stock')")){
                                 echo '<script>alert("Sucess saving to database!");</script>';                                               
                             }
                             else{
@@ -116,9 +121,6 @@
         </div>
     </div>
   </div>
-<script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-
 </body>
 </html>
 

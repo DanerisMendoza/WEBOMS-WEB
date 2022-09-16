@@ -11,12 +11,20 @@
     $price = $idAndPicname[2];
     $picName = $idAndPicname[3];
     $cost = $idAndPicname[4];
-    echo "</br>dish: ".$dish."</br>price: ".$price."</br>picname: ".$picName."</br> cost: ".$cost."<br></br>";
+    $stock = $idAndPicname[5];
+    echo 
+    "</br>dish: ".$dish.
+    "</br>price: ".$price.
+    "</br> cost: ".$cost.
+    "</br> stock: ".$stock.
+    "</br>picname: ".$picName.
+    "<br></br>";
 ?>
  <form method="post" class="form-group" enctype="multipart/form-data">
 <input type="text" class="form-control" name="dish" placeholder="dish"></br>
 <input type="number" class="form-control" name="price" placeholder="price"></br>
 <input type="number" class="form-control" name="cost" placeholder="cost"></br>
+<input type="number" class="form-control" name="stock" placeholder="stock"></br>
 <input type="file"  name="fileInput"></br>
 <button type="button" class="btn-success col-sm-12" id="cancel">Cancel</button>
 <button type="submit" class="btn-success col-sm-12" name="update">Update</button>
@@ -25,7 +33,8 @@
         $dish = $_POST['dish'];
         $price = $_POST['price'];
         $cost = $_POST['cost'];
-        if(empty($dish) || empty($price) || empty($cost) || $_FILES['fileInput']['name']==''){
+        $stock = $_POST['stock'];
+        if(empty($dish) || empty($price) || empty($cost) || empty($stock) || $_FILES['fileInput']['name']==''){
         echo "<script>alert('Please complete the details! ');</script>";
         return;    
         }
@@ -49,7 +58,8 @@
                     SET dish='$dish', 
                     price='$price',
                     picName = '$fileNameNew',
-                    cost = '$cost'
+                    cost = '$cost',
+                    stock =  '$stock'
                     WHERE orderType=$id ";        
                     if(mysqli_query($conn,$updateQuery)){
                         echo '<script>alert("Sucess updating the database!");</script>';       

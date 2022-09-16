@@ -39,7 +39,7 @@
         include_once('connection.php');
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        if(mysqli_query($conn,"insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')")){
+        
             //Load Composer's autoloader
             require 'vendor/autoload.php';
             //Create an instance; passing `true` enables exceptions
@@ -65,13 +65,15 @@
                 $mail->Body    = $otp;
         
                 $mail->send();
-                echo "<script>alert('OTP sent please verify your account first!'); window.location.replace('login.php');</script>";
+                
             }catch (Exception $e) {
                 echo "<script>alert('Error: $mail->ErrorInfo');</script>";
+                return;
             }                          
-        }
+        if(mysqli_query($conn,"insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')"))
+            echo "<script>alert('OTP sent please verify your account first!'); window.location.replace('login.php');</script>";
         else
-        echo '<script type="text/javascript">alert("failed to save to database");window.location.replace("login.php");</script>';  
+            echo '<script type="text/javascript">alert("failed to save to database");window.location.replace("login.php");</script>';  
        
     }
 ?>
