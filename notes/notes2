@@ -1,0 +1,24 @@
+login
+- username txt
+- password txt
+- login btn
+- forgot password?
+- not a member? sign up link
+
+admin
+- pos
+  1. dishes, price, picture, add to card
+  2. view cart
+  3. clear order
+  4. order btn
+  5. receipt (pdf)
+- orders
+  1. name, status (pending/approved), view order, approve, delete
+- inventory
+  1. add new dish (insert)
+  2. picture, dishes, price, cost, delete, update
+- sales report
+  1. ??
+- logout
+
+update page??
