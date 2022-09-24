@@ -25,7 +25,7 @@
 <div class="container"><div class="row justify-content-center">
 
     <form  method="post" class="text-center col-6 margin_top form1" >
-            <img src="logo.png"><br>
+            <img src="settings/logo.png"><br>
             <input class="margin" type="text" name="username" placeholder="Username" ></br>
             <input class="margin" type="password" name="password" placeholder="Password" ></br>
             <button class="margin" type="submit" name="login" value="login">Login</button><br>
@@ -36,13 +36,13 @@
     </form>
 
     <!-- otp (Bootstrap MODAL) -->
-    <div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal fade" id="otpModal" role="dialog" >
         <div class="modal-dialog">
             <div class="modal-content container">
                 <div class="modal-body">
-                    <form method="post">
+                    <form method="post" class="form-group">
                         <h3>Please Enter your OTP:</h3>
-                        <input type="text" placeholder="otp" name="otp">          
+                        <input type="text" class="form-control" placeholder="otp" name="otp" >          
                         <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel">
                         <input type="submit" value="Resend" name="Resend">
                         <input type="submit" value="Verify" name="Verify">
@@ -122,7 +122,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 body{
-  background-image: url(bg.jpg); /* #ED212D */
+  background-image: url(settings/bg.jpg); /* #ED212D */
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -133,13 +133,13 @@ body{
 }
 /* Restaurant Logo */
 img{
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
   width: auto;
 }
 /* Container form1 */
 .form1{
-  background: #ED212D;
+  background: gray;
   position: absolute;
   top: 48%;
   left: 50%;

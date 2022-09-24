@@ -6,11 +6,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 </head>
+
 <body>
     <!-- <img src="logo.png"> -->
-    <h1> ADMINISTRATOR MODE </h1>
     <div class="container text-center">
-
+    <h2> ADMINISTRATOR MODE </h1>
     <button class="btn" id="pos">POS</button>
     <button class="btn" id="orders">Orders</button>
     <button class="btn" id="inventory">Inventory</button>
@@ -33,14 +33,19 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
   body{
-    background-color: #ED212D;
+    background-image: url(settings/bg.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: #ED212D; */
+    color: white;
     font-family: 'Josefin Sans',sans-serif;
-
   }
   .btn{
     background-color: transparent;
     border: none;
-    color: black;
+    color: white;
     text-align: center;
     font-size: 25px;
     margin: 20px;

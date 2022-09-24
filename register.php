@@ -8,7 +8,7 @@
     <div class="container text-center">
 
     <form method="post" class="text-center col-6 margin_top form2">
-        <img src="logo.png"><br>
+        <img src="settings/logo.png"><br>
         <input type="text" class="form" name="username" placeholder="Enter Username"><br>
         <input type="text" class="form" name="name" placeholder="Enter Name"><br>
         <input type="email" class="form" name="email" placeholder="Enter Email"><br>
@@ -43,49 +43,50 @@
         include_once('connection.php');
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        if(mysqli_query($conn,"insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')")){
-            //Load Composer's autoloader
-            require 'vendor/autoload.php';
-            //Create an instance; passing `true` enables exceptions
-            $mail = new PHPMailer(true);
-            try {
-                //Server settings
-                $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-                //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-                $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
-                $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
-                $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-                $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+          //Load Composer's autoloader
+          require 'vendor/autoload.php';
+          //Create an instance; passing `true` enables exceptions
+          $mail = new PHPMailer(true);
+          try {
+              //Server settings
+              $mail->SMTPDebug  = SMTP::DEBUG_OFF;
+              //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+              $mail->isSMTP();                                            //Send using SMTP
+              $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+              $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+              $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
+              $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
+              $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
+              $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+      
+              //Recipients
+              $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
+              $mail->addAddress("$email");                                //sent to
+      
+              //Content
+              $mail->Subject = 'OTP';
+              $mail->Body    = $otp;
+      
+              $mail->send();
+              
+          }catch (Exception $e) {
+              echo "<script>alert('Error: $mail->ErrorInfo');</script>";
+              return;
+          }
+
+      if(mysqli_query($conn,"insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')"))
+          echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+      else
+          echo '<script type="text/javascript">alert("failed to save to database");window.location.replace("login.php");</script>';  
+            
         
-                //Recipients
-                $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
-                $mail->addAddress("$email");                                //sent to
-        
-                //Content
-                $mail->Subject = 'OTP';
-                $mail->Body    = $otp;
-        
-                $mail->send();
-                
-            }catch (Exception $e) {
-                echo "<script>alert('Error: $mail->ErrorInfo');</script>";
-                return;
-            }                          
-        if(mysqli_query($conn,"insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')"))
-            echo "<script>alert('OTP sent please verify your account first!'); window.location.replace('login.php');</script>";
-        else
-            echo '<script type="text/javascript">alert("failed to save to database");window.location.replace("login.php");</script>';  
-      }  
     }
 ?>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 body{
-  background-image: url(bg.jpg); /* #ED212D */
+  background-image: url(settings/bg.jpg); /* #ED212D */
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -98,12 +99,12 @@ body{
 /* Restaurant Logo */
 img{
   max-width: 100%;
-  height: 10%;
-  width: 10%;
+  height: 30%;
+  width: 30%;
 }
 /* Container form2 */
 .form2{
-  background: #ED212D;
+  background: gray;
   position: absolute;
   top: 48%;
   left: 50%;

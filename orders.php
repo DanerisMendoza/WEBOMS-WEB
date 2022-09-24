@@ -62,3 +62,15 @@
      echo "<script>alert('Approve Success'); window.location.replace('orders.php');</script>";
   }
 ?>
+<style>
+    body{
+    background-image: url(settings/bg.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: #ED212D; */
+    color: white;
+    font-family: 'Josefin Sans',sans-serif;
+  }
+</style>

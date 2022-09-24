@@ -27,7 +27,6 @@
 			      <th scope="col">Price</th>
 			      <th scope="col">Cost</th>
 			      <th scope="col">Stock</th>
-        
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -142,3 +141,15 @@
   echo "<script> window.location.replace('inventory.php'); alert('Delete data successfully'); </script>";  
 }
 ?>
+<style>
+    body{
+    background-image: url(settings/bg.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: #ED212D; */
+    color: white;
+    font-family: 'Josefin Sans',sans-serif;
+  }
+</style>
