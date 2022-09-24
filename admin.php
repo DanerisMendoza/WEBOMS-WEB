@@ -15,12 +15,14 @@
     <button class="btn" id="orders">Orders</button>
     <button class="btn" id="inventory">Inventory</button>
     <button class="btn" id="salesReport">Sales Report</button>
+    <button class="btn" id="settings">Settings</button>
     <button class="btn" id="Logout">Logout</button>
     <script>
     document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
     document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
     document.getElementById("inventory").onclick = function () {window.location.replace('inventory.php'); };
     document.getElementById("salesReport").onclick = function () {window.location.replace('salesReport.php'); };
+    document.getElementById("settings").onclick = function () {window.location.replace('settings.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
     $.post(
         "method/clearSessionMethod.php", {
@@ -45,7 +47,7 @@
   .btn{
     background-color: transparent;
     border: none;
-    color: white;
+    color: lightblue;
     text-align: center;
     font-size: 25px;
     margin: 20px;
@@ -62,6 +64,14 @@
      /* max-width: 100%;
      width: 30%;
      height: auto; */
+     background: gray;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px 50px 15px;
+    height: auto;
+    border-radius: 15px;
 
    }
    /* img{
