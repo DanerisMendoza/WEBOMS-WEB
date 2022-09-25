@@ -12,24 +12,14 @@
     </head>
     <body>
     <div class="container text-center">
-      <button class="btn btn-success col-sm-4" id="orders">Orders</button>
-        <button class="btn btn-success col-sm-4" id="admin">Admin</button>
-        <script>
-          document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
-          document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
-        </script> 
-        <div class="col-lg-12">
+        <div class="col-lg-12 cont2">
+          <button class="btn btn-success col-sm-4" id="orders">Orders</button>
+          <button class="btn btn-success col-sm-4" id="admin">Admin</button>
             <?php 
             include_once('connection.php');
             $arr = explode(',',$_GET['idAndPic']);
             $id = $arr[0];
             $pic = $arr[1];
-            // $total = $arr[2];
-            // $sql = mysqli_query($conn,"select user_tb.name, orderList_tb.*  from user_tb inner join orderlist_tb on user_tb.linkid = orderlist_tb.linkid"); 
-            // $sql = mysqli_query($conn,"select * from order_tb ");  
-            // $sql = mysqli_query($conn,"select dishes_tb.cost, order_tb.* from dishes_tb, order_tb where ordersLinkId = '$id'");  
-            // $sql = mysqli_query($conn,"select * from order_tb where ordersLinkId = '$id'");  
-            // $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb, order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$id' ");  
             $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$id' ");  
             if (mysqli_num_rows($sql)) {  
             ?>
@@ -57,10 +47,10 @@
                 </tr>
               </tbody>
             </table>
-            <h1>Proof of Payment:</h1>
-            <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
             <?php } ?>
           </div>
+          <h1>Proof of Payment:</h1>
+            <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
 	    </div>
     </body>
 </html>
@@ -76,4 +66,15 @@
     color: white;
     font-family: 'Josefin Sans',sans-serif;
   }
+
+	.cont2{
+     padding: 1%;
+     margin-top: 2%;
+     background: gray;
+   }
 </style>
+
+<script>
+  document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
+  document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
+</script> 

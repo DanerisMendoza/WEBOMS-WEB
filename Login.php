@@ -71,7 +71,7 @@
                     $valid = password_verify($password, $rows['password']);
                 }
                 if($valid)
-                    echo "<SCRIPT> window.location.replace('admin.php');</SCRIPT>";
+                    echo "<SCRIPT> location.replace('admin.php');</SCRIPT>";
                 else
                     echo "<SCRIPT>  window.location.replace('login.php'); alert('incorrect username or password!');</SCRIPT>";
             }

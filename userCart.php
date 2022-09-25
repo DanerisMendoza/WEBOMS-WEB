@@ -143,4 +143,19 @@ $(document).ready(function () {
     }
 ?>
 
-
+<style>
+    body{
+    background-image: url(settings/bg.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    font-family: 'Josefin Sans',sans-serif;
+    }
+	.container{
+     padding: 1%;
+     margin-top: 2%;
+     background: gray;
+   }
+</style>

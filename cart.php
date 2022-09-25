@@ -26,8 +26,6 @@
                     $dishesArr = array();
                     $priceArr = array();
                     $dishesQuantity = array();
-      
-
                     for($i=0; $i<count($_SESSION['dishes']); $i++){
                         if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
                             $index = array_search($_SESSION['dishes'][$i], $dishesArr);

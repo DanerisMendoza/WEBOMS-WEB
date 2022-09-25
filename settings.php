@@ -44,7 +44,6 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
-    /* background-color: #ED212D; */
     color: white;
     font-family: 'Josefin Sans',sans-serif;
     }
