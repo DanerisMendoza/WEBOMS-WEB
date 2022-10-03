@@ -1,15 +1,11 @@
-<?php session_start(); ?>
+<?php 
+include('allScript.php');
+session_start(); 
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <title></title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     </head>
     <body>    
         <div class="container text-center">
@@ -110,7 +106,6 @@ $(document).ready(function () {
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
-    /* background-color: #ED212D; */
     color: white;
     font-family: 'Josefin Sans',sans-serif;
   }

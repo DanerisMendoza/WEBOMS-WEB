@@ -75,7 +75,7 @@
           if(in_array($fileActualExt,$allowed)){
               if($fileError === 0){
                   if($fileSize < 10000000){
-                      unlink("settings/bg.jpg");
+                    unlink("settings/bg.jpg");
                       $fileNameNew = "bg.jpg";
                       $fileDestination = 'settings/'.$fileNameNew;
                       move_uploaded_file($fileTmpName,$fileDestination);           

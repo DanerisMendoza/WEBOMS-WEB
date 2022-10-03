@@ -15,6 +15,11 @@
         <div class="container text-center">
             <button class="btn btn-success col-sm-4" id="pos">Home</button>
             <button class="btn btn-success col-sm-4" id="clear">Clear Order</button>
+            <?php
+            //   $month_ini = new DateTime("first day of this month");
+            //   $month_end = new DateTime("0:00 last day of this month");
+            ?>
+            <!-- <input type="datetime-local" id="myDatetimeField" class="col-sm-6"> -->
             <div class="col-lg-12">
                 <table  class="table table-striped" border="10">
                     <tr>
@@ -76,8 +81,23 @@
 </html>
 
 <script>
+var now = new Date();
+var utcString = now.toISOString().substring(0,19);
+var year = now.getFullYear();
+var month = now.getMonth() + 1;
+var day = now.getDate();
+var hour = now.getHours();
+var minute = now.getMinutes();
+var second = now.getSeconds();
+var localDatetime = year + "-" +
+                (month < 10 ? "0" + month.toString() : month) + "-" +
+                (day < 10 ? "0" + day.toString() : day) + "T" +
+                (hour < 10 ? "0" + hour.toString() : hour) + ":" +
+                (minute < 10 ? "0" + minute.toString() : minute) +
+                utcString.substring(16,19);
+var datetimeField = document.getElementById("myDatetimeField");
+datetimeField.value = localDatetime;
 document.getElementById("pos").onclick = function () {window.location.replace('homepage.php'); };
-
 $(document).ready(function () {
             $("#clear").click(function () {
                 $.post(

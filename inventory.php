@@ -1,15 +1,13 @@
+<?php include('allScript.php')?>
 <!DOCTYPE html>
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
-    <script type="text/javascript" src="js/bootstrap.js"></script>
 </head>
 <body>
   <div class="container text-center">
     <button class="btn btn-success col-sm-4" id="admin">Admin</button>
-    <button id="addButton" type="button" class="btn" data-toggle="modal" data-target="#loginModal">Add new dish</button>
+    <button id="addButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">Add new dish</button>
 
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
    

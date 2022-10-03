@@ -1,21 +1,15 @@
 <?php 
-        session_start();
-        if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
-        $_SESSION["dishes"] = array();
-        $_SESSION["price"] = array(); 
-        }
+  include('allScript.php');
+  session_start();
+  if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
+  $_SESSION["dishes"] = array();
+  $_SESSION["price"] = array(); 
+  }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <title></title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     </head>
     <body>
     <div class="container text-center">
@@ -56,28 +50,27 @@
 
 <?php 
     if(isset($_GET['order'])){
-        $order = explode(',',$_GET['order']);  
-        $dish = $order[0];
-        $price = $order[1];
-        array_push($_SESSION['dishes'], $dish);
-        array_push($_SESSION['price'], $price);
+      $order = explode(',',$_GET['order']);  
+      $dish = $order[0];
+      $price = $order[1];
+      array_push($_SESSION['dishes'], $dish);
+      array_push($_SESSION['price'], $price);
     }
 ?>
 
 <style>
-     .btn{
-    background-color: greenyellow;
-     }
+    .btn{
+      background-color: greenyellow;
+    }
      
     body{
-    background-image: url(settings/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* background-color: #ED212D; */
-    color: white;
-    font-family: 'Josefin Sans',sans-serif;
+      background-image: url(settings/bg.jpg);
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      font-family: 'Josefin Sans',sans-serif;
     }
 
   

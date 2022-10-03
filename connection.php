@@ -16,8 +16,6 @@ if (!$db_selected) {
 		//connect to db first then create table
 		$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);	
 
-
-
 		$queryCreateDishesTb = "create table if not exists dishes_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
 		dish varchar(255),
 		price int,
@@ -43,7 +41,8 @@ if (!$db_selected) {
 		proofOfPayment varchar(255), 
 		userlinkId int, 
 		status tinyint,
-		ordersLinkId varchar(255))";
+		ordersLinkId varchar(255),
+		date date not null)";
 
 		$queryCreateOrderTb = "create table if not exists order_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		ordersLinkId varchar(255), 

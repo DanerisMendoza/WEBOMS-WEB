@@ -53,6 +53,7 @@
     margin: 20px;
     transition: 0.4s;
     border-radius: 10px;
+    border: 1px solid lightblue;
   }
    .btn:hover{
      color: white;
