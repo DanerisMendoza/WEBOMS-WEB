@@ -81,6 +81,7 @@
 </html>
 
 <script>
+document.getElementById("pos").onclick = function () {window.location.replace('homepage.php'); }; 
 var now = new Date();
 var utcString = now.toISOString().substring(0,19);
 var year = now.getFullYear();
@@ -97,7 +98,7 @@ var localDatetime = year + "-" +
                 utcString.substring(16,19);
 var datetimeField = document.getElementById("myDatetimeField");
 datetimeField.value = localDatetime;
-document.getElementById("pos").onclick = function () {window.location.replace('homepage.php'); };
+
 $(document).ready(function () {
             $("#clear").click(function () {
                 $.post(
