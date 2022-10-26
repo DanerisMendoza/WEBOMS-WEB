@@ -25,14 +25,14 @@
 <div class="container"><div class="row justify-content-center">
 
     <form  method="post" class="text-center col-6 margin_top form1" >
-            <img src="settings/logo.png"><br>
-            <input class="margin" type="text" name="username" placeholder="Username" ></br>
-            <input class="margin" type="password" name="password" placeholder="Password" ></br>
-            <button class="margin" type="submit" name="login" value="login">Login</button><br>
-            <div class="pass">Forgot Password?</div>
-            <div class="signup_link">
-              Not a member? <a href="register.php">Signup now</a>
-            </div>
+      <img src="settings/logo.png"><br>
+      <input class="margin" type="text" name="username" placeholder="Username" ></br>
+      <input class="margin" type="password" name="password" placeholder="Password" ></br>
+      <button class="margin" type="submit" name="login" value="login">Login</button><br>
+      <div class="pass">Forgot Password?</div>
+      <div class="signup_link">
+        Not a member? <a href="register.php">Signup now</a>
+      </div>
     </form>
 
     <!-- otp (Bootstrap MODAL) -->

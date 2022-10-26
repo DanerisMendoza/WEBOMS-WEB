@@ -22,6 +22,10 @@
             <tr>	
             <th scope="col">name</th>
             <th scope="col">status</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">date</th>
             </tr>
               <tbody>
                 <?php while($rows = mysqli_fetch_assoc($sql)){ ?>
@@ -31,6 +35,7 @@
                 <td><a href="viewOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><a href="?status=<?php echo $rows['ordersLinkId'] ?>">Approve</a></td>
                 <td><a href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
+                <td><?php echo $rows['date']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
@@ -45,6 +50,8 @@
      $ordersLinkId = $_GET['status'];
      include_once('orderClass.php');
      $order = new order($ordersLinkId);
+    //  $checkQuery = "SELECT orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId'";     
+
      $order-> sendReceiptToEmail(); 
      $updateQuery = "UPDATE orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId'";     
      $result = mysqli_query($conn, $updateQuery);

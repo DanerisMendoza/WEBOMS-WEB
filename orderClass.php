@@ -214,4 +214,18 @@
             }                        
         }
     }
+
+    class orderList{
+        function getOrderList(){
+            include_once('connection.php');
+            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($sql)) {
+                $arr = array();
+                while($rows = mysqli_fetch_assoc($sql)){
+                    array_push($arr,$rows);
+                }
+                return($arr);
+            }
+        }
+    }
 ?>

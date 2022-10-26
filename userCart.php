@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    date_default_timezone_set('Asia/Manila');
+    $date = new DateTime();
+    $today =  $date->format('Y-m-d'); 
+    $todayWithTime =  $date->format('Y-m-d H:i:s'); 
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,13 +19,11 @@
     </head>
     <body>    
         <div class="container text-center">
-            <button class="btn btn-success col-sm-4" id="pos">Home</button>
+            <button class="btn btn-success col-sm-4" id="home">Home</button>
             <button class="btn btn-success col-sm-4" id="clear">Clear Order</button>
-            <?php
-            //   $month_ini = new DateTime("first day of this month");
-            //   $month_end = new DateTime("0:00 last day of this month");
-            ?>
-            <!-- <input type="datetime-local" id="myDatetimeField" class="col-sm-6"> -->
+            
+            <input id="dateTime" type="datetime-local" class="col-sm-6" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
+  
             <div class="col-lg-12">
                 <table  class="table table-striped" border="10">
                     <tr>
@@ -69,35 +73,23 @@
                     </tr>
                 </table> 
        
-     
+        
+
                 <form method="post" enctype="multipart/form-data">           
+                   
                     <label for="fileInput">Proof of Payment: </label>
                     <input type="file"  name="fileInput">
                     <button class="btn btn-danger col-sm-12" name="order">Place Order</button>
                 </form>
+                <script>document.getElementById("dateTime").disabled = true;</script>
             </div>
         </div>
     </body>
 </html>
 
 <script>
-document.getElementById("pos").onclick = function () {window.location.replace('homepage.php'); }; 
-var now = new Date();
-var utcString = now.toISOString().substring(0,19);
-var year = now.getFullYear();
-var month = now.getMonth() + 1;
-var day = now.getDate();
-var hour = now.getHours();
-var minute = now.getMinutes();
-var second = now.getSeconds();
-var localDatetime = year + "-" +
-                (month < 10 ? "0" + month.toString() : month) + "-" +
-                (day < 10 ? "0" + day.toString() : day) + "T" +
-                (hour < 10 ? "0" + hour.toString() : hour) + ":" +
-                (minute < 10 ? "0" + minute.toString() : minute) +
-                utcString.substring(16,19);
-var datetimeField = document.getElementById("myDatetimeField");
-datetimeField.value = localDatetime;
+document.getElementById("home").onclick = function () {window.location.replace('homepage.php'); }; 
+
 
 $(document).ready(function () {
             $("#clear").click(function () {
@@ -134,7 +126,7 @@ $(document).ready(function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into orderList_tb(proofOfPayment, userlinkId, status, ordersLinkId) values('$fileNameNew','$userlinkId','0','$ordersLinkId')";
+                    $query1 = "insert into orderList_tb(proofOfPayment, userlinkId, status, ordersLinkId, date) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime')";
                     
                     for($i=0; $i<count($dishesArr); $i++){
                         $query2 = "insert into order_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
