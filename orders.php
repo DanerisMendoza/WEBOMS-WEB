@@ -8,56 +8,52 @@
     <div class="container text-center">
 
         <button class="btn btn-success col-sm-4" id="admin">Admin</button>
-        <script>
+        <script>020
             document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };    
         </script> 
         
         <div class="col-lg-12">
-            <?php 
-            include_once('connection.php');
-            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId ORDER BY orderlist_tb.id asc; ");  
-            if (mysqli_num_rows($sql)) {  
-            ?>
             <table class="table table-striped" border="10">
             <tr>	
             <th scope="col">name</th>
             <th scope="col">status</th>
+            <th scope="col">email</th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col">date</th>
             </tr>
               <tbody>
-                <?php while($rows = mysqli_fetch_assoc($sql)){ ?>
+                <?php
+                include_once('orderClass.php');
+                $order = new orderList();
+                $orderlist =  $order -> getOrderList(); 
+                foreach($orderlist as $rows){ ?>
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
+                <td><?php echo $rows['email']; ?></td>
                 <td><a href="viewOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-                <td><a href="?status=<?php echo $rows['ordersLinkId'] ?>">Approve</a></td>
+                <td><a href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a></td>
                 <td><a href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
                 <td><?php echo $rows['date']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
             </table>
-            <?php } ?>
           </div>
 	    </div>
     </body>
 </html>
 <?php 
   if(isset($_GET['status'])){
-     $ordersLinkId = $_GET['status'];
-     include_once('orderClass.php');
-     $order = new order($ordersLinkId);
-    //  $checkQuery = "SELECT orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId'";     
-
-     $order-> sendReceiptToEmail(); 
-     $updateQuery = "UPDATE orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId'";     
-     $result = mysqli_query($conn, $updateQuery);
-     if (!$result)
-     echo "<script>alert('update data unsuccessfully'); window.location.replace('orders.php');</script>";  
-     echo "<script>alert('Approve Success'); window.location.replace('orders.php');</script>";
+    $arr = explode(',',$_GET['status']);  
+    $ordersLinkId = $arr[0];
+    $email = $arr[1];
+    $order = new order($ordersLinkId,$email);
+    $order-> computeOrder(); 
+    $order-> sendReceiptToEmail(); 
+    $order-> approveOrder();
   }
 ?>
 <style>

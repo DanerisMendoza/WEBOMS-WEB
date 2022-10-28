@@ -2,15 +2,15 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
-
     class order{
-
         public $dishesArr = array();
         public $priceArr = array();
         public $dishesQuantity = array();
         public $total;
         public $cash;
-        
+        public $ordersLinkId;
+        public $email;
+
         function __construct(){ 
             $arguments = func_get_args();
             $numberOfArguments = func_num_args();
@@ -20,19 +20,11 @@
             
         }
 
-        public function __construct1($ordersLinkId)
+        public function __construct2($ordersLinkId,$email)
         {
-            include('connection.php');
-            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$ordersLinkId' ");  
-            if (mysqli_num_rows($sql)) {  
-                while($rows = mysqli_fetch_assoc($sql)){ 
-                    $price = ($rows['price']*$rows['quantity']);  
-                    array_push($this-> dishesArr,$rows['dish']);
-                    array_push($this-> priceArr,$rows['price']);
-                    array_push($this-> dishesQuantity,$rows['quantity']);
-                    $this-> total += $price;
-                }
-            }
+            $this -> ordersLinkId = $ordersLinkId;
+            $this -> email = $email;
+
         }
 
         public function __construct5($dishesQuantity,$dishesArr,$priceArr,$cash,$total)
@@ -45,6 +37,19 @@
            
         }
 
+        function computeOrder(){
+            include('connection.php');
+            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this -> ordersLinkId}' ");  
+            if (mysqli_num_rows($sql)) {  
+                while($rows = mysqli_fetch_assoc($sql)){ 
+                    $price = ($rows['price']*$rows['quantity']);  
+                    array_push($this-> dishesArr,$rows['dish']);
+                    array_push($this-> priceArr,$rows['price']);
+                    array_push($this-> dishesQuantity,$rows['quantity']);
+                    $this-> total += $price;
+                }
+            }
+        }
         
         function makeReceipt(){
             $dishesArr = $this-> dishesArr;
@@ -126,7 +131,6 @@
             $dishesArr = $this-> dishesArr;
             $priceArr = $this-> priceArr;
             $dishesQuantity = $this-> dishesQuantity;
-            $total = $this-> total;
             require_once('TCPDF-main/tcpdf.php'); 
             $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
             $obj_pdf->SetCreator(PDF_CREATOR);  
@@ -169,7 +173,7 @@
             <tr>
                 <td></td>
                 <td>Total</td>
-                <td>₱$total</td>
+                <td>₱{$this-> total}</td>
             </tr>
             
             <style>
@@ -184,7 +188,7 @@
             </style>
             ";
             $obj_pdf->writeHTML($content);  
-            ob_end_clean();
+            // ob_end_clean();
             $attachment = $obj_pdf->Output('file.pdf', 'S');
             require 'vendor/autoload.php';
             $mail = new PHPMailer(true);
@@ -201,22 +205,44 @@
         
                 //Recipients
                 $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
-                $mail->addAddress("custommemory072@gmail.com");             //sent to
+                $mail->addAddress("{$this -> email}");             //sent to
         
                 //Content
                 $mail->Subject = 'Receipt';
                 $mail->Body    = ' ';
                 $mail->AddStringAttachment($attachment, 'filename.pdf', 'base64', 'application/pdf');
                 $mail->send();
-                echo "<script>alert('Receipt Sent!'); window.location.replace('orders.php');</script>";
+                
+                
             }catch (Exception $e) {
                 echo "<script>alert('Error: $mail->ErrorInfo');</script>";
             }                        
+        }
+        
+        function approveOrder(){
+            require('connection.php');
+            $ordersLinkId = $this -> ordersLinkId;
+            $updateQuery = "UPDATE orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId' ";     
+            if($conn->query($updateQuery) === FALSE)
+                echo "<script>alert('update data unsuccessfully'); window.location.replace('orders.php');</script>";  
+            echo "<script>alert('Approve Success'); window.location.replace('orders.php');</script>";
         }
     }
 
     class orderList{
         function getOrderList(){
+            include_once('connection.php');
+            $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($sql)) {
+                $arr = array();
+                while($rows = mysqli_fetch_assoc($sql)){
+                    array_push($arr,$rows);
+                }
+                return($arr);
+            }
+        }
+
+        function getApprovedOrderList(){
             include_once('connection.php');
             $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ");  
             if (mysqli_num_rows($sql)) {
@@ -227,5 +253,22 @@
                 return($arr);
             }
         }
+
+        function getOrderListByDates($date1,$date2){
+            include_once('connection.php');
+            $sql = null;
+            // if(empty($date2))
+            // $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date = '$date1' ORDER BY orderlist_tb.id asc; ");  
+            // else
+            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date between '$date1' and '$date2' ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($sql)) {
+                $arr = array();
+                while($rows = mysqli_fetch_assoc($sql)){
+                    array_push($arr,$rows);
+                }
+                return($arr);
+            }
+        }
+    
     }
 ?>

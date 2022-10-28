@@ -8,11 +8,26 @@
         <div class="container text-center">
         <button class="btn btn-success col-sm-4" id="admin">Admin</button>
         <button class="btn btn-success col-sm-4" id="viewGraph">View Graph</button>
+        </br>
+        <form method="post">
+        <input type="datetime-local" name="dateFetch1" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
+        <button type="submit" name="fetch">fetch</button>
+        <input type="datetime-local" name="dateFetch2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
+        </form>
+        <form method="POST"><button type="submit" name="showAll">Show All</button></form>
             <div class="col-lg-12">
                 <?php
                     include_once('orderClass.php');
-                    $order = new orderList();
-                    $orderlist = $order-> getOrderList(); 
+                    if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
+                        $dateFetch1 = $_POST['dateFetch1'];
+                        $dateFetch2 = $_POST['dateFetch2'];
+                        $order = new orderList();
+                        $orderlist =  $order -> getOrderListByDates($dateFetch1,$dateFetch2); 
+                    }
+                    else{
+                        $order = new orderList();
+                        $orderlist =  $order -> getApprovedOrderList(); 
+                    }
                 ?>
                 <table class="table table-striped" border="10">
                 <tr>	
@@ -22,7 +37,10 @@
                 <th scope="col">date</th>
                 </tr>
                 <tbody>
-                    <?php foreach($orderlist as $rows){ ?>
+                    
+                    <?php 
+                    if(!empty($orderlist))
+                    foreach($orderlist as $rows){ ?>
                     <tr>	   
                     <td><?php echo $rows['name']; ?></td>
                     <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
@@ -50,7 +68,6 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
-    /* background-color: #ED212D; */
     color: white;
     font-family: 'Josefin Sans',sans-serif;
   }
