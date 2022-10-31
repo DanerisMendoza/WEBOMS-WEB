@@ -1,5 +1,4 @@
 <?php 
-// include('allScript.php');
 session_start(); 
 ?>
 <!DOCTYPE html>
@@ -7,6 +6,7 @@ session_start();
     <head>
         <title></title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+        <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
     </head>
     <body>    
         <div class="container text-center">
@@ -44,6 +44,7 @@ session_start();
                     for($i=0; $i<count($priceArr); $i++){
                         $total += $priceArr[$i];
                     }
+                    
                     for($i=0; $i<count($dishesArr); $i++){ ?>
                     <tr>  
                         <td> <?php echo $dishesQuantity[$i];?></td>
@@ -69,7 +70,7 @@ session_start();
 </html>
 
 <script>
-document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
+document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); }
 
 $(document).ready(function () {
             $("#clear").click(function () {

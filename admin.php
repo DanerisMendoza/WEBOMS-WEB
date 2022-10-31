@@ -3,12 +3,9 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 </head>
 
 <body>
-    <!-- <img src="logo.png"> -->
     <div class="container text-center">
     <h2> ADMINISTRATOR MODE </h1>
     <button class="btn" id="pos">POS</button>
@@ -40,7 +37,6 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
-    /* background-color: #ED212D; */
     color: white;
     font-family: 'Josefin Sans',sans-serif;
   }
@@ -62,10 +58,7 @@
    .container{
      display: grid;
      text-align: right;
-     /* max-width: 100%;
-     width: 30%;
-     height: auto; */
-     background: gray;
+    background: gray;
     position: absolute;
     top: 48%;
     left: 50%;
@@ -75,11 +68,6 @@
     border-radius: 15px;
 
    }
-   /* img{
-     width: 10%;
-     height: 20vh;
-
-   } */
   h1{
     padding-top: 150px;
     text-align: center;

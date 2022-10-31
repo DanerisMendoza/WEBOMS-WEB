@@ -1,14 +1,17 @@
-<?php include('allScript.php')?>
 <!DOCTYPE html>
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>  
+
 </head>
 <body>
   <div class="container text-center">
     <button class="btn btn-success col-sm-4" id="admin">Admin</button>
     <button id="addButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">Add new dish</button>
-
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
    
    <div class="col-lg-12">
@@ -60,7 +63,6 @@
                     <button type="submit" class="btn-success col-sm-12" name="insert">insert</button>
                 </form>
                 <?php
-                //use $_post when using method post otherwise use $_get
                                
                 //calling delete function
                 if (isset($_GET['idAndPicnameDelete']))   
@@ -139,15 +141,3 @@
   echo "<script> window.location.replace('inventory.php'); alert('Delete data successfully'); </script>";  
 }
 ?>
-<style>
-    body{
-    background-image: url(settings/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* background-color: #ED212D; */
-    color: white;
-    font-family: 'Josefin Sans',sans-serif;
-  }
-</style>

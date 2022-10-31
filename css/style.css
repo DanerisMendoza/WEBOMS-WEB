@@ -1,13 +1,28 @@
-.margin{
-    margin: 2px;
-}
-.margin_top{
-    margin-top: 10px;
-}
-body{
-background-color: black;
+    .margin{
+            margin: 2px;
+        }
+    .margin_top{
+        margin-top: 10px;
+    }
 
-}
-.form1{
-  background-color: red;
-}
+    .container{
+        padding: 1%;
+        margin-top: 2%;
+        background: gray;
+    }
+    
+    body{
+        background-image: url(../settings/bg.jpg);
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        color: white;
+        font-family: 'Josefin Sans',sans-serif;
+      }
+  
+      .container{
+       padding: 1%;
+       margin-top: 2%;
+       background: gray;
+     }

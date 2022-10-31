@@ -52,12 +52,7 @@
         }
         
         function makeReceipt(){
-            $dishesArr = $this-> dishesArr;
-            $priceArr = $this-> priceArr;
-            $dishesQuantity = $this-> dishesQuantity;
-            $total = $this-> total;
-            $cash = $this -> cash;
-            $change = ($cash - $total);
+            $change =  $this -> cash - $this-> total;
             require_once('TCPDF-main/tcpdf.php'); 
             $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
             $obj_pdf->SetCreator(PDF_CREATOR);  
@@ -84,12 +79,12 @@
                 <th scope="col">Cost</th>
             </tr>
             ';  
-            for($i=0; $i<count($dishesArr); $i++){ 
+            for($i=0; $i<count($this-> dishesArr); $i++){ 
             $content .= "
             <tr>  
-            <td>$dishesQuantity[$i]</td>
-            <td>$dishesArr[$i]</td>
-            <td>₱$priceArr[$i]</td>
+            <td>{$this-> dishesQuantity[$i]}</td>
+            <td>{$this-> dishesArr[$i]}</td>
+            <td>₱{$this-> priceArr[$i]}</td>
             </tr>
             ";
             }
@@ -99,12 +94,12 @@
             <tr>
                 <td></td>
                 <td>Cash</td>
-                <td>₱$cash</td>
+                <td>₱{$this -> cash}</td>
             </tr>
             <tr>
                 <td></td>
                 <td>Total</td>
-                <td>₱$total</td>
+                <td>₱{$this-> total}</td>
             </tr>
             <tr>
                 <td></td>
@@ -128,9 +123,6 @@
         }
 
         function sendReceiptToEmail(){
-            $dishesArr = $this-> dishesArr;
-            $priceArr = $this-> priceArr;
-            $dishesQuantity = $this-> dishesQuantity;
             require_once('TCPDF-main/tcpdf.php'); 
             $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
             $obj_pdf->SetCreator(PDF_CREATOR);  
@@ -158,12 +150,12 @@
                 <th scope="col">Cost</th>
             </tr>
             ';  
-            for($i=0; $i<count($dishesArr); $i++){ 
+          for($i=0; $i<count($this-> dishesArr); $i++){ 
             $content .= "
             <tr>  
-            <td>$dishesQuantity[$i]</td>
-            <td>$dishesArr[$i]</td>
-            <td>₱$priceArr[$i]</td>
+            <td>{$this-> dishesQuantity[$i]}</td>
+            <td>{$this-> dishesArr[$i]}</td>
+            <td>₱{$this-> priceArr[$i]}</td>
             </tr>
             ";
             }
@@ -230,10 +222,35 @@
     }
 
     class orderList{
+        
         function getOrderList(){
             include_once('connection.php');
             $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ");  
             if (mysqli_num_rows($sql)) {
+                $arr = array();
+                while($rows = mysqli_fetch_assoc($sql)){
+                    array_push($arr,$rows);
+                }
+                return($arr);
+            }
+        }
+
+        function getOrderListByCustomer(){
+            include_once('connection.php');
+            $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($sql)) {
+                $arr = array();
+                while($rows = mysqli_fetch_assoc($sql)){
+                    array_push($arr,$rows);
+                }
+                return($arr);
+            }
+        }
+
+        function getAllOrderById($id){
+            include_once('connection.php');
+            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$id' ");  
+            if (mysqli_num_rows($sql)) {  
                 $arr = array();
                 while($rows = mysqli_fetch_assoc($sql)){
                     array_push($arr,$rows);

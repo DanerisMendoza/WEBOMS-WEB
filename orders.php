@@ -1,8 +1,9 @@
-<?php  include('allScript.php'); ?>
 <!DOCTYPE html>
 <html>
     <head>
         <title></title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+        <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
     <div class="container text-center">
@@ -56,20 +57,3 @@
     $order-> approveOrder();
   }
 ?>
-<style>
-    body{
-    background-image: url(settings/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    font-family: 'Josefin Sans',sans-serif;
-  }
-
-	.container{
-     padding: 1%;
-     margin-top: 2%;
-     background: gray;
-   }
-</style>

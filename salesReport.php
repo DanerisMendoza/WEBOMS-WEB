@@ -71,4 +71,9 @@
     color: white;
     font-family: 'Josefin Sans',sans-serif;
   }
+  .container{
+     padding: 1%;
+     margin-top: 2%;
+     background: gray;
+   }
 </style>
