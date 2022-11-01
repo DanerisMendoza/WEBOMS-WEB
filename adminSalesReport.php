@@ -57,7 +57,7 @@
 
 <script>
     document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
-    document.getElementById("viewGraph").onclick = function () {window.location.replace('graph.php'); };
+    document.getElementById("viewGraph").onclick = function () {window.location.replace('adminGraph.php'); };
 </script>
 
 

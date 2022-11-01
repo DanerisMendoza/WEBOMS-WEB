@@ -9,16 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Login </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
-    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 <body>
 <?php include_once('connection.php');?>
@@ -86,7 +79,7 @@
                     }
                     if($valid && $otp == ""){
                         $_SESSION['userlinkId'] = $userlinkId;
-                        echo "<SCRIPT> window.location.replace('homePage.php?username=$username');  </SCRIPT>";
+                        echo "<SCRIPT> window.location.replace('customer.php?username=$username');  </SCRIPT>";
                     }
                     else if($valid && $otp != ""){
                         echo "<script type='text/javascript'>$('#otpModal').modal('show');</script>";
@@ -108,7 +101,7 @@
                     $_SESSION['userlinkId'] = $rows['userlinkId'];
                 $updateQuery = "UPDATE user_tb SET otp='' WHERE otp='$otp'";
                 if(mysqli_query($conn, $updateQuery))
-                    echo "<SCRIPT> window.location.replace('homePage.php?username=$username'); </SCRIPT>";
+                    echo "<SCRIPT> window.location.replace('customer.php?username=$username'); </SCRIPT>";
             }else
             echo  '<script type="text/javascript">alert("Incorrect Otp!"); window.location.replace("login.php");</script>';
         }

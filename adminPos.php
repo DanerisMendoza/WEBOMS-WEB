@@ -17,7 +17,7 @@
               <button class="btn btn-success col-sm-4" id="admin">Admin</button>
               <button  type="button" class="btn btn-success col-sm-4" id="viewCart" >View Cart</button>
               <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
-              <script>document.getElementById("viewCart").onclick = function () {window.location.replace('cart.php'); };</script> 
+              <script>document.getElementById("viewCart").onclick = function () {window.location.replace('adminCart.php'); };</script> 
               <div class="col-lg-12">
             <?php 
                 include_once('dishesClass.php');

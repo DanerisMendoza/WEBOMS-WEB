@@ -66,7 +66,7 @@
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
     
-        document.getElementById("viewSalesReport").onclick = function () {window.location.replace('salesReport.php'); };
+        document.getElementById("viewSalesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
         }
 </script>
 

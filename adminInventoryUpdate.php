@@ -99,6 +99,6 @@
 </style>
 <script>
     document.getElementById("cancel").addEventListener("click",function(){
-        window.location.replace('inventory.php');
+        window.location.replace('adminInventory.php');
     });
 </script>

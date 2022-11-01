@@ -15,11 +15,11 @@
     <button class="btn" id="settings">Settings</button>
     <button class="btn" id="Logout">Logout</button>
     <script>
-    document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); };
-    document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
-    document.getElementById("inventory").onclick = function () {window.location.replace('inventory.php'); };
+    document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); };
+    document.getElementById("orders").onclick = function () {window.location.replace('adminOrdersList.php'); };
+    document.getElementById("inventory").onclick = function () {window.location.replace('adminInventory.php'); };
     document.getElementById("salesReport").onclick = function () {window.location.replace('salesReport.php'); };
-    document.getElementById("settings").onclick = function () {window.location.replace('settings.php'); };
+    document.getElementById("settings").onclick = function () {window.location.replace('adminSettings.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
     $.post(
         "method/clearSessionMethod.php", {
@@ -56,8 +56,8 @@
      background-color: black;
    }
    .container{
-     display: grid;
-     text-align: right;
+    display: grid;
+    text-align: right;
     background: gray;
     position: absolute;
     top: 48%;
@@ -66,7 +66,6 @@
     padding: 15px 50px 15px;
     height: auto;
     border-radius: 15px;
-
    }
   h1{
     padding-top: 150px;

@@ -9,18 +9,14 @@
 <html>
     <head>
         <title></title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+        <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
     </head>
     <body>    
         <div class="container text-center">
-            <button class="btn btn-success col-sm-4" id="home">Home</button>
-            <button class="btn btn-success col-sm-4" id="clear">Clear Order</button>
+            <button class="btn btn-success col-sm-2" id="home">Home</button>
+            <button class="btn btn-success col-sm-2" id="back">Back</button>
+            <button class="btn btn-success col-sm-2" id="clear">Clear Order</button>
             
             <input id="dateTime" type="datetime-local" class="col-sm-6" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
   
@@ -73,10 +69,7 @@
                     </tr>
                 </table> 
        
-        
-
                 <form method="post" enctype="multipart/form-data">           
-                   
                     <label for="fileInput">Proof of Payment: </label>
                     <input type="file"  name="fileInput">
                     <button class="btn btn-danger col-sm-12" name="order">Place Order</button>
@@ -88,7 +81,8 @@
 </html>
 
 <script>
-document.getElementById("home").onclick = function () {window.location.replace('homepage.php'); }; 
+document.getElementById("home").onclick = function () {window.location.replace('customer.php'); }; 
+document.getElementById("back").onclick = function () {window.location.replace('customerMenu.php'); }; 
 
 
 $(document).ready(function () {
@@ -97,7 +91,7 @@ $(document).ready(function () {
                     "method/clearMethod.php", {
                     }
                 );
-                window.location.replace('usercart.php');
+                window.location.replace('customerCart.php');
             });
 });
 
@@ -142,7 +136,7 @@ $(document).ready(function () {
                     else{
                         echo '<script type="text/javascript">alert("failed to save to database");</script>';  
                     }
-                    echo "<script>window.location.replace('usercart.php')</script>";          
+                    echo "<script>window.location.replace('customerCart.php')</script>";          
                     
                 }
                 else

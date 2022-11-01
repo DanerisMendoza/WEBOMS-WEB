@@ -6,6 +6,7 @@ session_start();
     <head>
         <title></title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
     </head>
     <body>    
@@ -70,7 +71,7 @@ session_start();
 </html>
 
 <script>
-document.getElementById("pos").onclick = function () {window.location.replace('pos.php'); }
+document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); }
 
 $(document).ready(function () {
             $("#clear").click(function () {
@@ -78,7 +79,7 @@ $(document).ready(function () {
                     "method/clearMethod.php", {
                     }
                 );
-                window.location.replace('cart.php');
+                window.location.replace('adminCart.php');
             });
 });
 

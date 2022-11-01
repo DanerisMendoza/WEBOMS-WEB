@@ -8,8 +8,7 @@
     $query2 = "DELETE FROM order_tb WHERE ordersLinkId='$linkId'";
     $result = mysqli_query($conn, $query1) && mysqli_query($conn, $query2) ;
     if (!$result)
-    echo "<script>alert('Delete data unsuccessfully'); window.location.replace('../orders.php');</script>";  
-    
+        echo "<script>alert('Delete data unsuccessfully'); window.location.replace('../adminOrdersList.php');</script>";  
     unlink("../payment/".$Pic);
-    echo "<script> window.location.replace('../orders.php'); alert('Delete data successfully'); </script>";  
+    echo "<script> window.location.replace('../adminOrdersList.php'); alert('Delete data successfully'); </script>";  
 ?>

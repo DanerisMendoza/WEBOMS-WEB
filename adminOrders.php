@@ -6,7 +6,7 @@
     <body>
     <div class="container text-center">
         <div class="col-lg-12 cont2">
-          <button class="btn btn-success col-sm-4" id="orders">Orders</button>
+          <button class="btn btn-success col-sm-4" id="orderList">Order List</button>
           <button class="btn btn-success col-sm-4" id="admin">Admin</button>
             <?php 
               $arr = explode(',',$_GET['idAndPic']);
@@ -67,5 +67,5 @@
 
 <script>
   document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
-  document.getElementById("orders").onclick = function () {window.location.replace('orders.php'); };
+  document.getElementById("orderList").onclick = function () {window.location.replace('adminOrdersList.php'); };
 </script> 

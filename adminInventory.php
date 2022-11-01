@@ -41,7 +41,7 @@
           <td><?php echo '₱'.$rows['cost']; ?></td>
           <td><?php echo $rows['stock']; ?></td>
 				  <td><a href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="updatePage.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
+				  <td ><a href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
@@ -76,11 +76,11 @@
                 $file = $_FILES['fileInput'];
                 $stock = $_POST['stock'];
                 if(empty($dishes) || empty($price) || empty($cost) || empty($stock) || $_FILES['fileInput']['name']==''){
-                  echo "<script>alert('Please complete the details!'); window.location.replace('inventory.php');</script>";
+                  echo "<script>alert('Please complete the details!'); window.location.replace('adminInventory.php');</script>";
                   return;
                 }
                 if($price < $cost){
-                  echo "<script>alert('Cost should be less than price!'); window.location.replace('inventory.php');</script>";
+                  echo "<script>alert('Cost should be less than price!'); window.location.replace('adminInventory.php');</script>";
                   return;
                 }
                 include_once('connection.php');   
@@ -104,7 +104,7 @@
                             else{
                                 echo '<script type="text/javascript">alert("failed to save to database");</script>';  
                             }
-                            echo "<script>window.location.replace('inventory.php')</script>";                                
+                            echo "<script>window.location.replace('adminInventory.php')</script>";                                
                         }
                         else
                             echo "your file is too big!";
@@ -135,9 +135,9 @@
   $result = mysqli_query($conn, $sql);
   if (!$result){
     echo "<script>alert('Delete data unsuccessfully'); window.location.replace('inventory.php');</script>";  
-    echo "<script> window.location.replace('inventory.php');</script>";
+    echo "<script> window.location.replace('adminInventory.php');</script>";
   }
   unlink("dishespic/".$idAndPicArr[1]);
-  echo "<script> window.location.replace('inventory.php'); alert('Delete data successfully'); </script>";  
+  echo "<script> window.location.replace('adminInventory.php'); alert('Delete data successfully'); </script>";  
 }
 ?>

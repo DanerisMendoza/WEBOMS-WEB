@@ -216,8 +216,8 @@
             $ordersLinkId = $this -> ordersLinkId;
             $updateQuery = "UPDATE orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId' ";     
             if($conn->query($updateQuery) === FALSE)
-                echo "<script>alert('update data unsuccessfully'); window.location.replace('orders.php');</script>";  
-            echo "<script>alert('Approve Success'); window.location.replace('orders.php');</script>";
+                echo "<script>alert('update data unsuccessfully'); window.location.replace('adminOrders.php');</script>";  
+            echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
         }
     }
 
@@ -235,9 +235,9 @@
             }
         }
 
-        function getOrderListByCustomer(){
+        function getOrderListByCustomer($username){
             include_once('connection.php');
-            $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ");  
+            $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '$username' ORDER BY orderlist_tb.id asc; ");  
             if (mysqli_num_rows($sql)) {
                 $arr = array();
                 while($rows = mysqli_fetch_assoc($sql)){
