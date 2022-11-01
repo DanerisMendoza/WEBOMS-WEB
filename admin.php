@@ -18,7 +18,7 @@
     document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); };
     document.getElementById("orders").onclick = function () {window.location.replace('adminOrdersList.php'); };
     document.getElementById("inventory").onclick = function () {window.location.replace('adminInventory.php'); };
-    document.getElementById("salesReport").onclick = function () {window.location.replace('salesReport.php'); };
+    document.getElementById("salesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
     document.getElementById("settings").onclick = function () {window.location.replace('adminSettings.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
     $.post(

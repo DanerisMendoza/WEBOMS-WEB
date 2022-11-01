@@ -219,6 +219,10 @@
                 echo "<script>alert('update data unsuccessfully'); window.location.replace('adminOrders.php');</script>";  
             echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
         }
+
+        function insertFeedBack(){
+            
+        }
     }
 
     class orderList{

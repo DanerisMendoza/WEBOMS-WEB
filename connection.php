@@ -49,9 +49,7 @@ if (!$db_selected) {
 		quantity int,
 		orderType int)";
 
-		
-
-		if ($conn->query($queryCreateDishesTb) === TRUE && $conn->query($queryCreateAdminTb) === TRUE && $conn->query($query3) === TRUE && $conn->query($queryCreateUserTb) === TRUE && $conn->query($queryCreateOrderListTb) === TRUE  && $conn->query($queryCreateOrderTb) === TRUE) 
+		if ($conn->query($queryCreateDishesTb) && $conn->query($queryCreateAdminTb) && $conn->query($query3) && $conn->query($queryCreateUserTb) && $conn->query($queryCreateOrderListTb) && $conn->query($queryCreateOrderTb)) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						

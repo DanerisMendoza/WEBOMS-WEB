@@ -65,5 +65,5 @@
 </style>
 
 <script>
-  document.getElementById("orderList").onclick = function () {window.location.replace('adminOrdersList.php'); };
+  document.getElementById("orderList").onclick = function () {window.location.replace('customerOrdersList.php'); };
 </script> 

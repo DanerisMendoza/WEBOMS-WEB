@@ -35,7 +35,7 @@
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
                 <td><?php echo $rows['email']; ?></td>
-                <td><a href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                <td><a href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php echo $rows['date']; ?></td>
                 <td><?php 
                   if($rows['status'] == 1){
