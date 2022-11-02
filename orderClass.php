@@ -242,6 +242,7 @@
         function getOrderListByCustomer($username){
             include_once('connection.php');
             $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '$username' ORDER BY orderlist_tb.id asc; ");  
+            // $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.*, feedback_tb.* from user_tb, orderlist_tb, feedback_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '$username' ORDER BY orderlist_tb.id asc; ");  
             if (mysqli_num_rows($sql)) {
                 $arr = array();
                 while($rows = mysqli_fetch_assoc($sql)){

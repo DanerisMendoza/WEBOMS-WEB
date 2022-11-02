@@ -27,11 +27,11 @@
             <th scope="col">picture</th>
         </tr>
         <?php 
-        include_once('connection.php');
-        $sql = mysqli_query($conn,"select * from dishes_tb");  
-        if (mysqli_num_rows($sql)) {  
+            include_once('dishesClass.php');
+            $dishes = new dish('','','');
+            $dishes =  $dishes -> getAllDishes(); 
         ?>
-            <?php while($rows = mysqli_fetch_assoc($sql)){ ?>
+            <?php foreach($dishes as $rows){ ?>
             <tr>	   
                 <td><?=$rows['dish']?></td>
                 <td><?php echo '₱'.$rows['price']; ?></td>
@@ -39,7 +39,6 @@
                 <td><a href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
             </tr>
             <?php } ?>
-        <?php } ?>	
         </table>
     </div>
 </div>

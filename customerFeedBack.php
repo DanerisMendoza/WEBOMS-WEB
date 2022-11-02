@@ -12,7 +12,7 @@
             <div class="col-lg-12">
                 <form method="post">
                     </br>
-                    <textarea  name="feedback" placeholder="Enter your feedback" cols="30" rows="5" ></textarea>
+                    <textarea  name="feedback" placeholder="Enter your feedback" cols="30" rows="5" required></textarea>
                     <button type="submit" name="submit">Submit</button>
                 </form>
             </div>
@@ -20,13 +20,16 @@
     </body>
 </html>
 <?php 
-  if(isset($_GET['status'])){
-    $arr = explode(',',$_GET['status']);  
-    $ordersLinkId = $arr[0];
-    $email = $arr[1];
-    $order = new order($ordersLinkId,$email);
-    $order-> computeOrder(); 
-    $order-> sendReceiptToEmail(); 
-    $order-> approveOrder();
-  }
+    include_once('dishesClass.php');
+    // $dish = new dish('','','');
+    // $dish -> checkIfAlreadyFeedback();
+    
+    if(isset($_POST['submit'])){
+        $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);
+        $ordersLinkId = $arr[0];
+        $userLinkId = $arr[1];
+        $feedback = $_POST['feedback'];
+        $dish = new dish($feedback,$ordersLinkId,$userLinkId);
+        $dish -> giveFeedBackToDish();
+    }
 ?>

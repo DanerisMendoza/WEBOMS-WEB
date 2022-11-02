@@ -21,7 +21,7 @@
               <div class="col-lg-12">
             <?php 
                 include_once('dishesClass.php');
-                $dishes = new dishes();
+                $dishes = new dish('','','');
                 $dishes =  $dishes -> getAllDishes(); 
             ?>
             <table class="table table-striped" border="10">

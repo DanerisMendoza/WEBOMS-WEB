@@ -39,7 +39,7 @@
                 <td><?php echo $rows['date']; ?></td>
                 <td><?php 
                   if($rows['status'] == 1){
-                    ?>  <a href="customerFeedBack.php">feedback</a>  <?php
+                    ?>  <a href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userlinkId']?>">feedback</a>  <?php
                   }
                   else{
                     echo "you cannot give feedback yet </br> please wait for approvation";

@@ -102,7 +102,7 @@ $(document).ready(function () {
     if(isset($_POST['order'])){
         $file = $_FILES['fileInput'];
         if($_FILES['fileInput']['name']=='')
-             echo "<script>alert('Please complete the details!'); window.location.replace('userCart.php');</script>";
+            echo "<script>alert('Please complete the details!'); window.location.replace('userCart.php');</script>";
         include_once('connection.php');
         $fileName = $_FILES['fileInput']['name'];
         $fileTmpName = $_FILES['fileInput']['tmp_name'];

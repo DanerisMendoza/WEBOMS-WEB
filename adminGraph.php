@@ -2,9 +2,11 @@
 <html>
     <head>
         <title></title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+
     </head>
     <body>
     <?php
@@ -46,6 +48,8 @@
     </body>
 </html>
 <script>
+        document.getElementById("viewSalesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
+
         //graphs
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChartPie);
@@ -66,7 +70,6 @@
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
     
-        document.getElementById("viewSalesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
         }
 </script>
 

@@ -15,8 +15,8 @@
 </head>
 <body>
 <?php include_once('connection.php');?>
-<div class="container"><div class="row justify-content-center">
-
+<div class="container">
+  <div class="row justify-content-center">
     <form  method="post" class="text-center col-6 margin_top form1" >
       <img src="settings/logo.png"><br>
       <input class="margin" type="text" name="username" placeholder="Username" ></br>

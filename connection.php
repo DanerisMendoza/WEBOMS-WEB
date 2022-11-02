@@ -49,7 +49,12 @@ if (!$db_selected) {
 		quantity int,
 		orderType int)";
 
-		if ($conn->query($queryCreateDishesTb) && $conn->query($queryCreateAdminTb) && $conn->query($query3) && $conn->query($queryCreateUserTb) && $conn->query($queryCreateOrderListTb) && $conn->query($queryCreateOrderTb)) 
+		$queryCreateFeedbackTb = "create table if not exists feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
+		feedback varchar(255), 
+		ordersLinkId varchar(255), 
+		userlinkId int)";
+
+		if ($conn->query($queryCreateDishesTb) && $conn->query($queryCreateAdminTb) && $conn->query($query3) && $conn->query($queryCreateUserTb) && $conn->query($queryCreateOrderListTb) && $conn->query($queryCreateOrderTb) && $conn->query($queryCreateFeedbackTb)) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						
