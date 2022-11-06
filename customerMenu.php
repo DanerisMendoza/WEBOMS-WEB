@@ -28,10 +28,12 @@
         </tr>
         <?php 
             include_once('dishesClass.php');
-            $dishes = new dish('','','');
+            $dishes = new dish();
             $dishes =  $dishes -> getAllDishes(); 
         ?>
-            <?php foreach($dishes as $rows){ ?>
+            <?php 
+            if($dishes != null)
+            foreach($dishes as $rows){ ?>
             <tr>	   
                 <td><?=$rows['dish']?></td>
                 <td><?php echo '₱'.$rows['price']; ?></td>

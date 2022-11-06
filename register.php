@@ -9,10 +9,10 @@
 
     <form method="post" class="text-center col-6 margin_top form2">
         <img src="settings/logo.png"><br>
-        <input type="text" class="form" name="username" placeholder="Enter Username"><br>
-        <input type="text" class="form" name="name" placeholder="Enter Name"><br>
-        <input type="email" class="form" name="email" placeholder="Enter Email"><br>
-        <input type="password" class="form" name="password" placeholder="Enter Password"><br>
+        <input type="text" class="form" name="username" placeholder="Enter Username" required></br>
+        <input type="text" class="form" name="name" placeholder="Enter Name" required></br>
+        <input type="email" class="form" name="email" placeholder="Enter Email" required></br>
+        <input type="password" class="form" name="password" placeholder="Enter Password"></br>
         <button type="submit" class="button" name="createAccount">Sign Up</button><br>
         <button type="button" class="button2" id="back">Back</button><br>
         <div class="login_link">
@@ -36,10 +36,6 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        if(empty($name) || empty($email) || empty($password)){
-        echo "<script>alert('Please complete the details!'); window.location.replace('register.php');</script>";
-        return;
-        }
         include_once('connection.php');
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);

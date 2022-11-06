@@ -9,8 +9,10 @@
     <div class="container text-center">
 
         <button class="btn btn-success col-sm-4" id="customer">Customer</button>
+        <button class="btn btn-success col-sm-4" id="customersFeedback">Customers FeedBack</button>
         <script>020
             document.getElementById("customer").onclick = function () {window.location.replace('customer.php'); };    
+            document.getElementById("customersFeedback").onclick = function () {window.location.replace('customerFeedbackList.php'); };    
         </script> 
         
         <div class="col-lg-12">
@@ -27,8 +29,8 @@
                 <?php
                 session_start();
                 include_once('orderClass.php');
-                $order = new orderList();
-                $orderlist =  $order -> getOrderListByCustomer($_SESSION["username"]); 
+                $order = orderList::withUsername($_SESSION["username"]);  //Scope Resolution Operator (::) double colon = jump to search 
+                $orderlist =  $order -> getOrderListByCustomer(); 
                 if($orderlist != null)
                 foreach($orderlist as $rows){ ?>
                 <tr>	   

@@ -17,14 +17,12 @@
             if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
                 call_user_func_array(array($this, $function), $arguments);
             }
-            
         }
 
         public function __construct2($ordersLinkId,$email)
         {
             $this -> ordersLinkId = $ordersLinkId;
             $this -> email = $email;
-
         }
 
         public function __construct5($dishesQuantity,$dishesArr,$priceArr,$cash,$total)
@@ -226,7 +224,47 @@
     }
 
     class orderList{
-        
+        public $arr = array();
+        public $username, $id, $date1, $date2;
+        /*
+            *when using Scope Resolution Operator
+            Technically you're not building multiple constructors, just static helper methods,
+             but you get to avoid a lot of spaghetti code in the constructor this way.
+        */
+
+        function __construct(){ 
+            $arguments = func_get_args();
+            $numberOfArguments = func_num_args();
+            if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
+                call_user_func_array(array($this, $function), $arguments);
+            }
+        }
+
+        function __construct2($date1,$date2){ 
+           $this-> date1 = $date1;
+           $this-> date2 = $date2;
+        }
+
+        public static function withID( $id ) {
+            $instance = new self();
+            $instance->loadByID($id);
+            return $instance;
+        }
+
+        public static function withUsername( $username ) {
+            $instance = new self();
+            $instance->loadByUsername($username);
+            return $instance;
+        }
+
+        protected function loadByID( $id ) {
+            $this->id = $id;
+        }
+
+        protected function loadByUsername( $username ) {
+            $this -> username = $username;
+        }
+
         function getOrderList(){
             include_once('connection.php');
             $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ");  
@@ -239,56 +277,47 @@
             }
         }
 
-        function getOrderListByCustomer($username){
+        function getOrderListByCustomer(){
             include_once('connection.php');
-            $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '$username' ORDER BY orderlist_tb.id asc; ");  
-            // $sql = mysqli_query($conn,"select user_tb.*, orderlist_tb.*, feedback_tb.* from user_tb, orderlist_tb, feedback_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '$username' ORDER BY orderlist_tb.id asc; ");  
-            if (mysqli_num_rows($sql)) {
-                $arr = array();
-                while($rows = mysqli_fetch_assoc($sql)){
-                    array_push($arr,$rows);
+            $resultSet = $conn->query("select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($resultSet)) {
+                while($rows = mysqli_fetch_assoc($resultSet)){
+                    array_push($this->arr,$rows);
                 }
-                return($arr);
+                return($this->arr);
             }
         }
 
-        function getAllOrderById($id){
+        function getAllOrderById(){
             include_once('connection.php');
-            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '$id' ");  
-            if (mysqli_num_rows($sql)) {  
-                $arr = array();
-                while($rows = mysqli_fetch_assoc($sql)){
-                    array_push($arr,$rows);
+            $resultSet = $conn->query("select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this->id}' ");  
+            if (mysqli_num_rows($resultSet)) {  
+                while($rows = mysqli_fetch_assoc($resultSet)){
+                    array_push($this->arr,$rows);
                 }
-                return($arr);
+                return($this->arr);
             }
         }
 
         function getApprovedOrderList(){
             include_once('connection.php');
-            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ");  
-            if (mysqli_num_rows($sql)) {
-                $arr = array();
-                while($rows = mysqli_fetch_assoc($sql)){
-                    array_push($arr,$rows);
+            $resultSet = $conn->query("select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($resultSet)) {
+                while($rows = mysqli_fetch_assoc($resultSet)){
+                    array_push($this->arr,$rows);
                 }
-                return($arr);
+                return($this->arr);
             }
         }
 
-        function getOrderListByDates($date1,$date2){
+        function getOrderListByDates(){
             include_once('connection.php');
-            $sql = null;
-            // if(empty($date2))
-            // $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date = '$date1' ORDER BY orderlist_tb.id asc; ");  
-            // else
-            $sql = mysqli_query($conn,"select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date between '$date1' and '$date2' ORDER BY orderlist_tb.id asc; ");  
-            if (mysqli_num_rows($sql)) {
-                $arr = array();
-                while($rows = mysqli_fetch_assoc($sql)){
-                    array_push($arr,$rows);
+            $resultSet = $conn->query("select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY orderlist_tb.id asc; ");  
+            if (mysqli_num_rows($resultSet)) {
+                while($rows = mysqli_fetch_assoc($resultSet)){
+                    array_push($this->arr,$rows);
                 }
-                return($arr);
+                return($this->arr);
             }
         }
     

@@ -21,8 +21,8 @@
                     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
                         $dateFetch1 = $_POST['dateFetch1'];
                         $dateFetch2 = $_POST['dateFetch2'];
-                        $order = new orderList();
-                        $orderlist =  $order -> getOrderListByDates($dateFetch1,$dateFetch2); 
+                        $order = new orderList($dateFetch1,$dateFetch2);
+                        $orderlist =  $order -> getOrderListByDates(); 
                     }
                     else{
                         $order = new orderList();
@@ -37,7 +37,6 @@
                 <th scope="col">date</th>
                 </tr>
                 <tbody>
-                    
                     <?php 
                     if(!empty($orderlist))
                     foreach($orderlist as $rows){ ?>
@@ -45,7 +44,7 @@
                     <td><?php echo $rows['name']; ?></td>
                     <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
                     <td><a href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-                    <td><?php echo $rows['date']; ?></td>
+                    <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

@@ -3,8 +3,17 @@
         public $feedback;
         public $ordersLinkId;
         public $userlinkId;
+        public $arr = array();
 
-        function __construct($feedback,$ordersLinkId,$userlinkId){ 
+        function __construct(){ 
+            $arguments = func_get_args();
+            $numberOfArguments = func_num_args();
+            if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
+                call_user_func_array(array($this, $function), $arguments);
+            }
+        }
+
+        function __construct3($feedback,$ordersLinkId,$userlinkId){ 
             $this-> feedback = $feedback;
             $this-> ordersLinkId = $ordersLinkId;
             $this-> userlinkId = $userlinkId;
@@ -12,15 +21,13 @@
 
         function getAllDishes(){
             include_once('connection.php');
-			$sql = mysqli_query($conn,"select * from dishes_tb");  
-            if (mysqli_num_rows($sql)) {
-                $arr = array();
-                while($rows = mysqli_fetch_assoc($sql)){
-                    array_push($arr,$rows);
+            $resultSet = $conn->query("select * from dishes_tb" );
+            if (mysqli_num_rows($resultSet)) {
+                while($rows = mysqli_fetch_assoc($resultSet)){
+                    array_push($this->arr,$rows);
                 }
-                return($arr);
+                return($this->arr);
             }
-
         }
         
         function giveFeedBackToDish(){
@@ -35,6 +42,17 @@
         function checkIfAlreadyFeedback(){
             include_once('connection.php');
             $query = "";
+        }
+
+        function getAllFeedback(){
+            include_once('connection.php');
+            $resultSet = $conn->query("select feedback_tb.*, customer_tb.* from feedback_tb, customer_tb where user_tb.userlinkId = feedback.userlinkId;");
+            if (mysqli_num_rows($resultSet)) {
+                while($rows = mysqli_fetch_assoc($resultSet)){
+                    array_push($this->arr,$rows);
+                }
+                return($this->arr);
+            }
         }
 
     }

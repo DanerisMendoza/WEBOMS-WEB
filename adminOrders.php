@@ -12,8 +12,8 @@
               $id = $arr[0];
               $pic = $arr[1];
               include_once('orderClass.php');
-              $order = new orderList();
-              $arr =  $order -> getAllOrderById($id); 
+              $order = orderList::withID( $id );  
+              $arr =  $order -> getAllOrderById(); 
             ?>
             <table class="table table-striped" border="10">
             <tr>	
@@ -25,6 +25,7 @@
               <tbody>
                 <?php 
                 $total = 0;
+                if($arr != null)
                 foreach($arr as $rows){ ?>
                 <tr>	   
                   <?php $price = ($rows['price']*$rows['quantity']);  $total += $price;?>

@@ -21,7 +21,7 @@
               <div class="col-lg-12">
             <?php 
                 include_once('dishesClass.php');
-                $dishes = new dish('','','');
+                $dishes = new dish();
                 $dishes =  $dishes -> getAllDishes(); 
             ?>
             <table class="table table-striped" border="10">
@@ -45,7 +45,6 @@
         </div>
     </body>
 </html>
-
 <?php 
     if(isset($_GET['order'])){
       $order = explode(',',$_GET['order']);  
@@ -55,10 +54,3 @@
       array_push($_SESSION['price'], $price);
     }
 ?>
-
-<!-- <style>
-     
-
-  
-</style> -->
-
