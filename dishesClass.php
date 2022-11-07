@@ -3,6 +3,7 @@
         public $feedback, $ordersLinkId, $userlinkId;
         public $dishes, $price, $fileNameNew, $cost, $stock;
         public $id, $pic;
+        
 
         function __construct(){ 
             $arguments = func_get_args();
@@ -16,6 +17,17 @@
         {
             $this -> id = $id;
             $this -> pic = $pic;
+        }
+
+        public static function withOrdersAndLinkId($userlinkId,$ordersLinkId) {
+            $instance = new self();
+            $instance->loadByOrdersAndLinkId($userlinkId,$ordersLinkId);
+            return $instance;
+        }
+
+        protected function loadByOrdersAndLinkId($userlinkId,$ordersLinkId) {
+            $this -> userlinkId = $userlinkId;
+            $this -> ordersLinkId = $ordersLinkId;
         }
 
         function __construct3($feedback,$ordersLinkId,$userlinkId){ 
@@ -68,7 +80,15 @@
         }
 
         function checkIfAlreadyFeedback(){
-            $query = "";
+         
+            $this-> ordersLinkId;
+            $this-> userlinkId;
+            $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='{$this->ordersLinkId}' AND userlinkID = '{$this->userlinkId}' ";
+            if(QueryWithStringReturn($query) > 0)
+                echo "<script>alert('feedback sent already!'); window.location.replace('customerOrdersList.php');</script>";
+           
+            
+
         }
 
         function getAllFeedback(){
