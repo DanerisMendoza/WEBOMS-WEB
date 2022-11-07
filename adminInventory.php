@@ -6,15 +6,13 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
     <script type="text/javascript" src="js/bootstrap.min.js"></script>  
-
 </head>
 <body>
   <div class="container text-center">
     <button class="btn btn-success col-sm-4" id="admin">Admin</button>
     <button id="addButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
-   
-   <div class="col-lg-12">
+    <div class="col-lg-12">
 			<table class="table table-striped" border="10">
 			  <thead>
 			    <tr>	
@@ -52,11 +50,11 @@
         <div class="modal-content">
             <div class="modal-body ">
                 <form method="post" class="form-group" enctype="multipart/form-data">
-                    <input type="text" class="form-control" name="dishes" placeholder="dishes">
-                    <input type="number" class="form-control" name="price" placeholder="price">
-                    <input type="number" class="form-control" name="cost" placeholder="cost">
-                    <input type="number" class="form-control" name="stock" placeholder="stock">
-                    <input type="file"  name="fileInput">
+                    <input type="text" class="form-control" name="dishes" placeholder="dishes" required>
+                    <input type="number" class="form-control" name="price" placeholder="price" required>
+                    <input type="number" class="form-control" name="cost" placeholder="cost" required>
+                    <input type="number" class="form-control" name="stock" placeholder="stock" required>
+                    <input type="file"  name="fileInput" required>
                     <button type="submit" class="btn-success col-sm-12" name="insert">insert</button>
                 </form>
                 <?php
@@ -77,10 +75,6 @@
                 $cost = $_POST['cost'];
                 $file = $_FILES['fileInput'];
                 $stock = $_POST['stock'];
-                if(empty($dishes) || empty($price) || empty($cost) || empty($stock) || $_FILES['fileInput']['name']==''){
-                  echo "<script>alert('Please complete the details!'); window.location.replace('adminInventory.php');</script>";
-                  return;
-                }
                 if($price < $cost){
                   echo "<script>alert('Cost should be less than price!'); window.location.replace('adminInventory.php');</script>";
                   return;

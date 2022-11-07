@@ -17,7 +17,6 @@
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center;
-        color: white;
         font-family: 'Josefin Sans',sans-serif;
       }
   
@@ -25,4 +24,5 @@
        padding: 1%;
        margin-top: 2%;
        background: gray;
+       color: white;
      }
