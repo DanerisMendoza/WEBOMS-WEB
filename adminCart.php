@@ -74,13 +74,13 @@ session_start();
 document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); }
 
 $(document).ready(function () {
-            $("#clear").click(function () {
-                $.post(
-                    "method/clearMethod.php", {
-                    }
-                );
-                window.location.replace('adminCart.php');
-            });
+    $("#clear").click(function () {
+        $.post(
+            "method/clearMethod.php", {
+            }
+        );
+        window.location.replace('adminCart.php');
+    });
 });
 
 </script> 
@@ -98,7 +98,7 @@ $(document).ready(function () {
         }
         include_once('orderClass.php');
         $order = new order($dishesQuantity,$dishesArr,$priceArr,$cash,$total);
-        $order-> makeReceipt(); 
+        $order-> displayReceipt(); 
     }
 ?>
 

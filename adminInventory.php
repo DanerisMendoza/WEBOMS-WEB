@@ -15,11 +15,6 @@
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
    
    <div class="col-lg-12">
-			<?php 
-      include_once('connection.php');
-      $sql = mysqli_query($conn,"select * from dishes_tb");  
-      if (mysqli_num_rows($sql)) {  
-      ?>
 			<table class="table table-striped" border="10">
 			  <thead>
 			    <tr>	
@@ -32,7 +27,10 @@
 			  </thead>
 			  <tbody>
 			  	<?php 
-			  	   while($rows = mysqli_fetch_assoc($sql)){
+             include('dishesClass.php');
+             $dish = new dish();
+             $result = $dish -> getAllDishes();
+			  	   foreach($result as $rows){
 			  	 ?>
 			    <tr>	   
           <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
@@ -41,12 +39,11 @@
           <td><?php echo '₱'.$rows['cost']; ?></td>
           <td><?php echo $rows['stock']; ?></td>
 				  <td><a href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td ><a href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
+				  <td><a href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>
 			</table>
-			<?php } ?>
 		</div>
   </div>
   
@@ -64,9 +61,14 @@
                 </form>
                 <?php
                                
-                //calling delete function
-                if (isset($_GET['idAndPicnameDelete']))   
-                  delete($_GET['idAndPicnameDelete'],$conn);
+                //delete 
+                if (isset($_GET['idAndPicnameDelete'])){
+                  $arr = explode(' ',$_GET['idAndPicnameDelete']);
+                  $id = $arr[0];
+                  $pic = $arr[1];
+                  $dish = new dish($id, $pic);
+                  $dish ->deleteDishOnDatabase();
+                }
 
                 //insert
                 if(isset($_POST['insert'])){
@@ -83,7 +85,6 @@
                   echo "<script>alert('Cost should be less than price!'); window.location.replace('adminInventory.php');</script>";
                   return;
                 }
-                include_once('connection.php');   
                 $fileName = $_FILES['fileInput']['name'];
                 $fileTmpName = $_FILES['fileInput']['tmp_name'];
                 $fileSize = $_FILES['fileInput']['size'];
@@ -97,13 +98,9 @@
                         if($fileSize < 10000000){
                             $fileNameNew = uniqid('',true).".".$fileActualExt;
                             $fileDestination = 'dishesPic/'.$fileNameNew;
-                            move_uploaded_file($fileTmpName,$fileDestination);                 
-                            if(mysqli_query($conn,"insert into dishes_tb(dish, price, picName, cost, stock) values('$dishes','$price','$fileNameNew','$cost','$stock')")){
-                                echo '<script>alert("Sucess saving to database!");</script>';                                               
-                            }
-                            else{
-                                echo '<script type="text/javascript">alert("failed to save to database");</script>';  
-                            }
+                            move_uploaded_file($fileTmpName,$fileDestination);         
+                            $dish = new dish($dishes, $price, $fileNameNew, $cost, $stock);
+                            $dish->insertNewDishToDatabase();        
                             echo "<script>window.location.replace('adminInventory.php')</script>";                                
                         }
                         else
@@ -122,22 +119,3 @@
   </div>
 </body>
 </html>
-
-
-
-<?php 
-  //delete
-  function delete($idAndPicname,$conn){
-  $idAndPicArr = explode(' ',$idAndPicname);
-  echo $idAndPicArr[1];
-  $sql = "DELETE FROM dishes_tb
-        WHERE orderType=$idAndPicArr[0]";
-  $result = mysqli_query($conn, $sql);
-  if (!$result){
-    echo "<script>alert('Delete data unsuccessfully'); window.location.replace('inventory.php');</script>";  
-    echo "<script> window.location.replace('adminInventory.php');</script>";
-  }
-  unlink("dishespic/".$idAndPicArr[1]);
-  echo "<script> window.location.replace('adminInventory.php'); alert('Delete data successfully'); </script>";  
-}
-?>
