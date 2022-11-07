@@ -20,18 +20,13 @@
     </body>
 </html>
 <?php 
-    $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);
-    $ordersLinkId = $arr[0];
-    $userLinkId = $arr[1];
-    include_once('dishesClass.php');
-    $dish =  dish::withOrdersAndLinkId($userLinkId,$ordersLinkId);
-    $dish -> checkIfAlreadyFeedback();
-    
-    
     if(isset($_POST['submit'])){
+        $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);
+        $ordersLinkId = $arr[0];
+        $userLinkId = $arr[1];
         $feedback = $_POST['feedback'];
+        include_once('dishesClass.php');
         $dish = new dish($feedback,$ordersLinkId,$userLinkId);
         $dish -> giveFeedBackToDish();
-
     }
 ?>

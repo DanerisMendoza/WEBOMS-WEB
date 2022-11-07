@@ -36,7 +36,14 @@
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
                 <td><?php echo $rows['email']; ?></td>
                 <td><a href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-                <td><a href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a></td>
+                <td><?php 
+                if($rows['status'] == 1){
+                  echo "Already Approved";
+                }
+                else{
+                  ?><a href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
+                }?>
+                </td>
                 <td><a href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
                 </tr>

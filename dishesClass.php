@@ -19,16 +19,7 @@
             $this -> pic = $pic;
         }
 
-        public static function withOrdersAndLinkId($userlinkId,$ordersLinkId) {
-            $instance = new self();
-            $instance->loadByOrdersAndLinkId($userlinkId,$ordersLinkId);
-            return $instance;
-        }
-
-        protected function loadByOrdersAndLinkId($userlinkId,$ordersLinkId) {
-            $this -> userlinkId = $userlinkId;
-            $this -> ordersLinkId = $ordersLinkId;
-        }
+    
 
         function __construct3($feedback,$ordersLinkId,$userlinkId){ 
             $this-> feedback = $feedback;
@@ -68,7 +59,7 @@
 
         function getAllDishes(){
             $query = "select * from dishes_tb";
-            return QueryWithStringReturn($query);
+            return QueryWithResultReturn($query);
         }
         
         function giveFeedBackToDish(){
@@ -79,21 +70,11 @@
                 echo "<script>alert('fail to send feedback!');</script>";
         }
 
-        function checkIfAlreadyFeedback(){
-         
-            $this-> ordersLinkId;
-            $this-> userlinkId;
-            $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='{$this->ordersLinkId}' AND userlinkID = '{$this->userlinkId}' ";
-            if(QueryWithStringReturn($query) > 0)
-                echo "<script>alert('feedback sent already!'); window.location.replace('customerOrdersList.php');</script>";
-           
-            
 
-        }
 
         function getAllFeedback(){
             $query = "select feedback_tb.*, customer_tb.* from feedback_tb, customer_tb where user_tb.userlinkId = feedback.userlinkId;";
-            return QueryWithStringReturn($query);
+            return QueryWithResultReturn($query);
         }
 
     }
@@ -103,11 +84,14 @@
         return $conn->query($query);
     }   
     
-    function QueryWithStringReturn($query){
+    function QueryWithResultReturn($query){
         include('connection.php');
         $resultSet = $conn->query($query);  
-        if(mysqli_num_rows($resultSet) > 0) {
+        if($resultSet->num_rows > 0) {
             return($resultSet);
+        }
+        else{
+            return null;
         }
     }
 

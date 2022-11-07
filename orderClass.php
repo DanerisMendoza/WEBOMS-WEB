@@ -225,6 +225,7 @@
 
     class orderList{
         public $username, $id, $date1, $date2;
+        public $ordersLinkId, $userlinkId;
         /*
             *when using Scope Resolution Operator
              Technically you're not building multiple constructors, just static helper methods,
@@ -256,12 +257,24 @@
             return $instance;
         }
 
+
         protected function loadByID( $id ) {
             $this->id = $id;
         }
 
         protected function loadByUsername( $username ) {
             $this -> username = $username;
+        }
+
+        public static function withUsersAndOrdersLinkId($userlinkId,$ordersLinkId) {
+            $instance = new self();
+            $instance->loadByOrdersAndLinkId($userlinkId,$ordersLinkId);
+            return $instance;
+        }
+
+        protected function loadByOrdersAndLinkId($userlinkId,$ordersLinkId) {
+            $this -> userlinkId = $userlinkId;
+            $this -> ordersLinkId = $ordersLinkId;
         }
 
         function getOrderList(){
@@ -289,13 +302,21 @@
             return getQuery($query);
 
         }
+
+        function CustomerFeedback(){
+            $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='{$this->ordersLinkId}' AND userlinkId = '{$this->userlinkId}' ";
+            return getQuery($query);
+        }
     }
     
     function getQuery($query){
-        include_once('connection.php');
+        include('connection.php');
         $resultSet = $conn->query($query);  
-        if (mysqli_num_rows($resultSet) > 0) {
+        if ($resultSet->num_rows > 0) {
             return($resultSet);
+        }
+        else{
+            return null;
         }
     }
 ?>
