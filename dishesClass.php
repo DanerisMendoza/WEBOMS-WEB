@@ -70,8 +70,6 @@
                 echo "<script>alert('fail to send feedback!');</script>";
         }
 
-
-
         function getAllFeedback(){
             $query = "select feedback_tb.*, customer_tb.* from feedback_tb, customer_tb where user_tb.userlinkId = feedback.userlinkId;";
             return QueryWithResultReturn($query);

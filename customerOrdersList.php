@@ -29,10 +29,10 @@
                 <?php
                 session_start();
                 include_once('orderClass.php');
-                $order = orderList::withUsername($_SESSION["username"]);  //Scope Resolution Operator (::) double colon = jump to search 
-                $orderlist =  $order -> getOrderListByCustomer(); 
-                if($orderlist != null)
-                foreach($orderlist as $rows){ ?>
+                $orderlist = orderList::withUsername($_SESSION["username"]);  //Scope Resolution Operator (::) double colon = jump to search 
+                $resultSet =  $orderlist -> getOrderListByCustomer(); 
+                if($resultSet != null)
+                foreach($resultSet as $rows){ ?>
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); 
@@ -40,8 +40,8 @@
                 <td><?php echo $rows['email']; ?></td>
                 <td><a href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
-                  $dish =  orderList::withUsersAndOrdersLinkId($rows['userlinkId'],$rows['ordersLinkId']);
-                  if($rows['status'] == 1 && $dish->CustomerFeedback() == null){
+                  $orderlist =  orderList::withUsersAndOrdersLinkId($rows['userlinkId'],$rows['ordersLinkId']);
+                  if($rows['status'] == 1 && $orderlist->CustomerFeedback() == null){
                     ?>  <a href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userlinkId']?>">feedback</a>  <?php
                   }
                   elseif($rows['status'] == 1){

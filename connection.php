@@ -42,7 +42,8 @@ if (!$db_selected) {
 		userlinkId int, 
 		status tinyint,
 		ordersLinkId varchar(255),
-		date datetime not null)";
+		date datetime not null,
+		isOrdersComplete tinyint)";
 
 		$queryCreateOrderTb = "create table if not exists order_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		ordersLinkId varchar(255), 

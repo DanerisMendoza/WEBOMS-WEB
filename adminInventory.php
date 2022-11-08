@@ -28,6 +28,7 @@
              include('dishesClass.php');
              $dish = new dish();
              $result = $dish -> getAllDishes();
+             if($result != null)
 			  	   foreach($result as $rows){
 			  	 ?>
 			    <tr>	   

@@ -11,6 +11,8 @@
         public $ordersLinkId;
         public $email;
 
+        //constructor
+
         function __construct(){ 
             $arguments = func_get_args();
             $numberOfArguments = func_num_args();
@@ -34,6 +36,8 @@
            $this -> total = $total;
            
         }
+
+        //functions
 
         function computeOrder(){
             include('connection.php');
@@ -218,19 +222,13 @@
             echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
         }
 
-        function insertFeedBack(){
-            
-        }
     }
 
     class orderList{
         public $username, $id, $date1, $date2;
         public $ordersLinkId, $userlinkId;
-        /*
-            *when using Scope Resolution Operator
-             Technically you're not building multiple constructors, just static helper methods,
-             but you get to avoid a lot of spaghetti code in the constructor this way.
-        */
+
+        //constructors
 
         function __construct(){ 
             $arguments = func_get_args();
@@ -245,11 +243,7 @@
            $this-> date2 = $date2;
         }
 
-        public static function withID( $id ) {
-            $instance = new self();
-            $instance->loadByID($id);
-            return $instance;
-        }
+        //static helper methods
 
         public static function withUsername( $username ) {
             $instance = new self();
@@ -257,13 +251,18 @@
             return $instance;
         }
 
-
-        protected function loadByID( $id ) {
-            $this->id = $id;
-        }
-
         protected function loadByUsername( $username ) {
             $this -> username = $username;
+        }
+
+        public static function withID( $id ) {
+            $instance = new self();
+            $instance->loadByID($id);
+            return $instance;
+        }
+
+        protected function loadByID($id) {
+            $this->id = $id;
         }
 
         public static function withUsersAndOrdersLinkId($userlinkId,$ordersLinkId) {
@@ -277,10 +276,23 @@
             $this -> ordersLinkId = $ordersLinkId;
         }
 
+        //functions
+
         function getOrderList(){
             $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ";
             return getQuery($query);
         }
+
+        function getNotOrdersComplete(){
+            $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId && orderlist_tb.isOrdersComplete = 0 ORDER BY orderlist_tb.id asc; ";
+            return getQuery($query);
+        }
+
+        function getApprovedOrderList(){
+            $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
+            return getQuery($query);
+        }
+
 
         function getOrderListByCustomer(){
             $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ";
@@ -291,32 +303,53 @@
             $query = "select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this->id}' ";
             return getQuery($query);
         }
-
-        function getApprovedOrderList(){
-            $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
+  
         function getOrderListByDates(){
             $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY orderlist_tb.id asc; ";
             return getQuery($query);
-
         }
 
         function CustomerFeedback(){
             $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='{$this->ordersLinkId}' AND userlinkId = '{$this->userlinkId}' ";
             return getQuery($query);
         }
-    }
+
+        function setOrderComplete(){
+            $query = "UPDATE orderList_tb SET isOrdersComplete=true WHERE ordersLinkId='{$this->id}' ";     
+            if(Query($query)){
+                echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
+            }
+            else{
+                echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('unsuccess!');</SCRIPT>";
+            }
+        }
+     }
+
     
     function getQuery($query){
         include('connection.php');
-        $resultSet = $conn->query($query);  
-        if ($resultSet->num_rows > 0) {
-            return($resultSet);
+        if($resultSet = $conn->query($query)){  
+            if($resultSet->num_rows > 0){
+                return($resultSet);
+            }
+            else{
+                return null;
+            }
         }
         else{
-            return null;
+            return $conn->error;
         }
     }
+
+
+    function Query($query){
+        include('connection.php');
+        if($conn->query($query)){
+            return true;
+        }
+        else{
+            return $conn->error;
+        }
+    }
+
 ?>

@@ -102,7 +102,7 @@ $(document).ready(function () {
     if(isset($_POST['order'])){
         $file = $_FILES['fileInput'];
         if($_FILES['fileInput']['name']=='')
-            echo "<script>alert('Please complete the details!'); window.location.replace('userCart.php');</script>";
+            echo "<script>alert('Please complete the details!'); window.location.replace('customerCart.php');</script>";
         include_once('connection.php');
         $fileName = $_FILES['fileInput']['name'];
         $fileTmpName = $_FILES['fileInput']['tmp_name'];
@@ -120,7 +120,7 @@ $(document).ready(function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into orderList_tb(proofOfPayment, userlinkId, status, ordersLinkId, date) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime')";
+                    $query1 = "insert into orderList_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime', '0')";
                     
                     for($i=0; $i<count($dishesArr); $i++){
                         $query2 = "insert into order_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";

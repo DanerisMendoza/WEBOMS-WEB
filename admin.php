@@ -1,3 +1,7 @@
+<?php 
+session_start();
+$_SESSION['query'] = null
+?>
 <!DOCTYPE html>
 <html>
 <head>

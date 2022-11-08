@@ -46,7 +46,6 @@
     </div>
 
     <?php
-       
         if(isset($_POST['login'])){
             $_SESSION["username"]  = $_POST['username'];
             $username = $_POST['username'];
@@ -58,21 +57,25 @@
             }
             //admin block
             if($_POST['username'] === 'admin'){
-                $readQuery = "select * from admin_tb";
-                $sql = mysqli_query($conn,$readQuery);
-                while($rows = mysqli_fetch_assoc($sql)){
+                $query = "select * from admin_tb";
+                $resultSet = $conn->query($query);
+                if($resultSet->num_rows  > 0){
+                  foreach($resultSet as $rows){
                     $valid = password_verify($password, $rows['password']);
-                }
-                if($valid)
+                  }
+                  if($valid)
                     echo "<SCRIPT> location.replace('admin.php');</SCRIPT>";
-                else
+                  else
                     echo "<SCRIPT>  window.location.replace('login.php'); alert('incorrect username or password!');</SCRIPT>";
+                }
+                else
+                  echo "<SCRIPT>  window.location.replace('login.php'); alert('$conn->error');</SCRIPT>";
             }
             else{ //user block
-                $readQuery = "select * from user_tb where username = '$username'";
-                $result = mysqli_query($conn,$readQuery);
-                if(mysqli_num_rows($result) === 1){
-                    while($rows = mysqli_fetch_assoc($result)){
+                $query = "select * from user_tb where username = '$username'";
+                $resultSet = $conn->query($query);
+                if($resultSet->num_rows  > 0){
+                    foreach($resultSet as $rows){
                         $valid = password_verify($password, $rows['password'])?true:false;
                         $otp = $rows['otp'];
                         $userlinkId = $rows['userlinkId'];
@@ -102,8 +105,9 @@
                 $updateQuery = "UPDATE user_tb SET otp='' WHERE otp='$otp'";
                 if(mysqli_query($conn, $updateQuery))
                     echo "<SCRIPT> window.location.replace('customer.php?username=$username'); </SCRIPT>";
-            }else
-            echo  '<script type="text/javascript">alert("Incorrect Otp!"); window.location.replace("login.php");</script>';
+            }
+            else
+              echo  '<script type="text/javascript">alert("Incorrect Otp!"); window.location.replace("login.php");</script>';
         }
 
     ?>

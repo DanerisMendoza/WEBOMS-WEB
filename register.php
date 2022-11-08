@@ -66,7 +66,7 @@
               $mail->send();
               
           }catch (Exception $e) {
-              echo "<script>alert('Error: $mail->ErrorInfo');</script>";
+              echo "<script>window.location.replace('register.php'); alert('Error: $mail->ErrorInfo');</script>";
               return;
           }
 
