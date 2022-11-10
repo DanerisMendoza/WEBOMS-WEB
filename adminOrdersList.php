@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,16 +18,15 @@
             <table class="table table-striped" border="10">
             <tr>	
             <th scope="col">name</th>
+            <th scope="col">Orders ID</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
             <th scope="col">
               <form method="post">
                 <button type="submit" name="showAll" style="font-size: 12px ;">Show/Unshow All</button>
               </form>
-              </br>
-              Orders ID
+              <?php echo $_SESSION['query'] == 'all' ? "all":"not complete";?>
             </th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col">Approve status:</th>
             <th scope="col">Order status:</th>
@@ -34,7 +34,7 @@
             </tr>
               <tbody>
                 <?php
-                session_start();
+          
                 include_once('orderClass.php');
                 $orderlist = new orderList();
                 if($_SESSION['query'] != 'all')
@@ -55,7 +55,18 @@
                   ?><a href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
                 }?>
                 </td>
-                <td><a href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a></td>
+                <td>
+                <?php 
+                if($rows['status'] != 1){
+                  echo "pending";
+                }
+                elseif($rows['isOrdersComplete'] == 1){
+                  echo "order is complete";
+                }
+                else{
+                  ?> <a href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
+                }?>  
+               </td>
                 <td><a href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
                 <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Preparing"); ?></td>
