@@ -26,14 +26,15 @@
                     }
                     else{
                         $order = new orderList();
-                        $orderlist =  $order -> getApprovedOrderList(); 
+                        $orderlist =  $order -> getOrderCompleteList(); 
                     }
                 ?>
                 <table class="table table-striped" border="10">
                 <tr>	
                 <th scope="col">name</th>
+                <th scope="col">Orders ID</th>
                 <th scope="col">status</th>
-                <th scope="col"></th>
+                <th scope="col">_______</th>
                 <th scope="col">date</th>
                 </tr>
                 <tbody>
@@ -42,8 +43,9 @@
                     foreach($orderlist as $rows){ ?>
                     <tr>	   
                     <td><?php echo $rows['name']; ?></td>
-                    <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); ?></td>
-                    <td><a href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                    <td><?php echo $rows['ordersLinkId'];?></td>
+                    <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Pending"); ?></td>
+                    <td><a style="background: white; padding:2px; border: 2px black solid; color:black;"href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                     <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
                     </tr>
                     <?php } ?>

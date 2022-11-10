@@ -293,6 +293,11 @@
             return getQuery($query);
         }
 
+        function getOrderCompleteList(){
+            $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 ORDER BY orderlist_tb.id asc; ";
+            return getQuery($query);
+        }
+
 
         function getOrderListByCustomer(){
             $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ";
