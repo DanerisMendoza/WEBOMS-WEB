@@ -16,8 +16,8 @@
         </script> 
         
         <div class="col-lg-12">
-            <table class="table table-striped" border="10">
-            <tr>	
+            <table class="table table-striped col-lg-12" border="10">
+            <tr class="col-lg-12">	
             <th scope="col">name</th>
             <th scope="col">status</th>
             <th scope="col">email</th>
@@ -38,11 +38,11 @@
                 <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); 
                 ?></td>
                 <td><?php echo $rows['email']; ?></td>
-                <td><a href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                <td><a style="background: white; padding:2px; border: 2px black solid; color:black;" href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
                   $orderlist =  orderList::withUsersAndOrdersLinkId($rows['userlinkId'],$rows['ordersLinkId']);
                   if($rows['status'] == 1 && $orderlist->CustomerFeedback() == null){
-                    ?>  <a href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userlinkId']?>">feedback</a>  <?php
+                    ?>  <a style="background: white; padding:2px; border: 2px black solid; color:black;" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userlinkId']?>">feedback</a>  <?php
                   }
                   elseif($rows['status'] == 1){
                     echo "You have already feedback!";

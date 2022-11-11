@@ -44,13 +44,13 @@
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo $rows['ordersLinkId'];?></td>
-                <td colspan="2"><a style="background: white; padding:2px; border: 2px black solid; color:black" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                <td colspan="2"><a style="background: white; padding:2px; border: 2px black solid; color:black;" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
                 if($rows['status'] == 1){
                   echo "Already Approved";
                 }
                 else{
-                  ?><a style="background: white; padding:2px; border: 2px black solid; color:black" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
+                  ?><a style="background: blue; padding:2px; border: 2px black solid; color:black;" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
                 }?>
                 </td>
                 <td>
@@ -62,7 +62,7 @@
                   echo "order is complete";
                 }
                 else{
-                  ?> <a style="background: white; padding:2px; border: 2px black solid; color:black" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
+                  ?> <a style="background: green; padding:2px; border: 2px black solid; color:black;" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
                 }?>  
                </td>
                 <td><?php
@@ -77,7 +77,7 @@
                 }
                 ?></td>
                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
-                <td><a style="background: white; padding:2px; border: 2px black solid; color:black"href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
+                <td><a style="background: red; padding:2px; border: 2px black solid; color:black"href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
                 </tr>
                 <?php } ?>
               </tbody>

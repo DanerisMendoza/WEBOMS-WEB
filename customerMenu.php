@@ -38,7 +38,7 @@
                 <td><?=$rows['dish']?></td>
                 <td><?php echo '₱'.$rows['price']; ?></td>
                 <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><a href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
+                <td><a style="background: white; padding:2px; border: 2px black solid; color:black;" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
             </tr>
             <?php } ?>
         </table>
