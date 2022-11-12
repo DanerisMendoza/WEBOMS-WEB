@@ -28,7 +28,12 @@
 <input type="file"  name="fileInput" required></br>
 <button type="button" class="btn-success col-sm-12" id="cancel">Cancel</button>
 <button type="submit" class="btn-success col-sm-12" name="update">Update</button>
+ </form>
+</div>
+</body>
+</html>
 <?php
+    //if update button click
     if(isset($_POST['update'])){
         $dish = $_POST['dish'];
         $price = $_POST['price'];
@@ -61,7 +66,7 @@
                     cost = '$cost',
                     stock =  '$stock'
                     WHERE orderType=$id ";        
-                    if(mysqli_query($conn,$updateQuery)){
+                    if($conn->query($updateQuery)){
                         echo '<script>alert("Sucess updating the database!");</script>';       
                         unlink("dishespic/".$picName);                                        
                     }
@@ -87,10 +92,6 @@
         }
     }
 ?>
- </form>
-</div>
-</body>
-</html>
 <style>
     body{
         background-color: black;

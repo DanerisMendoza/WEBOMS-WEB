@@ -1,3 +1,17 @@
+<?php
+    include_once('class/transactionClass.php');
+    include('method/Query.php');
+    if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
+        $dateFetch1 = $_POST['dateFetch1'];
+        $dateFetch2 = $_POST['dateFetch2'];
+        $transaction = new transaction($dateFetch1,$dateFetch2);
+        $resultSet =  $transaction -> getOrderListByDates(); 
+    }
+    else{
+        $transaction = new transaction();
+        $resultSet =  $transaction -> getAllOrderCompleteList(); 
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,19 +30,6 @@
         </form>
         <form method="POST"><button type="submit" name="showAll">Show All</button></form>
             <div class="col-lg-12">
-                <?php
-                    include_once('orderClass.php');
-                    if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
-                        $dateFetch1 = $_POST['dateFetch1'];
-                        $dateFetch2 = $_POST['dateFetch2'];
-                        $order = new orderList($dateFetch1,$dateFetch2);
-                        $orderlist =  $order -> getOrderListByDates(); 
-                    }
-                    else{
-                        $order = new orderList();
-                        $orderlist =  $order -> getOrderCompleteList(); 
-                    }
-                ?>
                 <table class="table table-striped" border="10">
                 <tr>	
                 <th scope="col">name</th>
@@ -39,8 +40,8 @@
                 </tr>
                 <tbody>
                     <?php 
-                    if(!empty($orderlist))
-                    foreach($orderlist as $rows){ ?>
+                    if(!empty($resultSet))
+                    foreach($resultSet as $rows){ ?>
                     <tr>	   
                     <td><?php echo $rows['name']; ?></td>
                     <td><?php echo $rows['ordersLinkId'];?></td>
@@ -60,7 +61,6 @@
     document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
     document.getElementById("viewGraph").onclick = function () {window.location.replace('adminGraph.php'); };
 </script>
-
 
 <style>
     body{

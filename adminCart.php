@@ -96,7 +96,7 @@ $(document).ready(function () {
             echo "<script>alert('Your Cash is less than your total Payment amount');</script>";
             return;
         }
-        include_once('orderClass.php');
+        include_once('class/orderClass.php');
         $order = new order($dishesQuantity,$dishesArr,$priceArr,$cash,$total);
         $order-> displayReceipt(); 
     }

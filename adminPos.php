@@ -20,7 +20,8 @@
               <script>document.getElementById("viewCart").onclick = function () {window.location.replace('adminCart.php'); };</script> 
               <div class="col-lg-12">
             <?php 
-                include_once('dishesClass.php');
+                include_once('class/dishClass.php');
+                include('method/Query.php');
                 $dishes = new dish();
                 $dishes =  $dishes -> getAllDishes(); 
             ?>

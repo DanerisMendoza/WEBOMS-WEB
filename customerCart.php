@@ -71,7 +71,7 @@
        
                 <form method="post" enctype="multipart/form-data">           
                     <label for="fileInput">Proof of Payment: </label>
-                    <input type="file"  name="fileInput">
+                    <input type="file"  name="fileInput" required>
                     <button class="btn btn-danger col-sm-12" name="order">Place Order</button>
                 </form>
                 <script>document.getElementById("dateTime").disabled = true;</script>

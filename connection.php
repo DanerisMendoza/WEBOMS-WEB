@@ -41,7 +41,7 @@ if (!$db_selected) {
 
 		$queryCreateOrderListTb = "create table if not exists orderList_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
-		userlinkId varchar(255), 
+		userLinkId varchar(255), 
 		status tinyint,
 		ordersLinkId varchar(255),
 		date datetime not null,

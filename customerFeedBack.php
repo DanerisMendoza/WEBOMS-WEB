@@ -25,8 +25,9 @@
         $ordersLinkId = $arr[0];
         $userLinkId = $arr[1];
         $feedback = $_POST['feedback'];
-        include_once('dishesClass.php');
-        $dish = new dish($feedback,$ordersLinkId,$userLinkId);
-        $dish -> giveFeedBackToDish();
+        include('class/feedbackClass.php');
+        include('method/Query.php');
+        $dish = new feedback($feedback,$ordersLinkId,$userLinkId);
+        $dish -> giveFeedBackByOrdersLinkIdAndUserLinkId();
     }
 ?>

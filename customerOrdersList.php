@@ -25,9 +25,11 @@
               <tbody>
                 <?php
                 session_start();
-                include_once('orderClass.php');
-                $orderlist = orderList::withUserLinkId($_SESSION["userLinkId"]);  //Scope Resolution Operator (::) double colon = jump to search 
-                $resultSet =  $orderlist -> getOrderListByUserLinkId(); 
+                include_once('class/transactionClass.php');
+                include_once('class/feedbackClass.php');
+                include('method/Query.php');
+                $transaction = transaction::withUserLinkId($_SESSION["userLinkId"]);  //Scope Resolution Operator (::) double colon = jump to search 
+                $resultSet =  $transaction -> getOrderListByUserLinkId(); 
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
@@ -37,9 +39,9 @@
                 <td><?php echo $rows['email']; ?></td>
                 <td><a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
-                  $orderlist =  orderList::withUsersAndOrdersLinkId($rows['userlinkId'],$rows['ordersLinkId']);
-                  if($rows['status'] == 1 && $orderlist->CustomerFeedback() == null){
-                    ?>  <a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userlinkId']?>">feedback</a>  <?php
+                  $transaction =  new feedback('',$rows['ordersLinkId'],$rows['userLinkId']);
+                  if($rows['status'] == 1 && $transaction->CustomerFeedback() == null){
+                    ?>  <a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userLinkId']?>">feedback</a>  <?php
                   }
                   elseif($rows['status'] == 1){
                     echo "You have already feedback!";

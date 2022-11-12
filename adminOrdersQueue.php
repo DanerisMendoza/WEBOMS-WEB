@@ -1,39 +1,11 @@
 <?php 
 session_start();
 $isSame = false;
-include_once('orderClass.php');
-$orderlist = new orderList();
-$resultSet =  $orderlist -> getPrepairingOrder();
+include_once('class/transactionClass.php');
+include('method/Query.php');
+$transaction = new transaction();
+$resultSet =  $transaction -> getPrepairingOrder();
 $count = 0;
-//   if(isset($_SESSION['Queue'])){
-//   foreach($resultSet as $str){
-//     $count++;
-//   }
-//   if(count($_SESSION['Queue']) == $count){
-//     $isSame = true;
-//   }else{
-//     $isSame = false;
-//   }
-//   }
-// $Queue = 1;
-// if(!isset($_SESSION['Queue'])){
-//   $_SESSION['Queue'] = array();
-//   foreach($resultSet as $str){
-//     array_push($_SESSION['Queue'],$Queue);
-//     $Queue++;
-//   }
-// }else if($isSame == false){
-//   $last = count($_SESSION['Queue']);
-//   $last-1;
-//   $start = $_SESSION['Queue'][$last];
-//   foreach($resultSet as $str){
-//     array_push($_SESSION['Queue'],$start);
-//     $start++;
-//   }
-// }
-// $a = implode($_SESSION['Queue']);
-// echo "<script>alert('$a');</script>";
-
 ?>
 <!DOCTYPE html>
 <html>

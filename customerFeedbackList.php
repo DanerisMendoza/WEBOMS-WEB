@@ -22,9 +22,11 @@
               <tbody>
                 <?php
                 session_start();
-                include_once('orderClass.php');
-                $orderlist = new orderList();  
-                $resultSet =  $orderlist -> getAllFeedbackByUserLinkId(); 
+                include_once('class/feedbackClass.php');
+                include_once('method/query.php');
+                $feedback = new feedback('','','');  
+                $resultSet =  $feedback -> getAllFeedbackByUserLinkId(); 
+                if($resultSet!= null)
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>

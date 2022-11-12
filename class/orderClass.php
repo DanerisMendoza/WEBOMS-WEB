@@ -12,7 +12,6 @@
         public $email;
 
         //constructor
-
         function __construct(){ 
             $arguments = func_get_args();
             $numberOfArguments = func_num_args();
@@ -36,23 +35,9 @@
            $this -> total = $total;
            
         }
-
+        
         //functions
 
-        function computeOrder(){
-            include('connection.php');
-            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this -> ordersLinkId}' ");  
-            if (mysqli_num_rows($sql)) {  
-                while($rows = mysqli_fetch_assoc($sql)){ 
-                    $price = ($rows['price']*$rows['quantity']);  
-                    array_push($this-> dishesArr,$rows['dish']);
-                    array_push($this-> priceArr,$rows['price']);
-                    array_push($this-> dishesQuantity,$rows['quantity']);
-                    $this-> total += $price;
-                }
-            }
-        }
-        
         function displayReceipt(){
             $change =  $this -> cash - $this-> total;
             require_once('TCPDF-main/tcpdf.php'); 
@@ -143,7 +128,7 @@
             date_default_timezone_set('Asia/Manila');
             $date = date("j-m-Y  h:i:s A"); 
             $content = '
-            <h3>'.$date.'</h3>
+            <h3>Approve Date: '.$date.'</h3>
             <h3>*******************************************************************</h3>
             <table  text-center cellspacing="0" cellpadding="3">  
             <tr>
@@ -213,174 +198,28 @@
             }                        
         }
         
+        function computeOrder(){
+            include('connection.php');
+            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this -> ordersLinkId}' ");  
+            if (mysqli_num_rows($sql)) {  
+                while($rows = mysqli_fetch_assoc($sql)){ 
+                    $price = ($rows['price']*$rows['quantity']);  
+                    array_push($this-> dishesArr,$rows['dish']);
+                    array_push($this-> priceArr,$rows['price']);
+                    array_push($this-> dishesQuantity,$rows['quantity']);
+                    $this-> total += $price;
+                }
+            }
+        }
+
         function approveOrder(){
-            require('connection.php');
             $ordersLinkId = $this -> ordersLinkId;
-            $updateQuery = "UPDATE orderList_tb SET status=true WHERE ordersLinkId='$ordersLinkId' ";     
-            if($conn->query($updateQuery) === FALSE)
-                echo "<script>alert('update data unsuccessfully'); window.location.replace('adminOrders.php');</script>";  
-            echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
+            $query = "UPDATE orderList_tb SET status=1 WHERE ordersLinkId='$ordersLinkId' ";     
+            if($result = Query($query))
+                echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
+            else
+                echo "<script>alert('update data unsuccessfully $result'); window.location.replace('adminOrdersList.php');</script>";  
         }
 
     }
-
-    class orderList{
-        public $username, $id, $date1, $date2;
-        public $ordersLinkId, $userlinkId;
-
-        //constructors
-
-        function __construct(){ 
-            $arguments = func_get_args();
-            $numberOfArguments = func_num_args();
-            if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
-                call_user_func_array(array($this, $function), $arguments);
-            }
-        }
-
-        function __construct2($date1,$date2){ 
-           $this-> date1 = $date1;
-           $this-> date2 = $date2;
-        }
-
-        //static helper methods
-
-        public static function withUsername( $username ) {
-            $instance = new self();
-            $instance->loadByUsername($username);
-            return $instance;
-        }
-
-        protected function loadByUsername( $username ) {
-            $this -> username = $username;
-        }
-
-        public static function withUserLinkId( $userlinkId ) {
-            $instance = new self();
-            $instance->loadByUserLinkId($userlinkId);
-            return $instance;
-        }
-
-        protected function loadByUserLinkId( $userlinkId ) {
-            $this -> userlinkId = $userlinkId;
-        }
-    
-
-        public static function withID( $id ) {
-            $instance = new self();
-            $instance->loadByID($id);
-            return $instance;
-        }
-
-        protected function loadByID($id) {
-            $this->id = $id;
-        }
-
-        public static function withUsersAndOrdersLinkId($userlinkId,$ordersLinkId) {
-            $instance = new self();
-            $instance->loadByOrdersAndLinkId($userlinkId,$ordersLinkId);
-            return $instance;
-        }
-
-        protected function loadByOrdersAndLinkId($userlinkId,$ordersLinkId) {
-            $this -> userlinkId = $userlinkId;
-            $this -> ordersLinkId = $ordersLinkId;
-        }
-
-        //functions | query
-
-        function getOrderList(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
-        function getNotOrdersComplete(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId && orderlist_tb.isOrdersComplete = 0 ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
-        function getApprovedOrderList(){
-            $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
-        function getOrderCompleteList(){
-            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
-        function getPrepairingOrder(){
-            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 0 and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
-
-        function getOrderListByCustomer(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and customer_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-
-        function getOrderListByUserLinkId(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userLinkId = orderlist_tb.userlinkId and customer_tb.userLinkId = '{$this->userlinkId}';";
-            return getQuery($query);
-        }
-
-        function getAllOrderById(){
-            $query = "select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this->id}' ";
-            return getQuery($query);
-        }
-  
-        function getOrderListByDates(){
-            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 and orderlist_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
-        
-        function getAllFeedbackByUserLinkId(){
-            $query = "select customer_tb.*, feedback_tb.*, orderList_tb.* from customer_tb, orderList_tb, feedback_tb where customer_tb.userlinkId = orderList_tb.userlinkId and feedback_tb.ordersLinkId = orderList_tb.ordersLinkId;";
-            return getQuery($query);
-        }
-
-        function CustomerFeedback(){
-            $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='{$this->ordersLinkId}' AND userlinkId = '{$this->userlinkId}' ";
-            return getQuery($query);
-        }
-
-        function setOrderComplete(){
-            $query = "UPDATE orderList_tb SET isOrdersComplete=true WHERE ordersLinkId='{$this->id}' ";     
-            if(Query($query)){
-                echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
-            }
-            else{
-                echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('unsuccess!');</SCRIPT>";
-            }
-        }
-     }
-
-    
-    function getQuery($query){
-        include('connection.php');
-        if($resultSet = $conn->query($query)){  
-            if($resultSet->num_rows > 0){
-                return($resultSet);
-            }
-            else{
-                return null;
-            }
-        }
-        else{
-            return $conn->error;
-        }
-    }
-
-
-    function Query($query){
-        include('connection.php');
-        if($conn->query($query)){
-            return true;
-        }
-        else{
-            return $conn->error;
-        }
-    }
-
 ?>

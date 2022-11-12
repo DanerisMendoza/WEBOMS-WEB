@@ -7,12 +7,14 @@
     <div class="container text-center">
         <div class="col-lg-12 cont2">
           <button class="btn btn-success col-sm-4" id="orderList">Order List</button>
+          <button class="btn btn-success col-sm-4" id="salesReport">Sales Report</button>
             <?php 
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
               $pic = $arr[1];
-              include_once('orderClass.php');
-              $order = orderList::withID( $id );  
+              include_once('class/transactionClass.php');
+              include('method/Query.php');
+              $order = transaction::withID( $id );  
               $arr =  $order -> getAllOrderById(); 
             ?>
             <table class="table table-striped" border="10">
@@ -67,4 +69,5 @@
 
 <script>
   document.getElementById("orderList").onclick = function () {window.location.replace('adminOrdersList.php'); };
+  document.getElementById("salesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
 </script> 

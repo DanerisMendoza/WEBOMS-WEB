@@ -42,7 +42,7 @@
                 <h1>Sales Report: </h1>
                 <h5>Total Initial cost: <?php echo '₱'.$initialCost?></h5>
                 <h5>Total Amount of Sold: <?php echo '₱'.$sold?></h5>
-                <h5>Total Profit: <?php echo (($sold-$initialCost)<0 ? 'no profit': '₱'.($sold-$initialCost))?></h5>
+                <h5>Total Profit: <?php echo (($sold-$initialCost)<0 ? '₱0': '₱'.($sold-$initialCost))?></h5>
                 <h5>Loss: <?php echo ($initialCost-$sold)<0 ? '₱0': '₱'.($initialCost-$sold)?></h5>
                 <div class="col-lg-12" id="piechart" style="width: 900px; height: 500px;"></div>
             </div>

@@ -11,8 +11,10 @@
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
               $pic = $arr[1];
-              include_once('orderClass.php');
-              $order = orderList::withID( $id );
+              include_once('class/transactionClass.php');
+              include('method/Query.php');
+
+              $order = transaction::withID( $id );
               $arr =  $order -> getAllOrderById(); 
             ?>
             <table class="table table-striped" border="10">

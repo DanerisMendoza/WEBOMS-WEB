@@ -13,13 +13,10 @@
             }
         }
 
-        function __construct2($id, $pic)
-        {
+        function __construct2($id, $pic){
             $this -> id = $id;
             $this -> pic = $pic;
         }
-
-    
 
         function __construct3($feedback,$ordersLinkId,$userlinkId){ 
             $this-> feedback = $feedback;
@@ -59,39 +56,27 @@
 
         function getAllDishes(){
             $query = "select * from dishes_tb";
-            return QueryWithResultReturn($query);
+            return getQuery($query);
         }
         
-        function giveFeedBackToDish(){
-            $query = "insert into feedback_tb(feedback, ordersLinkId, userlinkId) values('{$this->feedback}', '{$this->ordersLinkId}', '{$this->userlinkId}')";
-            if(Query($query))
-                echo "<script>alert('feedback sent thanks!'); window.location.replace('customerOrdersList.php');</script>";
-            else
-                echo "<script>alert('fail to send feedback!');</script>";
-        }
 
         function getAllFeedback(){
             $query = "select feedback_tb.*, customer_tb.* from feedback_tb, customer_tb where user_tb.userlinkId = feedback.userlinkId;";
-            return QueryWithResultReturn($query);
+            return getQuery($query);
         }
 
-    }
-
-    function Query($query){
-        include('connection.php');
-        return $conn->query($query);
-    }   
-    
-    function QueryWithResultReturn($query){
-        include('connection.php');
-        $resultSet = $conn->query($query);  
-        if($resultSet->num_rows > 0) {
-            return($resultSet);
-        }
-        else{
-            return null;
+        function generateDishTableBody($resultSet){
+            foreach($resultSet as $rows){?>
+                <tr>	   
+                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                <td><?=$rows['dish']?></td>
+                <td><?php echo '₱'.$rows['price']; ?></td>
+                <td><?php echo '₱'.$rows['cost']; ?></td>
+                <td><?php echo $rows['stock']; ?></td>
+                <td><a class="btn" style="background: red; padding:2px; border: 2px black solid; color:black;" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
+                <td><a class="btn" style="background: yellow; padding:2px; border: 2px black solid; color:black;" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
+                </tr>
+                <?php } 
         }
     }
-
-
 ?>

@@ -29,7 +29,8 @@
             <th scope="col">picture</th>
         </tr>
         <?php 
-            include_once('dishesClass.php');
+            include_once('class/dishClass.php');
+            include_once('method/query.php');
             $dishes = new dish();
             $dishes =  $dishes -> getAllDishes(); 
         ?>
