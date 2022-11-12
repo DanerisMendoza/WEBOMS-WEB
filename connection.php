@@ -23,23 +23,25 @@ if (!$db_selected) {
 		cost int,
 		stock int)";
 		
-		$queryCreateAdminTb = "create table if not exists admin_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
-		admin varchar(255),
-		password varchar(255))";
+
+		$queryCreateUserTb = "create table if not exists user_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		username varchar(255),
+		password varchar(255),
+		accountType varchar(255),
+		userLinkId varchar(255))";
 
 		$hash = password_hash('password', PASSWORD_DEFAULT);
-		$query3 = "insert into admin_tb(admin, password) values('admin','$hash')";
-
-		$queryCreateUserTb = "create table if not exists user_tb(userlinkId int PRIMARY KEY AUTO_INCREMENT,
-		username varchar(255),
+		$query3 = "insert into user_tb(username, password, accountType) values('admin','$hash','1')";
+		
+		$queryCreateCustomerTb = "create table if not exists customer_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		name varchar(255),
 		email varchar(255),
 		otp varchar(255),
-		password varchar(255))";
+		userLinkId varchar(255))";
 
 		$queryCreateOrderListTb = "create table if not exists orderList_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
-		userlinkId int, 
+		userlinkId varchar(255), 
 		status tinyint,
 		ordersLinkId varchar(255),
 		date datetime not null,
@@ -55,7 +57,7 @@ if (!$db_selected) {
 		ordersLinkId varchar(255), 
 		userlinkId int)";
 
-		if ($conn->query($queryCreateDishesTb) && $conn->query($queryCreateAdminTb) && $conn->query($query3) && $conn->query($queryCreateUserTb) && $conn->query($queryCreateOrderListTb) && $conn->query($queryCreateOrderTb) && $conn->query($queryCreateFeedbackTb)) 
+		if ($conn->query($queryCreateDishesTb)  && $conn->query($queryCreateUserTb)  && $conn->query($query3) && $conn->query($queryCreateCustomerTb) && $conn->query($queryCreateOrderListTb) && $conn->query($queryCreateOrderTb) && $conn->query($queryCreateFeedbackTb)) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						

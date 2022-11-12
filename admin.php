@@ -14,17 +14,20 @@ $_SESSION['query'] = null
     <h2> ADMINISTRATOR MODE </h1>
     <button class="btn" id="pos">POS</button>
     <button class="btn" id="orders">Orders</button>
+    <button class="btn" id="ordersQueue">Orders Queue</button>
     <button class="btn" id="inventory">Inventory</button>
     <button class="btn" id="salesReport">Sales Report</button>
-    <button class="btn" id="settings">Settings</button>
+    <!-- <button class="btn" id="settings">Settings</button> -->
     <button class="btn" id="Logout">Logout</button>
     <script>
     document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); };
     document.getElementById("orders").onclick = function () {window.location.replace('adminOrdersList.php'); };
+    document.getElementById("orders").onclick = function () {window.location.replace('adminOrdersList.php'); };
+    document.getElementById("ordersQueue").onclick = function () {window.location.replace('adminOrdersQueue.php'); };
     document.getElementById("inventory").onclick = function () {window.location.replace('adminInventory.php'); };
     document.getElementById("salesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
-    document.getElementById("settings").onclick = function () {window.location.replace('adminSettings.php'); };
-    document.getElementById("Logout").onclick = function () {window.location.replace('login.php'); 
+    // document.getElementById("settings").onclick = function () {window.location.replace('adminSettings.php'); };
+    document.getElementById("Logout").onclick = function () {window.location.replace('Login.php'); 
     $.post(
         "method/clearSessionMethod.php", {
         }

@@ -25,7 +25,7 @@
 <input type="number" class="form-control" name="price" placeholder="price"></br>
 <input type="number" class="form-control" name="cost" placeholder="cost"></br>
 <input type="number" class="form-control" name="stock" placeholder="stock"></br>
-<input type="file"  name="fileInput"></br>
+<input type="file"  name="fileInput" required></br>
 <button type="button" class="btn-success col-sm-12" id="cancel">Cancel</button>
 <button type="submit" class="btn-success col-sm-12" name="update">Update</button>
 <?php
@@ -68,7 +68,7 @@
                     else{
                         echo '<script type="text/javascript">alert("failed to save to database");</script>';  
                     }
-                    echo "<script>window.location.replace('inventory.php')</script>";                                
+                    echo "<script>window.location.replace('adminInventory.php')</script>";                                
                 }
                 else
                     echo "your file is too big!";

@@ -70,10 +70,18 @@
               return;
           }
 
-      if($conn->query("insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')"))
-        echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+      $userLinkId = uniqid('',true);
+      if($conn->query("insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','2','$userLinkId')")){
+          if($conn->query("insert into customer_tb(name, email, otp, userLinkId) values('$username','$email','$otp','$userLinkId')")){
+            echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+          }
+        }
       else
-        echo '<script type="text/javascript">alert("failed to save to database");window.location.replace("login.php");</script>';  
+        echo "<script>alert('failed to save to database $conn->error');window.location.replace('login.php');</script>";  
+      // if($conn->query("insert into user_tb(username, name, email, otp, password) values('$username','$name','$email','$otp','$hash')"))
+      //   echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+      // else
+      //   echo '<script type="text/javascript">alert("failed to save to database");window.location.replace("login.php");</script>';  
     }
 ?>
 

@@ -255,6 +255,17 @@
             $this -> username = $username;
         }
 
+        public static function withUserLinkId( $userlinkId ) {
+            $instance = new self();
+            $instance->loadByUserLinkId($userlinkId);
+            return $instance;
+        }
+
+        protected function loadByUserLinkId( $userlinkId ) {
+            $this -> userlinkId = $userlinkId;
+        }
+    
+
         public static function withID( $id ) {
             $instance = new self();
             $instance->loadByID($id);
@@ -276,15 +287,15 @@
             $this -> ordersLinkId = $ordersLinkId;
         }
 
-        //functions
+        //functions | query
 
         function getOrderList(){
-            $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ";
             return getQuery($query);
         }
 
         function getNotOrdersComplete(){
-            $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId && orderlist_tb.isOrdersComplete = 0 ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId && orderlist_tb.isOrdersComplete = 0 ORDER BY orderlist_tb.id asc; ";
             return getQuery($query);
         }
 
@@ -294,13 +305,23 @@
         }
 
         function getOrderCompleteList(){
-            $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 ORDER BY orderlist_tb.id asc; ";
+            return getQuery($query);
+        }
+
+        function getPrepairingOrder(){
+            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 0 and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
             return getQuery($query);
         }
 
 
         function getOrderListByCustomer(){
-            $query = "select user_tb.*, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and user_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and customer_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ";
+            return getQuery($query);
+        }
+
+        function getOrderListByUserLinkId(){
+            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userLinkId = orderlist_tb.userlinkId and customer_tb.userLinkId = '{$this->userlinkId}';";
             return getQuery($query);
         }
 
@@ -310,7 +331,12 @@
         }
   
         function getOrderListByDates(){
-            $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 and orderlist_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 and orderlist_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY orderlist_tb.id asc; ";
+            return getQuery($query);
+        }
+        
+        function getAllFeedbackByUserLinkId(){
+            $query = "select customer_tb.*, feedback_tb.* from customer_tb, feedback_tb where customer_tb.userlinkId = feedback_tb.userlinkId";
             return getQuery($query);
         }
 

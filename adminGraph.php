@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
         <script type="text/javascript" src="js/bootstrap.js"></script>
+        
 
     </head>
     <body>
@@ -34,6 +35,7 @@
                 }
             }
         ?>
+        <center>
     <div class="container text-center">
         <button class="btn btn-success col-sm-4" id="viewSalesReport">Sales Report</button>
             <div class="col-lg-12">
@@ -41,10 +43,11 @@
                 <h5>Total Initial cost: <?php echo '₱'.$initialCost?></h5>
                 <h5>Total Amount of Sold: <?php echo '₱'.$sold?></h5>
                 <h5>Total Profit: <?php echo (($sold-$initialCost)<0 ? 'no profit': '₱'.($sold-$initialCost))?></h5>
-                <h5>Loss: <?php echo ($initialCost-$sold)<0 ? 'no loss': '₱'.($initialCost-$sold)?></h5>
+                <h5>Loss: <?php echo ($initialCost-$sold)<0 ? '₱0': '₱'.($initialCost-$sold)?></h5>
                 <div class="col-lg-12" id="piechart" style="width: 900px; height: 500px;"></div>
             </div>
         </div>
+        </center>
     </body>
 </html>
 <script>
@@ -64,8 +67,8 @@
 
         var options = {
           title: '',
-          backgroundColor: 'transparent',
-          is3D: true,
+          backgroundColor: 'gray',
+          is3D: false,
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);

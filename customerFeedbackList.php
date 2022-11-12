@@ -17,21 +17,18 @@
             <table class="table table-striped" border="10">
             <tr>	
             <th scope="col">name</th>
-            <th scope="col">dish</th>
             <th scope="col">feedback</th>
             </tr>
               <tbody>
                 <?php
                 session_start();
                 include_once('orderClass.php');
-                $order = new orderList();
-                $orderlist =  $order -> getOrderListByCustomer($_SESSION["username"]); 
-                if($orderlist != null)
-                foreach($orderlist as $rows){ ?>
+                $orderlist = new orderList();  
+                $resultSet =  $orderlist -> getAllFeedbackByUserLinkId(); 
+                foreach($resultSet as $rows){ ?>
                 <tr>	   
-                <!-- <td><?php echo $rows['name']; ?></td>
-                <td><?php echo $rows['dish'];?></td>
-                <td><?php echo $rows['feedback'];?></td> -->
+                <td><?php echo $rows['name']; ?></td>
+                <td><?php echo $rows['feedback'];?></td>
                 </tr>
                 <?php } ?>
               </tbody>

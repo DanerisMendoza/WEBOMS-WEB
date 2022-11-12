@@ -37,8 +37,8 @@
           <td><?php echo '₱'.$rows['price']; ?></td>
           <td><?php echo '₱'.$rows['cost']; ?></td>
           <td><?php echo $rows['stock']; ?></td>
-				  <td><a style="background: red; padding:2px; border: 2px black solid; color:black;" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-				  <td><a style="background: yellow; padding:2px; border: 2px black solid; color:black;" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
+				  <td><a class="btn" style="background: red; padding:2px; border: 2px black solid; color:black;" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
+				  <td><a class="btn" style="background: yellow; padding:2px; border: 2px black solid; color:black;" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
 			    </tr>
 			    <?php } ?>
 			  </tbody>

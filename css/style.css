@@ -5,11 +5,6 @@
         margin-top: 10px;
     }
 
-    .container{
-        padding: 1%;
-        margin-top: 2%;
-        background: gray;
-    }
     
     body{
         background-image: url(../settings/bg.jpg);
@@ -21,7 +16,7 @@
       }
   
       .container{
-       padding: 1%;
+       padding: .5%;
        margin-top: 2%;
        background: gray;
        color: white;

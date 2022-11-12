@@ -115,7 +115,7 @@ $(document).ready(function () {
         if(in_array($fileActualExt,$allowed)){
             if($fileError === 0){
                 if($fileSize < 10000000){
-                    $userlinkId = $_SESSION['userlinkId'];
+                    $userlinkId = $_SESSION['userLinkId'];
                     $ordersLinkId = uniqid();
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
