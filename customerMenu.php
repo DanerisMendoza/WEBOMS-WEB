@@ -17,8 +17,10 @@
 </head>
 <body>
 <div class="container text-center">
-    <button type="button" class="btn btn-success col-sm-4" id="back">Back</button>
-    <button type="button" class="btn btn-success col-sm-4" id="viewCart">View Cart</button>
+    <button type="button" class="btn btn-success col-sm-3" id="back">Back</button>
+    <button type="button" class="btn btn-success col-sm-3" id="viewCart">View Cart</button>
+    <button class="btn btn-success col-sm-3" id="customersFeedback">Customers FeedBack</button>
+
     <div class="col-lg-12">
     <table class="table" border="10px">
         <tr>	
@@ -61,6 +63,8 @@
 <script>
 	document.getElementById("back").onclick = function () {window.location.replace('customer.php'); };
 	document.getElementById("viewCart").onclick = function () {window.location.replace('customerCart.php'); };
+    document.getElementById("customersFeedback").onclick = function () {window.location.replace('customerFeedbackList.php'); };    
+
 </script>
 <style>
   	body{

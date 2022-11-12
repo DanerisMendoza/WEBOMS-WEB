@@ -8,10 +8,8 @@
     <body>
     <div class="container text-center">
         <button class="btn btn-success col-sm-4" id="customer">Customer</button>
-        <button class="btn btn-success col-sm-4" id="customersFeedback">Customers FeedBack</button>
         <script>
             document.getElementById("customer").onclick = function () {window.location.replace('customer.php'); };    
-            document.getElementById("customersFeedback").onclick = function () {window.location.replace('customerFeedbackList.php'); };    
         </script> 
         
         <div class="col-lg-12">
@@ -27,8 +25,6 @@
               <tbody>
                 <?php
                 session_start();
-                // $a = $_SESSION['userLinkId'];
-
                 include_once('orderClass.php');
                 $orderlist = orderList::withUserLinkId($_SESSION["userLinkId"]);  //Scope Resolution Operator (::) double colon = jump to search 
                 $resultSet =  $orderlist -> getOrderListByUserLinkId(); 

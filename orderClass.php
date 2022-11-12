@@ -336,7 +336,7 @@
         }
         
         function getAllFeedbackByUserLinkId(){
-            $query = "select customer_tb.*, feedback_tb.* from customer_tb, feedback_tb where customer_tb.userlinkId = feedback_tb.userlinkId";
+            $query = "select customer_tb.*, feedback_tb.*, orderList_tb.* from customer_tb, orderList_tb, feedback_tb where customer_tb.userlinkId = orderList_tb.userlinkId and feedback_tb.ordersLinkId = orderList_tb.ordersLinkId;";
             return getQuery($query);
         }
 
