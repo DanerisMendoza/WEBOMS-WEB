@@ -42,8 +42,6 @@
         }
     
 
-
-
         public static function withUsersAndOrdersLinkId($userlinkId,$ordersLinkId) {
             $instance = new self();
             $instance->loadByOrdersAndLinkId($userlinkId,$ordersLinkId);

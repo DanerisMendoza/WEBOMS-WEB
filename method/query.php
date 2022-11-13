@@ -10,9 +10,11 @@
             }
         }
         else{
-            return $conn->error;
+            die ($conn -> error);
+            
         }
     }
+
 
 
     function Query($query){
@@ -21,8 +23,9 @@
             return true;
         }
         else{
-            return $conn->error;
+            die ($conn->error);
         }
     }
+
 
 ?>

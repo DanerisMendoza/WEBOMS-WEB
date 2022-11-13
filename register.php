@@ -28,7 +28,6 @@
     });
 </script>
 <?php
-
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
@@ -37,49 +36,56 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        include_once('connection.php');
+        include('method/query.php');
+        $query = "select * from customer_tb where name = '$name' or email = '$email'";
+        if(getQuery($query) != null){
+          echo "<script>alert('Name or Email Already Exist!');</script>";
+          echo "<script>window.location.replace('register.php');</script>";
+          return;
+        }
+
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
-          //Load Composer's autoloader
-          require 'vendor/autoload.php';
-          //Create an instance; passing `true` enables exceptions
-          $mail = new PHPMailer(true);
-          try {
-              //Server settings
-              $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-              //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-              $mail->isSMTP();                                            //Send using SMTP
-              $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-              $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-              $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
-              $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
-              $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-              $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-      
-              //Recipients
-              $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
-              $mail->addAddress("$email");                                //sent to
-      
-              //Content
-              $mail->Subject = 'OTP';
-              $mail->Body    = $otp;
-      
-              $mail->send();
-              
-          }catch (Exception $e) {
-              //return if there is an error in sending an otp
-              echo $mail->ErrorInfo;
-              echo "<script>window.location.replace('register.php');</script>";
-              return;
-          }
+        //Load Composer's autoloader
+        require 'vendor/autoload.php';
+        //Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->SMTPDebug  = SMTP::DEBUG_OFF;
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
+            $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
+            $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
+            $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    
+            //Recipients
+            $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
+            $mail->addAddress("$email");                                //sent to
+    
+            //Content
+            $mail->Subject = 'OTP';
+            $mail->Body    = $otp;
+    
+            $mail->send();
+            
+        }catch (Exception $e) {
+            //return if there is an error in sending an otp
+            echo $mail->ErrorInfo;
+            echo "<script>window.location.replace('register.php');</script>";
+            return;
+        }
 
       $userLinkId = uniqid('',true);
       $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','2','$userLinkId')";
       $query2 = "insert into customer_tb(name, email, otp, userLinkId) values('$username','$email','$otp','$userLinkId')";
-      if(!$conn->query($query1))
-        echo "fail to save to database </br>".$conn->error;
-      elseif(!$conn->query($query2))
-        echo "fail to save to database </br>".$conn->error;
+      if(!Query($query1))
+        echo "fail to save to database";
+      elseif(!Query($query2))
+        echo "fail to save to database";
       else
         echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
     }

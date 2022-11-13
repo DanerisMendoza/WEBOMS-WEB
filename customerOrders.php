@@ -14,7 +14,7 @@
               include_once('class/transactionClass.php');
               include('method/Query.php');
 
-              $order = transaction::withID( $id );
+              $order = new transactionById( $id );
               $arr =  $order -> getAllOrderById(); 
             ?>
             <table class="table table-striped" border="10">

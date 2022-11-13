@@ -20,14 +20,12 @@
             }
         }
 
-        public function __construct2($ordersLinkId,$email)
-        {
+        public function __construct2($ordersLinkId,$email){
             $this -> ordersLinkId = $ordersLinkId;
             $this -> email = $email;
         }
 
-        public function __construct5($dishesQuantity,$dishesArr,$priceArr,$cash,$total)
-        {
+        public function __construct5($dishesQuantity,$dishesArr,$priceArr,$cash,$total){
            $this -> dishesQuantity = $dishesQuantity;
            $this -> dishesArr = $dishesArr;
            $this -> priceArr = $priceArr;

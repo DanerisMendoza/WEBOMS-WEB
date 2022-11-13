@@ -20,15 +20,15 @@
     </head>
     <body>
         <div class="container text-center">
-        <button class="btn btn-success col-sm-4" id="admin">Admin</button>
-        <button class="btn btn-success col-sm-4" id="viewGraph">View Graph</button>
-        </br>
-        <form method="post">
-        <input type="datetime-local" name="dateFetch1" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
-        <button type="submit" name="fetch">fetch</button>
-        <input type="datetime-local" name="dateFetch2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
-        </form>
-        <form method="POST"><button type="submit" name="showAll">Show All</button></form>
+            <button class="btn btn-success col-sm-4" id="admin">Admin</button>
+            <button class="btn btn-success col-sm-4" id="viewGraph">View Graph</button>
+            </br>
+            <form method="post">
+                <input type="datetime-local" name="dateFetch1" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
+                <button type="submit" name="fetch">fetch</button>
+                <input type="datetime-local" name="dateFetch2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
+            </form>
+            <form method="POST"><button type="submit" name="showAll">Show All</button></form>
             <div class="col-lg-12">
                 <table class="table table-striped" border="10">
                 <tr>	
