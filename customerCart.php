@@ -19,7 +19,6 @@
             <button class="btn btn-success col-sm-2" id="clear">Clear Order</button>
             
             <input id="dateTime" type="datetime-local" class="col-sm-6" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
-  
             <div class="col-lg-12">
                 <table  class="table table-striped" border="10">
                     <tr>
@@ -96,7 +95,6 @@ $(document).ready(function () {
 });
 
 </script> 
-
 <?php
 
     if(isset($_POST['order'])){
@@ -134,7 +132,7 @@ $(document).ready(function () {
                         $_SESSION["orderType"] = array();                                    
                     }
                     else{
-                        echo '<script type="text/javascript">alert("failed to save to database");</script>';  
+                        echo '<script>alert("failed to save to database");</script>';  
                     }
                     echo "<script>window.location.replace('customerCart.php')</script>";          
                     

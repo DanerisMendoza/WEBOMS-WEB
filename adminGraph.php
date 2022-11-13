@@ -11,30 +11,23 @@
     </head>
     <body>
     <?php
-            include_once('connection.php');
-            $sold = 0;
-            $initialCost = 0;
-            $stock = 0;
-            $profit = 0;
-            $sql = mysqli_query($conn,"select * from dishes_tb");  
-            if (mysqli_num_rows($sql)) { 
-                while($rows = mysqli_fetch_assoc($sql)){
-                    $initialCost += $rows['cost'];
-                    $stock = $rows['stock'];  
-                    // $stock += $rows['stock'];
-                }
-                $initialCost = ($initialCost * $stock);
-                // print_r($initialCost);
-            }
-
-            $sql = mysqli_query($conn,"select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType");  
-            if (mysqli_num_rows($sql)) { 
-                while($rows = mysqli_fetch_assoc($sql)){
-                    $sold += ($rows['price']*$rows['quantity']);
-                    // $stock += $rows['stock'];
-                }
-            }
-        ?>
+        include('method/query.php');
+        include('class/transactionClass.php');
+        $transaction = new transactionEmpty();
+        $sold = 0;
+        $initialCost = 0;
+        $stock = 0;
+        $profit = 0;
+        $query = "select * from dishes_tb";
+        $resultSet = getQuery($query);
+        foreach($resultSet as $row){
+            $initialCost += ($row['cost'] * $row['stock']);
+        }
+        $resultSet = $transaction ->getAllSold();
+        foreach($resultSet as $row){
+            $sold += ($row['price']*$row['quantity']);
+        }
+    ?>
         <center>
     <div class="container text-center">
         <button class="btn btn-success col-sm-4" id="viewSalesReport">Sales Report</button>

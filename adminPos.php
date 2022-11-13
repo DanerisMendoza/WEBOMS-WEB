@@ -22,8 +22,8 @@
             <?php 
                 include_once('class/dishClass.php');
                 include('method/Query.php');
-                $dishes = new dish();
-                $dishes =  $dishes -> getAllDishes(); 
+                $dish = new dish();
+                $resultSet =  $dish -> getAllDishes(); 
             ?>
             <table class="table table-striped" border="10">
                 <tr>	
@@ -32,14 +32,9 @@
                 <th scope="col">picture</th>
                 </tr>
               <tbody>
-                <?php foreach($dishes as $rows){ ?>
-                <tr>	   
-                <td><?=$rows['dish']?></td>
-                <td><?php echo '₱'.$rows['price']; ?></td>
-                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="?order=<?php echo $rows['dish'].",".$rows['price']?>" >Add to Cart</a></td>
-                </tr>
-                <?php } ?>
+                <?php
+                  $dish->generateDishTableBodyMenu($resultSet);
+                ?>
               </tbody>
             </table>
           </div>

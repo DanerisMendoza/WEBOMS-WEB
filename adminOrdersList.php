@@ -19,35 +19,16 @@
         </script> 
         
         <div class="col-lg-12">
-            <table class="table table-striped" border="10">
-            <tr>	
-              <th scope="col">name</th>
-              <th scope="col">Orders ID</th>
-              <th scope="col">_______</th>
-              <th scope="col">_______</th>
-              <th scope="col">Approve status:</th>
-              <th scope="col">Order Complete Status</th>
-              <th scope="col">Order status:
-                <form method="post">
-                  <button class="btn" type="submit" name="showAll" style="font-size: 12px ;">Show/Unshow All</button>
-                </form>
-              </th>
-                <th scope="col">Date:</th>
-                <th scope="col">_______</th>
-            </tr>
-              <tbody>
-                <?php
-                  $transaction = new transaction();
-                  include('method/Query.php');
-                  if($_SESSION['query'] != 'all')
-                    $resultSet =  $transaction -> getAllNotCompleteTransaction();
-                  else
-                    $resultSet =  $transaction -> getAllTransaction();
-                  if($resultSet != null)
-                    $transaction -> generateOrdersTableBody($resultSet);
-                ?>
-              </tbody>
-            </table>
+            <?php
+              $transaction = new transaction();
+              include('method/Query.php');
+              if($_SESSION['query'] != 'all')
+                $resultSet =  $transaction -> getAllNotCompleteTransaction();
+              else
+                $resultSet =  $transaction -> getAllTransaction();
+              if($resultSet != null)
+                $transaction -> generateOrdersTable($resultSet);
+            ?>
           </div>
 	    </div>
     </body>
@@ -66,7 +47,7 @@
   //button to make transaction complete
   if(isset($_GET['orderComplete'])){
     $id = $_GET['orderComplete'];
-    $transaction =  transaction::withID($id);
+    $transaction =  new transactionById($id);
     $transaction -> setOrderComplete();
   }
   //button to show even completed order or show pending orders only

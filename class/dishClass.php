@@ -1,6 +1,6 @@
 <?php
     class dish{
-        public $feedback, $ordersLinkId, $userlinkId;
+        public $ordersLinkId, $userlinkId;
         public $dishes, $price, $fileNameNew, $cost, $stock;
         public $id, $pic;
         
@@ -58,14 +58,9 @@
             $query = "select * from dishes_tb";
             return getQuery($query);
         }
-        
 
-        function getAllFeedback(){
-            $query = "select feedback_tb.*, customer_tb.* from feedback_tb, customer_tb where user_tb.userlinkId = feedback.userlinkId;";
-            return getQuery($query);
-        }
-
-        function generateDishTableBody($resultSet){
+        function generateDishTableBodyInventory($resultSet){
+            if($resultSet != null)
             foreach($resultSet as $rows){?>
                 <tr>	   
                 <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
@@ -77,6 +72,18 @@
                 <td><a class="btn" style="background: yellow; padding:2px; border: 2px black solid; color:black;" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
                 </tr>
                 <?php } 
+        }
+
+        function generateDishTableBodyMenu($resultSet){
+            if($resultSet != null)
+            foreach($resultSet as $rows){ ?>
+            <tr>	   
+                <td><?=$rows['dish']?></td>
+                <td><?php echo '₱'.$rows['price']; ?></td>
+                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                <td><a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
+            </tr>
+            <?php }
         }
     }
 ?>

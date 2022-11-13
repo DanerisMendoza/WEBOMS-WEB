@@ -30,7 +30,7 @@
             $dish = new dish();
             $resultSet = $dish -> getAllDishes();
             if($resultSet != null)
-              $dish->generateDishTableBody($resultSet);
+              $dish->generateDishTableBodyInventory($resultSet);
 			  	 ?>
 			  </tbody>
 			</table>

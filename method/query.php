@@ -10,7 +10,7 @@
             }
         }
         else{
-            return $resultSet->error;
+            return $conn->error;
         }
     }
 

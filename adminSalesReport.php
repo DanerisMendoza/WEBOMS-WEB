@@ -8,8 +8,8 @@
         $resultSet =  $transaction -> getOrderListByDates(); 
     }
     else{
-        $transaction = new transaction();
-        $resultSet =  $transaction -> getAllOrderCompleteList(); 
+        $transaction = new transactionEmpty();
+        $resultSet =  $transaction -> getAllTransactionComplete(); 
     }
 ?>
 <!DOCTYPE html>

@@ -31,19 +31,10 @@
         <?php 
             include_once('class/dishClass.php');
             include_once('method/query.php');
-            $dishes = new dish();
-            $dishes =  $dishes -> getAllDishes(); 
+            $dish = new dish();
+            $resultSet =  $dish -> getAllDishes(); 
+            $dish -> generateDishTableBodyMenu($resultSet);
         ?>
-            <?php 
-            if($dishes != null)
-            foreach($dishes as $rows){ ?>
-            <tr>	   
-                <td><?=$rows['dish']?></td>
-                <td><?php echo '₱'.$rows['price']; ?></td>
-                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
-            </tr>
-            <?php } ?>
         </table>
     </div>
 </div>
@@ -82,8 +73,4 @@
      margin-top: 2%;
      background: gray;
    }
-
-
-
-   
 </style>
