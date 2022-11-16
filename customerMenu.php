@@ -6,38 +6,48 @@
     $_SESSION["orderType"] = array(); 
     }
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-    <title></title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<head>
+    <title>Costumer - Menu</title>
+	
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
     <script type="text/javascript" src="js/bootstrap.js"></script>
 
 </head>
-<body>
-<div class="container text-center">
-    <button type="button" class="btn btn-success col-sm-3" id="back">Back</button>
-    <button type="button" class="btn btn-success col-sm-3" id="viewCart">View Cart</button>
-    <button class="btn btn-success col-sm-3" id="customersFeedback">Customers FeedBack</button>
+<body class="bg-light">
 
-    <div class="col-lg-12">
-    <table class="table" border="10px">
-        <tr>	
-            <th scope="col">Dishes</th>
-            <th scope="col">Price</th>
-            <th scope="col">picture</th>
-        </tr>
-        <?php 
-            include_once('class/dishClass.php');
-            include_once('method/query.php');
-            $dish = new dish();
-            $resultSet =  $dish -> getAllDishes(); 
-            $dish -> generateDishTableBodyMenu($resultSet);
-        ?>
-        </table>
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <h1 class="font-weight-normal mt-5 mb-4 text-center">Menu</h1>
+        <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="back">Back</button>
+        <button type="button" class="btn btn-lg btn-success col-12 mb-3" id="viewCart">View Cart</button>
+        <button class="btn btn-lg btn-success col-12 mb-4" id="customersFeedback">Customers Feedback</button>
+
+        <div class="table-responsive col-lg-12">
+            <table class="table table-striped table-bordered col-lg-12 mb-5">
+                <thead class="bg-dark text-white">
+                    <tr>	
+                        <th scope="col">DISH</th>
+                        <th scope="col">PRICE</th>
+                        <th scope="col">IMAGE</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <?php 
+                    include_once('class/dishClass.php');
+                    include_once('method/query.php');
+                    $dish = new dish();
+                    $resultSet =  $dish -> getAllDishes(); 
+                    $dish -> generateDishTableBodyMenu($resultSet);
+                ?>
+            </table>
+        </div>
     </div>
 </div>
+
 </body>
 </html>
 <?php 
@@ -58,19 +68,3 @@
     document.getElementById("customersFeedback").onclick = function () {window.location.replace('customerFeedbackList.php'); };    
 
 </script>
-<style>
-  	body{
-    background-image: url(settings/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    font-family: 'Josefin Sans',sans-serif;
-    }
-	.container{
-     padding: 1%;
-     margin-top: 2%;
-     background: gray;
-   }
-</style>

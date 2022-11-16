@@ -1,24 +1,30 @@
 <?php 
   session_start();
+
   include_once('class/transactionClass.php');
   include_once('class/orderClass.php');
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    <body>
-    <div class="container text-center">
+<head>
+  <title>Admin Orders</title>
+        
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+</head>
+<body class="bg-light">
 
-        <button class="btn btn-success col-sm-4" id="admin">Admin</button>
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <h1 class="font-weight-normal mt-5 mb-4">Orders</h1>
+    <button class="btn btn-lg btn-danger col-12 mb-4" id="admin">Admin</button>
         <script>
             document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };    
         </script> 
         
-        <div class="col-lg-12">
+    <div class="table-responsive col-lg-12">
             <?php
               $transaction = new transaction();
               include('method/Query.php');
@@ -29,10 +35,13 @@
               if($resultSet != null)
                 $transaction -> generateOrdersTable($resultSet);
             ?>
-          </div>
-	    </div>
-    </body>
+    </div>
+	</div>
+</div>
+    
+</body>
 </html>
+
 <?php 
   //button to approve order
   if(isset($_GET['status'])){

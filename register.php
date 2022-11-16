@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Signup</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></head>
-    </head>
-    <body>
-    <div class="container text-center">
-
-    <form method="post" class="text-center col-6 margin_top form2">
-        <img src="settings/logo.png"><br>
-        <input type="text" class="form" name="username" placeholder="Enter Username" required></br>
-        <input type="text" class="form" name="name" placeholder="Enter Name" required></br>
-        <input type="email" class="form" name="email" placeholder="Enter Email" required></br>
-        <input type="password" class="form" name="password" placeholder="Enter Password"></br>
-        <button type="submit" class="button" name="createAccount">Sign Up</button><br>
-        <button type="button" class="button2" id="back">Back</button><br>
-        <div class="login_link">
-          Have already an account? <a href="Login.php">Login</a>
-        </div>
+<head>
+  <title>Sign up</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></head>
+    
+</head>
+<body class="bg-light">
+    
+<div class="container px-5">
+  <div class="row justify-content-center">
+    <form method="post" class="form2">
+      <!-- <img src="settings/logo.png"><br> -->
+      <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
+      <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter Username" required>
+      <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter Name" required>
+      <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email" required>
+      <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter Password" required>
+      <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" name="createAccount">Sign Up</button><br>
+      <!-- <button type="button" class="button2" id="back">Back</button><br> -->
+      <div class="mb-5 text-muted text-center">
+        Have already an account? <a href="Login.php" class="login_link text-muted">Log in</a>
+      </div>
     </form>
-    </div>
-    </body>
+  </div>
+</div>
+    
+</body>
 </html>
+
 <script>
     document.getElementById("back").addEventListener("click",function(){
         window.location.replace('login.php');
     });
 </script>
+
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -90,68 +97,3 @@
         echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
     }
 ?>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-body{
-  background-image: url(settings/bg.jpg); /* #ED212D */
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  font-family: 'Josefin Sans', sans-serif;
-  color: white;
-}
-/* Restaurant Logo */
-img{
-  max-width: 100%;
-  height: 30%;
-  width: 30%;
-}
-/* Container form2 */
-.form2{
-  background: gray;
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 15px 50px 15px;
-  height: auto;
-  border-radius: 15px;
-  /* box-shadow: 5px 7px #6b0e13; */
-}
-/* Username, Name, Email, Password */
-.form{
-  width: 100%;
-  border-radius: 5px;
-  border-color: transparent;
-  padding: 10px 25px;
-  cursor: pointer;
-  font-size: 20px;
-  margin: 10px 0 0;
-}
-/* Sign Up and Back Button */
-button{
-  width: 100%;
-  border-radius: 5px;
-  border-color: transparent;
-  padding: 10px 25px;
-  cursor: pointer;
-  font-size: 18px;
-  margin: 10px 0 0;
-}
-button:hover{
-  border-color: #a6a6a6;
-  transition: .2s;
-}
-/* Back Button */
-.button2{
-  display: block;
-}
-/* Login Link */
-.login_link{
-  font-size: 18px;
-}
-</style>

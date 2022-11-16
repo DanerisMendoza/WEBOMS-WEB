@@ -33,12 +33,14 @@
         //functions
         function generateAllFeedbackTable($resultSet){
             ?>
-            <div class="col-lg-12">
-            <table class="table table-striped" border="10">
-            <tr>	
-            <th scope="col">name</th>
-            <th scope="col">feedback</th>
-            </tr>
+            <div class="table-responsive col-lg-12">
+            <table class="table table-striped table-bordered mb-5 col-lg-12">
+            <thead class="table-dark">
+                <tr>	
+                <th scope="col">NAME</th>
+                <th scope="col">FEEDBACK</th>
+                </tr>
+            </thead>
               <tbody>
                 <?php
                 if($resultSet!= null)

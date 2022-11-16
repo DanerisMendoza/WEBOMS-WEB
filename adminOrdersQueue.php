@@ -1,34 +1,41 @@
 <?php 
-session_start();
-$isSame = false;
-include_once('class/transactionClass.php');
-include('method/Query.php');
-$transaction = new transaction();
-$resultSet =  $transaction -> getPrepairingOrder();
-$count = 0;
+  session_start();
+
+  $isSame = false;
+  include_once('class/transactionClass.php');
+  include('method/Query.php');
+  $transaction = new transaction();
+  $resultSet =  $transaction -> getPrepairingOrder();
+  $count = 0;
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    <body>
-    <div class="container text-center">
+<head>
+  <title>Admin OQ</title>
+    
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+</head>
+<body class="bg-light">
 
-        <button class="btn btn-success col-sm-4" id="admin">Admin</button>
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <h1 class="font-weight-normal mt-5 mb-4 text-center">Orders Queue</h1>
+      <button class="btn btn-lg btn-danger col-12 mb-3" id="admin">Admin</button>
         <script>
             document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };    
         </script> 
         
-        <div class="col-lg-12">
-            <table class="table table-striped" border="10">
+      <div class="table-responsive col-lg-12">
+        <table class="table table-striped table-bordered col-lg-12">
+          <thead class="table-dark">
             <tr>	
-            <th scope="col">Orders ID</th>
-            <th scope="col">Queue Number</th>
+              <th scope="col">ORDERS ID</th>
+              <th scope="col">QUEUE NO.</th>
             </tr>
-              <tbody>
+          </thead>
+          <tbody>
                 <?php
                 $i = 1;
                 if($resultSet != null)
@@ -38,9 +45,11 @@ $count = 0;
                 <td><?php echo $i;?></td>
                 </tr>
                 <?php $i++;} ?>
-              </tbody>
-            </table>
-          </div>
-	    </div>
-    </body>
+          </tbody>
+        </table>
+      </div>
+	</div>
+</div>
+
+</body>
 </html>
