@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>  
+  <title>Admin Inventory</title>
+    
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>  
+
 </head>
-<body>
-  <div class="container text-center">
-    <button class="btn btn-success col-sm-4" id="admin">Admin</button>
-    <button id="addButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#loginModal">Add new dish</button>
+<body class="bg-light">
+
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <h1 class="font-weight-normal mt-5 mb-4 text-center">Inventory</h1>
+    <button class="btn btn-lg btn-danger col-12 mb-3" id="admin">Admin</button>
+    <button id="addButton" type="button" class="btn btn-lg btn-success col-12 mb-4" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
-    <div class="col-lg-12">
-			<table class="table table-striped" border="10">
-			  <thead>
+
+    <div class="table-responsive col-lg-12 mb-5">
+			<table class="table table-striped table-bordered col-lg-12">
+			  <thead class="table-dark">
 			    <tr>	
-            <th scope="col">picture</th>
-			      <th scope="col">Dishes</th>
-			      <th scope="col">Price</th>
-			      <th scope="col">Cost</th>
-			      <th scope="col">Stock</th>
+            <th scope="col">IMAGE</th>
+			      <th scope="col">DISH</th>
+			      <th scope="col">PRICE</th>
+			      <th scope="col">COST</th>
+			      <th scope="col">STOCK</th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -36,23 +44,25 @@
 			</table>
 		</div>
   </div>
+</div>
   
-  <div class="modal fade" role="dialog" id="loginModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body ">
-                <form method="post" class="form-group" enctype="multipart/form-data">
-                    <input type="text" class="form-control" name="dishes" placeholder="dishes" required>
-                    <input type="number" class="form-control" name="price" placeholder="price" required>
-                    <input type="number" class="form-control" name="cost" placeholder="cost" required>
-                    <input type="number" class="form-control" name="stock" placeholder="stock" required>
-                    <input type="file"  name="fileInput" required>
-                    <button type="submit" class="btn-success col-sm-12" name="insert">insert</button>
-                </form>
-            </div>
-        </div>
+<div class="modal fade" role="dialog" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body ">
+        <form method="post" class="form-group" enctype="multipart/form-data">
+          <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="Enter Dish Name" required>
+          <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter Price" required>
+          <input type="number" class="form-control form-control-lg mb-3" name="cost" placeholder="Enter Cost" required>
+          <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter Number of Stock" required>
+          <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
+          <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Insert</button>
+        </form>
+      </div>
     </div>
   </div>
+</div>
+
 </body>
 </html>
 

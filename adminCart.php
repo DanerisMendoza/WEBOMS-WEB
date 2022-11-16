@@ -1,25 +1,34 @@
 <?php 
-session_start(); 
+    session_start(); 
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
-    </head>
-    <body>    
-        <div class="container text-center">
-            <button class="btn btn-success col-sm-4" id="pos">Pos</button>
-            <button class="btn btn-success col-sm-4" id="clear">Clear Order</button>
-            <div class="col-lg-12">
-                <table  class="table table-striped" border="10">
+<head>
+    <title>Admin POS - View Cart</title>
+        
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+    <link rel="stylesheet" type="text/css" href="css/style.css">  
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
+
+</head>
+<body class="bg-light">    
+        
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <h1 class="font-weight-normal mt-5 mb-4">View Cart</h1>
+        <button class="btn btn-lg btn-danger col-12 mb-3" id="pos">POS</button>
+        <button class="btn btn-lg btn-success col-12 mb-4" id="clear">Clear Order</button>
+        
+        <div class="table-responsive col-lg-12 mb-5">
+            <table class="table table-striped table-bordered col-lg-12">
+                <thead class="table-dark">
                     <tr>
-                        <th scope="col">quantity</th>
-                        <th scope="col">dish</th>
-                        <th scope="col">cost</th>
+                        <th scope="col">QUANTITY</th>
+                        <th scope="col">DISH</th>
+                        <th scope="col">COST</th>
                     </tr>
+                </thead>
                     <?php 
                     $dishesArr = array();
                     $priceArr = array();
@@ -48,26 +57,26 @@ session_start();
                     
                     for($i=0; $i<count($dishesArr); $i++){ ?>
                     <tr>  
-                        <td> <?php echo $dishesQuantity[$i];?></td>
-                        <td> <?php echo $dishesArr[$i];?></td>
-                        <td> <?php echo '₱'.$priceArr[$i];?></td>
+                        <td><?php echo $dishesQuantity[$i];?></td>
+                        <td><?php echo $dishesArr[$i];?></td>
+                        <td><?php echo '₱'.$priceArr[$i];?></td>
                     </tr>
                     <?php }?>
                     <tr>
-                        <td colspan="2">Total</td>
-                        <td>₱<?php echo $total; ?></td>
+                        <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+                        <td><b>₱<?php echo $total; ?></b></td>
                     </tr>
-                </table> 
+            </table> 
        
-     
-                <form method="post">
-                    <input name="cash" placeholder="Cash Amount" type="number"></input>
-                    <br></br>    
-                    <button class="btn btn-danger col-sm-12" name="order">Order</button>
-                </form>
-            </div>
+            <form method="post">
+                <input name="cash" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3"></input>
+                <button class="btn btn-lg btn-success col-12 mb-5" name="order">Order</button>
+            </form>
         </div>
-    </body>
+    </div>
+</div>
+    
+</body>
 </html>
 
 <script>
@@ -101,18 +110,6 @@ $(document).ready(function () {
         $order-> displayReceipt(); 
     }
 ?>
-
-<style>
-    body{
-    background-image: url(settings/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    font-family: 'Josefin Sans',sans-serif;
-  }
-</style>
 
 <!-- 
         add pdf page and size

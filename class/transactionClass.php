@@ -120,35 +120,37 @@
 
         function generateOrdersTable($resultSet){
           ?>
-          <table class="table table-striped" border="10">
-          <tr>	
-            <th scope="col">name</th>
-            <th scope="col">Orders ID</th>
-            <th scope="col">_______</th>
-            <th scope="col">_______</th>
-            <th scope="col">Approve status:</th>
-            <th scope="col">Order Complete Status</th>
-            <th scope="col">Order status:
-              <form method="post">
-                <button class="btn" type="submit" name="showAll" style="font-size: 12px ;">Show/Unshow All</button>
-              </form>
-            </th>
-              <th scope="col">Date:</th>
-              <th scope="col">_______</th>
-            </tr>
+          <table class="table table-striped table-bordered col-lg-12">
+            <thead class="table-dark">
+              <tr>	
+                <th scope="col">NAME</th>
+                <th scope="col">ORDERS ID</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">APPROVE STATUS:</th>
+                <th scope="col">ORDER COMPLETE STATUS</th>
+                <th scope="col">ORDER STATUS:
+                  <form method="post">
+                    <button class="btn btn-light border-dark" type="submit" name="showAll">SHOW/HIDE ALL</button>
+                  </form>
+                  </th>
+                <th scope="col">DATE & TIME</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
             <tbody>
               <?php foreach($resultSet as $rows){?>
               <tr>	   
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo $rows['ordersLinkId'];?></td>
-                <td colspan="2"><a class="btn" style="background: white; padding:2px; border: 2px black solid; color:black;" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                <td colspan="2"><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td>
                   <?php 
                     if($rows['status'] == 1){
                       echo "Already Approved";
                     }
                     else{
-                      ?><a class="btn" style="background: blue; padding:2px; border: 2px black solid; color:black;" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
+                      ?><a class="btn btn-primary border-dark" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
                     }?>
                 </td>
                 <td>
@@ -160,7 +162,7 @@
                       echo "order is complete";
                     }
                     else{
-                      ?> <a class="btn"  style="background: green; padding:2px; border: 2px black solid; color:black;" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
+                      ?> <a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
                     }?>  
                 </td>
                 <td>
@@ -176,7 +178,7 @@
                   }
                 ?></td>
                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
-                <td><a class="btn" style="background: red; padding:2px; border: 2px black solid; color:black"href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
+                <td><a class="btn btn-danger border-dark" href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
               </tr><?php } ?>
             </tbody>   
           </table><?php

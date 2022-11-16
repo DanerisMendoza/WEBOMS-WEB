@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-    </head>
-    <body>
-    <div class="container text-center">
-        <div class="col-lg-12 cont2">
-          <button class="btn btn-success col-sm-4" id="orderList">Order List</button>
+<head>
+  <title>Costumer - Orders</title>
+  
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+    
+</head>
+<body class="bg-light">
+    
+<div class="container text-center">
+  <div class="row justify-content-center">
+    <h1 class="font-weight-normal mt-5 mb-4 text-center">View Order</h1>
+    <!-- <div class="col-lg-12"> -->
+    <button class="btn btn-lg btn-danger col-12 mb-4" id="orderList">Order List</button>
+
+    <div class="table-responsive col-lg-12">
             <?php 
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
@@ -17,14 +25,16 @@
               $order = new transactionById( $id );
               $arr =  $order -> getAllOrderById(); 
             ?>
-            <table class="table table-striped" border="10">
-            <tr>	
+      <table class="table table-striped table-bordered col-lg-12 mb-4">
+        <thead class="table-dark">
+          <tr>	
             <!-- <th scope="col">price</th> -->
-            <th scope="col">quantity</th>
-            <th scope="col">name</th>
-            <th scope="col">price</th>
-            </tr>
-              <tbody>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">NAME</th>
+            <th scope="col">PRICE</th>
+          </tr>
+        </thead>
+        <tbody>
                 <?php 
                 $total = 0;
                 foreach($arr as $rows){ ?>
@@ -32,39 +42,26 @@
                   <?php $price = ($rows['price']*$rows['quantity']);  $total += $price;?>
                   <td><?php echo $rows['quantity']; ?></td>
                   <td><?php echo $rows['dish']; ?></td>
-                  <td><?php echo $price?></td>
+                  <td><?php echo '₱' .$price?></td>
                 </tr>
                 <?php }?>
                 <tr>
-                  <td colspan="2">Total Amount:</td>
-                  <td><?php echo $total?></td>
+                  <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+                  <td><b>₱<?php echo $total?></b></td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <h1>Proof of Payment:</h1>
-            <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
-	    </div>
-    </body>
+        </tbody>
+      </table>
+    </div>
+          
+    <div class="mb-5">
+      <h1 class="font-weight-normal">PROOF OF PAYMENT:</h1>
+      <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
+    </div>
+  </div>
+</div>
+    
+</body>
 </html>
-
-<style>
-    body{
-    background-image: url(settings/bg.jpg);
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    font-family: 'Josefin Sans',sans-serif;
-  }
-
-	.cont2{
-     padding: 1%;
-     margin-top: 2%;
-     background: gray;
-   }
-</style>
 
 <script>
   document.getElementById("orderList").onclick = function () {window.location.replace('customerOrdersList.php'); };

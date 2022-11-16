@@ -1,48 +1,54 @@
 <?php
     session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Login </title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Log in</title>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
 </head>
-<body>
+<body class="bg-light">
 <?php include_once('connection.php');?>
+
 <div class="container">
   <div class="row justify-content-center">
-    <form  method="post" class="text-center col-6 margin_top form1" >
-      <img src="settings/logo.png"><br>
-      <input class="margin" type="text" name="username" placeholder="Username" ></br>
-      <input class="margin" type="password" name="password" placeholder="Password" ></br>
-      <button class="margin" type="submit" name="login" value="login">Login</button><br>
-      <div class="pass">Forgot Password?</div>
-      <div class="signup_link">
-        Not a member? <a href="register.php">Signup now</a>
+    <form  method="post" class="form1">
+      <!-- <img src="settings/logo.png"><br> -->
+      <h1 class="font-weight-normal mt-5 mb-4 text-center">Log in to your account</h1>
+      <input class="form-control form-control-lg mb-3" type="text" name="username" placeholder="Username" required>
+      <input class="form-control form-control-lg mb-3" type="password" name="password" placeholder="Password" required>
+      <div class="mb-3">
+        <a href="#" class="pass text-muted">Forgot Password?</a>
+      </div>
+      <button class="btn btn-primary btn-lg col-12 mb-3" type="submit" name="login" value="login">Login</button>
+      <div class="text-center text-muted mb-5">
+        Dont'have an account yet? <a href="register.php" class="signup_link text-muted">Sign up</a>
       </div>
     </form>
 
     <!-- otp (Bootstrap MODAL) -->
     <div class="modal fade" id="otpModal" role="dialog" >
-        <div class="modal-dialog">
-            <div class="modal-content container">
-                <div class="modal-body">
-                    <form method="post" class="form-group">
-                        <h3>Please Enter your OTP:</h3>
-                        <input type="text" class="form-control" placeholder="otp" name="otp" >          
-                        <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel">
-                        <input type="submit" value="Resend" name="Resend">
-                        <input type="submit" value="Verify" name="Verify">
-                    </form>
-                </div>
-            </div>
+      <div class="modal-dialog">
+        <div class="modal-content container">
+          <div class="modal-body">
+            <form method="post" class="form-group">
+              <h3 class="font-weight-normal mb-3">Please Enter Your OTP</h3>
+              <input type="text" class="form-control form-control-lg mb-3" placeholder="OTP" name="otp" >          
+              <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-3">
+              <input type="submit" value="Resend" name="Resend" class="btn btn-success btn-lg col-12 mb-3">
+              <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12">
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
     <?php
@@ -119,76 +125,3 @@
 
 </body>
 </html>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-body{
-  background-image: url(settings/bg.jpg); 
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  font-family: 'Josefin Sans', sans-serif;
-}
-/* Restaurant Logo */
-img{
-  max-width: 50%;
-  height: auto;
-  width: auto;
-}
-/* Container form1 */
-.form1{
-  background: gray;
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 15px 50px 15px;
-  height: auto;
-  border-radius: 15px;
-  /* box-shadow: 5px 7px black; */
-}
-/* Username & Password */
-input[type="text"],
-input[type="password"]{
-  width: 100%;
-  border-radius: 5px;
-  border-color: transparent;
-  padding: 10px 25px;
-  cursor: pointer;
-  font-size: 20px;
-}
-.margin{
-  margin: 10px 0 0;
-}
-/* Login Button */
-button{
-  display: block;
-  width: 100%;
-  border-radius: 5px;
-  border-color: transparent;
-  padding: 10px 25px;
-  cursor: pointer;
-  font-size: 18px;
-}
-button:hover{
-  border-color: #a6a6a6;
-  transition: .2s;
-}
-/* Forgot Password? */
-.pass{
-  color: #a6a6a6;
-  cursor: pointer;
-  font-size: 18px;
-}
-.pass:hover{
-  text-decoration: underline;
-}
-/* Signup Link */
-.signup_link{
-  color: white;
-  font-size: 18px;
-}
-</style>
