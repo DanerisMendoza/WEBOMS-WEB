@@ -26,6 +26,7 @@
         <tr>	
             <th scope="col">Dishes</th>
             <th scope="col">Price</th>
+            <th scope="col">Stock</th>
             <th scope="col">picture</th>
         </tr>
         <?php 
