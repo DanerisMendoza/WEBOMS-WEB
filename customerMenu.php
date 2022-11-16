@@ -32,8 +32,8 @@
                     <tr>	
                         <th scope="col">DISH</th>
                         <th scope="col">PRICE</th>
+                        <th scope="col">Stock</th>
                         <th scope="col">IMAGE</th>
-            <th scope="col">Stock</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
