@@ -21,7 +21,6 @@
     <button class="btn btn-lg btn-primary col-12 mb-3" id="ordersQueue">Orders Queue</button>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="inventory">Inventory</button>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="salesReport">Sales Report</button>
-    <!-- <button class="btn" id="settings">Settings</button> -->
     <button class="btn btn-lg btn-danger col-12 mb-3" id="Logout">Logout</button>
 
     <script>
@@ -31,12 +30,11 @@
     document.getElementById("ordersQueue").onclick = function () {window.location.replace('adminOrdersQueue.php'); };
     document.getElementById("inventory").onclick = function () {window.location.replace('adminInventory.php'); };
     document.getElementById("salesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
-    // document.getElementById("settings").onclick = function () {window.location.replace('adminSettings.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('Login.php'); 
     $.post(
         "method/clearSessionMethod.php", {
         }
-    );};
+    );}
     </script>
 
   </div>

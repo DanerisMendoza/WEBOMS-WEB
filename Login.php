@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +12,6 @@
 
 </head>
 <body class="bg-light">
-<?php include_once('connection.php');?>
 
 <div class="container">
   <div class="row justify-content-center">
@@ -52,6 +47,8 @@
     </div>
 
     <?php
+        session_start();
+        include('method/query.php');
         if(isset($_POST['login'])){
             $_SESSION["username"]  = $_POST['username'];
             $username = $_POST['username'];
@@ -61,10 +58,9 @@
                 echo "<script>window.location.replace('login.php')</script>";
                 return;
             }
-        
             //user block
             $query = "select * from user_tb where username = '$username'";
-            $resultSet = $conn->query($query);
+            $resultSet = getQuery($query);
             if(($resultSet && $resultSet->num_rows)  > 0){
                 foreach($resultSet as $rows){
                     $valid = password_verify($password, $rows['password'])?true:false;
@@ -72,56 +68,50 @@
                 }
                 if($valid){
                   $query = "select * from customer_Tb where name = '$username'";
-                  $resultSet = $conn->query($query);
+                  $resultSet = getQuery($query);
                   foreach($resultSet as $row){
                     $otp = $row['otp'];
                     $_SESSION['userLinkId'] = $rows['userLinkId'];
                   }
-                  
                   switch($accountType){
-                    case 1://admin
+                    case 1://admin block
                       echo "<script> window.location.replace('admin.php');</script>";
                     break;
-
-                    case 2://customer
+                    case 2://customer block
                       if($valid && $otp == ""){
-
                         echo "<SCRIPT> window.location.replace('customer.php?username=$username');  </SCRIPT>";
                       }
-                      else if($valid && $otp != "")
+                      else if($valid && $otp != ""){
                         echo "<script>$('#otpModal').modal('show');</script>";
-                      else
+                      }
+                      else{
                         echo "<script>alert('incorrect username or password!');</script>";
+                      }
                     break;
-
                   }
                 }
-                else
+                else{
                     echo "<script>alert('incorrect username or password!');</script>";
+                }
             }
-            else
-                echo "<script>alert('incorrect username or password! $conn->error');</script>";
-            
+            else{
+                echo "<script>alert('incorrect username or password!');</script>";
+            }
         }
         if(isset($_POST['Verify'])){
             $username = $_SESSION["username"];
             $otp = $_POST['otp'];
             $userLinkId = $_SESSION['userLinkId'];
-            $readQuery = "select * from customer_tb where userlinkId = '$userLinkId' && otp = '$otp' ";
-            $result = mysqli_query($conn,$readQuery);
-            if(mysqli_num_rows($result) === 1){
-                // while($rows = mysqli_fetch_assoc($result))
-                //     $_SESSION['userlinkId'] = $rows['userlinkId'];
+            $query = "select * from customer_tb where userlinkId = '$userLinkId' && otp = '$otp' ";
+            $resultSet = getQuery($query);
+            if($resultSet != null){
                 $updateQuery = "UPDATE customer_tb SET otp='' WHERE otp='$otp'";
-                if(mysqli_query($conn, $updateQuery))
+                if(Query($updateQuery))
                     echo "<SCRIPT> window.location.replace('customer.php?username=$username'); </SCRIPT>";
             }
             else
               echo  '<script>alert("Incorrect Otp!"); window.location.replace("login.php");</script>';
         }
-
     ?>
-
-
 </body>
 </html>

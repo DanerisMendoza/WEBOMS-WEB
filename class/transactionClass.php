@@ -55,59 +55,52 @@
 
         //queries
 
-        function getAllTransaction(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId  ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
 
-        function getAllNotCompleteTransaction(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId && orderlist_tb.isOrdersComplete = 0 ORDER BY orderlist_tb.id asc; ";
-            return getQuery($query);
-        }
+     
 
         function getAllTransactionComplete(){
-          $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 ORDER BY orderlist_tb.id asc; ";
+          $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 1 ORDER BY order_tb.id asc; ";
           return getQuery($query);
         }
 
         function getAllSold(){
-          $query = "select dishes_tb.*,order_tb.*,orderList_tb.isOrdersComplete from dishes_tb inner join order_tb on dishes_tb.orderType = order_tb.orderType inner join orderList_tb on orderList_tb.ordersLinkId = order_tb.OrdersLinkId where orderList_tb.isOrdersComplete = 1;";
+          $query = "select menu_tb.*,ordersDetail_tb.*,order_tb.isOrdersComplete from menu_tb inner join ordersDetail_tb on menu_tb.orderType = ordersDetail_tb.orderType inner join order_tb on order_tb.ordersLinkId = ordersDetail_tb.OrdersLinkId where order_tb.isOrdersComplete = 1;";
           return getQuery($query);
         }
 
         function getApprovedOrderList(){
-          $query = "select user_tb.name, orderlist_tb.* from user_tb, orderlist_tb where user_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
+          $query = "select user_tb.name, order_tb.* from user_tb, order_tb where user_tb.userlinkId = order_tb.userlinkId and order_tb.status = 1 ORDER BY order_tb.id asc; ";
           return getQuery($query);
         }
 
         function getPrepairingOrder(){
-            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 0 and orderlist_tb.status = 1 ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 0 and order_tb.status = 1 ORDER BY order_tb.id asc; ";
             return getQuery($query);
         }
 
 
         function getOrderListByCustomer(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and customer_tb.username = '{$this -> username}' ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and customer_tb.username = '{$this -> username}' ORDER BY order_tb.id asc; ";
             return getQuery($query);
         }
 
         function getOrderListByUserLinkId(){
-            $query = "select customer_tb.*, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userLinkId = orderlist_tb.userlinkId and customer_tb.userLinkId = '{$this->userlinkId}';";
+            $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userLinkId = order_tb.userlinkId and customer_tb.userLinkId = '{$this->userlinkId}';";
             return getQuery($query);
         }
 
         function getAllOrderById(){
-            $query = "select dishes_tb.*, order_tb.* from dishes_tb inner join order_tb where dishes_tb.orderType = order_tb.orderType and order_tb.ordersLinkId = '{$this->id}' ";
+            $query = "select menu_tb.*, ordersDetail_tb.* from menu_tb inner join ordersDetail_tb where menu_tb.orderType = ordersDetail_tb.orderType and ordersDetail_tb.ordersLinkId = '{$this->id}' ";
             return getQuery($query);
         }
   
         function getOrderListByDates(){
-            $query = "select customer_tb.name, orderlist_tb.* from customer_tb, orderlist_tb where customer_tb.userlinkId = orderlist_tb.userlinkId and orderlist_tb.isOrdersComplete = 1 and orderlist_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY orderlist_tb.id asc; ";
+            $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 1 and order_tb.date between '{$this->date1}' and '{$this->date2}' ORDER BY order_tb.id asc; ";
             return getQuery($query);
         }
         
         function setOrderComplete(){
-            $query = "UPDATE orderList_tb SET isOrdersComplete=true WHERE ordersLinkId='{$this->id}' ";     
+            $query = "UPDATE order_tb SET isOrdersComplete=true WHERE ordersLinkId='{$this->id}' ";     
             if(Query($query)){
                 echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
             }
@@ -118,82 +111,6 @@
 
         //methods | functions
 
-        function generateOrdersTable($resultSet){
-          ?>
-          <table class="table table-striped table-bordered col-lg-12">
-            <thead class="table-dark">
-              <tr>	
-                <th scope="col">NAME</th>
-                <th scope="col">ORDERS ID</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col">APPROVE STATUS:</th>
-                <th scope="col">ORDER COMPLETE STATUS</th>
-                <th scope="col">ORDER STATUS:
-                  <form method="post">
-                    <button class="btn btn-light border-dark" type="submit" name="showAll">SHOW/HIDE ALL</button>
-                  </form>
-                  </th>
-                <th scope="col">DATE & TIME</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach($resultSet as $rows){?>
-              <tr>	   
-                <td><?php echo $rows['name']; ?></td>
-                <td><?php echo $rows['ordersLinkId'];?></td>
-                <td colspan="2"><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-                <td>
-                  <?php 
-                    if($rows['status'] == 1){
-                      echo "Already Approved";
-                    }
-                    else{
-                      ?><a class="btn btn-primary border-dark" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
-                    }?>
-                </td>
-                <td>
-                  <?php 
-                    if($rows['status'] != 1){
-                      echo "waiting for approval";
-                    }
-                    elseif($rows['isOrdersComplete'] == 1){
-                      echo "order is complete";
-                    }
-                    else{
-                      ?> <a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
-                    }?>  
-                </td>
-                <td>
-                <?php
-                  if($rows['isOrdersComplete'] == 0 && $rows['status'] == 0){
-                    echo "Pending";
-                  }
-                  elseif($rows['isOrdersComplete'] == 0){
-                    echo "Preparing";
-                  }
-                  else{
-                    echo "Order Complete";
-                  }
-                ?></td>
-                <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
-                <td><a class="btn btn-danger border-dark" href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
-              </tr><?php } ?>
-            </tbody>   
-          </table><?php
-        }
      }
-     class transactionById extends transaction{
-        function __construct($id)
-        {
-          $this -> id = $id;
-        }
-     }
-     
-     class transactionEmpty extends transaction{
-        function __construct(){
-
-        }
-     }
+  
 ?>

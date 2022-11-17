@@ -1,9 +1,9 @@
 <?php 
     session_start();
     if(!isset($_SESSION["dishes"]) || !isset($_SESSION["price"]) || !isset($_SESSION["orderType"])){
-    $_SESSION["dishes"] = array();
-    $_SESSION["price"] = array(); 
-    $_SESSION["orderType"] = array(); 
+        $_SESSION["dishes"] = array();
+        $_SESSION["price"] = array(); 
+        $_SESSION["orderType"] = array(); 
     }
 ?>
 
@@ -37,13 +37,22 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
+                <tbody>
                 <?php 
-                    include_once('class/dishClass.php');
                     include_once('method/query.php');
-                    $dish = new dish();
-                    $resultSet =  $dish -> getAllDishes(); 
-                    $dish -> generateDishTableBodyMenu($resultSet);
-                ?>
+                    $query = "select * from menu_tb";
+                    $resultSet =  getQuery($query);
+                    if($resultSet != null)
+                        foreach($resultSet as $rows){ ?>
+                        <tr>	   
+                            <td><?=$rows['dish']?></td>
+                            <td><?php echo '₱'.$rows['price']; ?></td>
+                            <td><?php echo $rows['stock']; ?></td>
+                            <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                            <td><a class="btn btn-light border-dark" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
+                        </tr>
+                        <?php } ?>
+                </tbody>
             </table>
         </div>
     </div>

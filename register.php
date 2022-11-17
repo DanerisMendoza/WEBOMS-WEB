@@ -10,16 +10,13 @@
 <div class="container px-5">
   <div class="row justify-content-center">
     <form method="post" class="form2">
-      <!-- <img src="settings/logo.png"><br> -->
       <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
       <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter Username" required>
       <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter Name" required>
       <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email" required>
       <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter Password" required>
       <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" name="createAccount">Sign Up</button><br>
-      <!-- <button type="button" class="button2" id="back">Back</button><br> -->
-      <div class="mb-5 text-muted text-center">
-        Have already an account? <a href="Login.php" class="login_link text-muted">Log in</a>
+      <div class="mb-5 text-muted text-center">Have already an account? <a href="Login.php" class="login_link text-muted">Log in</a>
       </div>
     </form>
   </div>
@@ -38,6 +35,7 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
+
     if(isset($_POST['createAccount'])){
         $username = $_POST['username'];
         $name = $_POST['name'];
@@ -57,34 +55,24 @@
         require 'vendor/autoload.php';
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
-        try {
-            //Server settings
-            $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
-            $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
-            $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-            $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-    
-            //Recipients
-            $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
-            $mail->addAddress("$email");                                //sent to
-    
-            //Content
-            $mail->Subject = 'OTP';
-            $mail->Body    = $otp;
-    
-            $mail->send();
-            
-        }catch (Exception $e) {
-            //return if there is an error in sending an otp
-            echo $mail->ErrorInfo;
-            echo "<script>window.location.replace('register.php');</script>";
-            return;
-        }
+        //Server settings
+        $mail->SMTPDebug  = SMTP::DEBUG_OFF;
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                     //Enable verbose debug output
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
+        $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
+        $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
+        $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+        //Recipients
+        $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
+        $mail->addAddress("$email");                                //sent to
+        //Content
+        $mail->Subject = 'OTP';
+        $mail->Body    = $otp;
+        $mail->send();
 
       $userLinkId = uniqid('',true);
       $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','2','$userLinkId')";

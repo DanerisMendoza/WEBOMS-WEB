@@ -29,24 +29,32 @@
               
     <div class="table-responsive col-lg-12">
             <?php 
-                include_once('class/dishClass.php');
                 include('method/Query.php');
-                $dish = new dish();
-                $resultSet =  $dish -> getAllDishes(); 
+                $query = "select * from menu_tb";
+                $resultSet =  getQuery($query)
             ?>
       <table class="table table-striped table-bordered mb-5 col-lg-12">
         <thead class="table-dark">
           <tr>	
             <th scope="col">DISH</th>
             <th scope="col">PRICE</th>
+            <th scope="col">Stock</th>
             <th scope="col">IMAGE</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-                <?php
-                  $dish->generateDishTableBodyMenu($resultSet);
-                ?>
+          <?php 
+          if($resultSet != null)
+            foreach($resultSet as $rows){ ?>
+            <tr>	   
+                <td><?=$rows['dish']?></td>
+                <td><?php echo '₱'.$rows['price']; ?></td>
+                <td><?php echo $rows['stock']; ?></td>
+                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                <td><a class="btn btn-light border-dark" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
+            </tr>
+            <?php } ?>
         </tbody>
       </table>
     </div>

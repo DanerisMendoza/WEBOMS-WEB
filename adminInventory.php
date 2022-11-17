@@ -10,14 +10,12 @@
 
 </head>
 <body class="bg-light">
-
 <div class="container text-center">
   <div class="row justify-content-center">
     <h1 class="font-weight-normal mt-5 mb-4 text-center">Inventory</h1>
     <button class="btn btn-lg btn-danger col-12 mb-3" id="admin">Admin</button>
     <button id="addButton" type="button" class="btn btn-lg btn-success col-12 mb-4" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
-
     <div class="table-responsive col-lg-12 mb-5">
 			<table class="table table-striped table-bordered col-lg-12">
 			  <thead class="table-dark">
@@ -33,12 +31,22 @@
 			  </thead>
 			  <tbody>
 			  	<?php 
-            include('class/dishClass.php');
             include('method/Query.php');
-            $dish = new dish();
-            $resultSet = $dish -> getAllDishes();
-            if($resultSet != null)
-              $dish->generateDishTableBodyInventory($resultSet);
+            $query = "select * from menu_tb";
+            $resultSet = getQuery($query);
+            if($resultSet != null){
+              foreach($resultSet as $rows){?>
+                <tr>	   
+                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                <td><?=$rows['dish']?></td>
+                <td><?php echo '₱'.$rows['price']; ?></td>
+                <td><?php echo '₱'.$rows['cost']; ?></td>
+                <td><?php echo $rows['stock']; ?></td>
+                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
+                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
+                </tr>
+                <?php } 
+            }
 			  	 ?>
 			  </tbody>
 			</table>
@@ -72,8 +80,11 @@
     $arr = explode(' ',$_GET['idAndPicnameDelete']);
     $id = $arr[0];
     $pic = $arr[1];
-    $dish = new dish($id, $pic);
-    $dish ->deleteDishOnDatabase();
+    $query = "DELETE FROM menu_tb WHERE orderType='$id' ";
+    if(Query($query)){
+      unlink("dishespic/"."$pic");
+      echo "<script> window.location.replace('adminInventory.php');</script>";
+    }
   }
 
   //insert
@@ -101,8 +112,8 @@
               $fileNameNew = uniqid('',true).".".$fileActualExt;
               $fileDestination = 'dishesPic/'.$fileNameNew;
               move_uploaded_file($fileTmpName,$fileDestination);         
-              $dish = new dish($dishes, $price, $fileNameNew, $cost, $stock);
-              $dish->insertNewDishToDatabase();        
+              $query = "insert into menu_tb(dish, price, picName, cost, stock) values('$dishes','$price','$fileNameNew','$cost','$stock')";
+              Query($query);
               echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }
           else

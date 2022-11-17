@@ -11,7 +11,7 @@
         //queries
 
         function getAllFeedbackSortedByUserLinkId(){
-            $query = "select customer_tb.*, feedback_tb.*, orderList_tb.* from customer_tb, orderList_tb, feedback_tb where customer_tb.userlinkId = orderList_tb.userlinkId and feedback_tb.ordersLinkId = orderList_tb.ordersLinkId;";
+            $query = "select customer_tb.*, feedback_tb.*, order_tb.* from customer_tb, order_tb, feedback_tb where customer_tb.userlinkId = order_tb.userlinkId and feedback_tb.ordersLinkId = order_tb.ordersLinkId;";
             return getQuery($query);
         }
 

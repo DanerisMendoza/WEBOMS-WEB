@@ -18,7 +18,7 @@
         $initialCost = 0;
         $stock = 0;
         $profit = 0;
-        $query = "select * from dishes_tb";
+        $query = "select * from menu_tb";
         $resultSet = getQuery($query);
         foreach($resultSet as $row){
             $initialCost += ($row['cost'] * $row['stock']);

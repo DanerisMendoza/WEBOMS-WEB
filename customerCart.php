@@ -57,9 +57,8 @@
                     foreach(array_count_values($_SESSION['dishes']) as $count){
                         array_push($dishesQuantity,$count);
                     }
-                       
+
                     $total = 0;
-                    //getting total price
                     for($i=0; $i<count($priceArr); $i++){
                         $total += $priceArr[$i];
                     }
@@ -106,12 +105,11 @@ $(document).ready(function () {
 
 </script> 
 <?php
-
     if(isset($_POST['order'])){
+        include('method/query.php');
         $file = $_FILES['fileInput'];
         if($_FILES['fileInput']['name']=='')
             echo "<script>alert('Please complete the details!'); window.location.replace('customerCart.php');</script>";
-        include_once('connection.php');
         $fileName = $_FILES['fileInput']['name'];
         $fileTmpName = $_FILES['fileInput']['tmp_name'];
         $fileSize = $_FILES['fileInput']['size'];
@@ -128,14 +126,13 @@ $(document).ready(function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into orderList_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime', '0')";
-                    
+                    $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime', '0')";
                     for($i=0; $i<count($dishesArr); $i++){
-                        $query2 = "insert into order_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
-                        mysqli_query($conn,$query2);
+                        $query2 = "insert into ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
+                        Query($query2);
                     }
 
-                    if(mysqli_query($conn,$query1)){
+                    if(Query($query1)){
                         echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
                         $_SESSION["dishes"] = array();
                         $_SESSION["price"] = array();      

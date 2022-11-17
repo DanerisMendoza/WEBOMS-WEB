@@ -15,8 +15,6 @@
         }
     }
 
-
-
     function Query($query){
         include('connection.php');
         if($conn->query($query)){
@@ -26,6 +24,4 @@
             die ($conn->error);
         }
     }
-
-
 ?>

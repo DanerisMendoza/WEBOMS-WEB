@@ -95,7 +95,7 @@
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'dishesPic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
-                    $updateQuery = "UPDATE dishes_tb
+                    $updateQuery = "UPDATE menu_tb
                     SET dish='$dish', 
                     price='$price',
                     picName = '$fileNameNew',
