@@ -21,10 +21,9 @@
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
               $pic = $arr[1];
-              include_once('class/transactionClass.php');
               include('method/Query.php');
-              $order = new transactionById( $id );  
-              $arr =  $order -> getAllOrderById(); 
+              $query = "select menu_tb.*, ordersDetail_tb.* from menu_tb inner join ordersDetail_tb where menu_tb.orderType = ordersDetail_tb.orderType and ordersDetail_tb.ordersLinkId = '$id' ";
+              $resultSet = getQuery($query); 
             ?>
             <table class="table table-striped table-bordered border-dark col-lg-12">
               <thead class="table-dark">
@@ -38,8 +37,8 @@
               <tbody>
                 <?php 
                 $total = 0;
-                if($arr != null)
-                foreach($arr as $rows){ ?>
+                if($resultSet != null)
+                foreach($resultSet as $rows){ ?>
                 <tr>	   
                   <?php $price = ($rows['price']*$rows['quantity']);  $total += $price;?>
                   <td><?php echo $rows['quantity']; ?></td>

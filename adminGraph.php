@@ -12,8 +12,6 @@
 <body class="bg-light">
     <?php
         include('method/query.php');
-        include('class/transactionClass.php');
-        $transaction = new transactionEmpty();
         $sold = 0;
         $initialCost = 0;
         $stock = 0;
@@ -23,7 +21,8 @@
         foreach($resultSet as $row){
             $initialCost += ($row['cost'] * $row['stock']);
         }
-        $resultSet = $transaction ->getAllSold();
+        $query = "select menu_tb.*,ordersDetail_tb.*,order_tb.isOrdersComplete from menu_tb inner join ordersDetail_tb on menu_tb.orderType = ordersDetail_tb.orderType inner join order_tb on order_tb.ordersLinkId = ordersDetail_tb.OrdersLinkId where order_tb.isOrdersComplete = 1;";
+        $resultSet = getQuery($query);
         foreach($resultSet as $row){
             $sold += ($row['price']*$row['quantity']);
         }

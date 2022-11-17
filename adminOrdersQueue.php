@@ -2,10 +2,9 @@
   session_start();
 
   $isSame = false;
-  include_once('class/transactionClass.php');
   include('method/Query.php');
-  $transaction = new transaction();
-  $resultSet =  $transaction -> getPrepairingOrder();
+  $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 0 and order_tb.status = 1 ORDER BY order_tb.id asc; ";
+  $resultSet = getQuery($query);
   $count = 0;
 ?>
 <!DOCTYPE html>

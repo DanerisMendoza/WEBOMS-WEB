@@ -1,16 +1,15 @@
 <?php
-    include_once('class/transactionClass.php');
     include('method/Query.php');
 
     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
-        $dateFetch1 = $_POST['dateFetch1'];
-        $dateFetch2 = $_POST['dateFetch2'];
-        $transaction = new transaction($dateFetch1,$dateFetch2);
-        $resultSet =  $transaction -> getOrderListByDates(); 
+        $date1 = $_POST['dateFetch1'];
+        $date2 = $_POST['dateFetch2'];
+        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 1 and order_tb.date between '$date1' and '$date2' ORDER BY order_tb.id asc; ";
+        $resultSet =  getQuery($query); 
     }
     else{
-        $transaction = new transactionEmpty();
-        $resultSet =  $transaction -> getAllTransactionComplete(); 
+        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 1 ORDER BY order_tb.id asc; ";
+        $resultSet =  getQuery($query); 
     }
 ?>
 <!DOCTYPE html>
@@ -34,7 +33,6 @@
             <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-4" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
             <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button>
         </form>
-        <!-- <form method="POST"><button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button></form> -->
             <div class="table-responsive col-lg-12">
                 <table class="table table-striped table-bordered col-lg-12">
                     <thead class="table-dark">
@@ -48,16 +46,16 @@
                     </thead>
                     <tbody>
                         <?php 
-                        if(!empty($resultSet))
-                        foreach($resultSet as $rows){ ?>
-                        <tr>	   
-                        <td><?php echo $rows['name']; ?></td>
-                        <td><?php echo $rows['ordersLinkId'];?></td>
-                        <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Pending"); ?></td>
-                        <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-                        <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
-                        </tr>
-                        <?php } ?>
+                        if($resultSet != null)
+                            foreach($resultSet as $rows){ ?>
+                                <tr>	   
+                                <td><?php echo $rows['name']; ?></td>
+                                <td><?php echo $rows['ordersLinkId'];?></td>
+                                <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Pending"); ?></td>
+                                <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                                <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
+                                </tr>
+                            <?php } ?>
                     </tbody>
                 </table>
             </div>

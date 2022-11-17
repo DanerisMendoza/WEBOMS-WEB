@@ -32,9 +32,9 @@
         $ordersLinkId = $arr[0];
         $userLinkId = $arr[1];
         $feedback = $_POST['feedback'];
-        include('class/feedbackClass.php');
         include('method/Query.php');
-        $dish = new feedback($feedback,$ordersLinkId,$userLinkId);
-        $dish -> giveFeedBackByOrdersLinkIdAndUserLinkId();
+        $query = "insert into feedback_tb(feedback, ordersLinkId, userLinkId) values('$feedback', '$ordersLinkId', '$userLinkId')";
+        if(Query($query))
+            echo "<script>alert('feedback sent thanks!'); window.location.replace('customerOrdersList.php');</script>";
     }
 ?>

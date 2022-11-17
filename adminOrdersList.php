@@ -216,8 +216,9 @@
   //button to make transaction complete
     if(isset($_GET['orderComplete'])){
       $id = $_GET['orderComplete'];
-      $transaction =  new transactionById($id);
-      $transaction -> setOrderComplete();
+      $query = "UPDATE order_tb SET isOrdersComplete=true WHERE ordersLinkId='$id' ";     
+      if(Query($query))
+        echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
     }
   //button to show even completed order or show pending orders only
     if(isset($_POST['showAll'])){

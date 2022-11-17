@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Costumer - View Your Orders</title>
-        
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
   <link rel="stylesheet" type="text/css" href="css/style.css">
     
@@ -32,11 +31,10 @@
         <tbody>
                 <?php
                 session_start();
-                include_once('class/transactionClass.php');
-                include_once('class/feedbackClass.php');
                 include('method/Query.php');
-                $transaction = transaction::withUserLinkId($_SESSION["userLinkId"]);  //Scope Resolution Operator (::) double colon = jump to search 
-                $resultSet =  $transaction -> getOrderListByUserLinkId(); 
+                $userlinkId = $_SESSION["userLinkId"];  //Scope Resolution Operator (::) double colon = jump to search 
+                $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userLinkId = order_tb.userlinkId and customer_tb.userLinkId = '$userlinkId';";
+                $resultSet = getQuery($query);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
@@ -46,8 +44,11 @@
                 <td><?php echo $rows['email']; ?></td>
                 <td><a class="btn btn-light border-dark" href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
-                  $transaction =  new feedback('',$rows['ordersLinkId'],$rows['userLinkId']);
-                  if($rows['status'] == 1 && $transaction->CustomerFeedback() == null){
+                  $ordersLinkId = $rows['ordersLinkId'];
+                  $userLinkId = $rows['userLinkId'];
+                  $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='$ordersLinkId' AND userLinkId = '$userLinkId' ";
+                  $resultSet = getQuery($query);
+                  if($rows['status'] == 1 && $resultSet == null){
                     ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userLinkId']?>">Feedback</a>  <?php
                   }
                   elseif($rows['status'] == 1){

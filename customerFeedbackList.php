@@ -17,11 +17,30 @@
           </script> 
           <?php
               session_start();
-              include_once('class/feedbackClass.php');
               include_once('method/query.php');
-              $feedback = new feedbackEmpty();  
-              $resultSet =  $feedback -> getAllFeedbackSortedByUserLinkId(); 
-              $feedback -> generateAllFeedbackTable($resultSet);
+              $query = "select customer_tb.*, feedback_tb.*, order_tb.* from customer_tb, order_tb, feedback_tb where customer_tb.userlinkId = order_tb.userlinkId and feedback_tb.ordersLinkId = order_tb.ordersLinkId;";
+              $resultSet =  getQuery($query);
+              ?>
+              <div class="table-responsive col-lg-12">
+              <table class="table table-striped table-bordered mb-5 col-lg-12">
+              <thead class="table-dark">
+                  <tr>	
+                  <th scope="col">NAME</th>
+                  <th scope="col">FEEDBACK</th>
+                  </tr>
+              </thead>
+                <tbody>
+                  <?php
+                  if($resultSet!= null)
+                  foreach($resultSet as $rows){ ?>
+                  <tr>	   
+                    <td><?php echo $rows['name']; ?></td>
+                    <td><?php echo $rows['feedback'];?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+              <?php
           ?>
           </div>
 	    </div>
