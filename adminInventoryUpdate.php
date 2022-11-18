@@ -56,6 +56,7 @@
 </html>
 
 <?php
+    include('method/checkIfAccountLoggedIn.php');
     //if update button click
     if(isset($_POST['update'])){
         include('method/query.php');

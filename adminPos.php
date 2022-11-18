@@ -1,6 +1,5 @@
 <?php 
-  session_start();
-
+  include('method/checkIfAccountLoggedIn.php');
   if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
     $_SESSION["dishes"] = array();
     $_SESSION["price"] = array(); 
@@ -71,11 +70,15 @@
 </html>
 
 <?php 
+    //add to cart
     if(isset($_GET['order'])){
       $order = explode(',',$_GET['order']);  
       $dish = $order[0];
       $price = $order[1];
       array_push($_SESSION['dishes'], $dish);
       array_push($_SESSION['price'], $price);
+      $updateQuery = "UPDATE menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+      if(Query($updateQuery))
+        echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 ?>

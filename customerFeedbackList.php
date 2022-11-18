@@ -16,7 +16,7 @@
               document.getElementById("customer").onclick = function () {window.location.replace('customerMenu.php'); };    
           </script> 
           <?php
-              session_start();
+              include('method/checkIfAccountLoggedIn.php');
               include_once('method/query.php');
               $query = "select customer_tb.*, feedback_tb.*, order_tb.* from customer_tb, order_tb, feedback_tb where customer_tb.userlinkId = order_tb.userlinkId and feedback_tb.ordersLinkId = order_tb.ordersLinkId;";
               $resultSet =  getQuery($query);

@@ -1,5 +1,5 @@
 <?php 
-  session_start();
+  include('method/checkIfAccountLoggedIn.php');
   $_SESSION['query'] = null
 ?>
 
@@ -32,7 +32,7 @@
     document.getElementById("salesReport").onclick = function () {window.location.replace('adminSalesReport.php'); };
     document.getElementById("Logout").onclick = function () {window.location.replace('Login.php'); 
     $.post(
-        "method/clearSessionMethod.php", {
+        "method/logout.php",{
         }
     );}
     </script>

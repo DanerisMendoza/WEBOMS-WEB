@@ -75,11 +75,15 @@
                   }
                   switch($accountType){
                     case 1://admin block
+                      $_SESSION['username'] = $username;
+                      $_SESSION['account'] = 'valid';
                       echo "<script> window.location.replace('admin.php');</script>";
                     break;
                     case 2://customer block
                       if($valid && $otp == ""){
-                        echo "<SCRIPT> window.location.replace('customer.php?username=$username');  </SCRIPT>";
+                        $_SESSION['username'] = $username;
+                        $_SESSION['account'] = 'valid';
+                        echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
                       }
                       else if($valid && $otp != ""){
                         echo "<script>$('#otpModal').modal('show');</script>";
@@ -106,8 +110,11 @@
             $resultSet = getQuery($query);
             if($resultSet != null){
                 $updateQuery = "UPDATE customer_tb SET otp='' WHERE otp='$otp'";
-                if(Query($updateQuery))
+                if(Query($updateQuery)){
                     echo "<SCRIPT> window.location.replace('customer.php?username=$username'); </SCRIPT>";
+                    $_SESSION['username'] = $username;
+                    $_SESSION['account'] = 'valid';
+                }
             }
             else
               echo  '<script>alert("Incorrect Otp!"); window.location.replace("login.php");</script>';

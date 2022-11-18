@@ -1,6 +1,5 @@
 <?php 
-  session_start();
-
+  include('method/checkIfAccountLoggedIn.php');
   $isSame = false;
   include('method/Query.php');
   $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 0 and order_tb.status = 1 ORDER BY order_tb.id asc; ";

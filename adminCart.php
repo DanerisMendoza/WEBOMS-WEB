@@ -1,5 +1,6 @@
 <?php 
-    session_start(); 
+    include('method/checkIfAccountLoggedIn.php');
+    include('method/query.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,9 @@
     <div class="row justify-content-center">
         <h1 class="font-weight-normal mt-5 mb-4">View Cart</h1>
         <button class="btn btn-lg btn-danger col-12 mb-3" id="pos">POS</button>
-        <button class="btn btn-lg btn-success col-12 mb-4" id="clear">Clear Order</button>
+        <form method="post">
+            <button type="submit" class="btn btn-lg btn-success col-12 mb-5" name="clear">clear</button>
+        </form>
         
         <div class="table-responsive col-lg-12 mb-5">
             <table class="table table-striped table-bordered col-lg-12">
@@ -69,7 +72,7 @@
        
             <form method="post">
                 <input name="cash" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3" required></input>
-                <button class="btn btn-lg btn-success col-12 mb-5" name="order">Order</button>
+                <button type ="submit" class="btn btn-lg btn-success col-12 mb-5" name="order">Order</button>
             </form>
         </div>
     </div>
@@ -81,29 +84,33 @@
 <script>
 document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); }
 
-$(document).ready(function () {
-    $("#clear").click(function () {
-        $.post(
-            "method/clearMethod.php", {
-            }
-        );
-        window.location.replace('adminCart.php');
-    });
-});
+
 
 </script> 
 
 <?php
+    //clear button
+    if(isset($_POST['clear'])){
+        for($i=0; $i<count($dishesArr); $i++){ 
+            $updateQuery = "UPDATE menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            Query($updateQuery);    
+        }
+        $_SESSION["dishes"] = array();
+        $_SESSION["price"] = array();
+        $_SESSION["orderType"] = array(); 
+        echo "<script>window.location.replace('adminCart.php');</script>";
+    }
+
+    //order button
     if(isset($_POST['order'])){
-        include('method/query.php');
         $cash = $_POST['cash'];
         if($cash<$total)
             die ("<script>alert('Your Cash is less than your total Payment amount');</script>");
     
-        for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE menu_tb SET stock = (stock - '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-            Query($updateQuery);    
-        }
+        // for($i=0; $i<count($dishesArr); $i++){ 
+        //     $updateQuery = "UPDATE menu_tb SET stock = (stock - '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+        //     Query($updateQuery);    
+        // }
         $change =  $cash-$total;
         require_once('TCPDF-main/tcpdf.php'); 
         $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  

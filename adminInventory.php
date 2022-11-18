@@ -31,6 +31,7 @@
 			  <tbody>
 			  	<?php 
             include('method/Query.php');
+            include('method/checkIfAccountLoggedIn.php');
             $query = "select * from menu_tb";
             $resultSet = getQuery($query);
             if($resultSet != null){

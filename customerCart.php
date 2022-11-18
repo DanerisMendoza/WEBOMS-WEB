@@ -1,5 +1,5 @@
 <?php 
-    session_start(); 
+    include('method/checkIfAccountLoggedIn.php');
     date_default_timezone_set('Asia/Manila');
     $date = new DateTime();
     $today =  $date->format('Y-m-d'); 

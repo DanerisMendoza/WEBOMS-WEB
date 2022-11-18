@@ -15,6 +15,7 @@
 
     <div class="table-responsive col-lg-12">
             <?php 
+              include('method/checkIfAccountLoggedIn.php');
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
               $pic = $arr[1];

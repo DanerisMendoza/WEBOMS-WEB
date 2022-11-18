@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     if(!isset($_SESSION["dishes"]) || !isset($_SESSION["price"]) || !isset($_SESSION["orderType"])){
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array(); 
@@ -39,6 +38,7 @@
                 </thead>
                 <tbody>
                 <?php 
+                    include('method/checkIfAccountLoggedIn.php');
                     include_once('method/query.php');
                     $query = "select * from menu_tb";
                     $resultSet =  getQuery($query);

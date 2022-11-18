@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Costumer - Feedback</title>
-        
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
@@ -27,6 +26,7 @@
 </body>
 </html>
 <?php 
+    include('method/checkIfAccountLoggedIn.php');
     if(isset($_POST['submit'])){
         $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);
         $ordersLinkId = $arr[0];
