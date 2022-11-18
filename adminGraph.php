@@ -37,7 +37,6 @@
         <h1 class="font-weight-normal mt-5 mb-4 text-center">View Graph</h1>
         <button class="btn btn-lg btn-danger col-12 mb-3" id="viewSalesReport">Sales Report</button>
             <div class="col-lg-12">
-                <!-- <h1>Sales Report: </h1> -->
                 <h5 class="font-weight-normal">TOTAL AMOUNT OF SOLD: <?php echo '₱'.$sold?></h5>
                 <h5 class="font-weight-normal">TOTAL AMOUNT OF stock: <?php echo $stock?></h5>
                 <div class="col-lg-12" id="piechart" style="width: 900px; height: 500px;"></div> <!-- di pa responsive to -->
