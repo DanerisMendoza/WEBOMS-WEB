@@ -108,8 +108,6 @@ $(document).ready(function () {
     if(isset($_POST['order'])){
         include('method/query.php');
         $file = $_FILES['fileInput'];
-        if($_FILES['fileInput']['name']=='')
-            echo "<script>alert('Please complete the details!'); window.location.replace('customerCart.php');</script>";
         $fileName = $_FILES['fileInput']['name'];
         $fileTmpName = $_FILES['fileInput']['tmp_name'];
         $fileSize = $_FILES['fileInput']['size'];
@@ -126,7 +124,7 @@ $(document).ready(function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime', '0')";
+                    $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete, totalOrder) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime', '0','$total')";
                     for($i=0; $i<count($dishesArr); $i++){
                         $query2 = "insert into ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
                         Query($query2);
@@ -137,9 +135,6 @@ $(document).ready(function () {
                         $_SESSION["dishes"] = array();
                         $_SESSION["price"] = array();      
                         $_SESSION["orderType"] = array();                                    
-                    }
-                    else{
-                        echo '<script>alert("failed to save to database");</script>';  
                     }
                     echo "<script>window.location.replace('customerCart.php')</script>";          
                     

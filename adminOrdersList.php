@@ -91,7 +91,7 @@
                 }
               ?></td>
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
-              <td><a class="btn btn-danger border-dark" href="method/deleteOrderMethod.php?idAndPicnameDelete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
+              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
             </tr><?php } ?>
           </tbody>   
         </table>
@@ -198,7 +198,7 @@
 
         //Recipients
         $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
-        $mail->addAddress("{$email}");             //sent to
+        $mail->addAddress("$email");             //sent to
 
         //Content
         $mail->Subject = 'Receipt';
@@ -228,4 +228,17 @@
         $_SESSION['query'] = 'all';
       echo "<script>window.location.replace('adminOrdersList.php');</script>";
     }
+  //delete button
+  if(isset($_GET['delete'])){
+    $arr = explode(',',$_GET['delete']);
+    $id = $arr[0];
+    $Pic = $arr[1];
+    $linkId = $arr[2];
+    $query1 = "DELETE FROM order_tb WHERE id='$id'";
+    $query2 = "DELETE FROM ordersdetail_tb WHERE ordersLinkId='$linkId'";
+    if(Query($query1) && Query($query2)){
+      unlink("payment/".$Pic);
+      echo "<script> window.location.replace('adminOrdersList.php'); alert('Delete data successfully'); </script>";  
+    }
+  }
 ?>

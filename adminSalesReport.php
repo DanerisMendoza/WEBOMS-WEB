@@ -28,9 +28,9 @@
         <button class="btn btn-lg btn-danger col-12 mb-3" id="admin">Admin</button>
         <button class="btn btn-lg btn-success col-12 mb-3" id="viewGraph">View Graph</button>
         <form method="post">
-            <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-3" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
-            <button type="submit" name="fetch" class="btn btn-lg btn-success col-12 mb-3">Fetch</button>
-            <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-4" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
+            <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
+            <button type="submit" name="fetch" class="btn btn-lg btn-success col-12 mb-2">Fetch</button>
+            <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
             <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button>
         </form>
             <div class="table-responsive col-lg-12">

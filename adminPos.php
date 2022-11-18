@@ -52,7 +52,13 @@
                 <td><?php echo '₱'.$rows['price']; ?></td>
                 <td><?php echo $rows['stock']; ?></td>
                 <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><a class="btn btn-light border-dark" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a></td>
+                <td><a class="btn btn-light border-dark" 
+                    <?php   if($rows['stock'] <= 0) 
+                                echo "<button>Out of stock</button>";
+                            else{
+                    ?>
+                    href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a><?php } ?>
+                </td>
             </tr>
             <?php } ?>
         </tbody>

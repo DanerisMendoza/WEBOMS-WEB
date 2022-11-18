@@ -50,7 +50,6 @@
                     }
                        
                     $total = 0;
-                    //getting total price
                     for($i=0; $i<count($priceArr); $i++){
                         $total += $priceArr[$i];
                     }
@@ -68,8 +67,8 @@
                     </tr>
             </table> 
        
-            <form method="post">
-                <input name="cash" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3"></input>
+            <form method="post" target="blank" >
+                <input name="cash" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3" required></input>
                 <button class="btn btn-lg btn-success col-12 mb-5" name="order">Order</button>
             </form>
         </div>
@@ -96,15 +95,17 @@ $(document).ready(function () {
 
 <?php
     if(isset($_POST['order'])){
+        include('method/query.php');
         $cash = $_POST['cash'];
-        if(empty($cash)){
-            echo "<script>alert('Please Enter your Cash Amount');</script>";
-            return;
-        }
         if($cash<$total){
             echo "<script>alert('Your Cash is less than your total Payment amount');</script>";
             return;
         }
+        for($i=0; $i<count($dishesArr); $i++){ 
+            $updateQuery = "UPDATE menu_tb SET stock = (stock - '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            Query($updateQuery);    
+        }
+
         $change =  $cash-$total;
         require_once('TCPDF-main/tcpdf.php'); 
         $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
@@ -129,7 +130,7 @@ $(document).ready(function () {
         <tr>
             <th scope="col">Quantity</th>
             <th scope="col">Dish</th>
-            <th scope="col">Cost</th>
+            <th scope="col">Price</th>
         </tr>
         ';  
         for($i=0; $i<count($dishesArr); $i++){ 
@@ -173,6 +174,9 @@ $(document).ready(function () {
         $obj_pdf->writeHTML($content);  
         ob_end_clean();
         $obj_pdf->Output('file.pdf', 'I');
+        $_SESSION["dishes"] = array();
+        $_SESSION["price"] = array();
+        $_SESSION["orderType"] = array(); 
     }
 ?>
 

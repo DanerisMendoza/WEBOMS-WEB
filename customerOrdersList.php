@@ -32,7 +32,7 @@
                 <?php
                 session_start();
                 include('method/Query.php');
-                $userlinkId = $_SESSION["userLinkId"];  //Scope Resolution Operator (::) double colon = jump to search 
+                $userlinkId = $_SESSION["userLinkId"];  
                 $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userLinkId = order_tb.userlinkId and customer_tb.userLinkId = '$userlinkId';";
                 $resultSet = getQuery($query);
                 if($resultSet != null)

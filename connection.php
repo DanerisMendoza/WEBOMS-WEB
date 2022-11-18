@@ -20,7 +20,6 @@ if (!$db_selected) {
 		dish varchar(255),
 		price int,
 		picName varchar(255),
-		cost int,
 		stock int)";
 		
 
@@ -45,7 +44,8 @@ if (!$db_selected) {
 		status tinyint,
 		ordersLinkId varchar(255),
 		date datetime not null,
-		isOrdersComplete tinyint)";
+		isOrdersComplete tinyint,
+		totalOrder int)";
 
 		$queryCreateOrdersDetail_tb = "create table if not exists ordersDetail_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		ordersLinkId varchar(255), 

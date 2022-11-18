@@ -23,7 +23,6 @@
             <th scope="col">IMAGE</th>
 			      <th scope="col">DISH</th>
 			      <th scope="col">PRICE</th>
-			      <th scope="col">COST</th>
 			      <th scope="col">STOCK</th>
 			      <th scope="col"></th>
 			      <th scope="col"></th>
@@ -40,10 +39,9 @@
                 <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
                 <td><?=$rows['dish']?></td>
                 <td><?php echo '₱'.$rows['price']; ?></td>
-                <td><?php echo '₱'.$rows['cost']; ?></td>
                 <td><?php echo $rows['stock']; ?></td>
                 <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType']." ".$rows['dish']." ".$rows['price']." ".$rows['picName']." ". $rows['cost']." ".$rows['stock'] ?>"  >Update</a></td>
+                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType'].",".$rows['dish'].",".$rows['price'].",".$rows['picName'].",".$rows['stock'] ?>"  >Update</a></td>
                 </tr>
                 <?php } 
             }
@@ -61,7 +59,6 @@
         <form method="post" class="form-group" enctype="multipart/form-data">
           <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="Enter Dish Name" required>
           <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter Price" required>
-          <input type="number" class="form-control form-control-lg mb-3" name="cost" placeholder="Enter Cost" required>
           <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter Number of Stock" required>
           <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
           <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Insert</button>
@@ -91,13 +88,8 @@
   if(isset($_POST['insert'])){
   $dishes = $_POST['dishes'];
   $price = $_POST['price'];
-  $cost = $_POST['cost'];
   $file = $_FILES['fileInput'];
   $stock = $_POST['stock'];
-  if($price < $cost){
-    echo "<script>alert('Cost should be less than price!'); window.location.replace('adminInventory.php');</script>";
-    return;
-  }
   $fileName = $_FILES['fileInput']['name'];
   $fileTmpName = $_FILES['fileInput']['tmp_name'];
   $fileSize = $_FILES['fileInput']['size'];
@@ -112,9 +104,9 @@
               $fileNameNew = uniqid('',true).".".$fileActualExt;
               $fileDestination = 'dishesPic/'.$fileNameNew;
               move_uploaded_file($fileTmpName,$fileDestination);         
-              $query = "insert into menu_tb(dish, price, picName, cost, stock) values('$dishes','$price','$fileNameNew','$cost','$stock')";
-              Query($query);
-              echo "<script>window.location.replace('adminInventory.php')</script>";                                
+              $query = "insert into menu_tb(dish, price, picName, stock) values('$dishes','$price','$fileNameNew','$stock')";
+              if(Query($query));
+                echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }
           else
               echo "your file is too big!";
