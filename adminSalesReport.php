@@ -38,8 +38,9 @@
                     <thead class="table-dark">
                         <tr>	
                             <th scope="col">NAME</th>
-                            <th scope="col">ORDERS ID</th>
+                            <th scope="col">TRANSACTION NO</th>
                             <th scope="col">STATUS</th>
+                            <th scope="col">TOTAL</th>
                             <th scope="col"></th>
                             <th scope="col">DATE & TIME</th>
                         </tr>
@@ -52,6 +53,7 @@
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['ordersLinkId'];?></td>
                                 <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Pending"); ?></td>
+                                <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
                                 </tr>

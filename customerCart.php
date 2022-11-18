@@ -1,5 +1,6 @@
 <?php 
     include('method/checkIfAccountLoggedIn.php');
+    include('method/query.php');
     date_default_timezone_set('Asia/Manila');
     $date = new DateTime();
     $today =  $date->format('Y-m-d'); 
@@ -22,7 +23,9 @@
         <h1 class="font-weight-normal mt-5 mb-4 text-center">View Cart</h1>
         <button class="btn btn-lg btn-danger col-12 mb-3" id="home">Home</button>
         <button class="btn btn-lg btn-danger col-12 mb-3" id="back">Back</button>
-        <button class="btn btn-lg btn-success col-12 mb-3" id="clear">Clear Order</button>
+        <form method="post">
+            <button type="submit" class="btn btn-lg btn-success col-12 mb-5" name="clear">clear</button>
+        </form>
         <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
         
         <div class="table-responsive col-lg-12 mb-5">
@@ -91,22 +94,21 @@
 <script>
 document.getElementById("home").onclick = function () {window.location.replace('customer.php'); }; 
 document.getElementById("back").onclick = function () {window.location.replace('customerMenu.php'); }; 
-
-
-$(document).ready(function () {
-            $("#clear").click(function () {
-                $.post(
-                    "method/clearMethod.php", {
-                    }
-                );
-                window.location.replace('customerCart.php');
-            });
-});
-
 </script> 
 <?php
+    //clear button
+    if(isset($_POST['clear'])){
+        for($i=0; $i<count($dishesArr); $i++){ 
+            $updateQuery = "UPDATE menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            Query($updateQuery);    
+        }
+        $_SESSION["dishes"] = array();
+        $_SESSION["price"] = array();
+        $_SESSION["orderType"] = array(); 
+        echo "<script>window.location.replace('customerCart.php');</script>";
+    }
+    //order button
     if(isset($_POST['order'])){
-        include('method/query.php');
         $file = $_FILES['fileInput'];
         $fileName = $_FILES['fileInput']['name'];
         $fileTmpName = $_FILES['fileInput']['tmp_name'];
@@ -124,7 +126,7 @@ $(document).ready(function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete, totalOrder) values('$fileNameNew','$userlinkId','0','$ordersLinkId','$todayWithTime', '0','$total')";
+                    $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, isOrdersComplete, totalOrder) values('$fileNameNew','$userlinkId','pending','$ordersLinkId','$todayWithTime', '0','$total')";
                     for($i=0; $i<count($dishesArr); $i++){
                         $query2 = "insert into ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
                         Query($query2);

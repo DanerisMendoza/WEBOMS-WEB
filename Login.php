@@ -49,6 +49,7 @@
     <?php
         session_start();
         include('method/query.php');
+        include_once('connection.php');
         if(isset($_POST['login'])){
             $_SESSION["username"]  = $_POST['username'];
             $username = $_POST['username'];
@@ -67,27 +68,31 @@
                     $accountType = $rows['accountType'];
                 }
                 if($valid){
-                  $query = "select * from customer_Tb where name = '$username'";
-                  $resultSet = getQuery($query);
-                  foreach($resultSet as $row){
-                    $otp = $row['otp'];
-                    $_SESSION['userLinkId'] = $rows['userLinkId'];
-                  }
+                  
                   switch($accountType){
-                    case 1://admin block
+                    case 'admin':
                       $_SESSION['username'] = $username;
                       $_SESSION['account'] = 'valid';
                       echo "<script> window.location.replace('admin.php');</script>";
                     break;
-                    case 2://customer block
+                    case 'customer':
+                      $query = "select * from customer_Tb where name = '$username'";
+                      $resultSet = getQuery($query);
+                      foreach($resultSet as $row){
+                        $otp = $row['otp'];
+                        $_SESSION['userLinkId'] = $rows['userLinkId'];
+                      }
+                      //if customer account is valid
                       if($valid && $otp == ""){
                         $_SESSION['username'] = $username;
                         $_SESSION['account'] = 'valid';
                         echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
                       }
+                      //if customer account need to validate first via otp
                       else if($valid && $otp != ""){
                         echo "<script>$('#otpModal').modal('show');</script>";
                       }
+                      //if customer password is wrong
                       else{
                         echo "<script>alert('incorrect username or password!');</script>";
                       }

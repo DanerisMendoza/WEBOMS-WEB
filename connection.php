@@ -30,7 +30,7 @@ if (!$db_selected) {
 		userLinkId varchar(255))";
 
 		$hash = password_hash('password', PASSWORD_DEFAULT);
-		$queryInsertAdmin = "insert into user_tb(username, password, accountType) values('admin','$hash','1')";
+		$queryInsertAdmin = "insert into user_tb(username, password, accountType) values('admin','$hash','admin')";
 		
 		$queryCreateCustomer_tb = "create table if not exists customer_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		name varchar(255),
@@ -41,7 +41,7 @@ if (!$db_selected) {
 		$queryCreateOrder_tb = "create table if not exists order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
 		userLinkId varchar(255), 
-		status tinyint,
+		status varchar(255),
 		ordersLinkId varchar(255),
 		date datetime not null,
 		isOrdersComplete tinyint,

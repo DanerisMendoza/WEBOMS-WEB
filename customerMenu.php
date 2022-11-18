@@ -67,6 +67,7 @@
 </body>
 </html>
 <?php 
+    //add to cart
 	if(isset($_GET['order'])){
         $order = explode(',',$_GET['order']);  
         $dish = $order[0];
@@ -75,6 +76,10 @@
         array_push($_SESSION['dishes'], $dish);
         array_push($_SESSION['price'], $price);
         array_push($_SESSION['orderType'], $orderType);
+        $updateQuery = "UPDATE menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+          echo "<script>window.location.replace('customerMenu.php');</script>";    
+  
     }				
 ?>
 

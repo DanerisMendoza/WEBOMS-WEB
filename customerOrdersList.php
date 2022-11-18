@@ -71,14 +71,3 @@
 </body>
 </html>
 
-<?php 
-  if(isset($_GET['status'])){
-    $arr = explode(',',$_GET['status']);  
-    $ordersLinkId = $arr[0];
-    $email = $arr[1];
-    $order = new order($ordersLinkId,$email);
-    $order-> computeOrder(); 
-    $order-> sendReceiptToEmail(); 
-    $order-> approveOrder();
-  }
-?>

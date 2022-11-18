@@ -39,8 +39,7 @@
               <th scope="col">NAME</th>
               <th scope="col">ORDERS ID</th>
               <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col">APPROVE STATUS:</th>
+              <th scope="col" colspan="2">APPROVE STATUS:</th>
               <th scope="col">ORDER COMPLETE STATUS</th>
               <th scope="col">ORDER STATUS:
                 <form method="post">
@@ -56,19 +55,23 @@
             <tr>	   
               <td><?php echo $rows['name']; ?></td>
               <td><?php echo $rows['ordersLinkId'];?></td>
-              <td colspan="2"><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+              <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
               <td>
                 <?php 
-                  if($rows['status'] == 1){
+                  if($rows['status'] == 'approved'){
                     echo "Already Approved";
+                  }
+                  elseif($rows['status'] == 'disapproved'){
+                    echo "disapproved";
                   }
                   else{
                     ?><a class="btn btn-primary border-dark" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
                   }?>
               </td>
+              <td><a class="btn btn-primary border-dark" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Disapprove</a></td>
               <td>
                 <?php 
-                  if($rows['status'] != 1){
+                  if($rows['status'] != 'approved'){
                     echo "waiting for approval";
                   }
                   elseif($rows['isOrdersComplete'] == 1){
