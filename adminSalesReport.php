@@ -1,4 +1,5 @@
 <?php
+    $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
     include('method/Query.php');
     $_SESSION['from'] = 'salesReport';

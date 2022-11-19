@@ -1,4 +1,5 @@
 <?php 
+  $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   $_SESSION['from'] = 'orders';
   use PHPMailer\PHPMailer\PHPMailer;

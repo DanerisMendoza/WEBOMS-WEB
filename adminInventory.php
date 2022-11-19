@@ -15,7 +15,6 @@
 <body class="bg-light">
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Inventory</h1> -->
     <button class="btn btn-lg btn-dark col-6 mb-4" id="admin">Admin</button>
     <button id="addButton" type="button" class="btn btn-lg btn-success col-6 mb-4" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
@@ -33,6 +32,7 @@
 			  </thead>
 			  <tbody>
 			  	<?php 
+            $page = 'admin';
             include('method/Query.php');
             include('method/checkIfAccountLoggedIn.php');
             $query = "select * from menu_tb";

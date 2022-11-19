@@ -1,7 +1,7 @@
 <?php 
+  $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   include('method/Query.php');
-
 ?>
 <!DOCTYPE html>
 <html>

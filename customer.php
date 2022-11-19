@@ -1,4 +1,5 @@
 <?php 
+    $page = 'customer';
     include('method/checkIfAccountLoggedIn.php');
     if(!isset($_SESSION["dishes"]) || !isset($_SESSION["price"]) || !isset($_SESSION["orderType"])){
     $_SESSION["dishes"] = array();

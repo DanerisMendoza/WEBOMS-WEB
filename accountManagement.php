@@ -14,13 +14,13 @@
     
 </head>
 <body class="bg-light">
-        
         <div class="container text-center mt-5">
             <button class="btn btn-lg btn-dark col-12 mb-1" id="customer">Back</button>
             <button id="addButton" type="button" class="btn btn-lg btn-success col-12 mb-1" data-toggle="modal" data-target="#loginModal">Add new Account</button>
 
             <script>document.getElementById("customer").onclick = function () {window.location.replace('admin.php'); };</script> 
             <?php
+              $page = 'admin';
               include('method/checkIfAccountLoggedIn.php');
               include_once('method/query.php');
               $selectAllUser = "select * from user_tb";
@@ -43,7 +43,11 @@
                         <td><?php echo $rows['username']; ?></td>
                         <td><?php echo $rows['accountType'];?></td>
                         <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'] ?>">Update</a></td>
-                        <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['username'] ?>">delete</a></td>
+                        <td><?php if($rows['username'] != 'admin'){?>
+                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['username'] ?>">delete</a><?php } 
+                            else
+                                echo "You cannot delete admin account!"?>
+                        </td>
                     </tr>
                     <?php } ?>
                     </tbody>
@@ -62,7 +66,6 @@
                     <select name="accountType" class="form-control form-control-lg col-12 mb-3">
                         <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
-                        <option value="customer">Customer</option>
                         <option value="cashier">Cashier</option>
                     </select>
                     <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Insert</button>
@@ -103,7 +106,7 @@
         elseif(!Query($query2))
           echo "fail to save to database";
         else
-          die ("<script> alert('Sucess');</script>");
+          echo ("<script>window.location.replace('accountManagement.php'); alert('Sucess');</script>");
   
     }
 ?>

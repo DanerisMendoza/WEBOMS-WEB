@@ -1,4 +1,5 @@
 <?php 
+    $page = 'customer';
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
     date_default_timezone_set('Asia/Manila');

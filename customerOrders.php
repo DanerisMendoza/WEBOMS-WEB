@@ -13,11 +13,10 @@
     
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Order</h1> -->
     <button class="btn btn-lg btn-dark col-12 mb-4" id="orderList">Order List</button>
-
     <div class="table-responsive col-lg-12">
             <?php 
+              $page = 'customer';
               include('method/checkIfAccountLoggedIn.php');
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];

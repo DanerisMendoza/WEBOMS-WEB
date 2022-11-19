@@ -14,6 +14,7 @@
 </head>
 <body class="bg-light">
     <?php
+        $page = 'admin';
         include('method/checkIfAccountLoggedIn.php');
         include('method/query.php');
         $sold = 0;

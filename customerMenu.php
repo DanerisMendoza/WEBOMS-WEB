@@ -41,6 +41,7 @@
                 </thead>
                 <tbody>
                 <?php 
+                    $page = 'customer';
                     include('method/checkIfAccountLoggedIn.php');
                     include_once('method/query.php');
                     $query = "select * from menu_tb";

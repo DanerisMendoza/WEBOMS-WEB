@@ -66,26 +66,38 @@
                 foreach($resultSet as $rows){
                     $valid = password_verify($password, $rows['password'])?true:false;
                     $accountType = $rows['accountType'];
+                    $userLinkId = $rows['userLinkId'];
                 }
                 if($valid){
-                  
                   switch($accountType){
                     case 'admin':
                       $_SESSION['username'] = $username;
                       $_SESSION['account'] = 'valid';
+                      $_SESSION['accountType'] = 'admin';
                       echo "<script> window.location.replace('admin.php');</script>";
                     break;
+
+                    case 'cashier';
+                      $_SESSION['username'] = $username;
+                      $_SESSION['account'] = 'valid';
+                      $_SESSION['accountType'] = 'cashier';
+                      echo "<script> window.location.replace('adminPos.php');</script>";
+                    break;
+
                     case 'customer':
-                      $query = "select * from customer_Tb where name = '$username'";
+                      $_SESSION['userLinkId'] = $userLinkId;
+                      $query = "select * from customer_Tb where userLinkId = '$userLinkId'";
                       $resultSet = getQuery($query);
+                      $otp = '';
+                      if($resultSet!=null)
                       foreach($resultSet as $row){
                         $otp = $row['otp'];
-                        $_SESSION['userLinkId'] = $rows['userLinkId'];
                       }
                       //if customer account is valid
-                      if($valid && $otp == ""){
+                      if($valid && $otp == ''){
                         $_SESSION['username'] = $username;
                         $_SESSION['account'] = 'valid';
+                        $_SESSION['accountType'] = 'customer';
                         echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
                       }
                       //if customer account need to validate first via otp
@@ -116,9 +128,10 @@
             if($resultSet != null){
                 $updateQuery = "UPDATE customer_tb SET otp='' WHERE otp='$otp'";
                 if(Query($updateQuery)){
-                    echo "<SCRIPT> window.location.replace('customer.php?username=$username'); </SCRIPT>";
+                    echo "<SCRIPT> window.location.replace('customer.php'); </SCRIPT>";
                     $_SESSION['username'] = $username;
                     $_SESSION['account'] = 'valid';
+                    $_SESSION['accountType'] = 'customer';
                 }
             }
             else

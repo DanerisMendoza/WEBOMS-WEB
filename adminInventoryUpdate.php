@@ -61,6 +61,7 @@
 </html>
 
 <?php
+    $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
     //if update button click
     if(isset($_POST['update'])){

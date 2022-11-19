@@ -33,7 +33,8 @@
           </tr>
         </thead>
         <tbody>
-                <?php
+              <?php
+              $page = 'customer';
               include('method/checkIfAccountLoggedIn.php');
               include('method/Query.php');
                 $userlinkId = $_SESSION["userLinkId"];  

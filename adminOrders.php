@@ -13,10 +13,9 @@
 
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Orders</h1> -->
-        
     <div class="col-lg-12 cont2">
           <?php 
+          $page = 'admin';
           include('method/checkIfAccountLoggedIn.php');
           if($_SESSION['from'] == 'orders'){ ?>
           <button class="btn btn-lg btn-dark col-12 mb-3" id="orderList">Order List</button>
@@ -36,7 +35,6 @@
             <table class="table table-striped table-bordered border-dark col-lg-12">
               <thead class="table-dark">
                 <tr>	
-                  <!-- <th scope="col">price</th> -->
                   <th scope="col">QUANTITY</th>
                   <th scope="col">NAME</th>
                   <th scope="col">PRICE</th>

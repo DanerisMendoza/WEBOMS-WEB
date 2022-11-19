@@ -29,6 +29,7 @@
 </body>
 </html>
 <?php 
+    $page = 'customer';
     include('method/checkIfAccountLoggedIn.php');
     if(isset($_POST['submit'])){
         $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);

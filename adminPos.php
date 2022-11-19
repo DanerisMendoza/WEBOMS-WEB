@@ -1,4 +1,5 @@
 <?php 
+  $page = 'cashier';
   include('method/checkIfAccountLoggedIn.php');
   if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
     $_SESSION["dishes"] = array();
@@ -19,16 +20,22 @@
    
 </head>
 <body class="bg-light">
-          
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4">Point of Sales</h1> -->
+    <?php if($_SESSION['accountType'] != 'cashier'){?>
     <button class="btn btn-lg btn-dark col-6 mb-4" id="admin">Admin</button>
+    <?php }else{?>
+      <button class="btn btn-lg btn-dark col-6 mb-4" id="logout">Logout</button>
+    <?php }?>
     <button  type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart" >View Cart</button>
               
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
     <script>document.getElementById("viewCart").onclick = function () {window.location.replace('adminCart.php'); };</script> 
-              
+    <script> document.getElementById("logout").onclick = function () {window.location.replace('Login.php'); 
+    $.post(
+        "method/logout.php",{
+        }
+    );}</script>              
     <div class="table-responsive col-lg-12">
             <?php 
                 include('method/Query.php');
