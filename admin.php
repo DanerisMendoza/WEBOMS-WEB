@@ -7,6 +7,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Admin</title>
 
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -22,7 +25,7 @@
     <button class="btn btn-lg btn-primary col-12 mb-3" id="ordersQueue">Orders Queue</button>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="inventory">Inventory</button>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="salesReport">Sales Report</button>
-    <button class="btn btn-lg btn-danger col-12 mb-3" id="Logout">Logout</button>
+    <button class="btn btn-lg btn-dark col-12 mb-3" id="Logout">Logout</button>
 
     <script>
     document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); };

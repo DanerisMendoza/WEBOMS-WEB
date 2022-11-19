@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Sign up</title>
+
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></head>
     
 </head>
 <body class="bg-light">
-<div class="container px-5">
+
+<div class="container">
   <div class="row justify-content-center">
     <form method="post" class="form2">
       <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>

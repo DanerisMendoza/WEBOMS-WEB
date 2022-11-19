@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Costumer - Orders</title>
   
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
@@ -8,10 +11,10 @@
 </head>
 <body class="bg-light">
     
-<div class="container text-center">
+<div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <h1 class="font-weight-normal mt-5 mb-4 text-center">View Order</h1>
-    <button class="btn btn-lg btn-danger col-12 mb-4" id="orderList">Order List</button>
+    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Order</h1> -->
+    <button class="btn btn-lg btn-dark col-12 mb-4" id="orderList">Order List</button>
 
     <div class="table-responsive col-lg-12">
             <?php 

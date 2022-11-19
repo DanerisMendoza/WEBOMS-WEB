@@ -9,6 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Admin POS</title>
         
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -17,11 +20,11 @@
 </head>
 <body class="bg-light">
           
-<div class="container text-center">
+<div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <h1 class="font-weight-normal mt-5 mb-4">Point of Sales</h1>
-    <button class="btn btn-lg btn-danger col-12 mb-3" id="admin">Admin</button>
-    <button  type="button" class="btn btn-lg btn-success col-12 mb-4" id="viewCart" >View Cart</button>
+    <!-- <h1 class="font-weight-normal mt-5 mb-4">Point of Sales</h1> -->
+    <button class="btn btn-lg btn-dark col-6 mb-4" id="admin">Admin</button>
+    <button  type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart" >View Cart</button>
               
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
     <script>document.getElementById("viewCart").onclick = function () {window.location.replace('adminCart.php'); };</script> 
@@ -37,7 +40,7 @@
           <tr>	
             <th scope="col">DISH</th>
             <th scope="col">PRICE</th>
-            <th scope="col">Stock</th>
+            <th scope="col">STOCK</th>
             <th scope="col">IMAGE</th>
             <th scope="col"></th>
           </tr>

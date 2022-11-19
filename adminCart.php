@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin POS - View Cart</title>
         
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
@@ -15,16 +18,13 @@
 </head>
 <body class="bg-light">    
         
-<div class="container text-center">
+<div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <h1 class="font-weight-normal mt-5 mb-4">View Cart</h1>
-        <button class="btn btn-lg btn-danger col-12 mb-3" id="pos">POS</button>
-        <form method="post">
-            <button type="submit" class="btn btn-lg btn-success col-12 mb-5" name="clear">clear</button>
-        </form>
-        
-        <div class="table-responsive col-lg-12 mb-5">
-            <table class="table table-striped table-bordered col-lg-12">
+        <!-- <h1 class="font-weight-normal mt-5 mb-4">View Cart</h1> -->
+        <button class="btn btn-lg btn-dark col-12 mb-3" id="pos">POS</button>
+    
+        <div class="table-responsive col-lg-12">
+            <table class="table table-striped table-bordered col-lg-12 mb-5">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">QUANTITY</th>
@@ -72,7 +72,10 @@
        
             <form method="post">
                 <input name="cash" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3" required></input>
-                <button type ="submit" class="btn btn-lg btn-success col-12 mb-5" name="order">Order</button>
+                <button type ="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+            </form>
+            <form method="post">
+                <button type="submit" class="btn btn-lg btn-danger col-12 mb-5" name="clear">Clear Order</button>
             </form>
         </div>
     </div>

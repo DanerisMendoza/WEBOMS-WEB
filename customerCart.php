@@ -10,7 +10,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Costumer - View Cart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Costumer Menu - View Cart</title>
         
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
@@ -18,14 +21,11 @@
 </head>
 <body class="bg-light">    
 
-<div class="container text-center">
+<div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <h1 class="font-weight-normal mt-5 mb-4 text-center">View Cart</h1>
-        <button class="btn btn-lg btn-danger col-12 mb-3" id="home">Home</button>
-        <button class="btn btn-lg btn-danger col-12 mb-3" id="back">Back</button>
-        <form method="post">
-            <button type="submit" class="btn btn-lg btn-success col-12 mb-5" name="clear">clear</button>
-        </form>
+        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Cart</h1> -->
+        <button class="btn btn-lg btn-dark col-6 mb-3" id="back">Back</button>
+        <button class="btn btn-lg btn-dark col-6 mb-3" id="home">Home</button>
         <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
         
         <div class="table-responsive col-lg-12 mb-5">
@@ -81,7 +81,10 @@
                 <form method="post" enctype="multipart/form-data">           
                     <label for="fileInput">PROOF OF PAYMENT:</label>
                     <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
-                    <button class="btn btn-lg btn-success col-12" name="order">Place Order</button>
+                    <button class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+                </form>
+                <form method="post">
+                    <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
                 </form>
                 <script>document.getElementById("dateTime").disabled = true;</script>
             </div>

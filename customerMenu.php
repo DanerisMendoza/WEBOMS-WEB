@@ -9,7 +9,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Costumer - Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Costumer Menu</title>
 	
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
@@ -18,12 +21,12 @@
 </head>
 <body class="bg-light">
 
-<div class="container text-center">
+<div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <h1 class="font-weight-normal mt-5 mb-4 text-center">Menu</h1>
-        <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="back">Back</button>
-        <button type="button" class="btn btn-lg btn-success col-12 mb-3" id="viewCart">View Cart</button>
-        <button class="btn btn-lg btn-success col-12 mb-4" id="customersFeedback">Customers Feedback</button>
+        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Menu</h1> -->
+        <button type="button" class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
+        <button type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart">View Cart</button>
+        <button class="btn btn-lg btn-success col-6 mb-4" id="customersFeedback">Customers Feedback</button>
 
         <div class="table-responsive col-lg-12">
             <table class="table table-striped table-bordered col-lg-12 mb-5">
@@ -31,7 +34,7 @@
                     <tr>	
                         <th scope="col">DISH</th>
                         <th scope="col">PRICE</th>
-                        <th scope="col">Stock</th>
+                        <th scope="col">STOCK</th>
                         <th scope="col">IMAGE</th>
                         <th scope="col"></th>
                     </tr>

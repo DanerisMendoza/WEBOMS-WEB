@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin SR - View Graph</title>
         
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -32,10 +35,10 @@
         }
     ?>
         <!-- <center> -->
-<div class="container text-center">
+<div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <h1 class="font-weight-normal mt-5 mb-4 text-center">View Graph</h1>
-        <button class="btn btn-lg btn-danger col-12 mb-3" id="viewSalesReport">Sales Report</button>
+        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Graph</h1> -->
+        <button class="btn btn-lg btn-dark col-12 mb-3" id="viewSalesReport">Sales Report</button>
             <div class="col-lg-12">
                 <h5 class="font-weight-normal">TOTAL COUNT OF STOCK: <?php echo $countOfSold+$stockLeft?></h5>
                 <h5 class="font-weight-normal">TOTAL COUNT OF SOLD: <?php echo $countOfSold?></h5>

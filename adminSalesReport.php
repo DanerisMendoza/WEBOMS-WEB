@@ -16,6 +16,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin SR</title>
         
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -23,17 +26,19 @@
 </head>
 <body class="bg-light">
 
-<div class="container text-center">
+<div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <h1 class="font-weight-normal mt-5 mb-4 text-center">Sales Report</h1>
-        <button class="btn btn-lg btn-danger col-12 mb-3" id="admin">Admin</button>
-        <button class="btn btn-lg btn-success col-12 mb-3" id="viewGraph">View Graph</button>
-        <form method="post">
-            <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
-            <button type="submit" name="fetch" class="btn btn-lg btn-success col-12 mb-2">Fetch</button>
-            <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-2" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
-            <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button>
-        </form>
+        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Sales Report</h1> -->
+        <button class="btn btn-lg btn-dark col-6 mb-3" id="admin">Admin</button>
+        <button class="btn btn-lg btn-success col-6 mb-3" id="viewGraph">View Graph</button>
+        <div class="container-fluid">
+            <form method="post">
+                <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-2 col-12" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
+                <button type="submit" name="fetch" class="btn btn-lg btn-success col-12 mb-2">Fetch</button>
+                <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-2 col-12" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
+                <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button>
+            </form>
+        </div>
             <div class="table-responsive col-lg-12">
                 <table class="table table-striped table-bordered col-lg-12">
                     <thead class="table-dark">

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Inventory - Update</title>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -20,8 +23,8 @@
             $stock = $idAndPicname[4];
         ?>
 
-        <div class="table-responsive col-lg-12">
-            <table class="table table-striped table-bordered mb-4">
+        <div class="table-responsive col-lg-12 mb-4">
+            <table class="table table-striped table-bordered">
                 <tr>
                     <td><b>DISH:</b></td>
                     <td><?php echo $dish ?></td>
@@ -41,14 +44,16 @@
             </table>
         </div>
 
-        <form method="post" class="form-group" enctype="multipart/form-data">
-            <input type="text" class="form-control form-control-lg mb-3" name="dish" placeholder="Enter New Dish Name" required>
-            <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter New Price" required>
-            <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter New Number of Stock" required>
-            <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
-            <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel">Cancel</button>
-            <button type="submit" class="btn btn-lg btn-success col-12" name="update">Update</button>
-        </form>
+        <div class="container-fluid">
+            <form method="post" class="form-group" enctype="multipart/form-data">
+                <input type="text" class="form-control form-control-lg mb-3" name="dish" placeholder="Enter New Dish Name" required>
+                <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter New Price" required>
+                <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter New Number of Stock" required>
+                <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
+                <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel">Cancel</button>
+                <button type="submit" class="btn btn-lg btn-success col-12" name="update">Update</button>
+            </form>
+        </div>
     </div>
 </div>
 

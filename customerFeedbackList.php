@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Costumer - Feedback List</title>
         
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
@@ -9,9 +12,9 @@
 </head>
 <body class="bg-light">
         
-<div class="container text-center">
-    <h1 class="font-weight-normal mt-5 mb-4 text-center">Feedback</h1>
-    <button class="btn btn-lg btn-danger col-12 mb-4" id="customer">Back</button>
+<div class="container text-center mt-5">
+    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Feedback</h1> -->
+    <button class="btn btn-lg btn-dark col-12 mb-4" id="customer">Back</button>
           <script>020
               document.getElementById("customer").onclick = function () {window.location.replace('customerMenu.php'); };    
           </script> 

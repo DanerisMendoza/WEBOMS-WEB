@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Costumer - View Your Orders</title>
+
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
   <link rel="stylesheet" type="text/css" href="css/style.css">
     
 </head>
 <body class="bg-light">
     
-<div class="container text-center">
+<div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <h1 class="font-weight-normal mt-5 mb-4 text-center">View Your Orders</h1>
-    <button class="btn btn-lg btn-danger col-12 mb-4" id="customer">Customer</button>
+    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Your Orders</h1> -->
+    <button class="btn btn-lg btn-dark col-12 mb-4" id="customer">Customer</button>
         <script>
             document.getElementById("customer").onclick = function () {window.location.replace('customer.php'); };    
         </script> 

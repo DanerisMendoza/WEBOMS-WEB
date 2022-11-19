@@ -9,24 +9,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Admin Orders</title>
+
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
   <link rel="stylesheet" type="text/css" href="css/style.css">
     
 </head>
 <body class="bg-light">
 
-<div class="container text-center">
+<div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <h1 class="font-weight-normal mt-5 mb-4">Orders</h1>
-    <button class="btn btn-lg btn-danger col-12 mb-4" id="admin">Admin</button>
+    <!-- <h1 class="font-weight-normal mt-5 mb-4">Orders</h1> -->
+    <button class="btn btn-lg btn-dark col-12 mb-3" id="admin">Admin</button>
         <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); }</script> 
     <div class="table-responsive col-lg-12">
     <?php
       include('method/Query.php');
       ?>
        <form method="get">
-            <select  name="sort" method="get">
+            <select name="sort" class="form-control form-control-lg col-12 mb-3" method="get">
               <?php 
                 if(isset($_GET['sort'])){
                   ?><option value="<?php echo $_GET['sort'];?>" selected>Sort: <?php echo strtoupper($_GET['sort']);?></option><?php
@@ -41,7 +45,7 @@
               <option value="order complete">Order Complete</option>  
               <option value="order invalid">Order Invalid</option>  
             </select>
-            <input type = "submit"  value = "Sort"> 
+            <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4"> 
           </form>
       <?php
       if(isset($_GET['sort'])){

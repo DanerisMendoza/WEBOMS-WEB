@@ -21,9 +21,9 @@
 <div class="container text-center">
     <div class="row justify-content-center">
         <h2 class="font-weight-normal mt-5 mb-4">Customer, Hi <?php echo $_SESSION['username']?>!</h1>
-        <button class="btn btn-lg btn-success col-12 mb-3" id="menu">Browse Menu</button>
-        <button class="btn btn-lg btn-success col-12 mb-3" id="customerOrders">View Your Orders</button>
-        <button class="btn btn-lg btn-danger col-12" id="logout">Logout</button>
+        <button class="btn btn-lg btn-primary col-12 mb-3" id="menu">Browse Menu</button>
+        <button class="btn btn-lg btn-primary col-12 mb-3" id="customerOrders">View Your Orders</button>
+        <button class="btn btn-lg btn-dark col-12" id="logout">Logout</button>
     </div>
 </div>
 
