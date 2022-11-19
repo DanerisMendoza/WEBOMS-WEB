@@ -85,17 +85,16 @@
 
                     case 'customer':
                       $query = "select * from customer_Tb where userLinkId = '$userLinkId'";
+                      $_SESSION['userLinkId'] = $rows['userLinkId'];
                       $resultSet = getQuery($query);
                       foreach($resultSet as $row){
                         $otp = $row['otp'];
-                        $name = $row['name'];
+                        $_SESSION['name'] = $row['name'];
                       }
                       //if customer account is valid
                       if($valid && $otp == ''){
                         $_SESSION['username'] = $username;
-                        $_SESSION['name'] = $name;
                         $_SESSION['account'] = 'valid';
-                        $_SESSION['userLinkId'] = $userLinkId;
                         echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
                       }
                       //if customer account need to validate first via otp
@@ -133,7 +132,7 @@
                 }
             }
             else
-              echo  '<script>alert("Incorrect Otp!"); window.location.replace("login.php");</script>';
+              echo  '<script>alert("Incorrect Otp!"); </script>';
         }
     ?>
 </body>

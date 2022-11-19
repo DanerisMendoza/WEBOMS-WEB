@@ -23,11 +23,9 @@
 
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Menu</h1> -->
         <button type="button" class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
-        <button type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart">View Cart</button>
         <button class="btn btn-lg btn-success col-6 mb-4" id="customersFeedback">Customers Feedback</button>
-
+        <button type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart">View Cart</button>
         <div class="table-responsive col-lg-12">
             <table class="table table-striped table-bordered col-lg-12 mb-5">
                 <thead class="bg-dark text-white">
