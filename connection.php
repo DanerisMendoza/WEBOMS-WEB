@@ -30,26 +30,25 @@ if (!$db_selected) {
 		userLinkId varchar(255))";
 
 		$hash = password_hash('password', PASSWORD_DEFAULT);
-		$queryInsertAdmin = "insert into user_tb(username, password, accountType) values('admin','$hash','admin')";
-		
-		$queryCreateCustomer_tb = "create table if not exists customer_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		$userLinkId = uniqid('',true);
+
+		$queryInsertAdmin = "insert into user_tb(username, password, accountType, userLinkId) values('admin','$hash','admin','$userLinkId')";
+		$queryInsertAdminInfo = "insert into userInfo_tb(name, email, otp, userLinkId) values('admin','','','$userLinkId')";
+
+		$queryCreateUserInfo_tb = "create table if not exists userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		name varchar(255),
 		email varchar(255),
 		otp varchar(255),
 		userLinkId varchar(255))";
 	
-		$queryCreateStaff_tb = "create table if not exists staff_tb(id int PRIMARY KEY AUTO_INCREMENT,
-		name varchar(255),
-		email varchar(255),
-		userLinkId varchar(255))";
-
 		$queryCreateOrder_tb = "create table if not exists order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
 		userLinkId varchar(255), 
 		status varchar(255),
 		ordersLinkId varchar(255),
 		date datetime not null,
-		totalOrder int)";
+		totalOrder int,
+		staffInCharge varchar(255))";
 
 		$queryCreateOrdersDetail_tb = "create table if not exists ordersDetail_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		ordersLinkId varchar(255), 
@@ -61,7 +60,7 @@ if (!$db_selected) {
 		ordersLinkId varchar(255), 
 		userlinkId int)";
 
-		if ($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb)  && $conn->query($queryInsertAdmin) && $conn->query($queryCreateStaff_tb) && $conn->query($queryCreateCustomer_tb) && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) 
+		if ($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryInsertAdmin) && $conn->query($queryInsertAdminInfo)   && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						

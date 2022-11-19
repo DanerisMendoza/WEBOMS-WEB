@@ -38,7 +38,7 @@
               include('method/checkIfAccountLoggedIn.php');
               include('method/Query.php');
                 $userlinkId = $_SESSION["userLinkId"];  
-                $getCustomerOrders = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userLinkId = order_tb.userlinkId and customer_tb.userLinkId = '$userlinkId';";
+                $getCustomerOrders = "select userInfo_tb.*, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userLinkId = order_tb.userlinkId and userInfo_tb.userLinkId = '$userlinkId';";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>

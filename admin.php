@@ -20,7 +20,7 @@
 
 <div class="container">
   <div class="row justify-content-center">
-    <h1 class="font-weight-normal mt-5 mb-4">Administrator</h1>
+    <h1 class="font-weight-normal mt-5 mb-4"><?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')';?></h1>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="pos">POS</button>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="orders">Orders</button>
     <button class="btn btn-lg btn-primary col-12 mb-3" id="ordersQueue">Orders Queue</button>

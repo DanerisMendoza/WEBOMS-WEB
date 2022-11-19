@@ -22,7 +22,7 @@
               $page = 'customer';
               include('method/checkIfAccountLoggedIn.php');
               include_once('method/query.php');
-              $query = "select customer_tb.*, feedback_tb.*, order_tb.* from customer_tb, order_tb, feedback_tb where customer_tb.userlinkId = order_tb.userlinkId and feedback_tb.ordersLinkId = order_tb.ordersLinkId;";
+              $query = "select userInfo_tb.*, feedback_tb.*, order_tb.* from userInfo_tb, order_tb, feedback_tb where userInfo_tb.userlinkId = order_tb.userlinkId and feedback_tb.ordersLinkId = order_tb.ordersLinkId;";
               $resultSet =  getQuery($query);
               ?>
               <div class="table-responsive col-lg-12">

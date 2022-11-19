@@ -6,11 +6,11 @@
     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
         $date1 = $_POST['dateFetch1'];
         $date2 = $_POST['dateFetch2'];
-        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' and order_tb.date between '$date1' and '$date2' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.name, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' and order_tb.date between '$date1' and '$date2' ORDER BY order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
     else{
-        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.name, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' ORDER BY order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
 ?>

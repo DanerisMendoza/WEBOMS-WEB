@@ -24,7 +24,7 @@
     <script> document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };    </script> 
       
     <!-- serving table -->
-    <?php   $getPrepairingOrder = "select customer_tb.name, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  and status = 'serving' ORDER BY order_tb.id asc; ";
+    <?php   $getPrepairingOrder = "select userInfo_tb.name, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  and status = 'serving' ORDER BY order_tb.id asc; ";
             $resultSet = getQuery($getPrepairingOrder);?>
     <div class="table-responsive col-lg-6">
       <table class="table table-striped table-bordered col-lg-12">
@@ -47,7 +47,7 @@
     </div>
 
     <!-- prepairing table -->
-    <?php   $getPrepairingOrder = "select customer_tb.name, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  and status = 'prepairing' ORDER BY order_tb.id asc; ";
+    <?php   $getPrepairingOrder = "select userInfo_tb.name, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  and status = 'prepairing' ORDER BY order_tb.id asc; ";
             $resultSet = getQuery($getPrepairingOrder);?>
     <div class="table-responsive col-lg-6">
       <table class="table table-striped table-bordered col-lg-12">

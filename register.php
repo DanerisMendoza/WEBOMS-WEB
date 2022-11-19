@@ -51,10 +51,10 @@
         $query = "select * from user_tb where username = '$username'";
         if(getQuery($query) != null)
           die ("<script>alert('Name Already Exist!');</script>");
-        $query = "select * from customer_tb where name = '$name'";
+        $query = "select * from userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
           die ("<script>alert('Name Already Exist!');</script>");
-        $query = "select * from customer_tb where email = '$email'";
+        $query = "select * from userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
           die ("<script>alert('Email Already Exist!');</script>");
         
@@ -85,7 +85,7 @@
 
       $userLinkId = uniqid('',true);
       $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
-      $query2 = "insert into customer_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
+      $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
       if(!Query($query1))
         echo "fail to save to database";
       elseif(!Query($query2))

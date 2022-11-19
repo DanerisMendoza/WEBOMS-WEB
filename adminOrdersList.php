@@ -54,17 +54,17 @@
       }
 
       if($_SESSION['query'] == 'all')
-        $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId  ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userlinkId = order_tb.userlinkId  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'pending')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'pending' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'pending' ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'prepairing')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'prepairing'  ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'prepairing'  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'serving')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'serving'  ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'serving'  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'order complete')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status =  'complete' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status =  'complete' ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'order invalid')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'disapproved' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'disapproved' ORDER BY order_tb.id asc; ";
 
       $resultSet =  getQuery($query);
       if($resultSet != null){ ?>
