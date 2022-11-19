@@ -80,14 +80,7 @@
     
 </body>
 </html>
-
-<script>
-document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); }
-
-
-
-</script> 
-
+<script>document.getElementById("pos").onclick = function () {window.location.replace('adminPos.php'); }</script> 
 <?php
     //clear button
     if(isset($_POST['clear'])){
@@ -107,10 +100,6 @@ document.getElementById("pos").onclick = function () {window.location.replace('a
         if($cash<$total)
             die ("<script>alert('Your Cash is less than your total Payment amount');</script>");
     
-        // for($i=0; $i<count($dishesArr); $i++){ 
-        //     $updateQuery = "UPDATE menu_tb SET stock = (stock - '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-        //     Query($updateQuery);    
-        // }
         $change =  $cash-$total;
         require_once('TCPDF-main/tcpdf.php'); 
         $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  

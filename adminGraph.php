@@ -14,21 +14,20 @@
         include('method/checkIfAccountLoggedIn.php');
         include('method/query.php');
         $sold = 0;
-        $initialCost = 0;
-        $stock = 0;
-        $profit = 0;
+        $countOfSold = 0;
+        $stockLeft = 0;
         $query = "select * from menu_tb;";
         $resultSet = getQuery($query);
         if($resultSet!=null){
             foreach($resultSet as $row){
-                $stock += $row['stock'];
+                $stockLeft += $row['stock'];
             }
         }
         $query = "select menu_tb.*,ordersDetail_tb.*,order_tb.isOrdersComplete from menu_tb inner join ordersDetail_tb on menu_tb.orderType = ordersDetail_tb.orderType inner join order_tb on order_tb.ordersLinkId = ordersDetail_tb.OrdersLinkId where order_tb.isOrdersComplete = 1;";
         $resultSet = getQuery($query);
         if($resultSet!=null){
             foreach($resultSet as $row){
-                $sold += ($row['price']*$row['quantity']);
+                $countOfSold += $row['quantity'];
             }
         }
     ?>
@@ -38,8 +37,9 @@
         <h1 class="font-weight-normal mt-5 mb-4 text-center">View Graph</h1>
         <button class="btn btn-lg btn-danger col-12 mb-3" id="viewSalesReport">Sales Report</button>
             <div class="col-lg-12">
-                <h5 class="font-weight-normal">TOTAL AMOUNT OF SOLD: <?php echo '₱'.$sold?></h5>
-                <h5 class="font-weight-normal">TOTAL AMOUNT OF STOCK LEFT: <?php echo $stock?></h5>
+                <h5 class="font-weight-normal">TOTAL COUNT OF STOCK: <?php echo $countOfSold+$stockLeft?></h5>
+                <h5 class="font-weight-normal">TOTAL COUNT OF SOLD: <?php echo $countOfSold?></h5>
+                <h5 class="font-weight-normal">TOTAL COUNT OF STOCK LEFT: <?php echo $stockLeft?></h5>
                 <div class="col-lg-12" id="piechart" style="width: 900px; height: 500px;"></div> <!-- di pa responsive to -->
             </div>
     </div>
@@ -60,8 +60,8 @@
         function drawChartPie() {
         var data = google.visualization.arrayToDataTable([
             ['name', 'cost'],
-            ['sold',<?php echo $sold?>],
-            ['stock',<?php echo $stock?>]
+            ['Sold',<?php echo $countOfSold?>],
+            ['Stock Left',<?php echo $stockLeft?>]
         ]);
 
         var options = {

@@ -41,24 +41,30 @@
                             <th scope="col">NAME</th>
                             <th scope="col">TRANSACTION NO</th>
                             <th scope="col">STATUS</th>
-                            <th scope="col">TOTAL</th>
                             <th scope="col"></th>
                             <th scope="col">DATE & TIME</th>
+                            <th scope="col">TOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         if($resultSet != null)
+                            $total = 0;
                             foreach($resultSet as $rows){ ?>
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['ordersLinkId'];?></td>
                                 <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Pending"); ?></td>
-                                <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
+                                <td><?php echo '₱'.$rows['totalOrder']; ?></td>
+                                <?php $total += $rows['totalOrder'];?>
                                 </tr>
                             <?php } ?>
+                            <tr>
+                                <td colspan="5"><strong>Total</strong></td>
+                                <td><strong><?php echo '₱'.$total;?></strong></td>
+                            </tr>
                     </tbody>
                 </table>
             </div>
