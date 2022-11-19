@@ -85,7 +85,7 @@
 
       $userLinkId = uniqid('',true);
       $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
-      $query2 = "insert into customer_tb(name, email, otp, userLinkId) values('$username','$email','$otp','$userLinkId')";
+      $query2 = "insert into customer_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
       if(!Query($query1))
         echo "fail to save to database";
       elseif(!Query($query2))

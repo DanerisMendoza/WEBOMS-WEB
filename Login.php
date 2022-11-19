@@ -69,35 +69,33 @@
                     $userLinkId = $rows['userLinkId'];
                 }
                 if($valid){
+                  $_SESSION['accountType'] = $accountType;
                   switch($accountType){
                     case 'admin':
                       $_SESSION['username'] = $username;
                       $_SESSION['account'] = 'valid';
-                      $_SESSION['accountType'] = 'admin';
                       echo "<script> window.location.replace('admin.php');</script>";
                     break;
 
                     case 'cashier';
                       $_SESSION['username'] = $username;
                       $_SESSION['account'] = 'valid';
-                      $_SESSION['accountType'] = 'cashier';
                       echo "<script> window.location.replace('adminPos.php');</script>";
                     break;
 
                     case 'customer':
-                      $_SESSION['userLinkId'] = $userLinkId;
                       $query = "select * from customer_Tb where userLinkId = '$userLinkId'";
                       $resultSet = getQuery($query);
-                      $otp = '';
-                      if($resultSet!=null)
                       foreach($resultSet as $row){
                         $otp = $row['otp'];
+                        $name = $row['name'];
                       }
                       //if customer account is valid
                       if($valid && $otp == ''){
                         $_SESSION['username'] = $username;
+                        $_SESSION['name'] = $name;
                         $_SESSION['account'] = 'valid';
-                        $_SESSION['accountType'] = 'customer';
+                        $_SESSION['userLinkId'] = $userLinkId;
                         echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
                       }
                       //if customer account need to validate first via otp
