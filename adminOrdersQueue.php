@@ -2,7 +2,7 @@
   include('method/checkIfAccountLoggedIn.php');
   $isSame = false;
   include('method/Query.php');
-  $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 0 and order_tb.status = 1 ORDER BY order_tb.id asc; ";
+  $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 0 and order_tb.status = 'approved' ORDER BY order_tb.id asc; ";
   $resultSet = getQuery($query);
   $count = 0;
 ?>
@@ -31,6 +31,7 @@
             <tr>	
               <th scope="col">ORDERS ID</th>
               <th scope="col">QUEUE NO.</th>
+              <th scope="col">STATUS</th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +41,7 @@
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
                 <td><?php echo $rows['ordersLinkId']; ?></td>
+                <td>PREPAIRING</td>
                 <td><?php echo $i;?></td>
                 </tr>
                 <?php $i++;} ?>

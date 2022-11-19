@@ -6,7 +6,6 @@
     
 </head>
 <body class="bg-light">
-    
 <div class="container px-5">
   <div class="row justify-content-center">
     <form method="post" class="form2">

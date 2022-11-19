@@ -1,5 +1,6 @@
 <?php 
   include('method/checkIfAccountLoggedIn.php');
+  $_SESSION['from'] = 'orders';
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
@@ -9,7 +10,6 @@
 <html>
 <head>
   <title>Admin Orders</title>
-        
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
   <link rel="stylesheet" type="text/css" href="css/style.css">
     
@@ -24,14 +24,41 @@
     <div class="table-responsive col-lg-12">
     <?php
       include('method/Query.php');
-      if($_SESSION['query'] != 'all'){
-        $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId && order_tb.isOrdersComplete = 0 ORDER BY order_tb.id asc; ";
-        $resultSet =  getQuery($query);
+      ?>
+       <form method="get">
+            <select  name="sort" method="get">
+              <?php 
+                if(isset($_GET['sort'])){
+                  ?><option value="<?php echo $_GET['sort'];?>" selected><?php echo $_GET['sort'];?></option><?php
+                }else{
+                  ?><option value="all" selected>All</option><?php }
+              ?>
+              </option>
+              <option value="all">All</option>  
+              <option value="pending">Pending</option>  
+              <option value="prepairing">Prepairing</option>  
+              <option value="order complete">Order Complete</option>  
+              <option value="order invalid">Order Invalid</option>  
+            </select>
+            <input type = "submit"  value = "Sort"> 
+          </form>
+      <?php
+      if(isset($_GET['sort'])){
+        $_SESSION['query'] = $_GET['sort'];
       }
-      else{
+
+      if($_SESSION['query'] == 'all')
         $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId  ORDER BY order_tb.id asc; ";
-        $resultSet =  getQuery($query);
-      }
+      if($_SESSION['query'] == 'pending')
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status != 'disapproved' && status != 'approved' && isOrdersComplete !=  1 ORDER BY order_tb.id asc; ";
+      if($_SESSION['query'] == 'prepairing')
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'approved' && isOrdersComplete !=  1 ORDER BY order_tb.id asc; ";
+      if($_SESSION['query'] == 'order complete')
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where isOrdersComplete =  1 ORDER BY order_tb.id asc; ";
+      if($_SESSION['query'] == 'order invalid')
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'disapproved' ORDER BY order_tb.id asc; ";
+
+      $resultSet =  getQuery($query);
       if($resultSet != null){ ?>
           <table class="table table-striped table-bordered col-lg-12">
           <thead class="table-dark">
@@ -40,12 +67,8 @@
               <th scope="col">ORDERS ID</th>
               <th scope="col"></th>
               <th scope="col" colspan="2">APPROVE STATUS:</th>
-              <th scope="col">ORDER COMPLETE STATUS</th>
-              <th scope="col">ORDER STATUS:
-                <form method="post">
-                  <button class="btn btn-light border-dark" type="submit" name="showAll">SHOW/HIDE ALL</button>
-                </form>
-                </th>
+              <th scope="col">ORDER STATUS
+              </th>
               <th scope="col">DATE & TIME</th>
               <th scope="col"></th>
             </tr>
@@ -56,43 +79,36 @@
               <td><?php echo $rows['name']; ?></td>
               <td><?php echo $rows['ordersLinkId'];?></td>
               <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-              <td>
-                <?php 
+         
+                  <?php 
                   if($rows['status'] == 'approved'){
-                    echo "Already Approved";
+                    ?><td colspan="2"><?php echo "Approved"; ?></td><?php
                   }
                   elseif($rows['status'] == 'disapproved'){
-                    echo "disapproved";
-                  }
+                    ?><td colspan="2"><?php echo "Disapproved"; ?></td><?php                  }
                   else{
-                    ?><a class="btn btn-primary border-dark" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a><?php
+                    ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a></td>
+                       <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Disapprove</a></td>
+                    <?php
                   }?>
-              </td>
-              <td><a class="btn btn-primary border-dark" href="?status=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Disapprove</a></td>
+    
+             
               <td>
                 <?php 
-                  if($rows['status'] != 'approved'){
+                  if($rows['status'] == 'disapproved'){
+                    echo "Order Invalid";
+                  }
+                  elseif($rows['status'] != 'approved'){
                     echo "waiting for approval";
                   }
                   elseif($rows['isOrdersComplete'] == 1){
-                    echo "order is complete";
+                    echo "Complete";
                   }
                   else{
                     ?> <a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
                   }?>  
               </td>
-              <td>
-              <?php
-                if($rows['isOrdersComplete'] == 0 && $rows['status'] == 0){
-                  echo "Pending";
-                }
-                elseif($rows['isOrdersComplete'] == 0){
-                  echo "Preparing";
-                }
-                else{
-                  echo "Order Complete";
-                }
-              ?></td>
+        
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
               <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
             </tr><?php } ?>
@@ -108,8 +124,8 @@
 
 <?php 
   //button to approve order
-    if(isset($_GET['status'])){
-      $arr = explode(',',$_GET['status']);  
+    if(isset($_GET['approve'])){
+      $arr = explode(',',$_GET['approve']);  
       $ordersLinkId = $arr[0];
       $email = $arr[1];
       //compute order
@@ -210,12 +226,22 @@
         $mail->send();
 
       //approve
-        $query = "UPDATE order_tb SET status=1 WHERE ordersLinkId='$ordersLinkId' ";     
+        $query = "UPDATE order_tb SET status='approved' WHERE ordersLinkId='$ordersLinkId' ";     
         if(Query($query))
           echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
-
-
     }
+
+  //button to dissaprove order
+    if(isset($_GET['disapprove'])){
+      $arr = explode(',',$_GET['disapprove']);  
+      $ordersLinkId = $arr[0];
+      $email = $arr[1];
+      $query = "UPDATE order_tb SET status='disapproved' WHERE ordersLinkId='$ordersLinkId' ";     
+      Query($query);
+      if(Query($query))
+        echo "<script>alert('Disapprove Success'); window.location.replace('adminOrdersList.php');</script>";
+    }
+
   //button to make transaction complete
     if(isset($_GET['orderComplete'])){
       $id = $_GET['orderComplete'];

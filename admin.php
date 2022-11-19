@@ -1,6 +1,7 @@
 <?php 
   include('method/checkIfAccountLoggedIn.php');
-  $_SESSION['query'] = null
+  $_SESSION['query'] = 'all';
+  $_SESSION['from'] = null;
 ?>
 
 <!DOCTYPE html>
