@@ -37,6 +37,7 @@
               <option value="all">All</option>  
               <option value="pending">Pending</option>  
               <option value="prepairing">Prepairing</option>  
+              <option value="serving">Serving</option>  
               <option value="order complete">Order Complete</option>  
               <option value="order invalid">Order Invalid</option>  
             </select>
@@ -50,11 +51,13 @@
       if($_SESSION['query'] == 'all')
         $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'pending')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status != 'disapproved' && status != 'approved' && isOrdersComplete !=  1 ORDER BY order_tb.id asc; ";
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'pending' ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'prepairing')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'approved' && isOrdersComplete !=  1 ORDER BY order_tb.id asc; ";
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'prepairing'  ORDER BY order_tb.id asc; ";
+      if($_SESSION['query'] == 'serving')
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'serving'  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'order complete')
-        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where isOrdersComplete =  1 ORDER BY order_tb.id asc; ";
+        $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status =  'complete' ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'order invalid')
         $query = "select customer_tb.*, order_tb.* from customer_tb inner join order_tb on customer_tb.userlinkId = order_tb.userlinkId  where status = 'disapproved' ORDER BY order_tb.id asc; ";
 
@@ -66,9 +69,8 @@
               <th scope="col">NAME</th>
               <th scope="col">ORDERS ID</th>
               <th scope="col"></th>
-              <th scope="col" colspan="2">APPROVE STATUS:</th>
-              <th scope="col">ORDER STATUS
-              </th>
+              <th scope="col">ORDER STATUS</th>
+              <th scope="col" colspan="2">Option</th>
               <th scope="col">DATE & TIME</th>
               <th scope="col"></th>
             </tr>
@@ -76,40 +78,60 @@
           <tbody>
             <?php foreach($resultSet as $rows){?>
             <tr>	   
+              <!-- name -->
               <td><?php echo $rows['name']; ?></td>
+              <!-- orders link id -->
               <td><?php echo $rows['ordersLinkId'];?></td>
-              <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-         
+              <!-- order details -->
+              <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">Order Details</a></td>
+              <!-- order status -->
                   <?php 
-                  if($rows['status'] == 'approved'){
-                    ?><td colspan="2"><?php echo "Approved"; ?></td><?php
-                  }
-                  elseif($rows['status'] == 'disapproved'){
-                    ?><td colspan="2"><?php echo "Disapproved"; ?></td><?php                  }
-                  else{
-                    ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a></td>
-                       <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Disapprove</a></td>
-                    <?php
-                  }?>
-    
-             
-              <td>
-                <?php 
-                  if($rows['status'] == 'disapproved'){
-                    echo "Order Invalid";
-                  }
-                  elseif($rows['status'] != 'approved'){
-                    echo "waiting for approval";
-                  }
-                  elseif($rows['isOrdersComplete'] == 1){
-                    echo "Complete";
-                  }
-                  else{
-                    ?> <a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a><?php
-                  }?>  
-              </td>
+                    if($rows['status'] == 'pending'){
+                      ?><td>Pending</td><?php
+                    }
+                    elseif($rows['status'] == 'approved'){
+                      ?><td>Approved></td><?php
+                    }
+                    elseif($rows['status'] == 'disapproved'){
+                      ?><td>Disapproved</td><?php
+                    }
+                    elseif($rows['status'] == 'prepairing'){
+                      ?><td>Prepairing</td><?php
+                    }
+                    elseif($rows['status'] == 'serving'){
+                      ?><td>Serving</td><?php
+                    }
+                    elseif($rows['status'] == 'complete'){
+                      ?><td>Complete</td><?php
+                    }
+                  ?>
+              <!-- option -->
+            
+              <?php 
+                    if($rows['status'] == 'pending'){
+                      ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a></td>
+                      <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Disapprove</a></td><?php
+                    }
+                    elseif($rows['status'] == 'approved'){
+                      ?><td colspan="2">Approved></td><?php
+                    }
+                    elseif($rows['status'] == 'disapproved'){
+                      ?><td colspan="2">None</td><?php
+                    }
+                    elseif($rows['status'] == 'prepairing'){
+                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?serve=<?php echo $rows['ordersLinkId'] ?>">Serve</a></td><?php
+                    }
+                    elseif($rows['status'] == 'serving'){
+                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a></td><?php
+                    }
+                    elseif($rows['status'] == 'complete'){
+                      ?><td colspan="2">None</td><?php
+                    }
+                  ?>
         
+              <!-- date -->
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
+              <!-- delete -->
               <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
             </tr><?php } ?>
           </tbody>   
@@ -123,6 +145,14 @@
 </html>
 
 <?php 
+  //button to serve order
+  if(isset($_GET['serve'])){
+    $ordersLinkId = $_GET['serve'];
+    $query = "UPDATE order_tb SET status='serving' WHERE ordersLinkId='$ordersLinkId' ";     
+    if(Query($query))
+      echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
+
+  }
   //button to approve order
     if(isset($_GET['approve'])){
       $arr = explode(',',$_GET['approve']);  
@@ -226,7 +256,7 @@
         $mail->send();
 
       //approve
-        $query = "UPDATE order_tb SET status='approved' WHERE ordersLinkId='$ordersLinkId' ";     
+        $query = "UPDATE order_tb SET status='prepairing' WHERE ordersLinkId='$ordersLinkId' ";     
         if(Query($query))
           echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
     }
@@ -253,32 +283,25 @@
       }
     }
 
-  //button to make transaction complete
+  //button to make order complete
     if(isset($_GET['orderComplete'])){
-      $id = $_GET['orderComplete'];
-      $query = "UPDATE order_tb SET isOrdersComplete=true WHERE ordersLinkId='$id' ";     
+      $ordersLinkId = $_GET['orderComplete'];
+      $query = "UPDATE order_tb SET status='complete' WHERE ordersLinkId='$ordersLinkId' ";     
       if(Query($query))
         echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
     }
-  //button to show even completed order or show pending orders only
-    if(isset($_POST['showAll'])){
-      if($_SESSION['query'] == 'all')
-        $_SESSION['query'] = null;
-      else
-        $_SESSION['query'] = 'all';
-      echo "<script>window.location.replace('adminOrdersList.php');</script>";
-    }
+
   //delete button
-  if(isset($_GET['delete'])){
-    $arr = explode(',',$_GET['delete']);
-    $id = $arr[0];
-    $Pic = $arr[1];
-    $linkId = $arr[2];
-    $query1 = "DELETE FROM order_tb WHERE id='$id'";
-    $query2 = "DELETE FROM ordersdetail_tb WHERE ordersLinkId='$linkId'";
-    if(Query($query1) && Query($query2)){
-      unlink("payment/".$Pic);
-      echo "<script> window.location.replace('adminOrdersList.php'); alert('Delete data successfully'); </script>";  
+    if(isset($_GET['delete'])){
+      $arr = explode(',',$_GET['delete']);
+      $id = $arr[0];
+      $Pic = $arr[1];
+      $linkId = $arr[2];
+      $query1 = "DELETE FROM order_tb WHERE id='$id'";
+      $query2 = "DELETE FROM ordersdetail_tb WHERE ordersLinkId='$linkId'";
+      if(Query($query1) && Query($query2)){
+        unlink("payment/".$Pic);
+        echo "<script> window.location.replace('adminOrdersList.php'); alert('Delete data successfully'); </script>";  
+      }
     }
-  }
 ?>

@@ -5,11 +5,11 @@
     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
         $date1 = $_POST['dateFetch1'];
         $date2 = $_POST['dateFetch2'];
-        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 1 and order_tb.date between '$date1' and '$date2' ORDER BY order_tb.id asc; ";
+        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' and order_tb.date between '$date1' and '$date2' ORDER BY order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
     else{
-        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.isOrdersComplete = 1 ORDER BY order_tb.id asc; ";
+        $query = "select customer_tb.name, order_tb.* from customer_tb, order_tb where customer_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' ORDER BY order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
 ?>
@@ -41,20 +41,18 @@
                             <th scope="col">NAME</th>
                             <th scope="col">TRANSACTION NO</th>
                             <th scope="col">STATUS</th>
-                            <th scope="col"></th>
                             <th scope="col">DATE & TIME</th>
                             <th scope="col">TOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
+                        $total = 0;
                         if($resultSet != null)
-                            $total = 0;
                             foreach($resultSet as $rows){ ?>
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['ordersLinkId'];?></td>
-                                <td><?php echo ($rows['isOrdersComplete'] == 1 ? "Order Complete": "Pending"); ?></td>
                                 <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
                                 <td><?php echo '₱'.$rows['totalOrder']; ?></td>
@@ -62,7 +60,7 @@
                                 </tr>
                             <?php } ?>
                             <tr>
-                                <td colspan="5"><strong>Total</strong></td>
+                                <td colspan="4"><strong>Total</strong></td>
                                 <td><strong><?php echo '₱'.$total;?></strong></td>
                             </tr>
                     </tbody>
