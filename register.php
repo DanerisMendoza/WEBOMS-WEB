@@ -46,13 +46,18 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         include('method/query.php');
-        $query = "select * from customer_tb where name = '$name' or email = '$email'";
-        if(getQuery($query) != null){
-          echo "<script>alert('Name or Email Already Exist!');</script>";
-          echo "<script>window.location.replace('register.php');</script>";
-          return;
-        }
-
+        
+        //validation
+        $query = "select * from user_tb where username = '$username'";
+        if(getQuery($query) != null)
+          die ("<script>alert('Name Already Exist!');</script>");
+        $query = "select * from customer_tb where name = '$name'";
+        if(getQuery($query) != null)
+          die ("<script>alert('Name Already Exist!');</script>");
+        $query = "select * from customer_tb where email = '$email'";
+        if(getQuery($query) != null)
+          die ("<script>alert('Email Already Exist!');</script>");
+        
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
         //Load Composer's autoloader

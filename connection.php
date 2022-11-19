@@ -37,6 +37,11 @@ if (!$db_selected) {
 		email varchar(255),
 		otp varchar(255),
 		userLinkId varchar(255))";
+	
+		$queryCreateStaff_tb = "create table if not exists staff_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		email varchar(255),
+		userLinkId varchar(255))";
 
 		$queryCreateOrder_tb = "create table if not exists order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
@@ -56,7 +61,7 @@ if (!$db_selected) {
 		ordersLinkId varchar(255), 
 		userlinkId int)";
 
-		if ($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb)  && $conn->query($queryInsertAdmin) && $conn->query($queryCreateCustomer_tb) && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) 
+		if ($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb)  && $conn->query($queryInsertAdmin) && $conn->query($queryCreateStaff_tb) && $conn->query($queryCreateCustomer_tb) && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) 
 			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						

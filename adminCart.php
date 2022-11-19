@@ -20,7 +20,6 @@
         
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <!-- <h1 class="font-weight-normal mt-5 mb-4">View Cart</h1> -->
         <button class="btn btn-lg btn-dark col-12 mb-3" id="pos">POS</button>
     
         <div class="table-responsive col-lg-12">
