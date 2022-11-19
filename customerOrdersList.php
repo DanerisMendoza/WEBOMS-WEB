@@ -37,29 +37,28 @@
               include('method/checkIfAccountLoggedIn.php');
               include('method/Query.php');
                 $userlinkId = $_SESSION["userLinkId"];  
-                $query = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userLinkId = order_tb.userlinkId and customer_tb.userLinkId = '$userlinkId';";
-                $resultSet = getQuery($query);
+                $getCustomerOrders = "select customer_tb.*, order_tb.* from customer_tb, order_tb where customer_tb.userLinkId = order_tb.userlinkId and customer_tb.userLinkId = '$userlinkId';";
+                $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
                 <td><?php echo $rows['name']; ?></td>
-                <td><?php echo ($rows['status'] == 1 ? "Approved": "Pending"); 
-                ?></td>
+                <td><?php echo $rows['status']; ?></td>
                 <td><?php echo $rows['email']; ?></td>
                 <td><a class="btn btn-light border-dark" href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
                   $ordersLinkId = $rows['ordersLinkId'];
                   $userLinkId = $rows['userLinkId'];
-                  $query = "SELECT * FROM feedback_tb WHERE ordersLinkId='$ordersLinkId' AND userLinkId = '$userLinkId' ";
-                  $resultSet = getQuery($query);
-                  if($rows['status'] == 1 && $resultSet == null){
+                  $checkIfAlreadyFeedback = "SELECT * FROM feedback_tb WHERE ordersLinkId='$ordersLinkId' AND userLinkId = '$userLinkId' ";
+                  $resultSet = getQuery($checkIfAlreadyFeedback);
+                  if($rows['status'] == 'complete' && $resultSet == null){
                     ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userLinkId']?>">Feedback</a>  <?php
                   }
-                  elseif($rows['status'] == 1){
+                  elseif($rows['status'] == 'complete'){
                     echo "You have already feedback!";
                   }
                   else{
-                    echo "you cannot give feedback yet </br> please wait for approvation";
+                    echo "Please wait until order is Complete.";
                   }
                 ?>
                 </td>
