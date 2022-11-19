@@ -29,9 +29,9 @@
             <select  name="sort" method="get">
               <?php 
                 if(isset($_GET['sort'])){
-                  ?><option value="<?php echo $_GET['sort'];?>" selected><?php echo $_GET['sort'];?></option><?php
+                  ?><option value="<?php echo $_GET['sort'];?>" selected>Sort: <?php echo strtoupper($_GET['sort']);?></option><?php
                 }else{
-                  ?><option value="all" selected>All</option><?php }
+                  ?><option value="all" selected>Sort: All</option><?php }
               ?>
               </option>
               <option value="all">All</option>  
@@ -238,8 +238,19 @@
       $email = $arr[1];
       $query = "UPDATE order_tb SET status='disapproved' WHERE ordersLinkId='$ordersLinkId' ";     
       Query($query);
-      if(Query($query))
+      if(Query($query)){
         echo "<script>alert('Disapprove Success'); window.location.replace('adminOrdersList.php');</script>";
+        $query = "select menu_tb.*, ordersDetail_tb.* from menu_tb inner join ordersDetail_tb where menu_tb.orderType = ordersDetail_tb.orderType and ordersDetail_tb.ordersLinkId = '$ordersLinkId' ";
+        $dishesArr = array();
+        $dishesQuantity = array();
+        $resultSet = getQuery($query); 
+        foreach($resultSet as $rows){
+          $qty = $rows['quantity'];
+          $dish = $rows['dish'];
+          $updateQuery = "UPDATE menu_tb SET stock = (stock + '$qty') WHERE dish= '$dish' ";    
+          Query($updateQuery);    
+        }
+      }
     }
 
   //button to make transaction complete
