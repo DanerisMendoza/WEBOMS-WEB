@@ -1,8 +1,7 @@
 <?php 
     session_start();
     require_once('TCPDF-main/tcpdf.php'); 
-    date_default_timezone_set('Asia/Manila');
-    $date = date("j-m-Y  h:i:s A"); 
+    $date = $_SESSION['date'];
     $cash = $_SESSION['cash'];
     $total = $_SESSION['total'];
     $change =  $cash-$total;

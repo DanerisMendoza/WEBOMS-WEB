@@ -85,8 +85,11 @@
       $order = explode(',',$_GET['order']);  
       $dish = $order[0];
       $price = $order[1];
+      $orderType = $order[2];
       array_push($_SESSION['dishes'], $dish);
       array_push($_SESSION['price'], $price);
+      array_push($_SESSION['orderType'], $orderType);
+
       $updateQuery = "UPDATE menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
       if(Query($updateQuery))
         echo "<script>window.location.replace('adminPos.php');</script>";    

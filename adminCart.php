@@ -36,6 +36,8 @@
                     $dishesArr = array();
                     $priceArr = array();
                     $dishesQuantity = array();
+                    $orderType = array();
+
                     for($i=0; $i<count($_SESSION['dishes']); $i++){
                         if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
                             $index = array_search($_SESSION['dishes'][$i], $dishesArr);
@@ -45,6 +47,7 @@
                         else{
                             array_push($dishesArr,$_SESSION['dishes'][$i]);
                             array_push($priceArr,$_SESSION['price'][$i]);
+                            array_push($orderType,$_SESSION['orderType'][$i]);
                         }
                     }
     
@@ -102,11 +105,27 @@
         $cash = $_POST['cash'];
         if($cash<$total)
             die ("<script>alert('Your Cash is less than your total Payment amount');</script>");
+        date_default_timezone_set('Asia/Manila');
+        $date = new DateTime();
+        $today =  $date->format('Y-m-d'); 
+        $todayWithTime =  $date->format('Y-m-d H:i:s'); 
+        $_SESSION['date'] = $date = date("Y-m-d H:i:s"); 
         $_SESSION['cash'] = $cash;
         $_SESSION['total'] = $total;
         $_SESSION['dishesArr'] = $dishesArr;
         $_SESSION['priceArr'] = $priceArr;
         $_SESSION['dishesQuantity'] = $dishesQuantity;
+        $name = $_SESSION['name'];
+        $userLinkId = $_SESSION['userLinkId'];
+        $ordersLinkId = uniqid();
+        $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$name')";
+        for($i=0; $i<count($dishesArr); $i++){
+            $query2 = "insert into ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
+            Query($query2);
+        }
+        if(Query($query1)){
+            echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
+        }
         echo "<script>alert('order success!'); window.open('receipt.php', '_blank');</script>";
         echo "<script>window.location.replace('adminPos.php');</script>";
     }

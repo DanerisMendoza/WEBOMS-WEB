@@ -54,17 +54,17 @@
       }
 
       if($_SESSION['query'] == 'all')
-        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userlinkId = order_tb.userlinkId  ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.*, user_tb.accountType from userInfo_tb, order_tb, user_tb where userInfo_tb.userlinkId = order_tb.userlinkId  and user_tb.userLinkId = userInfo_tb.userLinkId ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'pending')
-        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'pending' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.*, user_tb.accountType from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId inner join user_tb on user_tb.userLinkId = userInfo_tb.userLinkId where status = 'pending' ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'prepairing')
-        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'prepairing'  ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.*, user_tb.accountType from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId inner join user_tb on user_tb.userLinkId = userInfo_tb.userLinkId where status = 'prepairing'  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'serving')
-        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'serving'  ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.*, user_tb.accountType from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId inner join user_tb on user_tb.userLinkId = userInfo_tb.userLinkId where status = 'serving'  ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'order complete')
-        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status =  'complete' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.*, user_tb.accountType from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId inner join user_tb on user_tb.userLinkId = userInfo_tb.userLinkId where status =  'complete' ORDER BY order_tb.id asc; ";
       if($_SESSION['query'] == 'order invalid')
-        $query = "select userInfo_tb.*, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  where status = 'disapproved' ORDER BY order_tb.id asc; ";
+        $query = "select userInfo_tb.*, order_tb.*, user_tb.accountType from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId inner join user_tb on user_tb.userLinkId = userInfo_tb.userLinkId where status = 'disapproved' ORDER BY order_tb.id asc; ";
 
       $resultSet =  getQuery($query);
       if($resultSet != null){ ?>
@@ -78,13 +78,14 @@
               <th scope="col" colspan="2">Option</th>
               <th scope="col">DATE & TIME</th>
               <th scope="col"></th>
+              <th scope="col">Staff In Charge</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach($resultSet as $rows){?>
             <tr>	   
               <!-- name -->
-              <td><?php echo $rows['name']; ?></td>
+              <td><?php echo $rows['accountType'] == 'admin' || $rows['name'] == 'manager'|| $rows['name'] == 'cashier' ? '':$rows['name']; ?></td>
               <!-- orders link id -->
               <td><?php echo $rows['ordersLinkId'];?></td>
               <!-- order details -->
@@ -138,6 +139,7 @@
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
               <!-- delete -->
               <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
+              <td><?php echo $rows['staffInCharge']?></td>
             </tr><?php } ?>
           </tbody>   
         </table>

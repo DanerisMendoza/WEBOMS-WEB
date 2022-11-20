@@ -46,7 +46,7 @@
                         <td><?php if($rows['username'] != 'admin'){?>
                             <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['username'] ?>">delete</a><?php } 
                             else
-                                echo "You cannot delete admin account!"?>
+                                echo "YOU CAN NOT DELETE </BR> ADMIN ACCOUNT!"?>
                         </td>
                     </tr>
                     <?php } ?>

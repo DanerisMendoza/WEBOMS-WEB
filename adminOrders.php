@@ -59,11 +59,13 @@
               </tbody>
             </table>
           </div>
-          
+          <?php if($pic!='null'){ ?>
           <div class="mb-5">
             <h1 class="font-weight-normal">PROOF OF PAYMENT:</h1>
-            <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
+            <?php  echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
           </div>
+          <?php }?>
+
 	  </div>
 	</div>
 </div>
