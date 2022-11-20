@@ -16,7 +16,7 @@ elseif($page == 'admin' && ($_SESSION['accountType'] != 'admin' && $_SESSION['ac
 }
 
 //not cashier
-elseif($page == 'cashier' && ($_SESSION['accountType'] != 'admin' && $_SESSION['accountType'] != 'cashier')){
+elseif($page == 'cashier' && ($_SESSION['accountType'] != 'admin' && $_SESSION['accountType'] != 'cashier'  && $_SESSION['accountType'] != 'manager')){
     die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
 }
 
