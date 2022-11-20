@@ -4,6 +4,7 @@
   if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
     $_SESSION["dishes"] = array();
     $_SESSION["price"] = array(); 
+    $_SESSION["orderType"] = array(); 
   }
 ?>
 

@@ -115,18 +115,18 @@
         $_SESSION['dishesArr'] = $dishesArr;
         $_SESSION['priceArr'] = $priceArr;
         $_SESSION['dishesQuantity'] = $dishesQuantity;
-        $name = $_SESSION['name'];
+        $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
         $userLinkId = $_SESSION['userLinkId'];
         $ordersLinkId = uniqid();
-        $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$name')";
+        $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$staff')";
         for($i=0; $i<count($dishesArr); $i++){
             $query2 = "insert into ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
             Query($query2);
         }
         if(Query($query1)){
-            echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
+            echo '<script>alert("Sucess Placing Order!");</script>';       
         }
-        echo "<script>alert('order success!'); window.open('receipt.php', '_blank');</script>";
+        echo "<script>window.open('receipt.php', '_blank');</script>";
         echo "<script>window.location.replace('adminPos.php');</script>";
     }
 ?>

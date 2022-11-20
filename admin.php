@@ -17,7 +17,6 @@
 
 </head>
 <body class="bg-light">
-
 <div class="container">
   <div class="row justify-content-center">
     <h1 class="font-weight-normal mt-5 mb-4"><?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')';?></h1>

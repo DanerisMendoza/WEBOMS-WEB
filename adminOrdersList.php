@@ -85,7 +85,7 @@
             <?php foreach($resultSet as $rows){?>
             <tr>	   
               <!-- name -->
-              <td><?php echo $rows['accountType'] == 'admin' || $rows['name'] == 'manager'|| $rows['name'] == 'cashier' ? '':$rows['name']; ?></td>
+              <td><?php echo $rows['accountType'] == 'admin' || $rows['accountType'] == 'manager'|| $rows['accountType'] == 'cashier' ? '':$rows['name']; ?></td>
               <!-- orders link id -->
               <td><?php echo $rows['ordersLinkId'];?></td>
               <!-- order details -->
@@ -139,7 +139,7 @@
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
               <!-- delete -->
               <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
-              <td><?php echo $rows['staffInCharge']?></td>
+              <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
             </tr><?php } ?>
           </tbody>   
         </table>
@@ -263,7 +263,8 @@
         $mail->send();
 
       //approve
-        $query = "UPDATE order_tb SET status='prepairing' WHERE ordersLinkId='$ordersLinkId' ";     
+        $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
+        $query = "UPDATE order_tb SET status='prepairing', staffInCharge = '$staff' WHERE ordersLinkId='$ordersLinkId' ";     
         if(Query($query))
           echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
     }
@@ -273,7 +274,8 @@
       $arr = explode(',',$_GET['disapprove']);  
       $ordersLinkId = $arr[0];
       $email = $arr[1];
-      $query = "UPDATE order_tb SET status='disapproved' WHERE ordersLinkId='$ordersLinkId' ";     
+      $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
+      $query = "UPDATE order_tb SET status='disapproved',staffInCharge='$staff' WHERE ordersLinkId='$ordersLinkId' ";     
       Query($query);
       if(Query($query)){
         echo "<script>alert('Disapprove Success'); window.location.replace('adminOrdersList.php');</script>";
@@ -307,7 +309,8 @@
       $query1 = "DELETE FROM order_tb WHERE id='$id'";
       $query2 = "DELETE FROM ordersdetail_tb WHERE ordersLinkId='$linkId'";
       if(Query($query1) && Query($query2)){
-        unlink("payment/".$Pic);
+        if($Pic != 'null')
+          unlink("payment/".$Pic);
         echo "<script> window.location.replace('adminOrdersList.php'); alert('Delete data successfully'); </script>";  
       }
     }
