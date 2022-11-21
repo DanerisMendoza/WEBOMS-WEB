@@ -85,7 +85,7 @@
             <?php foreach($resultSet as $rows){?>
             <tr>	   
               <!-- name -->
-              <td><?php echo $rows['accountType'] == 'admin' || $rows['accountType'] == 'manager'|| $rows['accountType'] == 'cashier' ? '':$rows['name']; ?></td>
+              <td><?php echo $rows['accountType'] == 'customer'  ? $rows['name']:'POS'; ?></td>
               <!-- orders link id -->
               <td><?php echo $rows['ordersLinkId'];?></td>
               <!-- order details -->
