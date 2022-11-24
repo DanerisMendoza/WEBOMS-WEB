@@ -41,12 +41,17 @@
     use PHPMailer\PHPMailer\Exception;
 
     if(isset($_POST['createAccount'])){
+        include('method/query.php');
+        
+        //initialization
         $username = $_POST['username'];
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        include('method/query.php');
-        
+        $otp = uniqid();
+        $userLinkId = uniqid('',true);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
         //validation
         $query = "select * from user_tb where username = '$username'";
         if(getQuery($query) != null)
@@ -58,8 +63,7 @@
         if(getQuery($query) != null)
           die ("<script>alert('Email Already Exist!');</script>");
         
-        $otp = uniqid();
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        //mailer
         //Load Composer's autoloader
         require 'vendor/autoload.php';
         //Create an instance; passing `true` enables exceptions
@@ -83,14 +87,14 @@
         $mail->Body    = $otp;
         $mail->send();
 
-      $userLinkId = uniqid('',true);
-      $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
-      $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
-      if(!Query($query1))
-        echo "fail to save to database";
-      elseif(!Query($query2))
-        echo "fail to save to database";
-      else
-        echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+        //queries
+        $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
+        $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
+        if(!Query($query1))
+          echo "fail to save to database";
+        elseif(!Query($query2))
+          echo "fail to save to database";
+        else
+          echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
     }
 ?>

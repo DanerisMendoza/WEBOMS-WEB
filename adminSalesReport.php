@@ -30,13 +30,16 @@
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
         <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Sales Report</h1> -->
-        <button class="btn btn-lg btn-dark col-6 mb-3" id="admin">Admin</button>
-        <button class="btn btn-lg btn-success col-6 mb-3" id="viewGraph">View Graph</button>
+        <button class="btn btn-lg btn-dark col-4 mb-3" id="admin">Admin</button>
+        <button class="btn btn-lg btn-success col-4 mb-3" id="viewGraph">View Graph</button>
+        <button class="btn btn-lg btn-success col-4 mb-3" id="viewGraph">View in PDF</button>
         <div class="container-fluid">
             <form method="post">
-                <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-2 col-12" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
-                <button type="submit" name="fetch" class="btn btn-lg btn-success col-12 mb-2">Fetch</button>
-                <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-2 col-12" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
+                <div class="col-12 row">
+                    <h5 class="form-control col-2">From:</h5><input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-2 col-3" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
+                    <h5 class="form-control col-2">To:</h5><input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-2 col-3" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
+                    <button type="submit" name="fetch" class="btn btn-lg btn-success col-2 mb-2">Fetch</button>
+                </div>
                 <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button>
             </form>
         </div>
@@ -60,7 +63,7 @@
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['ordersLinkId'];?></td>
                                 <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
-                                <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
+                                <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
                                 <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <?php $total += $rows['totalOrder'];?>
                                 </tr>

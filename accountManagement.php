@@ -17,8 +17,9 @@
         <div class="container text-center mt-5">
             <button class="btn btn-lg btn-dark col-12 mb-1" id="customer">Back</button>
             <button id="addButton" type="button" class="btn btn-lg btn-success col-12 mb-1" data-toggle="modal" data-target="#loginModal">Add new Account</button>
-
-            <script>document.getElementById("customer").onclick = function () {window.location.replace('admin.php'); };</script> 
+            <script>
+            document.getElementById("customer").onclick = function () {window.location.replace('admin.php'); };
+            </script> 
             <?php
               $page = 'admin';
               include('method/checkIfAccountLoggedIn.php');
@@ -42,7 +43,7 @@
                     <tr>	   
                         <td><?php echo $rows['username']; ?></td>
                         <td><?php echo $rows['accountType'];?></td>
-                        <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'] ?>">Update</a></td>
+                        <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'].',' ?>">Update</a></td>
                         <td><?php if($rows['username'] != 'admin'){?>
                             <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['username'] ?>">delete</a><?php } 
                             else
@@ -54,6 +55,7 @@
                     </table>
                 </div>
 	    </div>
+        <!-- insert -->
         <div class="modal fade" role="dialog" id="loginModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -74,9 +76,33 @@
                 </div>
             </div>
         </div>
-    </body>
+        <!-- update -->
+        <div class="modal fade" role="dialog" id="updateModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-body ">
+                    <form method="post" class="form-group">
+                    <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter New Username" required>
+                    <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter New Name" required>
+                    <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter New Email" required>
+                    <input type="text" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
+                    <select name="accountType" class="form-control form-control-lg col-12 mb-3">
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="cashier">Cashier</option>
+                    </select>
+                    <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Update</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+</body>
 </html>
+
 <?php 
+    //insert
     if(isset($_POST['insert'])){
         //initialization
         $name =  $_POST['name'];
@@ -108,5 +134,12 @@
         else
           echo ("<script>window.location.replace('accountManagement.php'); alert('Sucess');</script>");
   
+    }
+    //update
+    if(isset($_GET['update'])){
+        $arr = explode(',',$_GET['update']);
+        $username = $arr[0];
+        echo "<script>$('#updateModal').modal('show');</script>";
+        echo "<script>document.forms[1].username.value = '$username';</script>";
     }
 ?>
