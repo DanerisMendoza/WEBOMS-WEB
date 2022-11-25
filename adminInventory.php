@@ -26,6 +26,7 @@
 			      <th scope="col">DISH</th>
 			      <th scope="col">PRICE</th>
 			      <th scope="col">STOCK</th>
+			      <th scope="col">lastModifiedBy</th>
 			      <th scope="col"></th>
 			      <th scope="col"></th>
 			    </tr>
@@ -44,6 +45,7 @@
                 <td><?=$rows['dish']?></td>
                 <td><?php echo '₱'.$rows['price']; ?></td>
                 <td><?php echo $rows['stock']; ?></td>
+                <td><?php echo $rows['lastModifiedBy']; ?></td>
                 <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
                 <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType'].",".$rows['dish'].",".$rows['price'].",".$rows['picName'].",".$rows['stock'] ?>"  >Update</a></td>
                 </tr>
@@ -95,6 +97,8 @@
   $file = $_FILES['fileInput'];
   $stock = $_POST['stock'];
   $fileName = $_FILES['fileInput']['name'];
+  $name = $_SESSION['name'];
+
   $fileTmpName = $_FILES['fileInput']['tmp_name'];
   $fileSize = $_FILES['fileInput']['size'];
   $fileError = $_FILES['fileInput']['error'];
@@ -108,7 +112,7 @@
               $fileNameNew = uniqid('',true).".".$fileActualExt;
               $fileDestination = 'dishesPic/'.$fileNameNew;
               move_uploaded_file($fileTmpName,$fileDestination);         
-              $query = "insert into menu_tb(dish, price, picName, stock) values('$dishes','$price','$fileNameNew','$stock')";
+              $query = "insert into menu_tb(dish, price, picName, stock, lastModifiedBy) values('$dishes','$price','$fileNameNew','$stock','$name')";
               if(Query($query));
                 echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }

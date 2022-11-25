@@ -20,7 +20,8 @@ if (!$db_selected) {
 		dish varchar(255),
 		price int,
 		picName varchar(255),
-		stock int)";
+		stock int,
+		lastModifiedBy varchar(255))";
 		
 
 		$queryCreateUser_tb = "create table if not exists user_tb(id int PRIMARY KEY AUTO_INCREMENT,

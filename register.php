@@ -41,17 +41,12 @@
     use PHPMailer\PHPMailer\Exception;
 
     if(isset($_POST['createAccount'])){
-        include('method/query.php');
-        
-        //initialization
         $username = $_POST['username'];
         $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $otp = uniqid();
-        $userLinkId = uniqid('',true);
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
+        include('method/query.php');
+        
         //validation
         $query = "select * from user_tb where username = '$username'";
         if(getQuery($query) != null)
@@ -63,7 +58,8 @@
         if(getQuery($query) != null)
           die ("<script>alert('Email Already Exist!');</script>");
         
-        //mailer
+        $otp = uniqid();
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         //Load Composer's autoloader
         require 'vendor/autoload.php';
         //Create an instance; passing `true` enables exceptions
@@ -74,27 +70,27 @@
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'webBasedOrdering098@gmail.com'; //from //SMTP username
-        $mail->Password   = 'cgzyificorxxdlau';                     //SMTP password
+        $mail->Username   = 'weboms098@gmail.com'; //from //SMTP username
+        $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
         $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
         $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('webBasedOrdering098@gmail.com', 'webBasedOrdering');
+        $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
         $mail->addAddress("$email");                                //sent to
         //Content
         $mail->Subject = 'OTP';
         $mail->Body    = $otp;
         $mail->send();
 
-        //queries
-        $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
-        $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
-        if(!Query($query1))
-          echo "fail to save to database";
-        elseif(!Query($query2))
-          echo "fail to save to database";
-        else
-          echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+      $userLinkId = uniqid('',true);
+      $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
+      $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
+      if(!Query($query1))
+        echo "fail to save to database";
+      elseif(!Query($query2))
+        echo "fail to save to database";
+      else
+        echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
     }
 ?>

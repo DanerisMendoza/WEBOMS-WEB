@@ -15,12 +15,15 @@
     <div class="row justify-content-center">
         <h1 class="font-weight-normal mt-5 mb-4 text-center">Inventory Update</h1>
         <?php
+            $page = 'admin';
+            include('method/checkIfAccountLoggedIn.php');
             $idAndPicname = explode(',',$_GET['idAndPicnameUpdate']);    
             $id = $idAndPicname[0];
             $dishOriginal = $idAndPicname[1];
             $priceOriginal = $idAndPicname[2];
             $picNameOriginal = $idAndPicname[3];
             $stockOriginal = $idAndPicname[4];
+            $name = $_SESSION['name'];
         ?>
 
         <div class="table-responsive col-lg-12 mb-4">
@@ -61,8 +64,6 @@
 </html>
 
 <?php
-    $page = 'admin';
-    include('method/checkIfAccountLoggedIn.php');
     //if update button click
     if(isset($_POST['update'])){
         include('method/query.php');
@@ -71,7 +72,7 @@
         $stock = $_POST['stock'] == '' ? $stockOriginal : $_POST['stock'];
         //if image didn't change 
         if($_FILES['fileInput']['name'] == ''){
-            $updateQuery = "UPDATE menu_tb SET dish='$dish', price='$price', stock =  '$stock' WHERE orderType=$id ";   
+            $updateQuery = "UPDATE menu_tb SET dish='$dish', price='$price', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";   
             if(Query($updateQuery)){
                 die ("<script>alert('Sucess updating the database!'); window.location.replace('adminInventory.php');</script>");       
             }
@@ -90,7 +91,7 @@
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'dishesPic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
-                    $updateQuery = "UPDATE menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock' WHERE orderType=$id ";        
+                    $updateQuery = "UPDATE menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";        
                     if(Query($updateQuery)){
                         echo '<script>alert("Sucess updating the database!");</script>';       
                         unlink("dishespic/".$picName);                                        
