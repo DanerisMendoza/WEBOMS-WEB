@@ -75,7 +75,7 @@
        
             <form method="post">
                 <input name="cash" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3" required></input>
-                <button type ="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+                <button id="orderBtn" type ="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
             </form>
             <form method="post">
                 <button type="submit" class="btn btn-lg btn-danger col-12 mb-5" name="clear">Clear Order</button>
@@ -126,10 +126,17 @@
         if(Query($query1)){
             echo '<script>alert("Sucess Placing Order!");</script>';       
         }
-        echo "<script>window.open('receipt.php', '_blank');</script>";
         echo "<script>window.location.replace('adminPos.php');</script>";
     }
 ?>
+<script>
+    // get refernce to the button
+    const orderBtn = document.getElementById("orderBtn");
+    // add click event handler to button
+    orderBtn.addEventListener("click", () => {
+    window.open("receipt.php");
+    });
+</script>
 
 <!-- 
         add pdf page and size

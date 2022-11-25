@@ -85,7 +85,7 @@
     $arr = explode(' ',$_GET['idAndPicnameDelete']);
     $id = $arr[0];
     $pic = $arr[1];
-    $query = "DELETE FROM menu_tb WHERE orderType='$id' ";
+    $query = "DELETE FROM WEBOMS_menu_tb WHERE orderType='$id' ";
     if(Query($query)){
       unlink("dishespic/"."$pic");
       echo "<script> window.location.replace('adminInventory.php');</script>";

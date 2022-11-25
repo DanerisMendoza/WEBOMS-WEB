@@ -8,6 +8,9 @@
     $dishesArr = $_SESSION['dishesArr'];
     $priceArr = $_SESSION['priceArr'];
     $dishesQuantity = $_SESSION['dishesQuantity'];
+    if($total == 0)
+        echo "<script>window.location.replace('receipt.php');</script>";
+ 
     $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $obj_pdf->SetCreator(PDF_CREATOR);  
     $obj_pdf->SetTitle("Receipt");  
@@ -66,9 +69,9 @@
     </style>
     ";
     $obj_pdf->writeHTML($content);  
-    ob_end_clean();
     $obj_pdf->Output('file.pdf', 'I');
+
     $_SESSION["dishes"] = $_SESSION["price"] = $_SESSION["orderType"] = array(); 
     $_SESSION['total'] = $_SESSION['cash'] = null;
-
+  
 ?>
