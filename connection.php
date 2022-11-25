@@ -16,18 +16,18 @@ if (!$db_selected) {
 		//connect to db first then create table
 		$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);	
 
-		$queryCreateMenu_tb = "create table if not exists menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
-		dish varchar(255),
-		price int,
-		picName varchar(255),
-		stock int,
-		lastModifiedBy varchar(255))";
-		
+		//user
 
 		$queryCreateUser_tb = "create table if not exists user_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		username varchar(255),
 		password varchar(255),
 		accountType varchar(255),
+		userLinkId varchar(255))";
+
+		$queryCreateUserInfo_tb = "create table if not exists userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		email varchar(255),
+		otp varchar(255),
 		userLinkId varchar(255))";
 
 		$hash = password_hash('password', PASSWORD_DEFAULT);
@@ -36,12 +36,18 @@ if (!$db_selected) {
 		$queryInsertAdmin = "insert into user_tb(username, password, accountType, userLinkId) values('admin','$hash','admin','$userLinkId')";
 		$queryInsertAdminInfo = "insert into userInfo_tb(name, email, otp, userLinkId) values('admin','','','$userLinkId')";
 
-		$queryCreateUserInfo_tb = "create table if not exists userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
-		name varchar(255),
-		email varchar(255),
-		otp varchar(255),
-		userLinkId varchar(255))";
-	
+		//menu
+
+		$queryCreateMenu_tb = "create table if not exists menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
+		dish varchar(255),
+		price int,
+		picName varchar(255),
+		stock int,
+		lastModifiedBy varchar(255))";
+		
+
+		//orders
+
 		$queryCreateOrder_tb = "create table if not exists order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
 		userLinkId varchar(255), 
@@ -55,6 +61,8 @@ if (!$db_selected) {
 		ordersLinkId varchar(255), 
 		quantity int,
 		orderType int)";
+
+		//feedback
 
 		$queryCreateFeedback_tb = "create table if not exists feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		feedback varchar(255), 

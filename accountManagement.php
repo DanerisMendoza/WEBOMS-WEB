@@ -31,7 +31,7 @@
                 <table class="table table-striped table-bordered mb-5 col-lg-12">
                     <thead class="table-dark">
                         <tr>	
-                        <th scope="col">NAME</th>
+                        <th scope="col">username</th>
                         <th scope="col">Account Type</th>
                         <th scope="col" colspan="2">Option</th>
                         </tr>
@@ -45,7 +45,7 @@
                         <td><?php echo $rows['accountType'];?></td>
                         <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'].',' ?>">Update</a></td>
                         <td><?php if($rows['username'] != 'admin'){?>
-                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['username'] ?>">delete</a><?php } 
+                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['userLinkId'] ?>">delete</a><?php } 
                             else
                                 echo "YOU CAN NOT DELETE </BR> ADMIN ACCOUNT!"?>
                         </td>
@@ -64,9 +64,8 @@
                     <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter New Username" required>
                     <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter New Name" required>
                     <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter New Email" required>
-                    <input type="text" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
+                    <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
                     <select name="accountType" class="form-control form-control-lg col-12 mb-3">
-                        <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
                         <option value="cashier">Cashier</option>
                     </select>
@@ -85,19 +84,31 @@
                     <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter New Username" required>
                     <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter New Name" required>
                     <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter New Email" required>
-                    <input type="text" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
+                    <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
                     <select name="accountType" class="form-control form-control-lg col-12 mb-3">
-                        <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
                         <option value="cashier">Cashier</option>
                     </select>
-                    <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Update</button>
+                    <button type="submit" class="btn btn-lg btn-success col-12" name="updateNonAdmin">Update</button>
                     </form>
                 </div>
                 </div>
             </div>
         </div>
-
+        <!-- admin -->
+        <div class="modal fade" role="dialog" id="adminUpdateModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-body ">
+                    <form method="post" class="form-group">
+                    <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter New Username" required>
+                    <input type="text" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
+                    <button type="submit" class="btn btn-lg btn-success col-12" name="updateAdmin">Update</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
 
@@ -139,7 +150,28 @@
     if(isset($_GET['update'])){
         $arr = explode(',',$_GET['update']);
         $username = $arr[0];
+        //admin block
+        if($username == 'admin'){
+            echo "<script>$('#adminUpdateModal').modal('show');</script>";
+            echo "<script>document.forms[2].username.value = '$username';</script>";
+            if(isset($_POST['updateAdmin'])){
+                $password = $_POST['password'];
+                $query = "UPDATE user_tb SET password = '$password' WHERE username=$username";   
+                Query($query);
+            }
+        }
+        else{
         echo "<script>$('#updateModal').modal('show');</script>";
         echo "<script>document.forms[1].username.value = '$username';</script>";
+        }
+    }
+    //delete
+    if(isset($_GET['delete'])){
+        $userLinkId = $_GET['delete'];
+        $query = "DELETE FROM user_tb WHERE userLinkId='$userLinkId' ";
+        $query2 = "DELETE FROM userInfo_tb WHERE userLinkId='$userLinkId' ";
+        if(Query($query))
+            if(Query($query2))
+                echo "<script>window.location.replace('accountManagement.php');</script>";
     }
 ?>
