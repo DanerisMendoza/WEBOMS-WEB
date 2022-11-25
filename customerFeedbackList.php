@@ -1,3 +1,8 @@
+<?php
+  $page = 'customer';
+  include('method/checkIfAccountLoggedIn.php');
+  include_once('method/query.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,10 +24,7 @@
               document.getElementById("customer").onclick = function () {window.location.replace('customerMenu.php'); };    
           </script> 
           <?php
-              $page = 'customer';
-              include('method/checkIfAccountLoggedIn.php');
-              include_once('method/query.php');
-              $query = "select userInfo_tb.*, feedback_tb.*, order_tb.* from userInfo_tb, order_tb, feedback_tb where userInfo_tb.userlinkId = order_tb.userlinkId and feedback_tb.ordersLinkId = order_tb.ordersLinkId;";
+              $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId and WEBOMS_feedback_tb.ordersLinkId = WEBOMS_order_tb.ordersLinkId;";
               $resultSet =  getQuery($query);
               ?>
               <div class="table-responsive col-lg-12">

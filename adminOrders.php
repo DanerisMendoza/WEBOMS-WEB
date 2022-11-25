@@ -1,3 +1,6 @@
+<?php      
+  include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +19,6 @@
     <div class="col-lg-12 cont2">
           <?php 
           $page = 'admin';
-          include('method/checkIfAccountLoggedIn.php');
           if($_SESSION['from'] == 'orders'){ ?>
           <button class="btn btn-lg btn-dark col-12 mb-3" id="orderList">Order List</button>
           <?php }else{?>
@@ -28,8 +30,8 @@
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
               $pic = $arr[1];
-              include('method/Query.php');
-              $query = "select menu_tb.*, ordersDetail_tb.* from menu_tb inner join ordersDetail_tb where menu_tb.orderType = ordersDetail_tb.orderType and ordersDetail_tb.ordersLinkId = '$id' ";
+              include('method/query.php');
+              $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.ordersLinkId = '$id' ";
               $resultSet = getQuery($query); 
             ?>
             <table class="table table-striped table-bordered border-dark col-lg-12">

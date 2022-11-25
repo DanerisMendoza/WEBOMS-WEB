@@ -350,7 +350,7 @@ class PHPMailer
     public $Password = '';
 
     /**
-     * SMTP authentication type. Options are CRAM-MD5, LOGIN, PLAIN, XOAUTH2.
+     * SMTP authentication type. Options are CRAM-MD5, Login, PLAIN, XOAUTH2.
      * If not specified, the first one from that list that the server supports will be selected.
      *
      * @var string

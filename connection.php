@@ -1,54 +1,39 @@
 <?php
 $dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "ordering_db";
+$dbuser = "ytoovumw_bscs3a";
+$dbpass = "kaAGi]gz8H2*";
+$dbname = "ytoovumw_bscs3a";
 
-// Connect to MySQL but don't specify db name else terminate
-$conn = mysqli_connect($dbhost,$dbuser,$dbpass);
-if($conn->connect_error)
-	die("Connection failed: " . $conn->connect_error);
-//check db if exist create if no exist
-$db_selected = mysqli_select_db($conn, $dbname);
-if (!$db_selected) {
-	$sql = "CREATE DATABASE ".$dbname;
-	if ($conn->query($sql) === TRUE){ 
-		//connect to db first then create table
-		$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);	
+$conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);	
 
+	if ($conn -> connect_error){
+		die("Connection Failed: ". $conn->connect_error); 
+	}
+	else{
 		//user
-
-		$queryCreateUser_tb = "create table if not exists user_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		$queryCreateUser_tb = "create table if not exists WEBOMS_user_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		username varchar(255),
 		password varchar(255),
 		accountType varchar(255),
 		userLinkId varchar(255))";
 
-		$queryCreateUserInfo_tb = "create table if not exists userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		$queryCreateUserInfo_tb = "create table if not exists WEBOMS_userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		name varchar(255),
 		email varchar(255),
 		otp varchar(255),
 		userLinkId varchar(255))";
-
-		$hash = password_hash('password', PASSWORD_DEFAULT);
-		$userLinkId = uniqid('',true);
-
-		$queryInsertAdmin = "insert into user_tb(username, password, accountType, userLinkId) values('admin','$hash','admin','$userLinkId')";
-		$queryInsertAdminInfo = "insert into userInfo_tb(name, email, otp, userLinkId) values('admin','','','$userLinkId')";
+		
 
 		//menu
-
-		$queryCreateMenu_tb = "create table if not exists menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
+		$queryCreateMenu_tb = "create table if not exists WEBOMS_menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
 		dish varchar(255),
 		price int,
 		picName varchar(255),
 		stock int,
 		lastModifiedBy varchar(255))";
 		
-
 		//orders
-
-		$queryCreateOrder_tb = "create table if not exists order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
+		$queryCreateOrder_tb = "create table if not exists WEBOMS_order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		proofOfPayment varchar(255), 
 		userLinkId varchar(255), 
 		status varchar(255),
@@ -57,26 +42,35 @@ if (!$db_selected) {
 		totalOrder int,
 		staffInCharge varchar(255))";
 
-		$queryCreateOrdersDetail_tb = "create table if not exists ordersDetail_tb(id int PRIMARY KEY AUTO_INCREMENT, 
+		$queryCreateOrdersDetail_tb = "create table if not exists WEBOMS_ordersDetail_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		ordersLinkId varchar(255), 
 		quantity int,
 		orderType int)";
 
 		//feedback
-
-		$queryCreateFeedback_tb = "create table if not exists feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
+		$queryCreateFeedback_tb = "create table if not exists WEBOMS_feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		feedback varchar(255), 
 		ordersLinkId varchar(255), 
 		userlinkId int)";
 
-		if ($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryInsertAdmin) && $conn->query($queryInsertAdminInfo)   && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) 
-			echo '<script type="text/javascript">alert("Database and Table created successfully");</script>';
+		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) {
+			$checkQuery = "select * from WEBOMS_user_tb";
+			if($resultSet = $conn->query($checkQuery)){  
+				if($resultSet->num_rows <= 0){
+					$hash = password_hash('password', PASSWORD_DEFAULT);
+					$userLinkId = uniqid('',true);
+					$queryInsertAdmin = "insert into WEBOMS_user_tb(username, password, accountType, userLinkId) values('admin','$hash','admin','$userLinkId')";
+					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, email, otp, userLinkId) values('admin','','','$userLinkId')";
+					if($conn->query($queryInsertAdmin))
+						if($conn->query($queryInsertAdminInfo))
+							echo  '<script>alert("Success creating table");</script>';						
+					}
+			}
+		}
 		else 
-			echo  '<script type="text/javascript">alert("Error creating table: ");</script>'. $conn->error;						
+			echo  '<script type="text/javascript">alert("Error creating table");</script>';						
 	}
-	else 
-		echo '<script type="text/javascript">alert("Error creating database:");</script>' .$conn->error;
-}
+	
 
 ?>
 

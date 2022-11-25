@@ -184,7 +184,7 @@ class POP3
 
     /**
      * Authenticate with a POP3 server.
-     * A connect, login, disconnect sequence
+     * A connect, Login, disconnect sequence
      * appropriate for POP-before SMTP authorisation.
      *
      * @param string   $host        The hostname to connect to
@@ -219,14 +219,14 @@ class POP3
         //Connect
         $result = $this->connect($this->host, $this->port, $this->tval);
         if ($result) {
-            $login_result = $this->login($this->username, $this->password);
+            $login_result = $this->Login($this->username, $this->password);
             if ($login_result) {
                 $this->disconnect();
 
                 return true;
             }
         }
-        //We need to disconnect regardless of whether the login succeeded
+        //We need to disconnect regardless of whether the Login succeeded
         $this->disconnect();
 
         return false;
@@ -304,7 +304,7 @@ class POP3
      *
      * @return bool
      */
-    public function login($username = '', $password = '')
+    public function Login($username = '', $password = '')
     {
         if (!$this->connected) {
             $this->setError('Not connected to POP3 server');

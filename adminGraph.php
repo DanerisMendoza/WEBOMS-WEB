@@ -1,3 +1,8 @@
+<?php 
+    $page = 'admin';
+    include('method/checkIfAccountLoggedIn.php');
+    include('method/query.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,20 +19,17 @@
 </head>
 <body class="bg-light">
     <?php
-        $page = 'admin';
-        include('method/checkIfAccountLoggedIn.php');
-        include('method/query.php');
         $sold = 0;
         $countOfSold = 0;
         $stockLeft = 0;
-        $query = "select * from menu_tb;";
+        $query = "select * from WEBOMS_menu_tb;";
         $resultSet = getQuery($query);
         if($resultSet!=null){
             foreach($resultSet as $row){
                 $stockLeft += $row['stock'];
             }
         }
-        $query = "select menu_tb.*,ordersDetail_tb.*,order_tb.status from menu_tb inner join ordersDetail_tb on menu_tb.orderType = ordersDetail_tb.orderType inner join order_tb on order_tb.ordersLinkId = ordersDetail_tb.OrdersLinkId where status = 'complete';";
+        $query = "select WEBOMS_menu_tb.*,WEBOMS_ordersDetail_tb.*,WEBOMS_order_tb.status from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb on WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType inner join WEBOMS_order_tb on WEBOMS_order_tb.ordersLinkId = WEBOMS_ordersDetail_tb.OrdersLinkId where status = 'complete';";
         $resultSet = getQuery($query);
         if($resultSet!=null){
             foreach($resultSet as $row){

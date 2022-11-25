@@ -1,3 +1,7 @@
+<?php 
+    $page = 'customer';
+    include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,15 +33,13 @@
 </body>
 </html>
 <?php 
-    $page = 'customer';
-    include('method/checkIfAccountLoggedIn.php');
     if(isset($_POST['submit'])){
         $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);
         $ordersLinkId = $arr[0];
         $userLinkId = $arr[1];
         $feedback = $_POST['feedback'];
-        include('method/Query.php');
-        $query = "insert into feedback_tb(feedback, ordersLinkId, userLinkId) values('$feedback', '$ordersLinkId', '$userLinkId')";
+        include('method/query.php');
+        $query = "insert into WEBOMS_feedback_tb(feedback, ordersLinkId, userLinkId) values('$feedback', '$ordersLinkId', '$userLinkId')";
         if(Query($query))
             echo "<script>alert('feedback sent thanks!'); window.location.replace('customerOrdersList.php');</script>";
     }

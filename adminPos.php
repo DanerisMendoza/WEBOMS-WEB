@@ -39,8 +39,8 @@
     );}</script>              
     <div class="table-responsive col-lg-12">
             <?php 
-                include('method/Query.php');
-                $query = "select * from menu_tb";
+                include('method/query.php');
+                $query = "select * from WEBOMS_menu_tb";
                 $resultSet =  getQuery($query)
             ?>
       <table class="table table-striped table-bordered mb-5 col-lg-12">
@@ -91,7 +91,7 @@
       array_push($_SESSION['price'], $price);
       array_push($_SESSION['orderType'], $orderType);
 
-      $updateQuery = "UPDATE menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+      $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
       if(Query($updateQuery))
         echo "<script>window.location.replace('adminPos.php');</script>";    
     }

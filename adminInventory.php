@@ -1,3 +1,8 @@
+<?php 
+  $page = 'admin';
+  include('method/query.php');
+  include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,21 +38,18 @@
 			  </thead>
 			  <tbody>
 			  	<?php 
-            $page = 'admin';
-            include('method/Query.php');
-            include('method/checkIfAccountLoggedIn.php');
-            $query = "select * from menu_tb";
+            $query = "select * from WEBOMS_menu_tb";
             $resultSet = getQuery($query);
             if($resultSet != null){
               foreach($resultSet as $rows){?>
                 <tr>	   
                 <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><?=$rows['dish']?></td>
+                <td><?php echo $rows['dish'];?></td>
                 <td><?php echo '₱'.$rows['price']; ?></td>
                 <td><?php echo $rows['stock']; ?></td>
                 <td><?php echo $rows['lastModifiedBy']; ?></td>
-                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName'] ?>">Delete</a></td>
-                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType'].",".$rows['dish'].",".$rows['price'].",".$rows['picName'].",".$rows['stock'] ?>"  >Update</a></td>
+                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName']; ?>">Delete</a></td>
+                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType'].",".$rows['dish'].",".$rows['price'].",".$rows['picName'].",".$rows['stock']; ?>"  >Update</a></td>
                 </tr>
                 <?php } 
             }
@@ -112,7 +114,7 @@
               $fileNameNew = uniqid('',true).".".$fileActualExt;
               $fileDestination = 'dishesPic/'.$fileNameNew;
               move_uploaded_file($fileTmpName,$fileDestination);         
-              $query = "insert into menu_tb(dish, price, picName, stock, lastModifiedBy) values('$dishes','$price','$fileNameNew','$stock','$name')";
+              $query = "insert into WEBOMS_menu_tb(dish, price, picName, stock, lastModifiedBy) values('$dishes','$price','$fileNameNew','$stock','$name')";
               if(Query($query));
                 echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }

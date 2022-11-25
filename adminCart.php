@@ -91,7 +91,7 @@
     //clear button
     if(isset($_POST['clear'])){
         for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
             Query($updateQuery);    
         }
         $_SESSION["dishes"] = array();
@@ -118,9 +118,9 @@
         $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
         $userLinkId = $_SESSION['userLinkId'];
         $ordersLinkId = uniqid();
-        $query1 = "insert into order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$staff')";
+        $query1 = "insert into WEBOMS_order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$staff')";
         for($i=0; $i<count($dishesArr); $i++){
-            $query2 = "insert into ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
+            $query2 = "insert into WEBOMS_ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
             Query($query2);
         }
         if(Query($query1)){

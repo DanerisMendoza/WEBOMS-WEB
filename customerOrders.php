@@ -1,3 +1,7 @@
+<?php 
+  $page = 'customer';
+  include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,13 +20,11 @@
     <button class="btn btn-lg btn-dark col-12 mb-4" id="orderList">Order List</button>
     <div class="table-responsive col-lg-12">
             <?php 
-              $page = 'customer';
-              include('method/checkIfAccountLoggedIn.php');
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
               $pic = $arr[1];
-              include('method/Query.php');
-              $query = "select menu_tb.*, ordersDetail_tb.* from menu_tb inner join ordersDetail_tb where menu_tb.orderType = ordersDetail_tb.orderType and ordersDetail_tb.ordersLinkId = '$id' ";
+              include('method/query.php');
+              $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.ordersLinkId = '$id' ";
               $resultSet =  getQuery($query); 
             ?>
       <table class="table table-striped table-bordered col-lg-12 mb-4">

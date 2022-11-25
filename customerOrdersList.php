@@ -1,3 +1,7 @@
+<?php 
+  $page = 'customer';
+  include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +38,9 @@
         </thead>
         <tbody>
               <?php
-              $page = 'customer';
-              include('method/checkIfAccountLoggedIn.php');
-              include('method/Query.php');
+              include('method/query.php');
                 $userlinkId = $_SESSION["userLinkId"];  
-                $getCustomerOrders = "select userInfo_tb.*, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userLinkId = order_tb.userlinkId and userInfo_tb.userLinkId = '$userlinkId';";
+                $getCustomerOrders = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.userLinkId = WEBOMS_order_tb.userlinkId and WEBOMS_userInfo_tb.userLinkId = '$userlinkId';";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
@@ -50,7 +52,7 @@
                 <td><?php 
                   $ordersLinkId = $rows['ordersLinkId'];
                   $userLinkId = $rows['userLinkId'];
-                  $checkIfAlreadyFeedback = "SELECT * FROM feedback_tb WHERE ordersLinkId='$ordersLinkId' AND userLinkId = '$userLinkId' ";
+                  $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE ordersLinkId='$ordersLinkId' AND userLinkId = '$userLinkId' ";
                   $resultSet = getQuery($checkIfAlreadyFeedback);
                   if($rows['status'] == 'complete' && $resultSet == null){
                     ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userLinkId']?>">Feedback</a>  <?php

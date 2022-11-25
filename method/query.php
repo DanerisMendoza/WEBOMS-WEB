@@ -11,7 +11,6 @@
         }
         else{
             die ($conn -> error);
-            
         }
     }
 

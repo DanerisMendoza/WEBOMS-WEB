@@ -1,3 +1,7 @@
+<?php 
+    $page = 'admin';
+    include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +25,8 @@
             document.getElementById("customer").onclick = function () {window.location.replace('admin.php'); };
             </script> 
             <?php
-              $page = 'admin';
-              include('method/checkIfAccountLoggedIn.php');
               include_once('method/query.php');
-              $selectAllUser = "select * from user_tb";
+              $selectAllUser = "select * from WEBOMS_user_tb";
               $resultSet =  getQuery($selectAllUser);
               ?>
               <div class="table-responsive col-lg-12">
@@ -125,19 +127,19 @@
         $userLinkId = uniqid('',true);
 
         //validation
-        $query = "select * from user_tb where username = '$username'";
+        $query = "select * from WEBOMS_user_tb where username = '$username'";
         if(getQuery($query) != null)
             die ("<script>alert('Name Already Exist!');</script>");
-        $query = "select * from userInfo_tb where name = '$name'";
+        $query = "select * from WEBOMS_userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
             die ("<script>alert('Name Already Exist!');</script>");
-        $query = "select * from userInfo_tb where email = '$email'";
+        $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
             die ("<script>alert('Email Already Exist!');</script>");
 
         //insert
-        $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','$accountType','$userLinkId')";
-        $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','','$userLinkId')";
+        $query1 = "insert into WEBOMS_user_tb(username, password, accountType, userLinkId) values('$username','$hash','$accountType','$userLinkId')";
+        $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, userLinkId) values('$name','$email','','$userLinkId')";
         if(!Query($query1))
           echo "fail to save to database";
         elseif(!Query($query2))
@@ -156,7 +158,7 @@
             echo "<script>document.forms[2].username.value = '$username';</script>";
             if(isset($_POST['updateAdmin'])){
                 $password = $_POST['password'];
-                $query = "UPDATE user_tb SET password = '$password' WHERE username=$username";   
+                $query = "UPDATE WEBOMS_user_tb SET password = '$password' WHERE username=$username";   
                 Query($query);
             }
         }
@@ -168,8 +170,8 @@
     //delete
     if(isset($_GET['delete'])){
         $userLinkId = $_GET['delete'];
-        $query = "DELETE FROM user_tb WHERE userLinkId='$userLinkId' ";
-        $query2 = "DELETE FROM userInfo_tb WHERE userLinkId='$userLinkId' ";
+        $query = "DELETE FROM WEBOMS_user_tb WHERE userLinkId='$userLinkId' ";
+        $query2 = "DELETE FROM WEBOMS_userInfo_tb WHERE userLinkId='$userLinkId' ";
         if(Query($query))
             if(Query($query2))
                 echo "<script>window.location.replace('accountManagement.php');</script>";

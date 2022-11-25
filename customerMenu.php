@@ -1,4 +1,6 @@
 <?php 
+    $page = 'customer';
+    include('method/checkIfAccountLoggedIn.php');
     if(!isset($_SESSION["dishes"]) || !isset($_SESSION["price"]) || !isset($_SESSION["orderType"])){
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array(); 
@@ -39,10 +41,8 @@
                 </thead>
                 <tbody>
                 <?php 
-                    $page = 'customer';
-                    include('method/checkIfAccountLoggedIn.php');
                     include_once('method/query.php');
-                    $query = "select * from menu_tb";
+                    $query = "select * from WEBOMS_menu_tb";
                     $resultSet =  getQuery($query);
                     if($resultSet != null)
                         foreach($resultSet as $rows){ ?>
@@ -78,7 +78,7 @@
         array_push($_SESSION['dishes'], $dish);
         array_push($_SESSION['price'], $price);
         array_push($_SESSION['orderType'], $orderType);
-        $updateQuery = "UPDATE menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
         if(Query($updateQuery))
           echo "<script>window.location.replace('customerMenu.php');</script>";    
   

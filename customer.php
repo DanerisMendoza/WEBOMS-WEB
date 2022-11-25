@@ -36,7 +36,7 @@
 	document.getElementById("logout").addEventListener("click",function(){
 		$.post(
         "method/logout.php");
-        window.location.replace('login.php');
+        window.location.replace('Login.php');
     });
 	document.getElementById("menu").onclick = function () {window.location.replace('customerMenu.php'); };
 	document.getElementById("customerOrders").onclick = function () {window.location.replace('customerOrdersList.php'); };

@@ -4882,7 +4882,7 @@ $Id: ChangeLog,v 1.257 2010/09/19 13:15:07 Stevan_White Exp $
 2006-01-26  Primoz Peterlin  <primoz.peterlin@biofiz.mf.uni-lj.si>
 
 	* notes/maintenance.txt: Added information on the Makefile now
-	used; username for FTP login is anonymous.
+	used; username for FTP Login is anonymous.
 
 	* sfd/FreeSansBold.sfd: added U+0569, U+0571, U+0579, U+057B,
 	U+0586. Armenian small letters completed.

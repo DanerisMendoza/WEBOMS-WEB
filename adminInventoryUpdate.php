@@ -1,3 +1,6 @@
+<?php 
+    include('method/checkIfAccountLoggedIn.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +19,6 @@
         <h1 class="font-weight-normal mt-5 mb-4 text-center">Inventory Update</h1>
         <?php
             $page = 'admin';
-            include('method/checkIfAccountLoggedIn.php');
             $idAndPicname = explode(',',$_GET['idAndPicnameUpdate']);    
             $id = $idAndPicname[0];
             $dishOriginal = $idAndPicname[1];
@@ -72,7 +74,7 @@
         $stock = $_POST['stock'] == '' ? $stockOriginal : $_POST['stock'];
         //if image didn't change 
         if($_FILES['fileInput']['name'] == ''){
-            $updateQuery = "UPDATE menu_tb SET dish='$dish', price='$price', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";   
+            $updateQuery = "UPDATE WEBOMS_menu_tb SET dish='$dish', price='$price', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";   
             if(Query($updateQuery)){
                 die ("<script>alert('Sucess updating the database!'); window.location.replace('adminInventory.php');</script>");       
             }
@@ -91,7 +93,7 @@
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'dishesPic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
-                    $updateQuery = "UPDATE menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";        
+                    $updateQuery = "UPDATE WEBOMS_menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";        
                     if(Query($updateQuery)){
                         echo '<script>alert("Sucess updating the database!");</script>';       
                         unlink("dishespic/".$picName);                                        

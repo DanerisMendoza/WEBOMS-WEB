@@ -1,7 +1,7 @@
 <?php 
   $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
-  include('method/Query.php');
+  include('method/query.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
     <script> document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };    </script> 
       
     <!-- serving table -->
-    <?php   $getPrepairingOrder = "select userInfo_tb.name, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  and status = 'serving' ORDER BY order_tb.id asc; ";
+    <?php   $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId  and status = 'serving' ORDER BY WEBOMS_order_tb.id asc; ";
             $resultSet = getQuery($getPrepairingOrder);?>
     <div class="table-responsive col-lg-6">
       <table class="table table-striped table-bordered col-lg-12">
@@ -47,7 +47,7 @@
     </div>
 
     <!-- prepairing table -->
-    <?php   $getPrepairingOrder = "select userInfo_tb.name, order_tb.* from userInfo_tb inner join order_tb on userInfo_tb.userlinkId = order_tb.userlinkId  and status = 'prepairing' ORDER BY order_tb.id asc; ";
+    <?php   $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId  and status = 'prepairing' ORDER BY WEBOMS_order_tb.id asc; ";
             $resultSet = getQuery($getPrepairingOrder);?>
     <div class="table-responsive col-lg-6">
       <table class="table table-striped table-bordered col-lg-12">

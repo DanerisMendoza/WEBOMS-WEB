@@ -1,16 +1,16 @@
 <?php
     $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
-    include('method/Query.php');
+    include('method/query.php');
     $_SESSION['from'] = 'salesReport';
     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
         $date1 = $_POST['dateFetch1'];
         $date2 = $_POST['dateFetch2'];
-        $query = "select userInfo_tb.name, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' and order_tb.date between '$date1' and '$date2' ORDER BY order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId and WEBOMS_order_tb.status = 'complete' and WEBOMS_order_tb.date between '$date1' and '$date2' ORDER BY WEBOMS_order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
     else{
-        $query = "select userInfo_tb.name, order_tb.* from userInfo_tb, order_tb where userInfo_tb.userlinkId = order_tb.userlinkId and order_tb.status = 'complete' ORDER BY order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId and WEBOMS_order_tb.status = 'complete' ORDER BY WEBOMS_order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
 ?>
@@ -29,7 +29,6 @@
 
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Sales Report</h1> -->
         <button class="btn btn-lg btn-dark col-4 mb-3" id="admin">Admin</button>
         <button class="btn btn-lg btn-success col-4 mb-3" id="viewGraph">View Graph</button>
         <button class="btn btn-lg btn-success col-4 mb-3" id="viewGraph">View in PDF</button>

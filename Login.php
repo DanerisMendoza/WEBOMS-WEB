@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,7 @@
       <div class="mb-3">
         <a href="#" class="pass text-muted">Forgot Password?</a>
       </div>
-      <button class="btn btn-primary btn-lg col-12 mb-3" type="submit" name="login" value="login">Login</button>
+      <button class="btn btn-primary btn-lg col-12 mb-3" type="submit" name="Login" value="Login">Login</button>
       <div class="text-center text-muted mb-5">
         Dont'have an account yet? <a href="register.php" class="signup_link text-muted">Sign up</a>
       </div>
@@ -47,20 +48,14 @@
     </div>
 
     <?php
-        session_start();
         include('method/query.php');
         include_once('connection.php');
-        if(isset($_POST['login'])){
+        if(isset($_POST['Login'])){
             $_SESSION["username"]  = $_POST['username'];
             $username = $_POST['username'];
             $password = $_POST['password'];
-            if(empty($username) || empty($password)){
-                echo '<script >alert("Please complete details!");</script>';
-                echo "<script>window.location.replace('login.php')</script>";
-                return;
-            }
             //user block
-            $query = "select * from user_tb where username = '$username'";
+            $query = "select * from WEBOMS_user_tb where username = '$username'";
             $resultSet = getQuery($query);
             if(($resultSet && $resultSet->num_rows)  > 0){
                 foreach($resultSet as $rows){
@@ -70,7 +65,7 @@
                 }
                 if($valid){
                   //setting credential if valid
-                  $query = "select * from userInfo_tb where userLinkId = '$userLinkId'";
+                  $query = "select * from WEBOMS_userInfo_tb where userLinkId = '$userLinkId'";
                   $resultSet = getQuery($query);
                   foreach($resultSet as $row){
                     $_SESSION['name'] = $row['name'];
@@ -121,10 +116,10 @@
             $username = $_SESSION["username"];
             $otp = $_POST['otp'];
             $userLinkId = $_SESSION['userLinkId'];
-            $query = "select * from userInfo_tb where userlinkId = '$userLinkId' && otp = '$otp' ";
+            $query = "select * from WEBOMS_userInfo_tb where userlinkId = '$userLinkId' && otp = '$otp' ";
             $resultSet = getQuery($query);
             if($resultSet != null){
-                $updateQuery = "UPDATE userInfo_tb SET otp='' WHERE otp='$otp'";
+                $updateQuery = "UPDATE WEBOMS_userInfo_tb SET otp='' WHERE otp='$otp'";
                 if(Query($updateQuery)){
                     echo "<SCRIPT> window.location.replace('customer.php'); </SCRIPT>";
                     $_SESSION['username'] = $username;

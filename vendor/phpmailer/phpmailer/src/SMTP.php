@@ -482,7 +482,7 @@ class SMTP
      *
      * @param string $username The user name
      * @param string $password The password
-     * @param string $authtype The auth type (CRAM-MD5, PLAIN, LOGIN, XOAUTH2)
+     * @param string $authtype The auth type (CRAM-MD5, PLAIN, Login, XOAUTH2)
      * @param OAuthTokenProvider $OAuth An optional OAuthTokenProvider instance for XOAUTH2 authentication
      *
      * @return bool True if successfully authenticated
@@ -524,7 +524,7 @@ class SMTP
             if (empty($authtype)) {
                 //If no auth mechanism is specified, attempt to use these, in this order
                 //Try CRAM-MD5 first as it's more secure than the others
-                foreach (['CRAM-MD5', 'LOGIN', 'PLAIN', 'XOAUTH2'] as $method) {
+                foreach (['CRAM-MD5', 'Login', 'PLAIN', 'XOAUTH2'] as $method) {
                     if (in_array($method, $this->server_caps['AUTH'], true)) {
                         $authtype = $method;
                         break;
@@ -544,7 +544,7 @@ class SMTP
                 return false;
             }
         } elseif (empty($authtype)) {
-            $authtype = 'LOGIN';
+            $authtype = 'Login';
         }
         switch ($authtype) {
             case 'PLAIN':
@@ -565,9 +565,9 @@ class SMTP
                     return false;
                 }
                 break;
-            case 'LOGIN':
+            case 'Login':
                 //Start authentication
-                if (!$this->sendCommand('AUTH', 'AUTH LOGIN', 334)) {
+                if (!$this->sendCommand('AUTH', 'AUTH Login', 334)) {
                     return false;
                 }
                 if (!$this->sendCommand('Username', base64_encode($username), 334)) {

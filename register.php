@@ -31,7 +31,7 @@
 
 <script>
     document.getElementById("back").addEventListener("click",function(){
-        window.location.replace('login.php');
+        window.location.replace('Login.php');
     });
 </script>
 
@@ -48,13 +48,13 @@
         include('method/query.php');
         
         //validation
-        $query = "select * from user_tb where username = '$username'";
+        $query = "select * from WEBOMS_user_tb where username = '$username'";
         if(getQuery($query) != null)
           die ("<script>alert('Name Already Exist!');</script>");
-        $query = "select * from userInfo_tb where name = '$name'";
+        $query = "select * from WEBOMS_userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
           die ("<script>alert('Name Already Exist!');</script>");
-        $query = "select * from userInfo_tb where email = '$email'";
+        $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
           die ("<script>alert('Email Already Exist!');</script>");
         
@@ -84,13 +84,13 @@
         $mail->send();
 
       $userLinkId = uniqid('',true);
-      $query1 = "insert into user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
-      $query2 = "insert into userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
+      $query1 = "insert into WEBOMS_user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
+      $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
       if(!Query($query1))
         echo "fail to save to database";
       elseif(!Query($query2))
         echo "fail to save to database";
       else
-        echo "<script>window.location.replace('login.php'); alert('OTP sent please verify your account first!');</script>";
+        echo "<script>window.location.replace('Login.php'); alert('OTP sent please verify your account first!');</script>";
     }
 ?>
