@@ -51,7 +51,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		$queryCreateFeedback_tb = "create table if not exists WEBOMS_feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		feedback varchar(255), 
 		ordersLinkId varchar(255), 
-		userlinkId int)";
+		userlinkId varchar(255))";
 
 		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) {
 			$checkQuery = "select * from WEBOMS_user_tb";
