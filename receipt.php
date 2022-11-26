@@ -1,6 +1,14 @@
 <?php 
     session_start();
     require_once('TCPDF-main/tcpdf.php'); 
+    if($_SESSION['refreshCount'] < 2){
+        $_SESSION['refreshCount'] += 1;
+        die ("<script>window.location.replace('receipt.php');</script>");
+    }else{
+        if($_SESSION['continue'] == false)
+            die ("<script>window.close();</script>");
+    }
+
     $date = $_SESSION['date'];
     $cash = $_SESSION['cash'];
     $total = $_SESSION['total'];
@@ -8,9 +16,6 @@
     $dishesArr = $_SESSION['dishesArr'];
     $priceArr = $_SESSION['priceArr'];
     $dishesQuantity = $_SESSION['dishesQuantity'];
-    if($total == 0)
-        echo "<script>window.location.replace('receipt.php');</script>";
- 
     $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $obj_pdf->SetCreator(PDF_CREATOR);  
     $obj_pdf->SetTitle("Receipt");  
