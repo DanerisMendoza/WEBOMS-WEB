@@ -1,4 +1,5 @@
 <?php 
+    $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
 ?>
 <!DOCTYPE html>
@@ -18,7 +19,6 @@
     <div class="row justify-content-center">
         <h1 class="font-weight-normal mt-5 mb-4 text-center">Inventory Update</h1>
         <?php
-            $page = 'admin';
             $idAndPicname = explode(',',$_GET['idAndPicnameUpdate']);    
             $id = $idAndPicname[0];
             $dishOriginal = $idAndPicname[1];

@@ -2,6 +2,7 @@
     $page = 'cashier';
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
+    $_SESSION['refreshCount'] = 0;
 ?>
 
 <!DOCTYPE html>
@@ -103,38 +104,43 @@
     //order button
     if(isset($_POST['order'])){
         $cash = $_POST['cash'];
-        if($cash<$total)
-            die ("<script>alert('Your Cash is less than your total Payment amount');</script>");
-        date_default_timezone_set('Asia/Manila');
-        $date = new DateTime();
-        $today =  $date->format('Y-m-d'); 
-        $todayWithTime =  $date->format('Y-m-d H:i:s'); 
-        $_SESSION['date'] = $date = date("Y-m-d H:i:s"); 
-        $_SESSION['cash'] = $cash;
-        $_SESSION['total'] = $total;
-        $_SESSION['dishesArr'] = $dishesArr;
-        $_SESSION['priceArr'] = $priceArr;
-        $_SESSION['dishesQuantity'] = $dishesQuantity;
-        $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
-        $userLinkId = $_SESSION['userLinkId'];
-        $ordersLinkId = uniqid();
-        $query1 = "insert into WEBOMS_order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$staff')";
-        for($i=0; $i<count($dishesArr); $i++){
-            $query2 = "insert into WEBOMS_ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
-            Query($query2);
+        if($cash<$total){
+            $_SESSION['continue'] = false;
+            echo "<script>alert('Your Cash is less than your total Payment amount');</script>";
+            header("refresh: 1");
         }
-        if(Query($query1)){
-            echo '<script>alert("Sucess Placing Order!");</script>';       
-        }
-        echo "<script>window.location.replace('adminPos.php');</script>";
+        else{
+            $_SESSION['continue'] = true;
+            date_default_timezone_set('Asia/Manila');
+            $date = new DateTime();
+            $today =  $date->format('Y-m-d'); 
+            $todayWithTime =  $date->format('Y-m-d H:i:s'); 
+            $_SESSION['date'] = $date = date("Y-m-d H:i:s"); 
+            $_SESSION['cash'] = $cash;
+            $_SESSION['total'] = $total;
+            $_SESSION['dishesArr'] = $dishesArr;
+            $_SESSION['priceArr'] = $priceArr;
+            $_SESSION['dishesQuantity'] = $dishesQuantity;
+            $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
+            $userLinkId = $_SESSION['userLinkId'];
+            $ordersLinkId = uniqid();
+            $query1 = "insert into WEBOMS_order_tb(proofOfPayment, userlinkId, status, ordersLinkId, date, totalOrder, staffInCharge) values('null','$userLinkId','prepairing','$ordersLinkId','$todayWithTime','$total', '$staff')";
+            for($i=0; $i<count($dishesArr); $i++){
+                $query2 = "insert into WEBOMS_ordersDetail_tb(orderslinkId, quantity, orderType) values('$ordersLinkId',$dishesQuantity[$i], $orderType[$i])";
+                Query($query2);
+            }
+            if(Query($query1)){
+                echo '<script>alert("Sucess Placing Order!");</script>';       
+            }
+            echo "<script>window.location.replace('adminPos.php');</script>";
+        }   
     }
 ?>
 <script>
-    // get refernce to the button
-    const orderBtn = document.getElementById("orderBtn");
-    // add click event handler to button
+    var orderBtn = document.getElementById("orderBtn");
     orderBtn.addEventListener("click", () => {
     window.open("receipt.php");
+    // window.location.reload
     });
 </script>
 
