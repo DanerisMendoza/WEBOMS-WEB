@@ -35,10 +35,10 @@
 <?php 
     if(isset($_POST['submit'])){
         $arr = explode(',',$_GET['ordersLinkIdAndUserLinkId']);
-        $ordersLinkId = $arr[0];
-        $userLinkId = $arr[1];
+        $order_id = $arr[0];
+        $user_id = $arr[1];
         $feedback = $_POST['feedback'];
-        $query = "insert into WEBOMS_feedback_tb(feedback, ordersLinkId, userLinkId) values('$feedback', '$ordersLinkId', '$userLinkId')";
+        $query = "insert into WEBOMS_feedback_tb(feedback, order_id, user_id) values('$feedback', '$order_id', '$user_id')";
         if(Query($query))
             echo "<script>alert('feedback sent thanks!'); window.location.replace('customerOrdersList.php');</script>";
     }

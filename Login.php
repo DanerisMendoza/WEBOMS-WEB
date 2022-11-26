@@ -61,17 +61,17 @@
                 foreach($resultSet as $rows){
                     $valid = password_verify($password, $rows['password'])?true:false;
                     $accountType = $rows['accountType'];
-                    $userLinkId = $rows['userLinkId'];
+                    $user_id = $rows['user_id'];
                 }
                 if($valid){
                   //setting credential if valid
-                  $query = "select * from WEBOMS_userInfo_tb where userLinkId = '$userLinkId'";
+                  $query = "select * from WEBOMS_userInfo_tb where user_id = '$user_id'";
                   $resultSet = getQuery($query);
                   foreach($resultSet as $row){
                     $_SESSION['name'] = $row['name'];
                     $otp = $row['otp'];
                   }
-                  $_SESSION['userLinkId'] = $userLinkId;
+                  $_SESSION['user_id'] = $user_id;
                   $_SESSION['accountType'] = $accountType;
                   $_SESSION['username'] = $username;
                   $_SESSION['account'] = 'valid';
@@ -115,8 +115,8 @@
         if(isset($_POST['Verify'])){
             $username = $_SESSION["username"];
             $otp = $_POST['otp'];
-            $userLinkId = $_SESSION['userLinkId'];
-            $query = "select * from WEBOMS_userInfo_tb where userlinkId = '$userLinkId' && otp = '$otp' ";
+            $user_id = $_SESSION['user_id'];
+            $query = "select * from WEBOMS_userInfo_tb where user_id = '$user_id' && otp = '$otp' ";
             $resultSet = getQuery($query);
             if($resultSet != null){
                 $updateQuery = "UPDATE WEBOMS_userInfo_tb SET otp='' WHERE otp='$otp'";
