@@ -47,7 +47,7 @@
                         <td><?php echo $rows['accountType'];?></td>
                         <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'].',' ?>">Update</a></td>
                         <td><?php if($rows['username'] != 'admin'){?>
-                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['userLinkId'] ?>">delete</a><?php } 
+                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['user_id'] ?>">delete</a><?php } 
                             else
                                 echo "YOU CAN NOT DELETE </BR> ADMIN ACCOUNT!"?>
                         </td>
@@ -124,7 +124,7 @@
         $password =  $_POST['password'];
         $accountType = $_POST['accountType'];
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $userLinkId = uniqid('',true);
+        $user_id = uniqid('',true);
 
         //validation
         $query = "select * from WEBOMS_user_tb where username = '$username'";
@@ -138,8 +138,8 @@
             die ("<script>alert('Email Already Exist!');</script>");
 
         //insert
-        $query1 = "insert into WEBOMS_user_tb(username, password, accountType, userLinkId) values('$username','$hash','$accountType','$userLinkId')";
-        $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, userLinkId) values('$name','$email','','$userLinkId')";
+        $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
+        $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
         if(!Query($query1))
           echo "fail to save to database";
         elseif(!Query($query2))
@@ -169,9 +169,9 @@
     }
     //delete
     if(isset($_GET['delete'])){
-        $userLinkId = $_GET['delete'];
-        $query = "DELETE FROM WEBOMS_user_tb WHERE userLinkId='$userLinkId' ";
-        $query2 = "DELETE FROM WEBOMS_userInfo_tb WHERE userLinkId='$userLinkId' ";
+        $user_id = $_GET['delete'];
+        $query = "DELETE FROM WEBOMS_user_tb WHERE user_id='$user_id' ";
+        $query2 = "DELETE FROM WEBOMS_userInfo_tb WHERE user_id='$user_id' ";
         if(Query($query))
             if(Query($query2))
                 echo "<script>window.location.replace('accountManagement.php');</script>";

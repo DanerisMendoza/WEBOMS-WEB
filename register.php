@@ -83,9 +83,9 @@
         $mail->Body    = $otp;
         $mail->send();
 
-      $userLinkId = uniqid('',true);
-      $query1 = "insert into WEBOMS_user_tb(username, password, accountType, userLinkId) values('$username','$hash','customer','$userLinkId')";
-      $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, userLinkId) values('$name','$email','$otp','$userLinkId')";
+      $user_id = uniqid('',true);
+      $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
+      $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('$name','$email','$otp','$user_id')";
       if(!Query($query1))
         echo "fail to save to database";
       elseif(!Query($query2))

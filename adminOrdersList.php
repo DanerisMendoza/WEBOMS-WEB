@@ -53,17 +53,17 @@
       }
 
       if($_SESSION['query'] == 'all')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_user_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId  and WEBOMS_user_tb.userLinkId = WEBOMS_userInfo_tb.userLinkId ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_user_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id ORDER BY WEBOMS_order_tb.id asc; ";
       if($_SESSION['query'] == 'pending')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId inner join WEBOMS_user_tb on WEBOMS_user_tb.userLinkId = WEBOMS_userInfo_tb.userLinkId where status = 'pending' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'pending' ORDER BY WEBOMS_order_tb.id asc; ";
       if($_SESSION['query'] == 'prepairing')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId inner join WEBOMS_user_tb on WEBOMS_user_tb.userLinkId = WEBOMS_userInfo_tb.userLinkId where status = 'prepairing'  ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'prepairing'  ORDER BY WEBOMS_order_tb.id asc; ";
       if($_SESSION['query'] == 'serving')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId inner join WEBOMS_user_tb on WEBOMS_user_tb.userLinkId = WEBOMS_userInfo_tb.userLinkId where status = 'serving'  ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'serving'  ORDER BY WEBOMS_order_tb.id asc; ";
       if($_SESSION['query'] == 'order complete')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId inner join WEBOMS_user_tb on WEBOMS_user_tb.userLinkId = WEBOMS_userInfo_tb.userLinkId where status =  'complete' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status =  'complete' ORDER BY WEBOMS_order_tb.id asc; ";
       if($_SESSION['query'] == 'order invalid')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId inner join WEBOMS_user_tb on WEBOMS_user_tb.userLinkId = WEBOMS_userInfo_tb.userLinkId where status = 'disapproved' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'disapproved' ORDER BY WEBOMS_order_tb.id asc; ";
 
       $resultSet =  getQuery($query);
       if($resultSet != null){ ?>
@@ -86,9 +86,9 @@
               <!-- name -->
               <td><?php echo $rows['accountType'] == 'customer'  ? $rows['name']:'POS'; ?></td>
               <!-- orders link id -->
-              <td><?php echo $rows['ordersLinkId'];?></td>
+              <td><?php echo $rows['order_id'];?></td>
               <!-- order details -->
-              <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">Order Details</a></td>
+              <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">Order Details</a></td>
               <!-- order status -->
                   <?php 
                     if($rows['status'] == 'pending'){
@@ -114,8 +114,8 @@
             
               <?php 
                     if($rows['status'] == 'pending'){
-                      ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Approve</a></td>
-                      <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['ordersLinkId'].','.$rows['email']; ?>">Disapprove</a></td><?php
+                      ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['order_id'].','.$rows['email']; ?>">Approve</a></td>
+                      <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['order_id'].','.$rows['email']; ?>">Disapprove</a></td><?php
                     }
                     elseif($rows['status'] == 'approved'){
                       ?><td colspan="2">Approved></td><?php
@@ -124,10 +124,10 @@
                       ?><td colspan="2">None</td><?php
                     }
                     elseif($rows['status'] == 'prepairing'){
-                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?serve=<?php echo $rows['ordersLinkId'] ?>">Serve</a></td><?php
+                      ?> <td colspan='2'><a class="btn btn-success border-dark" href="?serve=<?php echo $rows['order_id'] ?>">Serve</a></td><?php
                     }
                     elseif($rows['status'] == 'serving'){
-                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['ordersLinkId'] ?>">Order Complete</a></td><?php
+                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['order_id'] ?>">Order Complete</a></td><?php
                     }
                     elseif($rows['status'] == 'complete'){
                       ?><td colspan="2">None</td><?php
@@ -137,7 +137,7 @@
               <!-- date -->
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
               <!-- delete -->
-              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['ordersLinkId'] ?>">Delete</a></td>
+              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['order_id'] ?>">Delete</a></td>
               <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
             </tr><?php } ?>
           </tbody>   
@@ -153,8 +153,8 @@
 <?php 
   //button to serve order
   if(isset($_GET['serve'])){
-    $ordersLinkId = $_GET['serve'];
-    $query = "UPDATE WEBOMS_order_tb SET status='serving' WHERE ordersLinkId='$ordersLinkId' ";     
+    $order_id = $_GET['serve'];
+    $query = "UPDATE WEBOMS_order_tb SET status='serving' WHERE order_id='$order_id' ";     
     if(Query($query))
       echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
 
@@ -162,10 +162,10 @@
   //button to approve order
     if(isset($_GET['approve'])){
       $arr = explode(',',$_GET['approve']);  
-      $ordersLinkId = $arr[0];
+      $order_id = $arr[0];
       $email = $arr[1];
       //compute order
-        $query ="select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.ordersLinkId = '$ordersLinkId' ";  
+        $query ="select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$order_id' ";  
         $resultSet = getQuery($query);
         if ($resultSet != null) {  
             $dishesArr = $priceArr = $dishesQuantity = array();
@@ -263,7 +263,7 @@
 
       //approve
         $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
-        $query = "UPDATE WEBOMS_order_tb SET status='prepairing', staffInCharge = '$staff' WHERE ordersLinkId='$ordersLinkId' ";     
+        $query = "UPDATE WEBOMS_order_tb SET status='prepairing', staffInCharge = '$staff' WHERE order_id='$order_id' ";     
         if(Query($query))
           echo "<script>alert('Approve Success'); window.location.replace('adminOrdersList.php');</script>";
     }
@@ -271,14 +271,14 @@
   //button to dissaprove order
     if(isset($_GET['disapprove'])){
       $arr = explode(',',$_GET['disapprove']);  
-      $ordersLinkId = $arr[0];
+      $order_id = $arr[0];
       $email = $arr[1];
       $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
-      $query = "UPDATE WEBOMS_order_tb SET status='disapproved',staffInCharge='$staff' WHERE ordersLinkId='$ordersLinkId' ";     
+      $query = "UPDATE WEBOMS_order_tb SET status='disapproved',staffInCharge='$staff' WHERE order_id='$order_id' ";     
       Query($query);
       if(Query($query)){
         echo "<script>alert('Disapprove Success'); window.location.replace('adminOrdersList.php');</script>";
-        $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.ordersLinkId = '$ordersLinkId' ";
+        $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$order_id' ";
         $dishesArr = array();
         $dishesQuantity = array();
         $resultSet = getQuery($query); 
@@ -293,8 +293,8 @@
 
   //button to make order complete
     if(isset($_GET['orderComplete'])){
-      $ordersLinkId = $_GET['orderComplete'];
-      $query = "UPDATE WEBOMS_order_tb SET status='complete' WHERE ordersLinkId='$ordersLinkId' ";     
+      $order_id = $_GET['orderComplete'];
+      $query = "UPDATE WEBOMS_order_tb SET status='complete' WHERE order_id='$order_id' ";     
       if(Query($query))
         echo "<SCRIPT>  window.location.replace('adminOrdersList.php'); alert('success!');</SCRIPT>";
     }
@@ -306,7 +306,7 @@
       $Pic = $arr[1];
       $linkId = $arr[2];
       $query1 = "DELETE FROM WEBOMS_order_tb WHERE id='$id'";
-      $query2 = "DELETE FROM WEBOMS_ordersDetail_tb WHERE ordersLinkId='$linkId'";
+      $query2 = "DELETE FROM WEBOMS_ordersDetail_tb WHERE order_id='$linkId'";
       if(Query($query1) && Query($query2)){
         if($Pic != 'null')
           unlink("payment/".$Pic);

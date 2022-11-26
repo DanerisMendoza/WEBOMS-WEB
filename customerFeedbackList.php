@@ -24,7 +24,7 @@
               document.getElementById("customer").onclick = function () {window.location.replace('customerMenu.php'); };    
           </script> 
           <?php
-              $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId and WEBOMS_feedback_tb.ordersLinkId = WEBOMS_order_tb.ordersLinkId;";
+              $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_feedback_tb.order_id = WEBOMS_order_tb.order_id;";
               $resultSet =  getQuery($query);
               ?>
               <div class="table-responsive col-lg-12">

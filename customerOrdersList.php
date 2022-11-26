@@ -39,8 +39,8 @@
         <tbody>
               <?php
               include('method/query.php');
-                $userlinkId = $_SESSION["userLinkId"];  
-                $getCustomerOrders = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.userLinkId = WEBOMS_order_tb.userlinkId and WEBOMS_userInfo_tb.userLinkId = '$userlinkId';";
+                $user_id = $_SESSION["user_id"];  
+                $getCustomerOrders = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_userInfo_tb.user_id = '$user_id';";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
@@ -48,14 +48,14 @@
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo $rows['status']; ?></td>
                 <td><?php echo $rows['email']; ?></td>
-                <td><a class="btn btn-light border-dark" href="customerOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                <td><a class="btn btn-light border-dark" href="customerOrders.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
-                  $ordersLinkId = $rows['ordersLinkId'];
-                  $userLinkId = $rows['userLinkId'];
-                  $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE ordersLinkId='$ordersLinkId' AND userLinkId = '$userLinkId' ";
+                  $order_id = $rows['order_id'];
+                  $user_id = $rows['user_id'];
+                  $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
                   $resultSet = getQuery($checkIfAlreadyFeedback);
                   if($rows['status'] == 'complete' && $resultSet == null){
-                    ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['ordersLinkId'].','.$rows['userLinkId']?>">Feedback</a>  <?php
+                    ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['order_id'].','.$rows['user_id']?>">Feedback</a>  <?php
                   }
                   elseif($rows['status'] == 'complete'){
                     echo "You have already feedback!";

@@ -24,7 +24,7 @@
     <script> document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };    </script> 
       
     <!-- serving table -->
-    <?php   $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId  and status = 'serving' ORDER BY WEBOMS_order_tb.id asc; ";
+    <?php   $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and status = 'serving' ORDER BY WEBOMS_order_tb.id asc; ";
             $resultSet = getQuery($getPrepairingOrder);?>
     <div class="table-responsive col-lg-6">
       <table class="table table-striped table-bordered col-lg-12">
@@ -39,7 +39,7 @@
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
-                <td><strong style="font-size: 36px;"><?php echo $rows['ordersLinkId']; ?></strong></td>
+                <td><strong style="font-size: 36px;"><?php echo $rows['order_id']; ?></strong></td>
                 </tr>
                 <?php } ?>
         </tbody>
@@ -47,7 +47,7 @@
     </div>
 
     <!-- prepairing table -->
-    <?php   $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId  and status = 'prepairing' ORDER BY WEBOMS_order_tb.id asc; ";
+    <?php   $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and status = 'prepairing' ORDER BY WEBOMS_order_tb.id asc; ";
             $resultSet = getQuery($getPrepairingOrder);?>
     <div class="table-responsive col-lg-6">
       <table class="table table-striped table-bordered col-lg-12">
@@ -62,7 +62,7 @@
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
                 <tr>	   
-                <td><strong style="font-size: 36px;"><?php echo $rows['ordersLinkId']; ?></strong></td>
+                <td><strong style="font-size: 36px;"><?php echo $rows['order_id']; ?></strong></td>
                 </tr>
                 <?php } ?>
         </tbody> 

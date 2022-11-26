@@ -29,7 +29,7 @@
                 $stockLeft += $row['stock'];
             }
         }
-        $query = "select WEBOMS_menu_tb.*,WEBOMS_ordersDetail_tb.*,WEBOMS_order_tb.status from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb on WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType inner join WEBOMS_order_tb on WEBOMS_order_tb.ordersLinkId = WEBOMS_ordersDetail_tb.OrdersLinkId where status = 'complete';";
+        $query = "select WEBOMS_menu_tb.*,WEBOMS_ordersDetail_tb.*,WEBOMS_order_tb.status from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb on WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType inner join WEBOMS_order_tb on WEBOMS_order_tb.order_id = WEBOMS_ordersDetail_tb.order_id where status = 'complete';";
         $resultSet = getQuery($query);
         if($resultSet!=null){
             foreach($resultSet as $row){

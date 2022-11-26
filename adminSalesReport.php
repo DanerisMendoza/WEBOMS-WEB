@@ -6,11 +6,11 @@
     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
         $date1 = $_POST['dateFetch1'];
         $date2 = $_POST['dateFetch2'];
-        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId and WEBOMS_order_tb.status = 'complete' and WEBOMS_order_tb.date between '$date1' and '$date2' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' and WEBOMS_order_tb.date between '$date1' and '$date2' ORDER BY WEBOMS_order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
     else{
-        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.userlinkId = WEBOMS_order_tb.userlinkId and WEBOMS_order_tb.status = 'complete' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' ORDER BY WEBOMS_order_tb.id asc; ";
         $resultSet =  getQuery($query); 
     }
 ?>
@@ -60,8 +60,8 @@
                             foreach($resultSet as $rows){ ?>
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
-                                <td><?php echo $rows['ordersLinkId'];?></td>
-                                <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['ordersLinkId'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                                <td><?php echo $rows['order_id'];?></td>
+                                <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
                                 <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <?php $total += $rows['totalOrder'];?>
