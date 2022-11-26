@@ -1,8 +1,8 @@
 <?php
 $dbhost = "localhost";
-$dbuser = "ytoovumw_bscs3a";
-$dbpass = "kaAGi]gz8H2*";
-$dbname = "ytoovumw_bscs3a";
+$dbuser = "root";
+$dbpass = "";
+$dbname = "ordering_db";
 
 $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);	
 
