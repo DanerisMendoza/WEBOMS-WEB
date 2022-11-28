@@ -12,7 +12,13 @@
     else{
         $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' ORDER BY WEBOMS_order_tb.id asc; ";
         $resultSet =  getQuery($query); 
+        unset($_POST['dateFetch1']);
+        unset($_POST['dateFetch2']);
+        $date1 = $date2 = '';
     }
+    isset($date1) && $date1 != '' ? $_SESSION['date1'] = date('m/d/Y h:i a ', strtotime($date1)) : '';
+    isset($date2) && $date2 != '' ? $_SESSION['date2'] = date('m/d/Y h:i a ', strtotime($date2)) : '';
+    $_SESSION['query'] = $query;
 ?>
 <!DOCTYPE html>
 <html>
@@ -83,10 +89,16 @@
 <script>
     document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
     document.getElementById("viewGraph").onclick = function () {window.location.replace('adminGraph.php'); };
+</script>
+
+<script>
+    //order button (js)
     document.getElementById("viewInPdf").addEventListener("click", () => {
-        var num = document.getElementById("cashNum").value;
-        if(num >= <?php echo $total;?>){
-            alert("Sucess Placing Order!");
+        if(<?php echo $resultSet == null ? 'true':'false';?>){
+            alert('Pdf is Empty!');
+            return;
+        }
+        else{
             window.open("pdf/salesReport.php");
         }
     });
