@@ -82,7 +82,7 @@
                 <form method="post" enctype="multipart/form-data">           
                     <label for="fileInput">PROOF OF PAYMENT:</label>
                     <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
-                    <button class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                 </form>
                 <form method="post">
                     <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
@@ -113,45 +113,57 @@ document.getElementById("back").onclick = function () {window.location.replace('
     }
     //order button
     if(isset($_POST['order'])){
-        $file = $_FILES['fileInput'];
-        $fileName = $_FILES['fileInput']['name'];
-        $fileTmpName = $_FILES['fileInput']['tmp_name'];
-        $fileSize = $_FILES['fileInput']['size'];
-        $fileError = $_FILES['fileInput']['error'];
-        $fileType = $_FILES['fileInput']['type'];
-        $fileExt = explode('.',$fileName);
-        $fileActualExt = strtolower(end($fileExt));
-        $allowed = array('jpg','jpeg','png');
-        if(in_array($fileActualExt,$allowed)){
-            if($fileError === 0){
-                if($fileSize < 10000000){
-                    $user_id = $_SESSION['user_id'];
-                    $order_id = uniqid();
-                    $fileNameNew = uniqid('',true).".".$fileActualExt;
-                    $fileDestination = 'payment/'.$fileNameNew;
-                    move_uploaded_file($fileTmpName,$fileDestination);   
-                    $query1 = "insert into WEBOMS_order_tb(proofOfPayment, user_id, status, order_id, date, totalOrder) values('$fileNameNew','$user_id','pending','$order_id','$todayWithTime','$total')";
-                    for($i=0; $i<count($dishesArr); $i++){
-                        $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
-                        Query($query2);
-                    }
+        if($total != 0){
+            $file = $_FILES['fileInput'];
+            $fileName = $_FILES['fileInput']['name'];
+            $fileTmpName = $_FILES['fileInput']['tmp_name'];
+            $fileSize = $_FILES['fileInput']['size'];
+            $fileError = $_FILES['fileInput']['error'];
+            $fileType = $_FILES['fileInput']['type'];
+            $fileExt = explode('.',$fileName);
+            $fileActualExt = strtolower(end($fileExt));
+            $allowed = array('jpg','jpeg','png');
+            if(in_array($fileActualExt,$allowed)){
+                if($fileError === 0){
+                    if($fileSize < 10000000){
+                        $user_id = $_SESSION['user_id'];
+                        $order_id = uniqid();
+                        $fileNameNew = uniqid('',true).".".$fileActualExt;
+                        $fileDestination = 'payment/'.$fileNameNew;
+                        move_uploaded_file($fileTmpName,$fileDestination);   
+                        $query1 = "insert into WEBOMS_order_tb(proofOfPayment, user_id, status, order_id, date, totalOrder) values('$fileNameNew','$user_id','pending','$order_id','$todayWithTime','$total')";
+                        for($i=0; $i<count($dishesArr); $i++){
+                            $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
+                            Query($query2);
+                        }
 
-                    if(Query($query1)){
-                        echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
-                        $_SESSION["dishes"] = array();
-                        $_SESSION["price"] = array();      
-                        $_SESSION["orderType"] = array();                                    
+                        if(Query($query1)){
+                            echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
+                            $_SESSION["dishes"] = array();
+                            $_SESSION["price"] = array();      
+                            $_SESSION["orderType"] = array();                                    
+                        }
+                        echo "<script>window.location.replace('customerCart.php')</script>";          
+                        
                     }
-                    echo "<script>window.location.replace('customerCart.php')</script>";          
-                    
+                    else
+                        echo "your file is too big!";
                 }
                 else
-                    echo "your file is too big!";
+                    echo "there was an error uploading your file!";
             }
             else
-                echo "there was an error uploading your file!";
-        }
-        else
-            echo "you cannot upload files of this type";     
+                echo "you cannot upload files of this type";   
+        }  
     }
 ?>
+
+<script>
+    //order button (js)
+    document.getElementById("orderBtn").addEventListener("click", () => {
+        if(<?php echo $total == 0 ? 'true':'false';?>){
+            alert('Please place your order!');
+            return;
+        }
+    });
+</script>
