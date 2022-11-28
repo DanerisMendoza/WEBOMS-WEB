@@ -101,10 +101,10 @@
         echo "<script>window.location.replace('adminCart.php');</script>";
     }
 
-    //order button
+    //order button (php)
     if(isset($_POST['order'])){
         $cash = $_POST['cash'];
-        if($cash >= $total){
+        if($cash >= $total && $total != 0){
             $_SESSION['continue'] = true;
             date_default_timezone_set('Asia/Manila');
             $date = new DateTime();
@@ -132,12 +132,17 @@
     }
 ?>
 <script>
+    //order button (js)
     var orderBtn = document.getElementById("orderBtn");
     orderBtn.addEventListener("click", () => {
         var num = document.getElementById("cashNum").value;
+        if(<?php echo $total == 0 ? 'true':'false';?>){
+            alert('Please place your order!');
+            return;
+        }
         if(num >= <?php echo $total;?>){
             alert("Sucess Placing Order!");
-            window.open("receipt.php");
+            window.open("pdf/receipt.php");
         }
     });
 </script>

@@ -31,7 +31,7 @@
     <div class="row justify-content-center">
         <button class="btn btn-lg btn-dark col-4 mb-3" id="admin">Admin</button>
         <button class="btn btn-lg btn-success col-4 mb-3" id="viewGraph">View Graph</button>
-        <button class="btn btn-lg btn-success col-4 mb-3" id="viewGraph">View in PDF</button>
+        <button class="btn btn-lg btn-success col-4 mb-3" id="viewInPdf">View in PDF</button>
         <div class="container-fluid">
             <form method="post">
                 <div class="col-12 row">
@@ -83,4 +83,11 @@
 <script>
     document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };
     document.getElementById("viewGraph").onclick = function () {window.location.replace('adminGraph.php'); };
+    document.getElementById("viewInPdf").addEventListener("click", () => {
+        var num = document.getElementById("cashNum").value;
+        if(num >= <?php echo $total;?>){
+            alert("Sucess Placing Order!");
+            window.open("pdf/salesReport.php");
+        }
+    });
 </script>
