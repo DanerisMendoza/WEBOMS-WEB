@@ -1,5 +1,7 @@
 <?php      
+  $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,10 +20,9 @@
   <div class="row justify-content-center">
     <div class="col-lg-12 cont2">
           <?php 
-          $page = 'admin';
-          if($_SESSION['from'] == 'orders'){ ?>
+          if($_SESSION['from'] == 'adminOrderList'){ ?>
           <button class="btn btn-lg btn-dark col-12 mb-3" id="orderList">Order List</button>
-          <?php }else{?>
+          <?php }elseif($_SESSION['from'] == 'adminSalesReport'){?>
           <button class="btn btn-lg btn-success col-12 mb-4" id="salesReport">Sales Report</button>
           <?php } ?>
 

@@ -2,7 +2,6 @@
   $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   $_SESSION['query'] = 'all';
-  $_SESSION['from'] = null;
 ?>
 
 <!DOCTYPE html>

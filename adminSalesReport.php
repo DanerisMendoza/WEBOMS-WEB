@@ -2,7 +2,7 @@
     $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
-    $_SESSION['from'] = 'salesReport';
+    $_SESSION['from'] = 'adminSalesReport';
     if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
         $date1 = $_POST['dateFetch1'];
         $date2 = $_POST['dateFetch2'];
