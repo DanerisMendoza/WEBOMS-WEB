@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Sign up</title>
 
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></head>
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign up</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
+
+</head>
+
 <body class="bg-light">
 
-<div class="container">
-  <div class="row justify-content-center">
-    <form method="post" class="form2">
-      <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
-      <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter Username" required>
-      <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter Name" required>
-      <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email" required>
-      <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter Password" required>
-      <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" name="createAccount">Sign Up</button><br>
-      <div class="mb-5 text-muted text-center">Have already an account? <a href="Login.php" class="login_link text-muted">Log in</a>
-      </div>
-    </form>
-  </div>
-</div>
-    
+    <div class="container">
+        <div class="row justify-content-center">
+            <form method="post" class="form2">
+                <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
+                <input type="text" class="form-control form-control-lg mb-3" name="username"
+                    placeholder="Enter Username" required>
+                <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter Name"
+                    required>
+                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email"
+                    required>
+                <input type="password" class="form-control form-control-lg mb-3" name="password"
+                    placeholder="Enter Password" required>
+                <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" name="createAccount">Sign
+                    Up</button><br>
+                <div class="mb-5 text-muted text-center">Have already an account? <a href="Login.php"
+                        class="login_link text-muted">Log in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
+
 </html>
 
 <script>
-    document.getElementById("back").addEventListener("click",function(){
-        window.location.replace('Login.php');
-    });
+document.getElementById("back").addEventListener("click", function() {
+    window.location.replace('Login.php');
+});
 </script>
 
 <?php
