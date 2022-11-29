@@ -26,7 +26,7 @@
             </script> 
             <?php
               include_once('method/query.php');
-              $selectAllUser = "select * from WEBOMS_user_tb";
+              $selectAllUser = "select * from WEBOMS_user_tb inner join WEBOMS_userInfo_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id";
               $resultSet =  getQuery($selectAllUser);
               ?>
               <div class="table-responsive col-lg-12">
@@ -34,6 +34,8 @@
                     <thead class="table-dark">
                         <tr>	
                         <th scope="col">username</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
                         <th scope="col">Account Type</th>
                         <th scope="col" colspan="2">Option</th>
                         </tr>
@@ -44,8 +46,10 @@
                     foreach($resultSet as $rows){ ?>
                     <tr>	   
                         <td><?php echo $rows['username']; ?></td>
+                        <td><?php echo $rows['name']; ?></td>
+                        <td><?php echo $rows['email']; ?></td>
                         <td><?php echo $rows['accountType'];?></td>
-                        <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'].',' ?>">Update</a></td>
+                        <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'].','.$rows['email'] ?>">Update</a></td>
                         <td><?php if($rows['username'] != 'admin'){?>
                             <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['user_id'] ?>">delete</a><?php } 
                             else
@@ -97,14 +101,15 @@
                 </div>
             </div>
         </div>
-        <!-- admin -->
-        <div class="modal fade" role="dialog" id="adminUpdateModal">
+        <!-- passAndEmail -->
+        <div class="modal fade" role="dialog" id="passAndEmail">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-body ">
                     <form method="post" class="form-group">
                     <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter New Username" required>
-                    <input type="text" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
+                    <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter New Email">
+                    <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter New Password" required>
                     <button type="submit" class="btn btn-lg btn-success col-12" name="updateAdmin">Update</button>
                     </form>
                 </div>
@@ -152,20 +157,32 @@
     if(isset($_GET['update'])){
         $arr = explode(',',$_GET['update']);
         $username = $arr[0];
+        $email = $arr[1];
         //admin block
-        if($username == 'admin'){
-            echo "<script>$('#adminUpdateModal').modal('show');</script>";
-            echo "<script>document.forms[2].username.value = '$username';</script>";
-            if(isset($_POST['updateAdmin'])){
+        // if($username == 'admin'){
+            //it's now all user
+            echo "<script>$('#passAndEmail').modal('show');</script>";
+            echo "<script>
+            document.forms[2].username.value = '$username';
+            document.forms[2].email.value = '$email';
+            document.forms[2].username.disabled = true;
+            </script>";
+             if(isset($_POST['updateAdmin'])){
                 $password = $_POST['password'];
-                $query = "UPDATE WEBOMS_user_tb SET password = '$password' WHERE username=$username";   
-                Query($query);
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $query = "UPDATE WEBOMS_user_tb SET password = '$hash' WHERE username='$username' ";   
+                if(Query($query)){
+                    echo "<script>alert('sucess');</script>";
+                    echo("<script>history.replaceState({},'','accountManagement.php');</script>");
+                    echo ("<script>window.location.replace('accountManagement.php');</script>");
+                }
             }
-        }
-        else{
-        echo "<script>$('#updateModal').modal('show');</script>";
-        echo "<script>document.forms[1].username.value = '$username';</script>";
-        }
+        // }
+        // //user block
+        // else{
+        // echo "<script>$('#updateModal').modal('show');</script>";
+        // echo "<script>document.forms[1].username.value = '$username';</script>";
+        // }
     }
     //delete
     if(isset($_GET['delete'])){

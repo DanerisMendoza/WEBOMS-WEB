@@ -2,23 +2,38 @@
     $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
+    //init
     $_SESSION['from'] = 'adminSalesReport';
-    if(isset($_POST['fetch']) && !isset($_POST['showAll'])){
-        $date1 = $_POST['dateFetch1'];
-        $date2 = $_POST['dateFetch2'];
-        $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' and WEBOMS_order_tb.date between '$date1' and '$date2' ORDER BY WEBOMS_order_tb.id asc; ";
-        $resultSet =  getQuery($query); 
+    $_SESSION['resultSet'] = array();
+    $_SESSION['date1'] =  $_SESSION['date2'] = '';
+
+
+    //default value
+    $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' ORDER BY WEBOMS_order_tb.id asc; ";
+    $resultSet =  getQuery($query); 
+  
+    //fetch by date
+    if(isset($_POST['fetch'])){
+        if($_POST['dateFetch1'] != '' && $_POST['dateFetch2'] != ''){
+            $date1 = $_POST['dateFetch1'];
+            $date2 = $_POST['dateFetch2'];
+            $_SESSION['date1'] = date('m/d/Y h:i a ', strtotime($date1));
+            $_SESSION['date2'] = date('m/d/Y h:i a ', strtotime($date2));
+            $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' and WEBOMS_order_tb.date between '$date1' and '$date2' ORDER BY WEBOMS_order_tb.id asc; ";
+            $resultSet =  getQuery($query); 
+            $_SESSION['resultSet'] = array();
+        }
     }
-    else{
+ 
+    //show all
+    if(isset($_POST['showAll'])){
         $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' ORDER BY WEBOMS_order_tb.id asc; ";
         $resultSet =  getQuery($query); 
         unset($_POST['dateFetch1']);
         unset($_POST['dateFetch2']);
-        $date1 = $date2 = '';
+        $_SESSION['resultSet'] = array();
     }
-    isset($date1) && $date1 != '' ? $_SESSION['date1'] = date('m/d/Y h:i a ', strtotime($date1)) : '';
-    isset($date2) && $date2 != '' ? $_SESSION['date2'] = date('m/d/Y h:i a ', strtotime($date2)) : '';
-    $_SESSION['query'] = $query;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -64,6 +79,7 @@
                         $total = 0;
                         if($resultSet != null)
                             foreach($resultSet as $rows){ ?>
+                                <?php array_push($_SESSION['resultSet'], $rows)?>
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['order_id'];?></td>
