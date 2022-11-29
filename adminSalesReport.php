@@ -83,7 +83,7 @@
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['order_id'];?></td>
-                                <td><a class="btn btn-light border-dark" href="adminOrders.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
                                 <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <?php $total += $rows['totalOrder'];?>
