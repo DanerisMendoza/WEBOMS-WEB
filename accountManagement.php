@@ -156,12 +156,15 @@
         if($username == 'admin'){
             echo "<script>$('#adminUpdateModal').modal('show');</script>";
             echo "<script>document.forms[2].username.value = '$username';</script>";
-            if(isset($_POST['updateAdmin'])){
+             if(isset($_POST['updateAdmin'])){
                 $password = $_POST['password'];
-                $query = "UPDATE WEBOMS_user_tb SET password = '$password' WHERE username=$username";   
-                Query($query);
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $query = "UPDATE WEBOMS_user_tb SET password = '$hash' WHERE username='admin' ";   
+                if(Query($query))
+                    echo "<script>alert('sucess update');</script>";
             }
         }
+
         else{
         echo "<script>$('#updateModal').modal('show');</script>";
         echo "<script>document.forms[1].username.value = '$username';</script>";
