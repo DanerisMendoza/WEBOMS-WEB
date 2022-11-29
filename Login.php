@@ -22,7 +22,7 @@
       <input class="form-control form-control-lg mb-3" type="text" name="username" placeholder="Username" required>
       <input class="form-control form-control-lg mb-3" type="password" name="password" placeholder="Password" required>
       <div class="mb-3">
-        <a href="#" class="pass text-muted">Forgot Password?</a>
+        <a href="forgetPassword.php" class="pass text-muted">Forgot Password?</a>
       </div>
       <button class="btn btn-primary btn-lg col-12 mb-3" type="submit" name="Login" value="Login">Login</button>
       <div class="text-center text-muted mb-5">
@@ -49,7 +49,6 @@
 
     <?php
         include('method/query.php');
-        include_once('connection.php');
         if(isset($_POST['Login'])){
             $_SESSION["username"]  = $_POST['username'];
             $username = $_POST['username'];

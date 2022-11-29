@@ -21,6 +21,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		name varchar(255),
 		email varchar(255),
 		otp varchar(255),
+		forgetPasswordOtp varchar(255),
 		user_id varchar(255))";
 		
 
@@ -60,7 +61,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 					$hash = password_hash('password', PASSWORD_DEFAULT);
 					$user_id = uniqid('',true);
 					$queryInsertAdmin = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('admin','$hash','admin','$user_id')";
-					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('admin','','','$user_id')";
+					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, email, otp, forgetPasswordOtp,  user_id) values('admin','','','','$user_id')";
 					if($conn->query($queryInsertAdmin))
 						if($conn->query($queryInsertAdminInfo))
 							echo  '<script>alert("Success creating table");</script>';						
