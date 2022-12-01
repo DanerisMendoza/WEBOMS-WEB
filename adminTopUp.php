@@ -1,5 +1,5 @@
 <?php
-  $page = 'feedback';
+  $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
 ?>

@@ -29,7 +29,9 @@
         <button class="btn btn-lg btn-primary col-12 mb-3" id="menu">Browse Menu</button>
         <button class="btn btn-lg btn-primary col-12 mb-3" id="topUp">Top-up</button>
         <button class="btn btn-lg btn-primary col-12 mb-3" id="customerOrders">View Your Orders</button>
-        <button class="btn btn-lg btn-dark col-12" id="logout">Logout</button>
+        <form method="POST">
+            <button class="btn btn-lg btn-dark col-12 mb-3" id="Logout" name="logout">Logout</button>
+        </form>
     </div>
 </div>
 
@@ -38,12 +40,33 @@
 
 
 <script>
-	document.getElementById("logout").addEventListener("click",function(){
-		$.post(
-        "method/logout.php");
-        window.location.replace('Login.php');
-    });
 	document.getElementById("menu").onclick = function () {window.location.replace('customerMenu.php'); };
 	document.getElementById("topUp").onclick = function () {window.location.replace('customerTopUp.php'); };
 	document.getElementById("customerOrders").onclick = function () {window.location.replace('customerOrdersList.php'); };
 </script>
+
+<?php 
+  if(isset($_POST['logout'])){
+    $dishesArr = array();
+    $dishesQuantity = array();
+    if(isset($_SESSION['dishes'])){
+        for($i=0; $i<count($_SESSION['dishes']); $i++){
+            if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
+              $index = array_search($_SESSION['dishes'][$i], $dishesArr);
+            }
+            else{
+              array_push($dishesArr,$_SESSION['dishes'][$i]);
+            }
+        }
+        foreach(array_count_values($_SESSION['dishes']) as $count){
+          array_push($dishesQuantity,$count);
+        }
+        for($i=0; $i<count($dishesArr); $i++){ 
+          $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+          Query($updateQuery);    
+        }
+    }
+    session_destroy();
+    echo "<script>window.location.replace('Login.php');</script>";
+  }
+?>

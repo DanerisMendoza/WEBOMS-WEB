@@ -36,11 +36,9 @@
               ?>
               </option>
               <option value="all">All</option>  
-              <option value="pending">Pending</option>  
               <option value="prepairing">Prepairing</option>  
               <option value="serving">Serving</option>  
               <option value="order complete">Order Complete</option>  
-              <option value="order invalid">Order Invalid</option>  
             </select>
             <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4"> 
           </form>
@@ -50,17 +48,13 @@
       }
 
       if($_SESSION['query'] == 'all')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_user_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'pending')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'pending' ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'prepairing')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'prepairing'  ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'serving')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'serving'  ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'order complete')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status =  'complete' ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'order invalid')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'disapproved' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id order by b.id asc " ;
+      elseif($_SESSION['query'] == 'prepairing')
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'prepairing' order by b.id asc " ;
+      elseif($_SESSION['query'] == 'serving')
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'serving' order by b.id asc " ;
+      elseif($_SESSION['query'] == 'order complete')
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'complete' order by b.id asc " ;
 
       $resultSet =  getQuery($query);
       if($resultSet != null){ ?>
@@ -88,14 +82,8 @@
               <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">Order Details</a></td>
               <!-- order status -->
                   <?php 
-                    if($rows['status'] == 'pending'){
-                      ?><td>Pending</td><?php
-                    }
-                    elseif($rows['status'] == 'approved'){
+                    if($rows['status'] == 'approved'){
                       ?><td>Approved></td><?php
-                    }
-                    elseif($rows['status'] == 'disapproved'){
-                      ?><td>Disapproved</td><?php
                     }
                     elseif($rows['status'] == 'prepairing'){
                       ?><td>Prepairing</td><?php

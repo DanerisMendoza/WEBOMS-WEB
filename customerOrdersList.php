@@ -39,7 +39,7 @@
               <?php
               include('method/query.php');
                 $user_id = $_SESSION["user_id"];  
-                $getCustomerOrders = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_userInfo_tb.user_id = '$user_id';";
+                $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>

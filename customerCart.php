@@ -231,7 +231,7 @@ document.getElementById("back").onclick = function () {window.location.replace('
             alert('Please place your order!');
             return;
         }
-        if(<?php echo $_SESSION['balance'] < $total ? 'true':'false';?>){
+        if(<?php echo $balance < $total ? 'true':'false';?>){
             alert('Your balance is less than your total order amount!');
             return;
         }

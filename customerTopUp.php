@@ -2,7 +2,8 @@
     $page = 'customer';
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
-    $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id";
+    $user_id = $_SESSION['user_id'];
+    $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$user_id' ";
     $resultSet =  getQuery($query);
 ?>
 <!DOCTYPE html>
