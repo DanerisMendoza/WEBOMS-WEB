@@ -117,7 +117,7 @@ document.getElementById("back").onclick = function () {window.location.replace('
     if(isset($_POST['order'])){
         if($total != 0 && $_SESSION['balance'] >= $total){
             $user_id = $_SESSION['user_id'];
-            $query = "SELECT email FROM `weboms_userinfo_tb` WHERE user_id = '$user_id' ";
+            $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
             $order_id = uniqid();
 
