@@ -18,7 +18,6 @@
     
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Your Orders</h1> -->
     <button class="btn btn-lg btn-dark col-12 mb-4" id="customer">Customer</button>
         <script>
             document.getElementById("customer").onclick = function () {window.location.replace('customer.php'); };    

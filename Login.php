@@ -48,6 +48,7 @@
     </div>
 
     <?php
+        include_once('connection.php');
         include('method/query.php');
         if(isset($_POST['Login'])){
             $_SESSION["username"]  = $_POST['username'];

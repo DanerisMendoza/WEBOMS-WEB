@@ -2,9 +2,6 @@
   $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   $_SESSION['from'] = 'adminOrderList';
-  use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\SMTP;
-  use PHPMailer\PHPMailer\Exception;
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +20,6 @@
 
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4">Orders</h1> -->
     <button class="btn btn-lg btn-dark col-12 mb-3" id="admin">Admin</button>
         <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); }</script> 
     <div class="table-responsive col-lg-12">
@@ -89,7 +85,7 @@
               <!-- orders link id -->
               <td><?php echo $rows['order_id'];?></td>
               <!-- order details -->
-              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">Order Details</a></td>
+              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">Order Details</a></td>
               <!-- order status -->
                   <?php 
                     if($rows['status'] == 'pending'){
@@ -138,7 +134,7 @@
               <!-- date -->
               <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
               <!-- delete -->
-              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['proofOfPayment'].','.$rows['order_id'] ?>">Delete</a></td>
+              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['order_id'] ?>">Delete</a></td>
               <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
             </tr><?php } ?>
           </tbody>   
@@ -152,132 +148,22 @@
 </html>
 
 <?php 
+  $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
+
   //button to serve order
   if(isset($_GET['serve'])){
     $order_id = $_GET['serve'];
     $query = "UPDATE WEBOMS_order_tb SET status='serving' WHERE order_id='$order_id' ";     
-    if(Query($query))
-      echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('success!');</SCRIPT>";
-
-  }
-  //button to approve order
-    if(isset($_GET['approve'])){
-      $arr = explode(',',$_GET['approve']);  
-      $order_id = $arr[0];
-      $email = $arr[1];
-      //compute order
-        $query ="select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$order_id' ";  
-        $resultSet = getQuery($query);
-        if ($resultSet != null) {  
-            $dishesArr = $priceArr = $dishesQuantity = array();
-            $total =0;
-            foreach($resultSet as $rows){ 
-                $price = ($rows['price']*$rows['quantity']);  
-                array_push($dishesArr,$rows['dish']);
-                array_push($priceArr,$rows['price']);
-                array_push($dishesQuantity,$rows['quantity']);
-                $total += $price;
-            }
-        }
-
-      //send receipt to email
-        require_once('TCPDF-main/tcpdf.php'); 
-        $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
-        $obj_pdf->SetCreator(PDF_CREATOR);  
-        $obj_pdf->SetTitle("Receipt");  
-        $obj_pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
-        $obj_pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
-        $obj_pdf->setPrintHeader(false);  
-        $obj_pdf->setPrintFooter(false);  
-        $obj_pdf->SetAutoPageBreak(TRUE, 10);  
-        $obj_pdf->SetFont('dejavusans', '', 11);  
-        $obj_pdf->AddPage('P','A6');
-        date_default_timezone_set('Asia/Manila');
-        $date = date("j-m-Y  h:i:s A"); 
-        $content = '
-        <h3>Approve Date:</h3>
-        <h3>'.$date.'</h3>
-        <table  text-center cellspacing="0" cellpadding="3">  
-            <tr>
-                <th scope="col">Quantity</th>
-                <th scope="col">Dish</th>
-                <th scope="col">Price</th>
-            </tr>
-            ';  
-            for($i=0; $i<count($dishesArr); $i++){ 
-            $content .= "
-            <tr>  
-            <td>$dishesQuantity[$i]</td>
-            <td>$dishesArr[$i]</td>
-            <td>₱$priceArr[$i]</td>
-            </tr>
-            ";
-            }
-            $content .= "   
-            <tr><td></td></tr>
-            <tr><td></td></tr>
-            <tr>
-                <td></td>
-                <td>Payment</td>
-                <td>₱$total</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Total</td>
-                <td>₱$total</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Change</td>
-                <td>₱0</td>
-            </tr>
-            <tr><td></td></tr>
-            <tr><td></td></tr>
-            <h2>Order#$order_id</h1>
-        </table>
-        <style>
-        h3{text-align: center;}
-        </style>";
-        ob_end_clean();
-        $obj_pdf->writeHTML($content); 
-        $attachment = $obj_pdf->Output('file.pdf', 'S');
-        //Load Composer's autoloader
-        require 'vendor/autoload.php';
-        //Create an instance; passing `true` enables exceptions
-        $mail = new PHPMailer(true);
-        //Server settings
-        $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                     //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'weboms098@gmail.com'; //from //SMTP username
-        $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
-        $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-        $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-        //Recipients
-        $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
-        $mail->addAddress("$email");                                //sent to
-        //Content
-        $mail->Subject = 'Receipt';
-        $mail->Body    = 'Thank you for ordering!';
-        $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
-        $mail->send();
-
-      //approve
-        $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
-        $query = "UPDATE WEBOMS_order_tb SET status='prepairing', staffInCharge = '$staff' WHERE order_id='$order_id' ";     
-        if(Query($query))
-          echo "<script>alert('Approve Success'); window.location.replace('adminOrders.php');</script>";
+    if(Query($query)){
+        echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('success!');</SCRIPT>";
     }
+  }
 
   //button to dissaprove order
     if(isset($_GET['disapprove'])){
       $arr = explode(',',$_GET['disapprove']);  
       $order_id = $arr[0];
       $email = $arr[1];
-      $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
       $query = "UPDATE WEBOMS_order_tb SET status='disapproved',staffInCharge='$staff' WHERE order_id='$order_id' ";     
       Query($query);
       if(Query($query)){
@@ -298,7 +184,7 @@
   //button to make order complete
     if(isset($_GET['orderComplete'])){
       $order_id = $_GET['orderComplete'];
-      $query = "UPDATE WEBOMS_order_tb SET status='complete' WHERE order_id='$order_id' ";     
+      $query = "UPDATE WEBOMS_order_tb SET status='complete',staffInCharge='$staff' WHERE order_id='$order_id' ";     
       if(Query($query))
         echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('success!');</SCRIPT>";
     }
@@ -307,13 +193,10 @@
     if(isset($_GET['delete'])){
       $arr = explode(',',$_GET['delete']);
       $id = $arr[0];
-      $Pic = $arr[1];
-      $linkId = $arr[2];
+      $linkId = $arr[1];
       $query1 = "DELETE FROM WEBOMS_order_tb WHERE id='$id'";
       $query2 = "DELETE FROM WEBOMS_ordersDetail_tb WHERE order_id='$linkId'";
       if(Query($query1) && Query($query2)){
-        if($Pic != 'null')
-          unlink("payment/".$Pic);
         echo "<script> window.location.replace('adminOrders.php'); alert('Delete data successfully'); </script>";  
       }
     }

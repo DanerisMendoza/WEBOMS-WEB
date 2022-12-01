@@ -22,7 +22,6 @@
             <?php 
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
-              $pic = $arr[1];
               $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$id' ";
               $resultSet = getQuery($query); 
             ?>
@@ -53,13 +52,6 @@
               </tbody>
             </table>
           </div>
-          <?php if($pic!='null'){ ?>
-          <div class="mb-5">
-            <h1 class="font-weight-normal">PROOF OF PAYMENT:</h1>
-            <?php  echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
-          </div>
-          <?php }?>
-
 	  </div>
 	</div>
 </div>

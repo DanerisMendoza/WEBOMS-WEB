@@ -17,6 +17,7 @@
         if($_POST['dateFetch1'] != '' && $_POST['dateFetch2'] != ''){
             $date1 = $_POST['dateFetch1'];
             $date2 = $_POST['dateFetch2'];
+
             $_SESSION['date1'] = date('m/d/Y h:i a ', strtotime($date1));
             $_SESSION['date2'] = date('m/d/Y h:i a ', strtotime($date2));
             $query = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_order_tb.status = 'complete' and WEBOMS_order_tb.date between '$date1' and '$date2' ORDER BY WEBOMS_order_tb.id asc; ";
@@ -58,7 +59,7 @@
                 <div class="col-12 row">
                     <h5 class="form-control col-2">From:</h5><input type="datetime-local" name="dateFetch1" class="form-control form-control-lg mb-2 col-3" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>" >
                     <h5 class="form-control col-2">To:</h5><input type="datetime-local" name="dateFetch2" class="form-control form-control-lg mb-2 col-3" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>" >
-                    <button type="submit" name="fetch" class="btn btn-lg btn-success col-2 mb-2">Fetch</button>
+                    <button type="submit" name="fetch" class="btn btn-lg btn-success col-2 mb-2">Fetch(BETWEEN)</button>
                 </div>
                 <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-3">Show All</button>
             </form>
@@ -83,7 +84,7 @@
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['order_id'];?></td>
-                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
                                 <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <?php $total += $rows['totalOrder'];?>
