@@ -12,12 +12,11 @@
     <title>Costumer - TopUp List</title>
         
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     
 </head>
 <body class="bg-light">
-        
 <div class="container text-center mt-5">
     <button class="btn btn-lg btn-dark col-12 mb-4" id="back">Back</button>
           <script>
@@ -35,6 +34,7 @@
                   <th scope="col">Amount</th>
                   <th scope="col">Proof Of Payment</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Date</th>
                   <th scope="col" colspan="3">Action</th>
                   </tr>
               </thead>
@@ -47,10 +47,13 @@
                     <td><?php echo '₱'.$rows['amount'];?></td>
                     <td><?php echo $rows['proofOfPayment'];?></td>
                     <td><?php echo $rows['status'];?></td>
+                    <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date']));?></td>
                     <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
                         <?php if($rows['status'] == 'pending') {?>
                         <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['id'].','.$rows['user_id'].','.$rows['amount'];?>">Approve</a></td>
                         <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['id'];?>">Disapprove</a></td>
+                        <?php } else {?>
+                        <td colspan="3">none</td>
                         <?php } ?>
                     </tr>
                   <?php } ?>

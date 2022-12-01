@@ -10,7 +10,6 @@
     $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
     $balance = getQueryOneVal($query,'balance');
     $balance = $balance == null ? 0 : $balance;
-    $_SESSION['balance'] = $balance;
 ?>
 
 <!DOCTYPE html>

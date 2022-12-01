@@ -100,6 +100,10 @@ document.getElementById("home").onclick = function () {window.location.replace('
 document.getElementById("back").onclick = function () {window.location.replace('customerMenu.php'); }; 
 </script> 
 <?php
+    $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
+    $balance = getQueryOneVal($query,'balance');
+    $balance = $balance == null ? 0 : $balance;
+
     //clear button
     if(isset($_POST['clear'])){
         for($i=0; $i<count($dishesArr); $i++){ 
@@ -115,7 +119,7 @@ document.getElementById("back").onclick = function () {window.location.replace('
     
     //order button
     if(isset($_POST['order'])){
-        if($total != 0 && $_SESSION['balance'] >= $total){
+        if($total != 0 && $balance >= $total){
             $user_id = $_SESSION['user_id'];
             $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
