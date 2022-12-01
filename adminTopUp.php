@@ -24,7 +24,7 @@
               document.getElementById("back").onclick = function () {window.location.replace('admin.php');};    
           </script> 
               <?php
-              $query = "SELECT a.*,b.name FROM `weboms_topup_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id";
+              $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id";
               $resultSet =  getQuery($query);
               ?>
               <div class="table-responsive col-lg-12">
@@ -81,7 +81,7 @@
     $id = $arr[0];
     $user_id = $arr[1];
     $amount = $arr[2];
-    $query = "UPDATE weboms_topup_tb SET status='approved' WHERE id='$id' ";     
+    $query = "UPDATE WEBOMS_topUp_tb SET status='approved' WHERE id='$id' ";     
     if(Query($query)){
         $query = "UPDATE WEBOMS_userInfo_tb SET balance = (balance + '$amount') where user_id = '$user_id' ";     
         if(Query($query)){
@@ -92,7 +92,7 @@
   }
   //disapprove
   if(isset($_GET['disapprove'])){
-    $query = "UPDATE weboms_topup_tb SET status='disapproved' WHERE id = '$_GET[disapprove]' ";     
+    $query = "UPDATE WEBOMS_topUp_tb SET status='disapproved' WHERE id = '$_GET[disapprove]' ";     
     if(Query($query))
         echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('success!');</SCRIPT>";
   }
