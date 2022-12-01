@@ -22,7 +22,8 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		email varchar(255),
 		otp varchar(255),
 		forgetPasswordOtp varchar(255),
-		user_id varchar(255))";
+		user_id varchar(255),
+		balance int)";
 		
 
 		//menu
@@ -35,7 +36,6 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		
 		//orders
 		$queryCreateOrder_tb = "create table if not exists WEBOMS_order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
-		proofOfPayment varchar(255), 
 		user_id varchar(255), 
 		status varchar(255),
 		order_id varchar(255),
@@ -54,14 +54,22 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		order_id varchar(255), 
 		user_id varchar(255))";
 
-		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb)) {
+		//topup
+		$queryTopUp_tb = "create table if not exists WEBOMS_topUp_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		user_id varchar(255),
+		amount int,
+		status varchar(255),
+		proofOfPayment varchar(255),
+		date datetime)";
+
+		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb)) {
 			$checkQuery = "select * from WEBOMS_user_tb";
 			if($resultSet = $conn->query($checkQuery)){  
 				if($resultSet->num_rows <= 0){
 					$hash = password_hash('password', PASSWORD_DEFAULT);
 					$user_id = uniqid('',true);
 					$queryInsertAdmin = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('admin','$hash','admin','$user_id')";
-					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, email, otp, forgetPasswordOtp,  user_id) values('admin','','','','$user_id')";
+					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, user_id) values('admin', '$user_id')";
 					if($conn->query($queryInsertAdmin))
 						if($conn->query($queryInsertAdminInfo))
 							echo  '<script>alert("Success creating table");</script>';						

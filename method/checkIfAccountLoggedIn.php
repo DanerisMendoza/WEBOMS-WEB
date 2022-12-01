@@ -10,6 +10,11 @@ if($page == 'customer' && $_SESSION['accountType'] != 'customer'){
     die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
 }
 
+//not customer or admin or manager
+elseif($page == 'feedback' && ($_SESSION['accountType'] != 'admin' && $_SESSION['accountType'] != 'manager' && $_SESSION['accountType'] != 'customer')){
+    die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
+}
+
 //not admin or manager
 elseif($page == 'admin' && ($_SESSION['accountType'] != 'admin' && $_SESSION['accountType'] != 'manager')){
     die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");

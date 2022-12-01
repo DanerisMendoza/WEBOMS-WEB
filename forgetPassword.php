@@ -1,3 +1,10 @@
+<?php 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    include('method/query.php');
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,11 +55,6 @@
     </body>
 </html>
 <?php 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-    include('method/query.php');
-    session_start();
     if(isset($_POST['submit'])){
         $_SESSION['email'] = $email = $_POST['email'];
         $selectEmail = "select * from WEBOMS_user_tb inner join WEBOMS_userInfo_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where email = '$email' ";

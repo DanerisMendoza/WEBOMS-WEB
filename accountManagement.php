@@ -153,37 +153,40 @@
           echo ("<script>window.location.replace('accountManagement.php'); alert('Sucess');</script>");
   
     }
-    //update
+    //update form
     if(isset($_GET['update'])){
         $arr = explode(',',$_GET['update']);
         $username = $arr[0];
         $email = $arr[1];
-        //admin block
-        // if($username == 'admin'){
-            //it's now all user
-            echo "<script>$('#passAndEmail').modal('show');</script>";
-            echo "<script>
-            document.forms[2].username.value = '$username';
-            document.forms[2].email.value = '$email';
-            document.forms[2].username.disabled = true;
-            </script>";
-             if(isset($_POST['updateAdmin'])){
-                $password = $_POST['password'];
-                $hash = password_hash($password, PASSWORD_DEFAULT);
-                $query = "UPDATE WEBOMS_user_tb SET password = '$hash' WHERE username='$username' ";   
-                if(Query($query)){
-                    echo "<script>alert('sucess');</script>";
-                    echo("<script>history.replaceState({},'','accountManagement.php');</script>");
-                    echo ("<script>window.location.replace('accountManagement.php');</script>");
-                }
-            }
-        // }
-        // //user block
-        // else{
-        // echo "<script>$('#updateModal').modal('show');</script>";
-        // echo "<script>document.forms[1].username.value = '$username';</script>";
-        // }
+        $_SESSION['oldEmail'] = $email;
+        echo "<script>$('#passAndEmail').modal('show');</script>";
+        echo "<script>
+        document.forms[2].username.value = '$username';
+        document.forms[2].email.value = '$email';
+        document.forms[2].username.disabled = true;
+        </script>";
     }
+
+    //update button
+    if(isset($_POST['updateAdmin'])){
+        $password = $_POST['password'];
+        $email = $_POST['email'];
+        $oldEmail = $_SESSION['oldEmail'];
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        //validation
+        $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
+        if(getQuery($query) != null && $email != $oldEmail)
+            die ("<script>alert('Email Already Exist!');</script>");
+
+        $query = "update WEBOMS_user_tb as a inner join WEBOMS_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
+        if(Query($query)){
+            echo "<script>alert('sucess');</script>";
+            echo "<script>history.replaceState({},'','accountManagement.php');</script>";
+            echo "<script>window.location.replace('accountManagement.php');</script>";
+        }
+    }
+
     //delete
     if(isset($_GET['delete'])){
         $user_id = $_GET['delete'];

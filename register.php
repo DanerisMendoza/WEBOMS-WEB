@@ -85,7 +85,7 @@
 
       $user_id = uniqid('',true);
       $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
-      $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('$name','$email','$otp','$user_id')";
+      $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id, balance) values('$name','$email','$otp','$user_id',0)";
       if(!Query($query1))
         echo "fail to save to database";
       elseif(!Query($query2))
