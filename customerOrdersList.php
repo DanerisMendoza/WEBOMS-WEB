@@ -47,7 +47,7 @@
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo $rows['status']; ?></td>
                 <td><?php echo $rows['email']; ?></td>
-                <td><a class="btn btn-light border-dark" href="customerOrders.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
+                <td><a class="btn btn-light border-dark" href="customerOrders.php?id=<?php echo $rows['order_id'];?>">View Order</a></td>
                 <td><?php 
                   $order_id = $rows['order_id'];
                   $user_id = $rows['user_id'];
