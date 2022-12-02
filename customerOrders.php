@@ -20,9 +20,8 @@
     <button class="btn btn-lg btn-dark col-12 mb-4" id="orderList">Order List</button>
     <div class="table-responsive col-lg-12">
             <?php 
-              $arr = explode(',',$_GET['idAndPic']);
-              $id = $arr[0];
-              $pic = $arr[1];
+            
+              $id =  $_GET['id'];
               include('method/query.php');
               $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$id' ";
               $resultSet =  getQuery($query); 
@@ -31,7 +30,7 @@
         <thead class="table-dark">
           <tr>	
             <th scope="col">QUANTITY</th>
-            <th scope="col">NAME</th>
+            <th scope="col">DISH</th>
             <th scope="col">PRICE</th>
           </tr>
         </thead>
@@ -53,11 +52,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
-          
-    <div class="mb-5">
-      <h1 class="font-weight-normal">PROOF OF PAYMENT:</h1>
-      <?php echo "<img src='payment/$pic' style=width:300px;height:500px>";?>
     </div>
   </div>
 </div>

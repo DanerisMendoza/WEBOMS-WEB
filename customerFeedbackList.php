@@ -1,5 +1,5 @@
 <?php
-  $page = 'customer';
+  $page = 'feedback';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
 ?>
@@ -18,10 +18,15 @@
 <body class="bg-light">
         
 <div class="container text-center mt-5">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">Feedback</h1> -->
-    <button class="btn btn-lg btn-dark col-12 mb-4" id="customer">Back</button>
-          <script>020
-              document.getElementById("customer").onclick = function () {window.location.replace('customerMenu.php'); };    
+    <button class="btn btn-lg btn-dark col-12 mb-4" id="back">Back</button>
+          <script>
+              var accountType = "<?php echo  $_SESSION['accountType'];?>";
+              document.getElementById("back").onclick = function () {
+                if(accountType == 'customer')
+                  window.location.replace('customerMenu.php');
+                else if(accountType == 'admin' || accountType == 'manager') 
+                  window.location.replace('admin.php');
+              };    
           </script> 
           <?php
               $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_feedback_tb.order_id = WEBOMS_order_tb.order_id;";
