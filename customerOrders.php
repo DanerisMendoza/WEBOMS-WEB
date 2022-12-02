@@ -30,7 +30,7 @@
         <thead class="table-dark">
           <tr>	
             <th scope="col">QUANTITY</th>
-            <th scope="col">NAME</th>
+            <th scope="col">DISH</th>
             <th scope="col">PRICE</th>
           </tr>
         </thead>

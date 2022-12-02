@@ -120,7 +120,7 @@
             $user_id = $_SESSION['user_id'];
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
-            $query1 = "insert into WEBOMS_order_tb(user_id, status, order_id, date, totalOrder, staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total', '$staff')";
+            $query1 = "insert into WEBOMS_order_tb(user_id, status, order_id, date, totalOrder, payment,  staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);

@@ -47,13 +47,13 @@
             <tr><td></td></tr>
             <tr>
                 <td></td>
-                <td>Payment</td>
-                <td>₱$cash</td>
+                <td>Total</td>
+                <td>₱$total</td>
             </tr>
             <tr>
                 <td></td>
-                <td>Total</td>
-                <td>₱$total</td>
+                <td>Payment</td>
+                <td>₱$cash</td>
             </tr>
             <tr>
                 <td></td>

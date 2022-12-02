@@ -42,6 +42,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		order_id varchar(255),
 		date datetime not null,
 		totalOrder int,
+		payment int,
 		staffInCharge varchar(255))";
 
 		$queryCreateOrdersDetail_tb = "create table if not exists WEBOMS_ordersDetail_tb(id int PRIMARY KEY AUTO_INCREMENT, 
