@@ -9,6 +9,8 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
+    $_SESSION['multiArr'] = array();
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +40,7 @@
                         <th scope="col">DISH</th>
                         <th scope="col">QUANTITY</th>
                         <th scope="col">PRICE</th>
-                        <!-- <th scope="col" colspan="2">Option</th> -->
+                        <th scope="col" colspan="1">Option</th>
                     </tr>
                 </thead>
                     <?php 
@@ -47,7 +49,7 @@
                     $dishesQuantity = array();
                     $orderType = array();
       
-
+                    //merge repeating order into 1 
                     for($i=0; $i<count($_SESSION['dishes']); $i++){
                         if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
                             $index = array_search($_SESSION['dishes'][$i], $dishesArr);
@@ -60,22 +62,33 @@
                             array_push($orderType,$_SESSION['orderType'][$i]);
                         }
                     }
-                    
+                    //push order quantity into arrray
                     foreach(array_count_values($_SESSION['dishes']) as $count){
                         array_push($dishesQuantity,$count);
                     }
-
+                    
+                    //merge 3 array into 1 multi dimensional
+                    for($i=0; $i<count($dishesArr); $i++){ 
+                        $arr = array('dish'=> $dishesArr[$i], 'price' => $priceArr[$i], 'quantity' => $dishesQuantity[$i], 'orderType' => $orderType[$i]);
+                        array_push($_SESSION['multiArr'],$arr);
+                    }
+                    //sort multi dimensional
+                    sort($_SESSION['multiArr']);
                     $total = 0;
                     for($i=0; $i<count($priceArr); $i++){
                         $total += $priceArr[$i];
                     }
-                    for($i=0; $i<count($dishesArr); $i++){ ?>
+
+                    //create a table using the multi dimensional array
+                    foreach($_SESSION['multiArr'] as $arr){ ?>
                     <tr>  
-                        <td><?php echo $dishesArr[$i];?></td>
-                        <td><?php echo $dishesQuantity[$i];?></td>
-                        <td><?php echo '₱'.$priceArr[$i];?></td>
-                        <!-- <td><?php $priceArr[$i];?>Add</td>
-                        <td><?php $priceArr[$i];?>Minus</td> -->
+                        <td><?php echo $arr['dish'];?></td>
+                        <td><?php echo $arr['quantity'];?></td>
+                        <td><?php echo '₱'.$arr['price'];?></td>
+                        <td>
+                            <a class="btn btn-success border-dark" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <a class="btn btn-success border-dark" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
+                        </td>
                     </tr>
                     <?php }?>
                     <tr>
@@ -83,10 +96,11 @@
                         <td><b>₱<?php echo $total; ?></b></td>
                     </tr>
                 </table> 
-       
+                <!-- place order -->
                 <form method="post">           
                     <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                 </form>
+                <!-- clear order -->
                 <form method="post">
                     <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
                 </form>
@@ -116,7 +130,46 @@ document.getElementById("back").onclick = function () {window.location.replace('
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array();
         $_SESSION["orderType"] = array(); 
+        $_SESSION['multiArr'] = array();
         echo "<script>window.location.replace('customerCart.php');</script>";
+    }
+
+    //add
+    if(isset($_GET['add'])){
+        $arr = explode(',',$_GET['add']);
+        $dish = $arr[0];
+        $price = $arr[1];
+		$orderType = $arr[2];
+        array_push($_SESSION['dishes'], $dish);
+        array_push($_SESSION['price'], $price);
+        array_push($_SESSION['orderType'], $orderType);
+
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+          echo "<script>window.location.replace('customerCart.php');</script>";    
+    }
+
+    //minus
+    if(isset($_GET['minus'])){
+        $arr = explode(',',$_GET['minus']);
+        $dish = $arr[0];
+        $price = $arr[1];
+        $orderType = $arr[2];
+       
+        //remove one order 
+        $key = array_search($dish, $_SESSION['dishes']);
+        unset($_SESSION['dishes'][$key]);
+        unset($_SESSION['price'][$key]);
+        unset($_SESSION['orderType'][$key]);
+
+        //refresh the array
+        $_SESSION['dishes'] = array_values($_SESSION['dishes']);
+        $_SESSION['price'] = array_values($_SESSION['price']);
+        $_SESSION['orderType'] = array_values($_SESSION['orderType']);
+
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+            echo "<script>window.location.replace('customerCart.php');</script>";    
     }
 
     
