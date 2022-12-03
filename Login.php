@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php     
+  $page = 'notLogin';
+  include('method/checkIfAccountLoggedIn.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +20,6 @@
 <div class="container">
   <div class="row justify-content-center">
     <form  method="post" class="form1">
-      <!-- <img src="settings/logo.png"><br> -->
       <h1 class="font-weight-normal mt-5 mb-4 text-center">Log in to your account</h1>
       <input class="form-control form-control-lg mb-3" type="text" name="username" placeholder="Username" required>
       <input class="form-control form-control-lg mb-3" type="password" name="password" placeholder="Password" required>

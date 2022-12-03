@@ -1,3 +1,7 @@
+<?php     
+  $page = 'notLogin';
+  include('method/checkIfAccountLoggedIn.php'); 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,19 +123,12 @@
     }
 ?>
 <script>
+    //cut phone nu
     $("#phone").bind("change paste input", function(){
         var phone = document.forms[0].phone.value;
         if(phone.length >= 11){
           document.forms[0].phone.value = phone.substring(0, 11);
         }
     });
-
-
-  //  var createAccount = document.getElementById("createAccount");
-  //  createAccount.addEventListener("click", () => {
-  //     if(document.forms[0].phone.value == 'null'){
-  //       alert('please pick a gender!');
-  //     }
-  //   });
 </script> 
 

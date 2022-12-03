@@ -84,7 +84,7 @@
                     <tr>  
                         <td><?php echo $arr['dish'];?></td>
                         <td><?php echo $arr['quantity'];?></td>
-                        <td><?php echo '₱'.$arr['price'];?></td>
+                        <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                         <td>
                             <a class="btn btn-success border-dark" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
                             <a class="btn btn-success border-dark" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
@@ -93,7 +93,7 @@
                     <?php }?>
                     <tr>
                         <td colspan="2"><b>TOTAL AMOUNT:</b></td>
-                        <td><b>₱<?php echo $total; ?></b></td>
+                        <td><b>₱<?php echo number_format($total,2); ?></b></td>
                     </tr>
                 </table> 
                 <!-- place order -->
