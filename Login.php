@@ -37,10 +37,10 @@
           <div class="modal-body">
             <form method="post" class="form-group">
               <h3 class="font-weight-normal mb-3">Please Enter Your OTP</h3>
-              <input type="text" class="form-control form-control-lg mb-3" placeholder="OTP" name="otp" >          
-              <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-3">
-              <input type="submit" value="Resend" name="Resend" class="btn btn-success btn-lg col-12 mb-3">
-              <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12">
+              <input type="text" class="form-control form-control-lg mb-3" placeholder="OTP" name="otp" >  
+              <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12 mb-1">
+              <!-- <input type="submit" value="Resend" name="Resend" class="btn btn-secondary btn-lg col-12 mb-1"> -->
+              <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-1">
             </form>
           </div>
         </div>

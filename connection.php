@@ -19,18 +19,22 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		user_id varchar(255))";
 
 		$queryCreateUserInfo_tb = "create table if not exists WEBOMS_userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		user_id varchar(255),
 		name varchar(255),
+		gender varchar(255),
+		age int,
+		phoneNumber varchar(255),
+		address varchar(255),
 		email varchar(255),
 		otp varchar(255),
 		forgetPasswordOtp varchar(255),
-		user_id varchar(255),
 		balance int)";
 		
 
 		//menu
 		$queryCreateMenu_tb = "create table if not exists WEBOMS_menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
 		dish varchar(255),
-		price int,
+		price float,
 		picName varchar(255),
 		stock int,
 		lastModifiedBy varchar(255))";
@@ -38,8 +42,8 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		//orders
 		$queryCreateOrder_tb = "create table if not exists WEBOMS_order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		user_id varchar(255), 
-		status varchar(255),
 		order_id varchar(255),
+		status varchar(255),
 		date datetime not null,
 		totalOrder int,
 		payment int,
@@ -52,9 +56,9 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 
 		//feedback
 		$queryCreateFeedback_tb = "create table if not exists WEBOMS_feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
-		feedback varchar(255), 
+		user_id varchar(255), 
 		order_id varchar(255), 
-		user_id varchar(255))";
+		feedback varchar(255))";
 
 		//topup
 		$queryTopUp_tb = "create table if not exists WEBOMS_topUp_tb(id int PRIMARY KEY AUTO_INCREMENT,
@@ -81,7 +85,5 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		else 
 			echo  '<script type="text/javascript">alert("Error creating table");</script>';						
 	}
-	
-
 ?>
 

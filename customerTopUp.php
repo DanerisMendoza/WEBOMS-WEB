@@ -3,7 +3,7 @@
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$user_id' ";
+    $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by a.id desc";
     $resultSet =  getQuery($query);
 ?>
 <!DOCTYPE html>
@@ -55,8 +55,12 @@
                                 <td><?php echo $rows['proofOfPayment'];?></td>
                                 <td><?php echo $rows['status'];?></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date']));?></td>
+                                <?php if($rows['status'] != 'approved'){?>
                                 <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
                                 <td><a class="btn btn-danger border-dark" href="?cancel=<?php echo $rows['id'].','.$rows['proofOfPayment'];?>">Cancel</a></td>
+                                <?php }else{ ?>
+                                <td colspan="2"><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
+                                <?php }?>
                                 </tr>
                                 <?php } ?>
                             </tbody>

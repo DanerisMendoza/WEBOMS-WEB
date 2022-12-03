@@ -35,9 +35,10 @@
             <table class="table table-striped table-bordered col-lg-12 mb-4">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">QUANTITY</th>
                         <th scope="col">DISH</th>
+                        <th scope="col">QUANTITY</th>
                         <th scope="col">PRICE</th>
+                        <!-- <th scope="col" colspan="2">Option</th> -->
                     </tr>
                 </thead>
                     <?php 
@@ -70,9 +71,11 @@
                     }
                     for($i=0; $i<count($dishesArr); $i++){ ?>
                     <tr>  
-                        <td><?php echo $dishesQuantity[$i];?></td>
                         <td><?php echo $dishesArr[$i];?></td>
+                        <td><?php echo $dishesQuantity[$i];?></td>
                         <td><?php echo '₱'.$priceArr[$i];?></td>
+                        <!-- <td><?php $priceArr[$i];?>Add</td>
+                        <td><?php $priceArr[$i];?>Minus</td> -->
                     </tr>
                     <?php }?>
                     <tr>
@@ -137,60 +140,42 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 Query($query);
                 //send receipt to email
                 require_once('TCPDF-main/tcpdf.php'); 
-                $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
-                $obj_pdf->SetCreator(PDF_CREATOR);  
-                $obj_pdf->SetTitle("Receipt");  
-                $obj_pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
-                $obj_pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
-                $obj_pdf->setPrintHeader(false);  
-                $obj_pdf->setPrintFooter(false);  
-                $obj_pdf->SetAutoPageBreak(TRUE, 10);  
-                $obj_pdf->SetFont('dejavusans', '', 11);  
-                $obj_pdf->AddPage('P','A6');
+                $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+                $pdf->SetCreator(PDF_CREATOR);  
+                $pdf->SetTitle("Receipt");  
+                $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
+                $pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
+                $pdf->setPrintHeader(false);  
+                $pdf->setPrintFooter(false);  
+                $pdf->SetAutoPageBreak(TRUE, 10);  
+                $pdf->SetFont('dejavusans', '', 11);  
+                $pdf->AddPage('P','a6');
                 date_default_timezone_set('Asia/Manila');
                 $date = date("j-m-Y  h:i:s A"); 
-                $content = '
-                <h3>Order Date:</h3>
-                <h3>'.$date.'</h3>
-                <table  text-center cellspacing="0" cellpadding="3">  
-                    <tr>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Dish</th>
-                        <th scope="col">Price</th>
-                    </tr>
-                    ';  
-                    for($i=0; $i<count($dishesArr); $i++){ 
-                    $content .= "
-                    <tr>  
-                    <td>$dishesQuantity[$i]</td>
-                    <td>$dishesArr[$i]</td>
-                    <td>₱$priceArr[$i]</td>
-                    </tr>
-                    ";
-                    }
-                    $content .= "   
-                    <tr><td></td></tr>
-                    <tr><td></td></tr>
-                    <tr>
-                        <td></td>
-                        <td>Total</td>
-                        <td>₱$total</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>Payment</td>
-                        <td>₱$total</td>
-                    </tr>
-                    <tr><td></td></tr>
-                    <tr><td></td></tr>
-                    <h2>Order#$order_id</h1>
-                </table>
-                <style>
-                h3{text-align: center;}
-                </style>";
+                $pdf -> Cell(60,10,"$date",'0','C');
+                $pdf -> ln(10);
+                $pdf -> Cell(61,10,"Dish",'B,T','0','C');
+                $pdf -> Cell(61,10,"Quantity",'B,T','0','C');
+                $pdf -> Cell(61,10,"Price",'B,T','0','C');
+                $pdf -> ln(20);
+                for($i=0; $i<count($dishesArr); $i++){ 
+                    $d = date('m/d/Y h:i a ', strtotime($row['date']));
+                    $pdf -> Cell(61,10,"$dishesArr[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"$dishesQuantity[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"₱$priceArr[$i]",'','0','C');
+                    $pdf -> ln(10);
+                }
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Payment",'T','0','L');
+                $pdf -> Cell(61,10,"₱$total",'T','0','C');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Total",'','0','L');
+                $pdf -> Cell(61,10,"₱$total",'','0','C');
+                $pdf -> ln(10);
+                $pdf->SetFont('dejavusans', '', 18);  
+                $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
                 ob_end_clean();
-                $obj_pdf->writeHTML($content); 
-                $attachment = $obj_pdf->Output('file.pdf', 'S');
+                $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
                 require 'vendor/autoload.php';
                 //Create an instance; passing `true` enables exceptions

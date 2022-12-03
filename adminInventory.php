@@ -66,7 +66,7 @@
       <div class="modal-body ">
         <form method="post" class="form-group" enctype="multipart/form-data">
           <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="Enter Dish Name" required>
-          <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter Price" required>
+          <input type="number" class="form-control form-control-lg mb-3" name="price" step="any" placeholder="Enter Price" required>
           <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter Number of Stock" required>
           <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
           <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Insert</button>
