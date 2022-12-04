@@ -91,7 +91,7 @@
                                 </tr>
                             <?php } ?>
                             <tr>
-                                <td colspan="4"><strong>Total</strong></td>
+                                <td colspan="3"><strong>Total</strong></td>
                                 <td><strong><?php echo '₱'.$total;?></strong></td>
                             </tr>
                     </tbody>

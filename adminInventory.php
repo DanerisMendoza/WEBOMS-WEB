@@ -15,6 +15,8 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
   <script type="text/javascript" src="js/bootstrap.min.js"></script>  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> 
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
 
 </head>
 <body class="bg-light">
@@ -24,10 +26,10 @@
     <button id="addButton" type="button" class="btn btn-lg btn-success col-6 mb-4" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
     <div class="table-responsive col-lg-12 mb-5">
-			<table class="table table-striped table-bordered col-lg-12">
+			<table id="tbl" class="table table-striped table-bordered col-lg-12">
 			  <thead class="table-dark">
 			    <tr>	
-            <th scope="col">IMAGE</th>
+            <th scope="col" >IMAGE</th>
 			      <th scope="col">DISH</th>
 			      <th scope="col">PRICE</th>
 			      <th scope="col">STOCK</th>
@@ -128,3 +130,9 @@
       echo "you cannot upload files of this type";     
   }
 ?>
+
+<script>
+    $(document).ready( function () {
+    $('#tbl').DataTable();
+} );
+</script>

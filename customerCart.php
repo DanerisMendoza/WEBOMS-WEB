@@ -23,6 +23,8 @@
         
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
    
 </head>
 <body class="bg-light">    
@@ -34,7 +36,7 @@
         <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
         
         <div class="table-responsive col-lg-12 mb-5">
-            <table class="table table-striped table-bordered col-lg-12 mb-4">
+            <table id="tbl" class="table table-striped table-bordered col-lg-12 mb-4">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">DISH</th>
@@ -86,7 +88,12 @@
                         <td><?php echo $arr['quantity'];?></td>
                         <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                         <td>
+                            <!-- check stock -->
+                            <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
                             <a class="btn btn-success border-dark" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <?php }else{ ?>
+                            <a class="btn btn-success border-dark">Out of Stock</a>
+                            <?php } ?> 
                             <a class="btn btn-success border-dark" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
                         </td>
                     </tr>
