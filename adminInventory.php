@@ -15,6 +15,8 @@
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
   <script type="text/javascript" src="js/bootstrap.min.js"></script>  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> 
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
 
 </head>
 <body class="bg-light">
@@ -24,10 +26,10 @@
     <button id="addButton" type="button" class="btn btn-lg btn-success col-6 mb-4" data-toggle="modal" data-target="#loginModal">Add new dish</button>
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
     <div class="table-responsive col-lg-12 mb-5">
-			<table class="table table-striped table-bordered col-lg-12">
+			<table id="tbl" class="table table-striped table-bordered col-lg-12">
 			  <thead class="table-dark">
 			    <tr>	
-            <th scope="col">IMAGE</th>
+            <th scope="col" >IMAGE</th>
 			      <th scope="col">DISH</th>
 			      <th scope="col">PRICE</th>
 			      <th scope="col">STOCK</th>
@@ -41,15 +43,15 @@
             $query = "select * from WEBOMS_menu_tb";
             $resultSet = getQuery($query);
             if($resultSet != null){
-              foreach($resultSet as $rows){?>
+              foreach($resultSet as $row){?>
                 <tr>	   
-                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><?php echo $rows['dish'];?></td>
-                <td><?php echo '₱'.$rows['price']; ?></td>
-                <td><?php echo $rows['stock']; ?></td>
-                <td><?php echo $rows['lastModifiedBy']; ?></td>
-                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName']; ?>">Delete</a></td>
-                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType'].",".$rows['dish'].",".$rows['price'].",".$rows['picName'].",".$rows['stock']; ?>"  >Update</a></td>
+                <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                <td><?php echo $row['dish'];?></td>
+                <td><?php echo '₱'.$row['price']; ?></td>
+                <td><?php echo $row['stock']; ?></td>
+                <td><?php echo $row['lastModifiedBy']; ?></td>
+                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>">Delete</a></td>
+                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>"  >Update</a></td>
                 </tr>
                 <?php } 
             }
@@ -66,7 +68,7 @@
       <div class="modal-body ">
         <form method="post" class="form-group" enctype="multipart/form-data">
           <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="Enter Dish Name" required>
-          <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter Price" required>
+          <input type="number" class="form-control form-control-lg mb-3" name="price" step="any" placeholder="Enter Price" required>
           <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter Number of Stock" required>
           <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
           <button type="submit" class="btn btn-lg btn-success col-12" name="insert">Insert</button>
@@ -128,3 +130,9 @@
       echo "you cannot upload files of this type";     
   }
 ?>
+
+<script>
+    $(document).ready( function () {
+    $('#tbl').DataTable();
+} );
+</script>

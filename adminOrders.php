@@ -36,11 +36,9 @@
               ?>
               </option>
               <option value="all">All</option>  
-              <option value="pending">Pending</option>  
               <option value="prepairing">Prepairing</option>  
               <option value="serving">Serving</option>  
               <option value="order complete">Order Complete</option>  
-              <option value="order invalid">Order Invalid</option>  
             </select>
             <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4"> 
           </form>
@@ -50,17 +48,13 @@
       }
 
       if($_SESSION['query'] == 'all')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_user_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'pending')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'pending' ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'prepairing')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'prepairing'  ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'serving')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'serving'  ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'order complete')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status =  'complete' ORDER BY WEBOMS_order_tb.id asc; ";
-      if($_SESSION['query'] == 'order invalid')
-        $query = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.*, WEBOMS_user_tb.accountType from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id inner join WEBOMS_user_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where status = 'disapproved' ORDER BY WEBOMS_order_tb.id asc; ";
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id order by b.id asc " ;
+      elseif($_SESSION['query'] == 'prepairing')
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'prepairing' order by b.id asc " ;
+      elseif($_SESSION['query'] == 'serving')
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'serving' order by b.id asc " ;
+      elseif($_SESSION['query'] == 'order complete')
+        $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'complete' order by b.id asc " ;
 
       $resultSet =  getQuery($query);
       if($resultSet != null){ ?>
@@ -69,73 +63,59 @@
             <tr>	
               <th scope="col">NAME</th>
               <th scope="col">ORDERS ID</th>
-              <th scope="col"></th>
               <th scope="col">ORDER STATUS</th>
-              <th scope="col" colspan="2">Option</th>
               <th scope="col">DATE & TIME</th>
-              <th scope="col"></th>
               <th scope="col">Staff In Charge</th>
+              <th scope="col">Order Details</th>
+              <th scope="col" colspan="3">Option</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach($resultSet as $rows){?>
+            <?php foreach($resultSet as $row){?>
             <tr>	   
               <!-- name -->
-              <td><?php echo $rows['accountType'] == 'customer'  ? $rows['name']:'POS'; ?></td>
+              <td><?php echo $row['accountType'] == 'customer'  ? $row['name']:'POS'; ?></td>
               <!-- orders link id -->
-              <td><?php echo $rows['order_id'];?></td>
-              <!-- order details -->
-              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">Order Details</a></td>
+              <td><?php echo $row['order_id'];?></td>
               <!-- order status -->
                   <?php 
-                    if($rows['status'] == 'pending'){
-                      ?><td>Pending</td><?php
-                    }
-                    elseif($rows['status'] == 'approved'){
+                    if($row['status'] == 'approved'){
                       ?><td>Approved></td><?php
                     }
-                    elseif($rows['status'] == 'disapproved'){
-                      ?><td>Disapproved</td><?php
-                    }
-                    elseif($rows['status'] == 'prepairing'){
+                    elseif($row['status'] == 'prepairing'){
                       ?><td>Prepairing</td><?php
                     }
-                    elseif($rows['status'] == 'serving'){
+                    elseif($row['status'] == 'serving'){
                       ?><td>Serving</td><?php
                     }
-                    elseif($rows['status'] == 'complete'){
+                    elseif($row['status'] == 'complete'){
                       ?><td>Complete</td><?php
                     }
                   ?>
+              <!-- staff in charge -->
+              <td><?php echo $row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge']?></td>
+
+              <!-- date -->
+              <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
+
+              <!-- order details -->
+              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $row['order_id']?>">Order Details</a></td>
+
               <!-- option -->
-            
               <?php 
-                    if($rows['status'] == 'pending'){
-                      ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['order_id'].','.$rows['email']; ?>">Approve</a></td>
-                      <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['order_id'].','.$rows['email']; ?>">Disapprove</a></td><?php
+                    if($row['status'] == 'prepairing'){
+                      ?> <td colspan='2'><a class="btn btn-success border-dark" href="?serve=<?php echo $row['order_id'] ?>">Serve</a></td><?php
                     }
-                    elseif($rows['status'] == 'approved'){
-                      ?><td colspan="2">Approved></td><?php
+                    elseif($row['status'] == 'serving'){
+                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $row['order_id'] ?>">Order Complete</a></td><?php
                     }
-                    elseif($rows['status'] == 'disapproved'){
-                      ?><td colspan="2">None</td><?php
-                    }
-                    elseif($rows['status'] == 'prepairing'){
-                      ?> <td colspan='2'><a class="btn btn-success border-dark" href="?serve=<?php echo $rows['order_id'] ?>">Serve</a></td><?php
-                    }
-                    elseif($rows['status'] == 'serving'){
-                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['order_id'] ?>">Order Complete</a></td><?php
-                    }
-                    elseif($rows['status'] == 'complete'){
+                    elseif($row['status'] == 'complete'){
                       ?><td colspan="2">None</td><?php
                     }
                   ?>
-        
-              <!-- date -->
-              <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
+         
               <!-- delete -->
-              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['order_id'] ?>">Delete</a></td>
-              <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
+              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $row['ID'].','.$row['order_id'] ?>">Delete</a></td>
             </tr><?php } ?>
           </tbody>   
         </table>
@@ -172,9 +152,9 @@
         $dishesArr = array();
         $dishesQuantity = array();
         $resultSet = getQuery($query); 
-        foreach($resultSet as $rows){
-          $qty = $rows['quantity'];
-          $dish = $rows['dish'];
+        foreach($resultSet as $row){
+          $qty = $row['quantity'];
+          $dish = $row['dish'];
           $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$qty') WHERE dish= '$dish' ";    
           Query($updateQuery);    
         }

@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php     
+  $page = 'notLogin';
+  include('method/checkIfAccountLoggedIn.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +20,6 @@
 <div class="container">
   <div class="row justify-content-center">
     <form  method="post" class="form1">
-      <!-- <img src="settings/logo.png"><br> -->
       <h1 class="font-weight-normal mt-5 mb-4 text-center">Log in to your account</h1>
       <input class="form-control form-control-lg mb-3" type="text" name="username" placeholder="Username" required>
       <input class="form-control form-control-lg mb-3" type="password" name="password" placeholder="Password" required>
@@ -37,10 +39,10 @@
           <div class="modal-body">
             <form method="post" class="form-group">
               <h3 class="font-weight-normal mb-3">Please Enter Your OTP</h3>
-              <input type="text" class="form-control form-control-lg mb-3" placeholder="OTP" name="otp" >          
-              <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-3">
-              <input type="submit" value="Resend" name="Resend" class="btn btn-success btn-lg col-12 mb-3">
-              <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12">
+              <input type="text" class="form-control form-control-lg mb-3" placeholder="OTP" name="otp" >  
+              <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12 mb-1">
+              <!-- <input type="submit" value="Resend" name="Resend" class="btn btn-secondary btn-lg col-12 mb-1"> -->
+              <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-1">
             </form>
           </div>
         </div>
@@ -58,10 +60,10 @@
             $query = "select * from WEBOMS_user_tb where username = '$username'";
             $resultSet = getQuery($query);
             if(($resultSet && $resultSet->num_rows)  > 0){
-                foreach($resultSet as $rows){
-                    $valid = password_verify($password, $rows['password'])?true:false;
-                    $accountType = $rows['accountType'];
-                    $user_id = $rows['user_id'];
+                foreach($resultSet as $row){
+                    $valid = password_verify($password, $row['password'])?true:false;
+                    $accountType = $row['accountType'];
+                    $user_id = $row['user_id'];
                 }
                 if($valid){
                   //setting credential if valid

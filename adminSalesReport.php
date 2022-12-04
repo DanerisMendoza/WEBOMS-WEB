@@ -70,28 +70,28 @@
                         <tr>	
                             <th scope="col">NAME</th>
                             <th scope="col">TRANSACTION NO</th>
-                            <th scope="col">STATUS</th>
                             <th scope="col">DATE & TIME</th>
                             <th scope="col">TOTAL</th>
+                            <th scope="col">ORDER DETAILS</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         $total = 0;
                         if($resultSet != null)
-                            foreach($resultSet as $rows){ ?>
-                                <?php array_push($_SESSION['resultSet'], $rows)?>
+                            foreach($resultSet as $row){ ?>
+                                <?php array_push($_SESSION['resultSet'], $row)?>
                                 <tr>	   
-                                <td><?php echo $rows['name']; ?></td>
-                                <td><?php echo $rows['order_id'];?></td>
-                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">View Order</a></td>
-                                <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
-                                <td><?php echo '₱'.$rows['totalOrder']; ?></td>
-                                <?php $total += $rows['totalOrder'];?>
+                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo $row['order_id'];?></td>
+                                <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
+                                <td><?php echo '₱'.$row['totalOrder']; ?></td>
+                                <?php $total += $row['totalOrder'];?>
+                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $row['order_id']?>">ORDER DETAILS</a></td>
                                 </tr>
                             <?php } ?>
                             <tr>
-                                <td colspan="4"><strong>Total</strong></td>
+                                <td colspan="3"><strong>Total</strong></td>
                                 <td><strong><?php echo '₱'.$total;?></strong></td>
                             </tr>
                     </tbody>

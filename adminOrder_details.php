@@ -22,14 +22,14 @@
             <?php 
               $arr = explode(',',$_GET['idAndPic']);
               $id = $arr[0];
-              $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$id' ";
+              $query = "select a.*, b.* from WEBOMS_menu_tb a inner join WEBOMS_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$id' ";
               $resultSet = getQuery($query); 
             ?>
             <table class="table table-striped table-bordered border-dark col-lg-12">
               <thead class="table-dark">
                 <tr>	
                   <th scope="col">QUANTITY</th>
-                  <th scope="col">NAME</th>
+                  <th scope="col">DISH</th>
                   <th scope="col">PRICE</th>
                 </tr>
               </thead>
@@ -37,17 +37,26 @@
                 <?php 
                 $total = 0;
                 if($resultSet != null)
-                foreach($resultSet as $rows){ ?>
+                foreach($resultSet as $row){ ?>
                 <tr>	   
-                  <?php $price = ($rows['price']*$rows['quantity']);  $total += $price;?>
-                  <td><?php echo $rows['quantity']; ?></td>
-                  <td><?php echo $rows['dish']; ?></td>
+                  <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
+                  <td><?php echo $row['quantity']; ?></td>
+                  <td><?php echo $row['dish']; ?></td>
                   <td><?php echo '₱'.$price?></td>
                 </tr>
                 <?php }?>
                 <tr>
                   <td colspan="2"><b>TOTAL AMOUNT:</b></td>
                   <td><b>₱<?php echo $total?></b></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Payment:</b></td>
+                  <?php $payment = getQueryOneVal("SELECT a.payment FROM WEBOMS_order_tb a where a.order_id = '$id' ",'payment');?>
+                  <td><b>₱<?php echo $payment; ?></b></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><b>Change:</b></td>
+                  <td><b>₱<?php echo $payment-$total; ?></b></td>
                 </tr>
               </tbody>
             </table>
