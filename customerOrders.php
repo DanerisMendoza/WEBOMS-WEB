@@ -26,6 +26,7 @@
               $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$id' ";
               $resultSet =  getQuery($query); 
             ?>
+            
       <table class="table table-striped table-bordered col-lg-12 mb-4">
         <thead class="table-dark">
           <tr>	

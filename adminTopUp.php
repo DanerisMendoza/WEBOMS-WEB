@@ -50,8 +50,8 @@
                     <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date']));?></td>
                     <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
                         <?php if($rows['status'] == 'pending') {?>
-                        <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['id'].','.$rows['user_id'].','.$rows['amount'];?>">Approve</a></td>
-                        <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['id'];?>">Disapprove</a></td>
+                        <td><a class="btn btn-success border-dark" href="?approve=<?php echo $rows['id'].','.$rows['user_id'].','.$rows['amount'];?>">Approve</a></td>
+                        <td><a class="btn btn-danger border-dark" href="?disapprove=<?php echo $rows['id'];?>">Disapprove</a></td>
                         <?php } else {?>
                         <td colspan="3">none</td>
                         <?php } ?>

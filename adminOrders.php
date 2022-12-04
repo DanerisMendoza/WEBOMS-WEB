@@ -63,12 +63,11 @@
             <tr>	
               <th scope="col">NAME</th>
               <th scope="col">ORDERS ID</th>
-              <th scope="col"></th>
               <th scope="col">ORDER STATUS</th>
-              <th scope="col" colspan="2">Option</th>
               <th scope="col">DATE & TIME</th>
-              <th scope="col"></th>
               <th scope="col">Staff In Charge</th>
+              <th scope="col">Order Details</th>
+              <th scope="col" colspan="3">Option</th>
             </tr>
           </thead>
           <tbody>
@@ -78,8 +77,6 @@
               <td><?php echo $rows['accountType'] == 'customer'  ? $rows['name']:'POS'; ?></td>
               <!-- orders link id -->
               <td><?php echo $rows['order_id'];?></td>
-              <!-- order details -->
-              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">Order Details</a></td>
               <!-- order status -->
                   <?php 
                     if($rows['status'] == 'approved'){
@@ -95,20 +92,18 @@
                       ?><td>Complete</td><?php
                     }
                   ?>
+              <!-- staff in charge -->
+              <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
+
+              <!-- date -->
+              <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
+
+              <!-- order details -->
+              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">Order Details</a></td>
+
               <!-- option -->
-            
               <?php 
-                    if($rows['status'] == 'pending'){
-                      ?> <td><a class="btn btn-primary border-dark" href="?approve=<?php echo $rows['order_id'].','.$rows['email']; ?>">Approve</a></td>
-                      <td><a class="btn btn-primary border-dark" href="?disapprove=<?php echo $rows['order_id'].','.$rows['email']; ?>">Disapprove</a></td><?php
-                    }
-                    elseif($rows['status'] == 'approved'){
-                      ?><td colspan="2">Approved></td><?php
-                    }
-                    elseif($rows['status'] == 'disapproved'){
-                      ?><td colspan="2">None</td><?php
-                    }
-                    elseif($rows['status'] == 'prepairing'){
+                    if($rows['status'] == 'prepairing'){
                       ?> <td colspan='2'><a class="btn btn-success border-dark" href="?serve=<?php echo $rows['order_id'] ?>">Serve</a></td><?php
                     }
                     elseif($rows['status'] == 'serving'){
@@ -118,12 +113,9 @@
                       ?><td colspan="2">None</td><?php
                     }
                   ?>
-        
-              <!-- date -->
-              <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
+         
               <!-- delete -->
               <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['order_id'] ?>">Delete</a></td>
-              <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
             </tr><?php } ?>
           </tbody>   
         </table>

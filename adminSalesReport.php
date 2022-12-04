@@ -70,9 +70,9 @@
                         <tr>	
                             <th scope="col">NAME</th>
                             <th scope="col">TRANSACTION NO</th>
-                            <th scope="col">STATUS</th>
                             <th scope="col">DATE & TIME</th>
                             <th scope="col">TOTAL</th>
+                            <th scope="col">ORDER DETAILS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,10 +84,10 @@
                                 <tr>	   
                                 <td><?php echo $rows['name']; ?></td>
                                 <td><?php echo $rows['order_id'];?></td>
-                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">View Order</a></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
                                 <td><?php echo '₱'.$rows['totalOrder']; ?></td>
                                 <?php $total += $rows['totalOrder'];?>
+                                <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">ORDER DETAILS</a></td>
                                 </tr>
                             <?php } ?>
                             <tr>

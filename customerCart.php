@@ -9,6 +9,8 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
+    $_SESSION['multiArr'] = array();
+
 ?>
 
 <!DOCTYPE html>
@@ -35,9 +37,10 @@
             <table class="table table-striped table-bordered col-lg-12 mb-4">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">QUANTITY</th>
                         <th scope="col">DISH</th>
+                        <th scope="col">QUANTITY</th>
                         <th scope="col">PRICE</th>
+                        <th scope="col" colspan="1">Option</th>
                     </tr>
                 </thead>
                     <?php 
@@ -46,7 +49,7 @@
                     $dishesQuantity = array();
                     $orderType = array();
       
-
+                    //merge repeating order into 1 
                     for($i=0; $i<count($_SESSION['dishes']); $i++){
                         if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
                             $index = array_search($_SESSION['dishes'][$i], $dishesArr);
@@ -59,31 +62,45 @@
                             array_push($orderType,$_SESSION['orderType'][$i]);
                         }
                     }
-                    
+                    //push order quantity into arrray
                     foreach(array_count_values($_SESSION['dishes']) as $count){
                         array_push($dishesQuantity,$count);
                     }
-
+                    
+                    //merge 3 array into 1 multi dimensional
+                    for($i=0; $i<count($dishesArr); $i++){ 
+                        $arr = array('dish'=> $dishesArr[$i], 'price' => $priceArr[$i], 'quantity' => $dishesQuantity[$i], 'orderType' => $orderType[$i]);
+                        array_push($_SESSION['multiArr'],$arr);
+                    }
+                    //sort multi dimensional
+                    sort($_SESSION['multiArr']);
                     $total = 0;
                     for($i=0; $i<count($priceArr); $i++){
                         $total += $priceArr[$i];
                     }
-                    for($i=0; $i<count($dishesArr); $i++){ ?>
+
+                    //create a table using the multi dimensional array
+                    foreach($_SESSION['multiArr'] as $arr){ ?>
                     <tr>  
-                        <td><?php echo $dishesQuantity[$i];?></td>
-                        <td><?php echo $dishesArr[$i];?></td>
-                        <td><?php echo '₱'.$priceArr[$i];?></td>
+                        <td><?php echo $arr['dish'];?></td>
+                        <td><?php echo $arr['quantity'];?></td>
+                        <td><?php echo '₱'.number_format($arr['price'],2);?></td>
+                        <td>
+                            <a class="btn btn-success border-dark" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <a class="btn btn-success border-dark" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
+                        </td>
                     </tr>
                     <?php }?>
                     <tr>
                         <td colspan="2"><b>TOTAL AMOUNT:</b></td>
-                        <td><b>₱<?php echo $total; ?></b></td>
+                        <td><b>₱<?php echo number_format($total,2); ?></b></td>
                     </tr>
                 </table> 
-       
+                <!-- place order -->
                 <form method="post">           
                     <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                 </form>
+                <!-- clear order -->
                 <form method="post">
                     <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
                 </form>
@@ -113,7 +130,46 @@ document.getElementById("back").onclick = function () {window.location.replace('
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array();
         $_SESSION["orderType"] = array(); 
+        $_SESSION['multiArr'] = array();
         echo "<script>window.location.replace('customerCart.php');</script>";
+    }
+
+    //add
+    if(isset($_GET['add'])){
+        $arr = explode(',',$_GET['add']);
+        $dish = $arr[0];
+        $price = $arr[1];
+		$orderType = $arr[2];
+        array_push($_SESSION['dishes'], $dish);
+        array_push($_SESSION['price'], $price);
+        array_push($_SESSION['orderType'], $orderType);
+
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+          echo "<script>window.location.replace('customerCart.php');</script>";    
+    }
+
+    //minus
+    if(isset($_GET['minus'])){
+        $arr = explode(',',$_GET['minus']);
+        $dish = $arr[0];
+        $price = $arr[1];
+        $orderType = $arr[2];
+       
+        //remove one order 
+        $key = array_search($dish, $_SESSION['dishes']);
+        unset($_SESSION['dishes'][$key]);
+        unset($_SESSION['price'][$key]);
+        unset($_SESSION['orderType'][$key]);
+
+        //refresh the array
+        $_SESSION['dishes'] = array_values($_SESSION['dishes']);
+        $_SESSION['price'] = array_values($_SESSION['price']);
+        $_SESSION['orderType'] = array_values($_SESSION['orderType']);
+
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+            echo "<script>window.location.replace('customerCart.php');</script>";    
     }
 
     
@@ -137,60 +193,42 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 Query($query);
                 //send receipt to email
                 require_once('TCPDF-main/tcpdf.php'); 
-                $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
-                $obj_pdf->SetCreator(PDF_CREATOR);  
-                $obj_pdf->SetTitle("Receipt");  
-                $obj_pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
-                $obj_pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
-                $obj_pdf->setPrintHeader(false);  
-                $obj_pdf->setPrintFooter(false);  
-                $obj_pdf->SetAutoPageBreak(TRUE, 10);  
-                $obj_pdf->SetFont('dejavusans', '', 11);  
-                $obj_pdf->AddPage('P','A6');
+                $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+                $pdf->SetCreator(PDF_CREATOR);  
+                $pdf->SetTitle("Receipt");  
+                $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
+                $pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
+                $pdf->setPrintHeader(false);  
+                $pdf->setPrintFooter(false);  
+                $pdf->SetAutoPageBreak(TRUE, 10);  
+                $pdf->SetFont('dejavusans', '', 11);  
+                $pdf->AddPage('P','a6');
                 date_default_timezone_set('Asia/Manila');
                 $date = date("j-m-Y  h:i:s A"); 
-                $content = '
-                <h3>Order Date:</h3>
-                <h3>'.$date.'</h3>
-                <table  text-center cellspacing="0" cellpadding="3">  
-                    <tr>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Dish</th>
-                        <th scope="col">Price</th>
-                    </tr>
-                    ';  
-                    for($i=0; $i<count($dishesArr); $i++){ 
-                    $content .= "
-                    <tr>  
-                    <td>$dishesQuantity[$i]</td>
-                    <td>$dishesArr[$i]</td>
-                    <td>₱$priceArr[$i]</td>
-                    </tr>
-                    ";
-                    }
-                    $content .= "   
-                    <tr><td></td></tr>
-                    <tr><td></td></tr>
-                    <tr>
-                        <td></td>
-                        <td>Total</td>
-                        <td>₱$total</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>Payment</td>
-                        <td>₱$total</td>
-                    </tr>
-                    <tr><td></td></tr>
-                    <tr><td></td></tr>
-                    <h2>Order#$order_id</h1>
-                </table>
-                <style>
-                h3{text-align: center;}
-                </style>";
+                $pdf -> Cell(60,10,"$date",'0','C');
+                $pdf -> ln(10);
+                $pdf -> Cell(61,10,"Dish",'B,T','0','C');
+                $pdf -> Cell(61,10,"Quantity",'B,T','0','C');
+                $pdf -> Cell(61,10,"Price",'B,T','0','C');
+                $pdf -> ln(20);
+                for($i=0; $i<count($dishesArr); $i++){ 
+                    $d = date('m/d/Y h:i a ', strtotime($row['date']));
+                    $pdf -> Cell(61,10,"$dishesArr[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"$dishesQuantity[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"₱$priceArr[$i]",'','0','C');
+                    $pdf -> ln(10);
+                }
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Payment",'T','0','L');
+                $pdf -> Cell(61,10,"₱$total",'T','0','C');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Total",'','0','L');
+                $pdf -> Cell(61,10,"₱$total",'','0','C');
+                $pdf -> ln(10);
+                $pdf->SetFont('dejavusans', '', 18);  
+                $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
                 ob_end_clean();
-                $obj_pdf->writeHTML($content); 
-                $attachment = $obj_pdf->Output('file.pdf', 'S');
+                $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
                 require 'vendor/autoload.php';
                 //Create an instance; passing `true` enables exceptions

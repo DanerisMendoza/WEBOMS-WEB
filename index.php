@@ -267,9 +267,9 @@
     <!-- footer -->
     <section class="">
         <footer class="bg-black text-center text-white">
-            <div class="container py-4 pb-0">
+            <!-- <div class="container py-4 pb-0">
                 reviews dito
-            </div>
+            </div> -->
             <div class="container p-4 pb-0">
                 <section class="mb-4">
                     <a href="#" class="text-decoration-none text-white me-3">

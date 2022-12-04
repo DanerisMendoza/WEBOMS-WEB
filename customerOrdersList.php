@@ -30,9 +30,9 @@
             <th scope="col">NAME</th>
             <th scope="col">STATUS</th>
             <th scope="col">EMAIL</th>
-            <th scope="col"></th>
             <th scope="col">FEEDBACK</th>
             <th scope="col">DATE & TIME</th>
+            <th scope="col">ORDER DETAILS</th>
           </tr>
         </thead>
         <tbody>
@@ -47,7 +47,6 @@
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo $rows['status']; ?></td>
                 <td><?php echo $rows['email']; ?></td>
-                <td><a class="btn btn-light border-dark" href="customerOrders.php?id=<?php echo $rows['order_id'];?>">View Order</a></td>
                 <td><?php 
                   $order_id = $rows['order_id'];
                   $user_id = $rows['user_id'];
@@ -65,6 +64,7 @@
                 ?>
                 </td>
                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
+                <td><a class="btn btn-light border-dark" href="customerOrders.php?id=<?php echo $rows['order_id'];?>">View Order</a></td>
                 </tr>
                 <?php } ?>
         </tbody>
