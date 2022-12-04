@@ -43,10 +43,10 @@
                 <tbody>
                   <?php
                   if($resultSet!= null)
-                  foreach($resultSet as $rows){ ?>
+                  foreach($resultSet as $row){ ?>
                   <tr>	   
-                    <td><?php echo $rows['name']; ?></td>
-                    <td><?php echo $rows['feedback'];?></td>
+                    <td><?php echo $row['name']; ?></td>
+                    <td><?php echo $row['feedback'];?></td>
                   </tr>
                   <?php } ?>
                 </tbody>

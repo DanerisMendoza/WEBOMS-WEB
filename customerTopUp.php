@@ -48,18 +48,18 @@
                             <tbody>
                             <?php
                             if($resultSet!= null)
-                            foreach($resultSet as $rows){ ?>
+                            foreach($resultSet as $row){ ?>
                             <tr>	   
-                                <td><?php echo $rows['name']; ?></td>
-                                <td><?php echo '₱'.$rows['amount'];?></td>
-                                <td><?php echo $rows['proofOfPayment'];?></td>
-                                <td><?php echo $rows['status'];?></td>
-                                <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date']));?></td>
-                                <?php if($rows['status'] != 'approved'){?>
-                                <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
-                                <td><a class="btn btn-danger border-dark" href="?cancel=<?php echo $rows['id'].','.$rows['proofOfPayment'];?>">Cancel</a></td>
+                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo '₱'.$row['amount'];?></td>
+                                <td><?php echo $row['proofOfPayment'];?></td>
+                                <td><?php echo $row['status'];?></td>
+                                <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
+                                <?php if($row['status'] != 'approved'){?>
+                                <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
+                                <td><a class="btn btn-danger border-dark" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>">Cancel</a></td>
                                 <?php }else{ ?>
-                                <td colspan="2"><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
+                                <td colspan="2"><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
                                 <?php }?>
                                 </tr>
                                 <?php } ?>

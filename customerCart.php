@@ -187,6 +187,8 @@ document.getElementById("back").onclick = function () {window.location.replace('
             $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
             $order_id = uniqid();
+            $total = number_format($total,2);
+            $name = $_SESSION['name'];
 
             $query1 = "insert into WEBOMS_order_tb( user_id, status, order_id, date, totalOrder, payment, staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
@@ -209,7 +211,7 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 $pdf->setPrintFooter(false);  
                 $pdf->SetAutoPageBreak(TRUE, 10);  
                 $pdf->SetFont('dejavusans', '', 11);  
-                $pdf->AddPage('P','a6');
+                $pdf->AddPage('P','A4');
                 date_default_timezone_set('Asia/Manila');
                 $date = date("j-m-Y  h:i:s A"); 
                 $pdf -> Cell(60,10,"$date",'0','C');
@@ -219,10 +221,10 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 $pdf -> Cell(61,10,"Price",'B,T','0','C');
                 $pdf -> ln(20);
                 for($i=0; $i<count($dishesArr); $i++){ 
-                    $d = date('m/d/Y h:i a ', strtotime($row['date']));
+                    $price = number_format($priceArr[$i],2);
                     $pdf -> Cell(61,10,"$dishesArr[$i]",'','0','C');
                     $pdf -> Cell(61,10,"$dishesQuantity[$i]",'','0','C');
-                    $pdf -> Cell(61,10,"₱$priceArr[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"₱$price",'','0','C');
                     $pdf -> ln(10);
                 }
                 $pdf -> ln(10);
@@ -234,6 +236,11 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 $pdf -> ln(10);
                 $pdf->SetFont('dejavusans', '', 18);  
                 $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
+                $pdf -> ln(20);
+                $pdf->SetFont('dejavusans', '', 11);  
+                $pdf -> Cell(122,10,"Customer: $name",'','0','L');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Order Type: Online Order",'','0','L');
                 ob_end_clean();
                 $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader

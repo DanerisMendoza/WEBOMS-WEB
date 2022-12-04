@@ -47,18 +47,18 @@
                         $query = "select * from WEBOMS_menu_tb";
                         $resultSet =  getQuery($query);
                         if($resultSet != null)
-                            foreach($resultSet as $rows){ ?>
+                            foreach($resultSet as $row){ ?>
                             <tr>	   
-                                <td><?=$rows['dish']?></td>
-                                <td><?php echo '₱'.$rows['price']; ?></td>
-                                <td><?php echo $rows['stock']; ?></td>
-                                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                                <td><?=$row['dish']?></td>
+                                <td><?php echo $row['price']; ?></td>
+                                <td><?php echo $row['stock']; ?></td>
+                                <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
                                 <td><a class="btn btn-light border-dark" 
-                                    <?php   if($rows['stock'] <= 0) 
+                                    <?php   if($row['stock'] <= 0) 
                                                 echo "<button>Out of stock</button>";
                                             else{
                                     ?>
-                                    href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>" >Add To Cart</a><?php } ?>
+                                    href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>" >Add To Cart</a><?php } ?>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -96,4 +96,23 @@
     $(document).ready( function () {
     $('#tbl').DataTable();
 } );
+
+// $('#tbl').dataTable( {
+//       "aoColumnDefs": [
+//           { 'bSortable': false, 'aTargets': [ 3 ] }
+//        ]
+// });
+
+// $('#tbl').tablesorter({
+//         headers: {
+//             0: { sorter: false },
+//             4: { sorter: false }
+//         }
+//     });
+
+// $(document).ready(function() {
+//     $('#tbl').dataTable( {
+//         "aaSorting": [[ 1, "desc" ]]
+//     } );
+// } );
 </script>

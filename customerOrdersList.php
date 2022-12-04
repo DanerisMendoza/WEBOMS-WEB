@@ -42,20 +42,20 @@
                 $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
-                foreach($resultSet as $rows){ ?>
+                foreach($resultSet as $row){ ?>
                 <tr>	   
-                <td><?php echo $rows['name']; ?></td>
-                <td><?php echo $rows['status']; ?></td>
-                <td><?php echo $rows['email']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['status']; ?></td>
+                <td><?php echo $row['email']; ?></td>
                 <td><?php 
-                  $order_id = $rows['order_id'];
-                  $user_id = $rows['user_id'];
+                  $order_id = $row['order_id'];
+                  $user_id = $row['user_id'];
                   $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
                   $resultSet = getQuery($checkIfAlreadyFeedback);
-                  if($rows['status'] == 'complete' && $resultSet == null){
-                    ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $rows['order_id'].','.$rows['user_id']?>">Feedback</a>  <?php
+                  if($row['status'] == 'complete' && $resultSet == null){
+                    ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>">Feedback</a>  <?php
                   }
-                  elseif($rows['status'] == 'complete'){
+                  elseif($row['status'] == 'complete'){
                     echo "You have already feedback!";
                   }
                   else{
@@ -63,8 +63,8 @@
                   }
                 ?>
                 </td>
-                <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
-                <td><a class="btn btn-light border-dark" href="customerOrders.php?id=<?php echo $rows['order_id'];?>">View Order</a></td>
+                <td><?php echo date('m/d/Y h:i:s a ', strtotime($row['date'])); ?></td>
+                <td><a class="btn btn-light border-dark" href="customerOrders.php?id=<?php echo $row['order_id'];?>">View Order</a></td>
                 </tr>
                 <?php } ?>
         </tbody>

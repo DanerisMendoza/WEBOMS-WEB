@@ -174,7 +174,7 @@
                 <button id="orderBtn" type ="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
             </form>
             <form method="post">
-                <button type="submit" class="btn btn-lg btn-danger col-12 mb-5" name="clear">Clear Order</button>
+                <button type="submit" id="clear" class="btn btn-lg btn-danger col-12 mb-5" name="clear">Clear Order</button>
             </form>
         </div>
   </div>
@@ -275,16 +275,12 @@
                 Query($query2);
             }
             Query($query1);
-            echo "<script>window.location.replace('adminPos.php');</script>";
+            echo "<script>document.getElementById('clear').click();</script>";
         }   
     }
 ?>
 
-<script>
-    $(document).ready( function () {
-    $('#tbl').DataTable();
-} );
-</script>
+
 
 <script>
     //order button (js)
@@ -300,4 +296,10 @@
             window.open("pdf/receipt.php");
         }
     });
+</script>
+
+<script>
+    $(document).ready( function () {
+    $('#tbl').DataTable();
+} );
 </script>

@@ -43,15 +43,15 @@
             $query = "select * from WEBOMS_menu_tb";
             $resultSet = getQuery($query);
             if($resultSet != null){
-              foreach($resultSet as $rows){?>
+              foreach($resultSet as $row){?>
                 <tr>	   
-                <td><?php $pic = $rows['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                <td><?php echo $rows['dish'];?></td>
-                <td><?php echo '₱'.$rows['price']; ?></td>
-                <td><?php echo $rows['stock']; ?></td>
-                <td><?php echo $rows['lastModifiedBy']; ?></td>
-                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $rows['orderType']." ".$rows['picName']; ?>">Delete</a></td>
-                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $rows['orderType'].",".$rows['dish'].",".$rows['price'].",".$rows['picName'].",".$rows['stock']; ?>"  >Update</a></td>
+                <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
+                <td><?php echo $row['dish'];?></td>
+                <td><?php echo '₱'.$row['price']; ?></td>
+                <td><?php echo $row['stock']; ?></td>
+                <td><?php echo $row['lastModifiedBy']; ?></td>
+                <td><a class="btn btn-danger border-dark" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>">Delete</a></td>
+                <td><a class="btn btn-warning border-dark" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>"  >Update</a></td>
                 </tr>
                 <?php } 
             }
