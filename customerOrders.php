@@ -39,11 +39,11 @@
           <?php 
           $total = 0;
           if($resultSet != null)
-          foreach($resultSet as $rows){ ?>
+          foreach($resultSet as $row){ ?>
           <tr>	   
-            <?php $price = ($rows['price']*$rows['quantity']);  $total += $price;?>
-            <td><?php echo $rows['quantity']; ?></td>
-            <td><?php echo $rows['dish']; ?></td>
+            <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
+            <td><?php echo $row['quantity']; ?></td>
+            <td><?php echo $row['dish']; ?></td>
             <td><?php echo '₱' .$price?></td>
           </tr>
           <?php }?>

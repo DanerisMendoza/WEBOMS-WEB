@@ -37,9 +37,9 @@
         <tbody>
                 <?php
                 if($resultSet != null)
-                foreach($resultSet as $rows){ ?>
+                foreach($resultSet as $row){ ?>
                 <tr>	   
-                <td><strong style="font-size: 36px;"><?php echo $rows['order_id']; ?></strong></td>
+                <td><strong style="font-size: 36px;"><?php echo $row['order_id']; ?></strong></td>
                 </tr>
                 <?php } ?>
         </tbody>
@@ -60,9 +60,9 @@
         <tbody>
                 <?php
                 if($resultSet != null)
-                foreach($resultSet as $rows){ ?>
+                foreach($resultSet as $row){ ?>
                 <tr>	   
-                <td><strong style="font-size: 36px;"><?php echo $rows['order_id']; ?></strong></td>
+                <td><strong style="font-size: 36px;"><?php echo $row['order_id']; ?></strong></td>
                 </tr>
                 <?php } ?>
         </tbody> 
