@@ -39,9 +39,8 @@
             <div class="sidebar-header bg-dark">
                 <h3 class="mt-3">Admin</h3>
             </div>
-
             <ul class="list-unstyled components ms-3">
-                <li class="mb-2">
+                <li class="mb-2 active">
                     <a href="#">
                         <i class="bi bi-tag me-2"></i>
                         Point of Sales
@@ -102,25 +101,32 @@
 
         <!-- Page Content  -->
         <div id="content">
-
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
-
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
                         <i class="bi bi-list"></i>
                         <span>Dashboard</span>
                     </button>
                 </div>
             </nav>
-
+            <!-- content here -->
             <div class="container-fluid text-center mt-5">
                 <div class="row justify-content-center">
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
+                    <!-- admin -->
                     <button class="btn btn-lg btn-dark col-12 mb-4" id="admin">
                         <i class="bi bi-arrow-left"></i>
                         <span class="ms-1">Admin</span>
                     </button>
+
+                    <script>
+                    document.getElementById("admin").onclick = function() {
+                        window.location.replace('admin.php');
+                    };
+                    </script>
+
                     <?php }else{?>
+                    <!-- logout -->
                     <form method="post" class="col-12">
                         <button class="btn btn-lg btn-danger col-12 mb-4" id="logout" name="logout">
                             <i class="bi bi-power"></i>
@@ -129,13 +135,6 @@
                     </form> <br>
                     <?php }?>
 
-                    <script>
-                    document.getElementById("admin").onclick = function() {
-                        window.location.replace('admin.php');
-                    };
-                    </script>
-
-                    <!-- logout -->
                     <?php 
                         if(isset($_POST['logout'])){
                         $dishesArr = array();
@@ -202,6 +201,7 @@
                         </div>
                     </div> -->
 
+                    <!-- table container -->
                     <div class="table-responsive col-lg-6">
                         <?php 
                             $query = "select * from WEBOMS_menu_tb";
@@ -221,9 +221,13 @@
                                     if($resultSet != null)
                                         foreach($resultSet as $rows){ ?>
                                 <tr>
+                                    <!-- dish -->
                                     <td><?=$rows['dish']?></td>
+                                    <!-- price -->
                                     <td><?php echo number_format($rows['price'],2); ?></td>
+                                    <!-- stock -->
                                     <td><?php echo $rows['stock']; ?></td>
+                                    <!-- add to cart -->
                                     <td>
                                         <a class="btn btn-light border-secondary" <?php if($rows['stock'] <= 0) 
                                             echo "<button>Out of stock</button>";
@@ -249,7 +253,6 @@
                                     <th scope="col">DISH</th>
                                     <th scope="col">PRICE</th>
                                     <th scope="col" colspan="2">QUANTITY</th>
-                                    <!-- <th scope="col">OPTIONS</th> -->
                                 </tr>
                             </thead>
                             <?php 
@@ -291,8 +294,11 @@
                                 //create a table using the multi dimensional array
                                 foreach($_SESSION['multiArr'] as $arr){ ?>
                             <tr>
+                                <!-- dish -->
                                 <td><?php echo $arr['dish'];?></td>
+                                <!-- price -->
                                 <td><?php echo '₱'.number_format($arr['price'],2);?></td>
+                                <!-- quantity -->
                                 <td><?php echo $arr['quantity'];?></td>
                                 <td>
                                     <!-- check stock -->
@@ -312,21 +318,26 @@
                             </tr>
                             <?php }?>
                             <tr>
+                                <!-- total amount -->
                                 <td colspan="2"><b>TOTAL AMOUNT:</b></td>
                                 <td><b>₱<?php echo number_format($total,2); ?></b></td>
+                                <!-- check stock -->
                                 <td></td>
                             </tr>
                         </table>
                         <form method="post">
+                            <!-- cash amount -->
                             <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any
                                 placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3"
                                 required></input>
+                            <!-- place order -->
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">
                                 <i class="bi bi-cart"></i>
                                 <span class="ms-1">Place Order</span>
                             </button>
                         </form>
                         <form method="post">
+                            <!-- clear order -->
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12 mb-5" name="clear">
                                 <i class="bi bi-trash"></i>
                                 <span class="ms-1">Clear Order</span>
@@ -379,7 +390,7 @@ $(document).ready(function() {
         echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-      //add
+    // add
     if(isset($_GET['add'])){
         $arr = explode(',',$_GET['add']);
         $dish = $arr[0];
@@ -416,7 +427,6 @@ $(document).ready(function() {
         if(Query($updateQuery))
             echo "<script>window.location.replace('adminPos.php');</script>";    
     }
-
 
     //order button (php)
     if(isset($_POST['order'])){
@@ -465,12 +475,14 @@ orderBtn.addEventListener("click", () => {
 </script>
 
 <script>
+// data table
 $(document).ready(function() {
     $('#tbl').DataTable();
 });
 </script>
 
 <script>
+// for navbar click locations
 document.getElementById("orders").onclick = function() {
     window.location.replace('adminOrders.php');
 };

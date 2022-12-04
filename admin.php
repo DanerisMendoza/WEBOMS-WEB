@@ -33,7 +33,6 @@
             <div class="sidebar-header bg-dark">
                 <h3 class="mt-3">Admin</h3>
             </div>
-
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
                     <a href="#" id="pos">
@@ -84,10 +83,6 @@
                     </a>
                 </li>
                 <li>
-                    <!-- <a href="#" class="text-danger" id="Logout" name="logout">
-                        <i class="bi bi-power me-2"></i>
-                        Logout
-                    </a> -->
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
                             <i class="bi bi-power me-2"></i>
@@ -100,22 +95,20 @@
 
         <!-- Page Content  -->
         <div id="content">
-
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
                         <i class="bi bi-list"></i>
                         <span>Dashboard</span>
                     </button>
                 </div>
             </nav>
-
-            <!-- <h2 class="text-secondary"
+            <!-- content here -->
+            <h2 class="text-secondary"
                 style="margin:0; position:absolute; top:50%; left:30%; transform:translate(-50%, -50%); font-size:50px;">
                 Welcome <br>
                 <?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')!';?>
-            </h2> -->
+            </h2>
         </div>
     </div>
 
@@ -124,6 +117,7 @@
 </html>
 
 <?php 
+    // logout
     include('method/query.php');
     if(isset($_POST['logout'])){
         $dishesArr = array();
@@ -151,47 +145,7 @@
 ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(event) {
-
-    const showNavbar = (toggleId, navId, bodyId, headerId) => {
-        const toggle = document.getElementById(toggleId),
-            nav = document.getElementById(navId),
-            bodypd = document.getElementById(bodyId),
-            headerpd = document.getElementById(headerId)
-
-        // Validate that all variables exist
-        if (toggle && nav && bodypd && headerpd) {
-            toggle.addEventListener('click', () => {
-                // show navbar
-                nav.classList.toggle('show')
-                // change icon
-                toggle.classList.toggle('bx-x')
-                // add padding to body
-                bodypd.classList.toggle('body-pd')
-                // add padding to header
-                headerpd.classList.toggle('body-pd')
-            })
-        }
-    }
-
-    showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
-
-    /*===== LINK ACTIVE =====*/
-    const linkColor = document.querySelectorAll('.nav_link')
-
-    function colorLink() {
-        if (linkColor) {
-            linkColor.forEach(l => l.classList.remove('active'))
-            this.classList.add('active')
-        }
-    }
-    linkColor.forEach(l => l.addEventListener('click', colorLink))
-
-    // Your code to run since DOM is loaded and ready
-});
-</script>
-
-<script>
+// for navbar click locations
 document.getElementById("pos").onclick = function() {
     window.location.replace('adminPos.php');
 };
@@ -222,6 +176,7 @@ document.getElementById("adminTopUp").onclick = function() {
 </script>
 
 <script>
+// sidebar toggler
 $(document).ready(function() {
     $('#sidebarCollapse').on('click', function() {
         $('#sidebar').toggleClass('active');
