@@ -43,15 +43,15 @@
                     <tbody>
                     <?php
                     if($resultSet!= null)
-                    foreach($resultSet as $rows){ ?>
+                    foreach($resultSet as $row){ ?>
                     <tr>	   
-                        <td><?php echo $rows['username']; ?></td>
-                        <td><?php echo $rows['name']; ?></td>
-                        <td><?php echo $rows['email']; ?></td>
-                        <td><?php echo $rows['accountType'];?></td>
-                        <td><a class="btn btn-warning border-dark" href="?update=<?php echo $rows['username'].','.$rows['email'] ?>">Update</a></td>
-                        <td><?php if($rows['username'] != 'admin'){?>
-                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['user_id'] ?>">delete</a><?php } 
+                        <td><?php echo $row['username']; ?></td>
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['accountType'];?></td>
+                        <td><a class="btn btn-warning border-dark" href="?update=<?php echo $row['username'].','.$row['email'] ?>">Update</a></td>
+                        <td><?php if($row['username'] != 'admin'){?>
+                            <a class="btn btn-danger border-dark" href="?delete=<?php echo $row['user_id'] ?>">delete</a><?php } 
                             else
                                 echo "YOU CAN NOT DELETE </BR> ADMIN ACCOUNT!"?>
                         </td>

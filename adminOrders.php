@@ -71,51 +71,51 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach($resultSet as $rows){?>
+            <?php foreach($resultSet as $row){?>
             <tr>	   
               <!-- name -->
-              <td><?php echo $rows['accountType'] == 'customer'  ? $rows['name']:'POS'; ?></td>
+              <td><?php echo $row['accountType'] == 'customer'  ? $row['name']:'POS'; ?></td>
               <!-- orders link id -->
-              <td><?php echo $rows['order_id'];?></td>
+              <td><?php echo $row['order_id'];?></td>
               <!-- order status -->
                   <?php 
-                    if($rows['status'] == 'approved'){
+                    if($row['status'] == 'approved'){
                       ?><td>Approved></td><?php
                     }
-                    elseif($rows['status'] == 'prepairing'){
+                    elseif($row['status'] == 'prepairing'){
                       ?><td>Prepairing</td><?php
                     }
-                    elseif($rows['status'] == 'serving'){
+                    elseif($row['status'] == 'serving'){
                       ?><td>Serving</td><?php
                     }
-                    elseif($rows['status'] == 'complete'){
+                    elseif($row['status'] == 'complete'){
                       ?><td>Complete</td><?php
                     }
                   ?>
               <!-- staff in charge -->
-              <td><?php echo $rows['staffInCharge'] == 'null' ? ' ' :$rows['staffInCharge']?></td>
+              <td><?php echo $row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge']?></td>
 
               <!-- date -->
-              <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date'])); ?></td>
+              <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
 
               <!-- order details -->
-              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $rows['order_id']?>">Order Details</a></td>
+              <td><a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $row['order_id']?>">Order Details</a></td>
 
               <!-- option -->
               <?php 
-                    if($rows['status'] == 'prepairing'){
-                      ?> <td colspan='2'><a class="btn btn-success border-dark" href="?serve=<?php echo $rows['order_id'] ?>">Serve</a></td><?php
+                    if($row['status'] == 'prepairing'){
+                      ?> <td colspan='2'><a class="btn btn-success border-dark" href="?serve=<?php echo $row['order_id'] ?>">Serve</a></td><?php
                     }
-                    elseif($rows['status'] == 'serving'){
-                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $rows['order_id'] ?>">Order Complete</a></td><?php
+                    elseif($row['status'] == 'serving'){
+                      ?> <td colspan="2"><a class="btn btn-success border-dark" href="?orderComplete=<?php echo $row['order_id'] ?>">Order Complete</a></td><?php
                     }
-                    elseif($rows['status'] == 'complete'){
+                    elseif($row['status'] == 'complete'){
                       ?><td colspan="2">None</td><?php
                     }
                   ?>
          
               <!-- delete -->
-              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $rows['ID'].','.$rows['order_id'] ?>">Delete</a></td>
+              <td><a class="btn btn-danger border-dark" href="?delete=<?php echo $row['ID'].','.$row['order_id'] ?>">Delete</a></td>
             </tr><?php } ?>
           </tbody>   
         </table>
@@ -152,9 +152,9 @@
         $dishesArr = array();
         $dishesQuantity = array();
         $resultSet = getQuery($query); 
-        foreach($resultSet as $rows){
-          $qty = $rows['quantity'];
-          $dish = $rows['dish'];
+        foreach($resultSet as $row){
+          $qty = $row['quantity'];
+          $dish = $row['dish'];
           $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$qty') WHERE dish= '$dish' ";    
           Query($updateQuery);    
         }

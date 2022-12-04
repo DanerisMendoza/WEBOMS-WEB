@@ -8,8 +8,11 @@
     }
     $date = date('m/d/Y h:i:s a ', strtotime($_SESSION['date']));
     $cash = $_SESSION['cash'];
+    $cash = number_format($cash,2);
     $total = $_SESSION['total'];
+    $total = number_format($total,2);
     $change =  $cash-$total;
+    $change = number_format($change,2);
     $dishesArr = $_SESSION['dishesArr'];
     $priceArr = $_SESSION['priceArr'];
     $dishesQuantity = $_SESSION['dishesQuantity'];
@@ -31,10 +34,10 @@
     $pdf -> Cell(61,10,"Price",'B,T','0','C');
     $pdf -> ln(20);
     for($i=0; $i<count($dishesArr); $i++){ 
-        $d = date('m/d/Y h:i a ', strtotime($row['date']));
+        $price = number_format($priceArr[$i],2);
         $pdf -> Cell(61,10,"$dishesArr[$i]",'','0','C');
         $pdf -> Cell(61,10,"$dishesQuantity[$i]",'','0','C');
-        $pdf -> Cell(61,10,"₱$priceArr[$i]",'','0','C');
+        $pdf -> Cell(61,10,"₱$price",'','0','C');
         $pdf -> ln(10);
     }
     $pdf -> ln(10);
@@ -49,10 +52,15 @@
     $pdf -> ln(10);
     $pdf->SetFont('dejavusans', '', 18);  
     $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
+    $pdf -> ln(20);
+    $pdf->SetFont('dejavusans', '', 11);  
+    $pdf -> Cell(122,10,"Customer: ",'','0','L');
+    $pdf -> ln(10);
+    $pdf -> Cell(122,10,"Order Type: POS",'','0','L');
     ob_end_clean();
     $pdf->Output('file.pdf', 'I');
 
-    $_SESSION["dishes"] = $_SESSION["price"] = $_SESSION["orderType"] = array(); 
+    $_SESSION["dishes"] = $_SESSION["price"] = $_SESSION["orderType"] = $_SESSION['multiArr'] = array(); 
     $_SESSION['total'] = $_SESSION['cash'] = $_SESSION['order_id'] = null;
   
 ?>

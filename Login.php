@@ -114,10 +114,10 @@
             $query = "select * from WEBOMS_user_tb where username = '$username'";
             $resultSet = getQuery($query);
             if(($resultSet && $resultSet->num_rows)  > 0){
-                foreach($resultSet as $rows){
-                    $valid = password_verify($password, $rows['password'])?true:false;
-                    $accountType = $rows['accountType'];
-                    $user_id = $rows['user_id'];
+                foreach($resultSet as $row){
+                    $valid = password_verify($password, $row['password'])?true:false;
+                    $accountType = $row['accountType'];
+                    $user_id = $row['user_id'];
                 }
                 if($valid){
                   //setting credential if valid

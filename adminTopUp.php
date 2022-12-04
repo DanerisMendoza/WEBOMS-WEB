@@ -41,17 +41,17 @@
                 <tbody>
                   <?php
                   if($resultSet!= null)
-                  foreach($resultSet as $rows){ ?>
+                  foreach($resultSet as $row){ ?>
                   <tr>	   
-                    <td><?php echo $rows['name']; ?></td>
-                    <td><?php echo '₱'.$rows['amount'];?></td>
-                    <td><?php echo $rows['proofOfPayment'];?></td>
-                    <td><?php echo $rows['status'];?></td>
-                    <td><?php echo date('m/d/Y h:i a ', strtotime($rows['date']));?></td>
-                    <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $rows['proofOfPayment'];?>">View</a></td>
-                        <?php if($rows['status'] == 'pending') {?>
-                        <td><a class="btn btn-success border-dark" href="?approve=<?php echo $rows['id'].','.$rows['user_id'].','.$rows['amount'];?>">Approve</a></td>
-                        <td><a class="btn btn-danger border-dark" href="?disapprove=<?php echo $rows['id'];?>">Disapprove</a></td>
+                    <td><?php echo $row['name']; ?></td>
+                    <td><?php echo '₱'.$row['amount'];?></td>
+                    <td><?php echo $row['proofOfPayment'];?></td>
+                    <td><?php echo $row['status'];?></td>
+                    <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
+                    <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
+                        <?php if($row['status'] == 'pending') {?>
+                        <td><a class="btn btn-success border-dark" href="?approve=<?php echo $row['id'].','.$row['user_id'].','.$row['amount'];?>">Approve</a></td>
+                        <td><a class="btn btn-danger border-dark" href="?disapprove=<?php echo $row['id'];?>">Disapprove</a></td>
                         <?php } else {?>
                         <td colspan="3">none</td>
                         <?php } ?>
