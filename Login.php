@@ -21,6 +21,10 @@
 <body class="bg-dark">
 
     <section class="vh-100">
+        <a href="index.php" type="button" class="btn btn-lg btn-dark text-white">
+            <i class="bi bi-arrow-left"></i>
+            BACK
+        </a>
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-10">
@@ -33,23 +37,42 @@
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
-
                                     <div class="container">
                                         <div class="row justify-content-center">
                                             <form method="post" class="form1">
                                                 <h1 class="fw-normal mt-5 mb-4 text-center">Log in to your
                                                     account</h1>
-                                                <input class="form-control form-control-lg mb-3" type="text"
-                                                    name="username" placeholder="Username" required>
-                                                <input class="form-control form-control-lg mb-3" type="password"
-                                                    name="password" placeholder="Password" required>
-                                                <div class="mb-3">
-                                                    <a href="forgetPassword.php"
-                                                        class="pass text-muted text-decoration-none">Forgot
-                                                        Password?</a>
+
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text bg-dark">
+                                                        <i class="bi bi-person text-white"></i>
+                                                    </span>
+                                                    <input class="form-control form-control-lg" type="text"
+                                                        name="username" placeholder="Username" required>
                                                 </div>
-                                                <button class="btn btn-dark btn-lg col-12 mb-3" type="submit"
-                                                    name="Login" value="Login">Login</button>
+
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text bg-dark">
+                                                        <i class="bi bi-lock text-white"></i>
+                                                    </span>
+                                                    <input class="form-control form-control-lg" type="password"
+                                                        name="password" placeholder="Password" required>
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <a href="forgetPassword.php"
+                                                        class="pass text-muted text-decoration-none">
+                                                        Forgot Password?
+                                                    </a>
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <button class="btn btn-dark btn-lg col-12" type="submit"
+                                                        name="Login" value="Login">
+                                                        Login
+                                                    </button>
+                                                </div>
+
                                                 <div class="text-center text-muted mb-5">
                                                     Dont'have an account yet? <a href="register.php"
                                                         class="signup_link text-muted text-decoration-none">Sign up
