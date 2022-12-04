@@ -6,6 +6,11 @@
     $date = new DateTime();
     $today =  $date->format('Y-m-d'); 
     $todayWithTime =  $date->format('Y-m-d H:i:s'); 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    $_SESSION['multiArr'] = array();
+
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +29,6 @@
 
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Cart</h1> -->
         <button class="btn btn-lg btn-dark col-6 mb-3" id="back">Back</button>
         <button class="btn btn-lg btn-dark col-6 mb-3" id="home">Home</button>
         <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
@@ -33,9 +37,10 @@
             <table class="table table-striped table-bordered col-lg-12 mb-4">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">QUANTITY</th>
                         <th scope="col">DISH</th>
+                        <th scope="col">QUANTITY</th>
                         <th scope="col">PRICE</th>
+                        <th scope="col" colspan="1">Option</th>
                     </tr>
                 </thead>
                     <?php 
@@ -44,7 +49,7 @@
                     $dishesQuantity = array();
                     $orderType = array();
       
-
+                    //merge repeating order into 1 
                     for($i=0; $i<count($_SESSION['dishes']); $i++){
                         if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
                             $index = array_search($_SESSION['dishes'][$i], $dishesArr);
@@ -57,33 +62,45 @@
                             array_push($orderType,$_SESSION['orderType'][$i]);
                         }
                     }
-                    
+                    //push order quantity into arrray
                     foreach(array_count_values($_SESSION['dishes']) as $count){
                         array_push($dishesQuantity,$count);
                     }
-
+                    
+                    //merge 3 array into 1 multi dimensional
+                    for($i=0; $i<count($dishesArr); $i++){ 
+                        $arr = array('dish'=> $dishesArr[$i], 'price' => $priceArr[$i], 'quantity' => $dishesQuantity[$i], 'orderType' => $orderType[$i]);
+                        array_push($_SESSION['multiArr'],$arr);
+                    }
+                    //sort multi dimensional
+                    sort($_SESSION['multiArr']);
                     $total = 0;
                     for($i=0; $i<count($priceArr); $i++){
                         $total += $priceArr[$i];
                     }
-                    for($i=0; $i<count($dishesArr); $i++){ ?>
+
+                    //create a table using the multi dimensional array
+                    foreach($_SESSION['multiArr'] as $arr){ ?>
                     <tr>  
-                        <td><?php echo $dishesQuantity[$i];?></td>
-                        <td><?php echo $dishesArr[$i];?></td>
-                        <td><?php echo '₱'.$priceArr[$i];?></td>
+                        <td><?php echo $arr['dish'];?></td>
+                        <td><?php echo $arr['quantity'];?></td>
+                        <td><?php echo '₱'.number_format($arr['price'],2);?></td>
+                        <td>
+                            <a class="btn btn-success border-dark" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <a class="btn btn-success border-dark" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
+                        </td>
                     </tr>
                     <?php }?>
                     <tr>
                         <td colspan="2"><b>TOTAL AMOUNT:</b></td>
-                        <td><b>₱<?php echo $total; ?></b></td>
+                        <td><b>₱<?php echo number_format($total,2); ?></b></td>
                     </tr>
                 </table> 
-       
-                <form method="post" enctype="multipart/form-data">           
-                    <label for="fileInput">PROOF OF PAYMENT:</label>
-                    <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
+                <!-- place order -->
+                <form method="post">           
                     <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                 </form>
+                <!-- clear order -->
                 <form method="post">
                     <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
                 </form>
@@ -100,6 +117,10 @@ document.getElementById("home").onclick = function () {window.location.replace('
 document.getElementById("back").onclick = function () {window.location.replace('customerMenu.php'); }; 
 </script> 
 <?php
+    $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
+    $balance = getQueryOneVal($query,'balance');
+    $balance = $balance == null ? 0 : $balance;
+
     //clear button
     if(isset($_POST['clear'])){
         for($i=0; $i<count($dishesArr); $i++){ 
@@ -109,51 +130,134 @@ document.getElementById("back").onclick = function () {window.location.replace('
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array();
         $_SESSION["orderType"] = array(); 
+        $_SESSION['multiArr'] = array();
         echo "<script>window.location.replace('customerCart.php');</script>";
     }
+
+    //add
+    if(isset($_GET['add'])){
+        $arr = explode(',',$_GET['add']);
+        $dish = $arr[0];
+        $price = $arr[1];
+		$orderType = $arr[2];
+        array_push($_SESSION['dishes'], $dish);
+        array_push($_SESSION['price'], $price);
+        array_push($_SESSION['orderType'], $orderType);
+
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+          echo "<script>window.location.replace('customerCart.php');</script>";    
+    }
+
+    //minus
+    if(isset($_GET['minus'])){
+        $arr = explode(',',$_GET['minus']);
+        $dish = $arr[0];
+        $price = $arr[1];
+        $orderType = $arr[2];
+       
+        //remove one order 
+        $key = array_search($dish, $_SESSION['dishes']);
+        unset($_SESSION['dishes'][$key]);
+        unset($_SESSION['price'][$key]);
+        unset($_SESSION['orderType'][$key]);
+
+        //refresh the array
+        $_SESSION['dishes'] = array_values($_SESSION['dishes']);
+        $_SESSION['price'] = array_values($_SESSION['price']);
+        $_SESSION['orderType'] = array_values($_SESSION['orderType']);
+
+        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
+        if(Query($updateQuery))
+            echo "<script>window.location.replace('customerCart.php');</script>";    
+    }
+
+    
     //order button
     if(isset($_POST['order'])){
-        if($total != 0){
-            $file = $_FILES['fileInput'];
-            $fileName = $_FILES['fileInput']['name'];
-            $fileTmpName = $_FILES['fileInput']['tmp_name'];
-            $fileSize = $_FILES['fileInput']['size'];
-            $fileError = $_FILES['fileInput']['error'];
-            $fileType = $_FILES['fileInput']['type'];
-            $fileExt = explode('.',$fileName);
-            $fileActualExt = strtolower(end($fileExt));
-            $allowed = array('jpg','jpeg','png');
-            if(in_array($fileActualExt,$allowed)){
-                if($fileError === 0){
-                    if($fileSize < 10000000){
-                        $user_id = $_SESSION['user_id'];
-                        $order_id = uniqid();
-                        $fileNameNew = uniqid('',true).".".$fileActualExt;
-                        $fileDestination = 'payment/'.$fileNameNew;
-                        move_uploaded_file($fileTmpName,$fileDestination);   
-                        $query1 = "insert into WEBOMS_order_tb(proofOfPayment, user_id, status, order_id, date, totalOrder) values('$fileNameNew','$user_id','pending','$order_id','$todayWithTime','$total')";
-                        for($i=0; $i<count($dishesArr); $i++){
-                            $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
-                            Query($query2);
-                        }
+        if($total != 0 && $balance >= $total){
+            $user_id = $_SESSION['user_id'];
+            $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
+            $email = getQueryOneVal($query,'email');
+            $order_id = uniqid();
 
-                        if(Query($query1)){
-                            echo '<script>alert("Sucess Placing Order Please wait for verification!");</script>';       
-                            $_SESSION["dishes"] = array();
-                            $_SESSION["price"] = array();      
-                            $_SESSION["orderType"] = array();                                    
-                        }
-                        echo "<script>window.location.replace('customerCart.php')</script>";          
-                        
-                    }
-                    else
-                        echo "your file is too big!";
-                }
-                else
-                    echo "there was an error uploading your file!";
+            $query1 = "insert into WEBOMS_order_tb( user_id, status, order_id, date, totalOrder, payment, staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$total', 'online order')";
+            for($i=0; $i<count($dishesArr); $i++){
+                $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
+                Query($query2);
             }
-            else
-                echo "you cannot upload files of this type";   
+
+            if(Query($query1)){
+                //minus order amount to balance
+                $query = "UPDATE WEBOMS_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
+                Query($query);
+                //send receipt to email
+                require_once('TCPDF-main/tcpdf.php'); 
+                $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+                $pdf->SetCreator(PDF_CREATOR);  
+                $pdf->SetTitle("Receipt");  
+                $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
+                $pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
+                $pdf->setPrintHeader(false);  
+                $pdf->setPrintFooter(false);  
+                $pdf->SetAutoPageBreak(TRUE, 10);  
+                $pdf->SetFont('dejavusans', '', 11);  
+                $pdf->AddPage('P','a6');
+                date_default_timezone_set('Asia/Manila');
+                $date = date("j-m-Y  h:i:s A"); 
+                $pdf -> Cell(60,10,"$date",'0','C');
+                $pdf -> ln(10);
+                $pdf -> Cell(61,10,"Dish",'B,T','0','C');
+                $pdf -> Cell(61,10,"Quantity",'B,T','0','C');
+                $pdf -> Cell(61,10,"Price",'B,T','0','C');
+                $pdf -> ln(20);
+                for($i=0; $i<count($dishesArr); $i++){ 
+                    $d = date('m/d/Y h:i a ', strtotime($row['date']));
+                    $pdf -> Cell(61,10,"$dishesArr[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"$dishesQuantity[$i]",'','0','C');
+                    $pdf -> Cell(61,10,"₱$priceArr[$i]",'','0','C');
+                    $pdf -> ln(10);
+                }
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Payment",'T','0','L');
+                $pdf -> Cell(61,10,"₱$total",'T','0','C');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Total",'','0','L');
+                $pdf -> Cell(61,10,"₱$total",'','0','C');
+                $pdf -> ln(10);
+                $pdf->SetFont('dejavusans', '', 18);  
+                $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
+                ob_end_clean();
+                $attachment = $pdf->Output('receipt.pdf', 'S');
+                //Load Composer's autoloader
+                require 'vendor/autoload.php';
+                //Create an instance; passing `true` enables exceptions
+                $mail = new PHPMailer(true);
+                //Server settings
+                $mail->SMTPDebug  = SMTP::DEBUG_OFF;
+                //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                     //Enable verbose debug output
+                $mail->isSMTP();                                            //Send using SMTP
+                $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                $mail->Username   = 'weboms098@gmail.com'; //from //SMTP username
+                $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
+                $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
+                $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                //Recipients
+                $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
+                $mail->addAddress("$email");                                //sent to
+                //Content
+                $mail->Subject = 'Receipt';
+                $mail->Body    = 'Thank you for ordering!';
+                $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
+                $mail->send();   
+                $_SESSION["dishes"] = array();
+                $_SESSION["price"] = array();      
+                $_SESSION["orderType"] = array();                     
+                echo '<script>alert("Sucess Placing Order!");</script>';    
+                echo "<script>window.location.replace('customerCart.php')</script>";          
+            }
         }  
     }
 ?>
@@ -163,6 +267,10 @@ document.getElementById("back").onclick = function () {window.location.replace('
     document.getElementById("orderBtn").addEventListener("click", () => {
         if(<?php echo $total == 0 ? 'true':'false';?>){
             alert('Please place your order!');
+            return;
+        }
+        if(<?php echo $balance < $total ? 'true':'false';?>){
+            alert('Your balance is less than your total order amount!');
             return;
         }
     });

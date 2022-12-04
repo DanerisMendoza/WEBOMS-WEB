@@ -37,10 +37,8 @@
             }
         }
     ?>
-        <!-- <center> -->
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
-        <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Graph</h1> -->
         <button class="btn btn-lg btn-dark col-12 mb-3" id="viewSalesReport">Sales Report</button>
             <div class="col-lg-12">
                 <h5 class="font-weight-normal">TOTAL COUNT OF STOCK: <?php echo $countOfSold+$stockLeft?></h5>
@@ -50,7 +48,6 @@
             </div>
     </div>
 </div>
-        <!-- </center> -->
     
 </body>
 </html>

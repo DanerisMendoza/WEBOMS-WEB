@@ -6,6 +6,7 @@
         $_SESSION["price"] = array(); 
         $_SESSION["orderType"] = array(); 
     }
+    $_SESSION['multiArr'] = array();
 ?>
 
 <!DOCTYPE html>

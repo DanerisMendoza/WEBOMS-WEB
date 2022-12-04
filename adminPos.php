@@ -1,6 +1,7 @@
 <?php 
   $page = 'cashier';
   include('method/checkIfAccountLoggedIn.php');
+  include('method/query.php');
   if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
     $_SESSION["dishes"] = array();
     $_SESSION["price"] = array(); 
@@ -26,20 +27,40 @@
     <?php if($_SESSION['accountType'] != 'cashier'){?>
     <button class="btn btn-lg btn-dark col-6 mb-4" id="admin">Admin</button>
     <?php }else{?>
-      <button class="btn btn-lg btn-dark col-6 mb-4" id="logout">Logout</button>
+      <form method="post" class="col-6"><button name="logout"  class="btn btn-lg btn-danger col-12 mb-4" id="logout">Logout</button></form>
     <?php }?>
     <button  type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart" >View Cart</button>
               
     <script>document.getElementById("admin").onclick = function () {window.location.replace('admin.php'); };</script> 
     <script>document.getElementById("viewCart").onclick = function () {window.location.replace('adminCart.php'); };</script> 
-    <script> document.getElementById("logout").onclick = function () {window.location.replace('Login.php'); 
-    $.post(
-        "method/logout.php",{
+    <!-- logout -->
+    <?php 
+        if(isset($_POST['logout'])){
+          $dishesArr = array();
+          $dishesQuantity = array();
+          if(isset($_SESSION['dishes'])){
+            for($i=0; $i<count($_SESSION['dishes']); $i++){
+                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
+                  $index = array_search($_SESSION['dishes'][$i], $dishesArr);
+                }
+                else{
+                  array_push($dishesArr,$_SESSION['dishes'][$i]);
+                }
+            }
+            foreach(array_count_values($_SESSION['dishes']) as $count){
+              array_push($dishesQuantity,$count);
+            }
+            for($i=0; $i<count($dishesArr); $i++){ 
+              $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+              Query($updateQuery);    
+            }
+          }
+          session_destroy();
+          echo "<script>window.location.replace('Login.php');</script>";
         }
-    );}</script>              
+    ?>            
     <div class="table-responsive col-lg-12">
             <?php 
-                include('method/query.php');
                 $query = "select * from WEBOMS_menu_tb";
                 $resultSet =  getQuery($query)
             ?>

@@ -28,8 +28,8 @@
             <table class="table table-striped table-bordered col-lg-12 mb-5">
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">QUANTITY</th>
                         <th scope="col">DISH</th>
+                        <th scope="col">QUANTITY</th>
                         <th scope="col">COST</th>
                     </tr>
                 </thead>
@@ -63,9 +63,9 @@
                     
                     for($i=0; $i<count($dishesArr); $i++){ ?>
                     <tr>  
-                        <td><?php echo $dishesQuantity[$i];?></td>
                         <td><?php echo $dishesArr[$i];?></td>
-                        <td><?php echo '₱'.$priceArr[$i];?></td>
+                        <td><?php echo $dishesQuantity[$i];?></td>
+                        <td><?php echo '₱'.number_format($priceArr[$i], 2);?></td>
                     </tr>
                     <?php }?>
                     <tr>
@@ -75,7 +75,7 @@
             </table> 
        
             <form method="post">
-                <input id="cashNum" name="cash" min="<?php echo $total;?>" placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3" required></input>
+                <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3" required></input>
                 <button id="orderBtn" type ="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
             </form>
             <form method="post">
@@ -110,7 +110,7 @@
             $date = new DateTime();
             $today =  $date->format('Y-m-d'); 
             $todayWithTime =  $date->format('Y-m-d H:i:s'); 
-            $_SESSION['date'] = $date = date("Y-m-d H:i:s"); 
+            $_SESSION['date'] = $todayWithTime;
             $_SESSION['cash'] = $cash;
             $_SESSION['total'] = $total;
             $_SESSION['dishesArr'] = $dishesArr;
@@ -120,7 +120,7 @@
             $user_id = $_SESSION['user_id'];
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
-            $query1 = "insert into WEBOMS_order_tb(proofOfPayment, user_id, status, order_id, date, totalOrder, staffInCharge) values('null','$user_id','prepairing','$order_id','$todayWithTime','$total', '$staff')";
+            $query1 = "insert into WEBOMS_order_tb(user_id, status, order_id, date, totalOrder, payment,  staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);

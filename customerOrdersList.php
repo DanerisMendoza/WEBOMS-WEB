@@ -18,7 +18,6 @@
     
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <!-- <h1 class="font-weight-normal mt-5 mb-4 text-center">View Your Orders</h1> -->
     <button class="btn btn-lg btn-dark col-12 mb-4" id="customer">Customer</button>
         <script>
             document.getElementById("customer").onclick = function () {window.location.replace('customer.php'); };    
@@ -31,16 +30,16 @@
             <th scope="col">NAME</th>
             <th scope="col">STATUS</th>
             <th scope="col">EMAIL</th>
-            <th scope="col"></th>
             <th scope="col">FEEDBACK</th>
             <th scope="col">DATE & TIME</th>
+            <th scope="col">ORDER DETAILS</th>
           </tr>
         </thead>
         <tbody>
               <?php
               include('method/query.php');
                 $user_id = $_SESSION["user_id"];  
-                $getCustomerOrders = "select WEBOMS_userInfo_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_userInfo_tb.user_id = '$user_id';";
+                $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $rows){ ?>
@@ -48,7 +47,6 @@
                 <td><?php echo $rows['name']; ?></td>
                 <td><?php echo $rows['status']; ?></td>
                 <td><?php echo $rows['email']; ?></td>
-                <td><a class="btn btn-light border-dark" href="customerOrders.php?idAndPic=<?php echo $rows['order_id'].','.$rows['proofOfPayment']?>">View Order</a></td>
                 <td><?php 
                   $order_id = $rows['order_id'];
                   $user_id = $rows['user_id'];
@@ -66,6 +64,7 @@
                 ?>
                 </td>
                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($rows['date'])); ?></td>
+                <td><a class="btn btn-light border-dark" href="customerOrders.php?id=<?php echo $rows['order_id'];?>">View Order</a></td>
                 </tr>
                 <?php } ?>
         </tbody>
