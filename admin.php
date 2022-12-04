@@ -9,8 +9,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin</title>
 
     <link rel="stylesheet" href="css/bootstrap 5/bootstrap.min.css">
@@ -21,79 +21,102 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
-<body id="body-pd">
+<body style="background: url(https://images.pexels.com/photos/3298637/pexels-photo-3298637.jpeg?cs=srgb&dl=pexels-cottonbro-studio-3298637.jpg&fm=jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;">
 
-    <header class="header" id="header">
-        <div class="header_toggle">
-            <i class="bi bi-list" id="header-toggle"></i>
-            Dashboard
-        </div>
-    </header>
-    <div class="l-navbar bg-dark" id="nav-bar">
-        <nav class="nav">
-            <div class="text-white">
-                <a href="#" class="nav_logo">
-                    <!-- logo dito -->
-                    <i class="bi bi-bootstrap text-white"></i>
-                    <span class="nav_logo-name">ADMIN</span>
-                </a>
-                <div class="nav_list">
-                    <a href="adminPos.php" class="nav_link">
-                        <i class="bi bi-tag"></i>
-                        <span class="nav_name" id="pos">POINT OF SALES</span>
-                    </a>
-                    <a href="adminOrders.php" class="nav_link">
-                        <i class="bi bi-minecart"></i>
-                        <span class="nav_name" id="orders">ORDERS</span>
-                    </a>
-                    <a href="adminOrdersQueue.php" class="nav_link">
-                        <i class="bi bi-clock"></i>
-                        <span class="nav_name" id="ordersQueue">ORDERS QUEUE</span>
-                    </a>
-                    <a href="adminInventory.php" class="nav_link">
-                        <i class="bi bi-box-seam"></i>
-                        <span class="nav_name" id="inventory">INVENTORY</span>
-                    </a>
-                    <a href="adminSalesReport.php" class="nav_link">
-                        <i class="bi bi-bar-chart"></i>
-                        <span class="nav_name" id="salesReport">SALES REPORT</span>
-                    </a>
-                    <a href="accountManagement.php" class="nav_link">
-                        <i class="bi bi-person-circle"></i>
-                        <span class="nav_name" id="accountManagement">ACCOUNT <br> MANAGEMENT</span>
-                    </a>
-                    <a href="customerFeedbackList.php" class="nav_link">
-                        <i class="bi bi-chat-square-text"></i>
-                        <span class="nav_name" id="customerFeedback">CUSTOMER <br> FEEDBACK</span>
-                    </a>
-                    <a href="adminTopUp.php" class="nav_link">
-                        <i class="bi bi-cash-stack"></i>
-                        <span class="nav_name" id="adminTopUp">TOP UP</span>
-                    </a>
-                </div>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="bg-dark">
+            <div class="sidebar-header bg-dark">
+                <h3 class="mt-3">Admin</h3>
             </div>
-            <!-- <form method="POST">
-                <a href="" class="nav_link text-danger" id="Logout" name="logout">
-                    <i class="bi bi-power"></i>
-                    <span class="nav_name">LOGOUT</span>
-                </a>
-            </form> -->
-            <form method="post">
-                <button class="btn btn-dark col-12 mb-3 nav_link text-danger" id="Logout" name="logout">
-                    <i class="bi bi-power"></i>
-                    <span class="nav_name">LOGOUT</span>
-                </button>
-            </form>
-        </nav>
-    </div>
 
-    <!-- Container Main start -->
-    <div class="height-100 text-center">
-        <h1 class="fw-normal"
-            style="margin:0; position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); letter-spacing:5px;">
-            Welcome <br>
-            <?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')';?>
-        </h1>
+            <ul class="list-unstyled components ms-3">
+                <li class="mb-2">
+                    <a href="#" id="pos">
+                        <i class="bi bi-tag me-2"></i>
+                        Point of Sales
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="orders">
+                        <i class="bi bi-minecart me-2"></i>
+                        Orders
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="ordersQueue">
+                        <i class="bi bi-clock me-2"></i>
+                        Orders Queue
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="inventory">
+                        <i class="bi bi-box-seam me-2"></i>
+                        Inventory
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="salesReport">
+                        <i class="bi bi-bar-chart me-2"></i>
+                        Sales Report
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="accountManagement">
+                        <i class="bi bi-person-circle me-2"></i>
+                        Account Management
+                    </a>
+                </li>
+                <li class="mb-2">
+                    <a href="#" id="customerFeedback">
+                        <i class="bi bi-chat-square-text me-2"></i>
+                        Customer Feedback
+                    </a>
+                </li>
+                <li class="mb-1">
+                    <a href="#" id="adminTopUp">
+                        <i class="bi bi-cash-stack me-2"></i>
+                        Top-Up
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#" class="text-danger" id="Logout" name="logout">
+                        <i class="bi bi-power me-2"></i>
+                        Logout
+                    </a> -->
+                    <form method="post">
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
+                            <i class="bi bi-power me-2"></i>
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg bg-light">
+                <div class="container-fluid bg-transparent">
+
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
+                        <i class="bi bi-list"></i>
+                        <span>Dashboard</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- <h2 class="text-secondary"
+                style="margin:0; position:absolute; top:50%; left:30%; transform:translate(-50%, -50%); font-size:50px;">
+                Welcome <br>
+                <?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')!';?>
+            </h2> -->
+        </div>
     </div>
 
 </body>
@@ -196,4 +219,12 @@ document.getElementById("customerFeedback").onclick = function() {
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
 };
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#sidebarCollapse').on('click', function() {
+        $('#sidebar').toggleClass('active');
+    });
+});
 </script>
