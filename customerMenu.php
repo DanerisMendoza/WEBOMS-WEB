@@ -11,17 +11,18 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Costumer Menu</title>
-	
+
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> 
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body class="bg-light">
@@ -33,7 +34,7 @@
             <div class="table-responsive col-lg-12">
                 <table id="tbl" class="table table-striped table-bordered col-lg-12 mb-5">
                     <thead class="bg-dark text-white">
-                        <tr>	
+                        <tr>
                             <th scope="col">DISH</th>
                             <th scope="col">PRICE</th>
                             <th scope="col">STOCK</th>
@@ -42,26 +43,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php 
+                        <?php 
                         include_once('method/query.php');
                         $query = "select * from WEBOMS_menu_tb";
                         $resultSet =  getQuery($query);
                         if($resultSet != null)
                             foreach($resultSet as $row){ ?>
-                            <tr>	   
-                                <td><?=$row['dish']?></td>
-                                <td><?php echo $row['price']; ?></td>
-                                <td><?php echo $row['stock']; ?></td>
-                                <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?></td>
-                                <td><a class="btn btn-light border-dark" 
-                                    <?php   if($row['stock'] <= 0) 
+                        <tr>
+                            <td><?=$row['dish']?></td>
+                            <td><?php echo $row['price']; ?></td>
+                            <td><?php echo $row['stock']; ?></td>
+                            <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?>
+                            </td>
+                            <td><a class="btn btn-light border-dark" <?php   if($row['stock'] <= 0) 
                                                 echo "<button>Out of stock</button>";
                                             else{
                                     ?>
-                                    href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>" >Add To Cart</a><?php } ?>
-                                </td>
-                            </tr>
-                            <?php } ?>
+                                    href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>">Add
+                                    To Cart</a><?php } ?>
+                            </td>
+                        </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -69,6 +71,7 @@
     </div>
 
 </body>
+
 </html>
 <?php 
     //add to cart
@@ -87,15 +90,21 @@
 ?>
 
 <script>
-	document.getElementById("back").onclick = function () {window.location.replace('customer.php'); };
-	document.getElementById("viewCart").onclick = function () {window.location.replace('customerCart.php'); };
-    document.getElementById("customersFeedback").onclick = function () {window.location.replace('customerFeedbackList.php'); };    
+document.getElementById("back").onclick = function() {
+    window.location.replace('customer.php');
+};
+document.getElementById("viewCart").onclick = function() {
+    window.location.replace('customerCart.php');
+};
+document.getElementById("customersFeedback").onclick = function() {
+    window.location.replace('customerFeedbackList.php');
+};
 </script>
 
 <script>
-    $(document).ready( function () {
+$(document).ready(function() {
     $('#tbl').DataTable();
-} );
+});
 
 // $('#tbl').dataTable( {
 //       "aoColumnDefs": [

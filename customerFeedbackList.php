@@ -11,10 +11,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Customer Feedback</title>
 
     <link rel="stylesheet" href="css/bootstrap 5/bootstrap.min.css">
-    <link rel="stylesheet" href="css/admin.css">
     <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
@@ -23,126 +22,47 @@
 
 <body>
 
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar" class="bg-dark">
-            <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">Admin</h3>
-            </div>
-            <ul class="list-unstyled components ms-3">
-                <li class="mb-2">
-                    <a href="#" id="pos">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
-                </li>
-                <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
-                </li>
-                <li class="mb-2">
-                    <a href="#" id="ordersQueue">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
-                </li>
-                <li class="mb-2">
-                    <a href="#" id="inventory">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
-                </li>
-                <li class="mb-2">
-                    <a href="#" id="salesReport">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
-                </li>
-                <li class="mb-2">
-                    <a href="#" id="accountManagement">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
-                </li>
-                <li class="mb-2 active">
-                    <a href="#">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
-                </li>
-                <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
-                </li>
-                <li>
-                    <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
+    <div class="container text-center mt-5">
+        <!-- back button -->
+        <button class="btn btn-lg btn-dark col-12 mb-4" id="back">
+            <i class="bi bi-arrow-left me-1"></i>
+            BACK
+        </button>
+        <script>
+        var accountType = "<?php echo  $_SESSION['accountType'];?>";
+        document.getElementById("back").onclick = function() {
+            if (accountType == 'customer')
+                window.location.replace('customerMenu.php');
+            else if (accountType == 'admin' || accountType == 'manager')
+                window.location.replace('admin.php');
+        };
+        </script>
 
-        <!-- Page Content  -->
-        <div id="content">
-            <nav class="navbar navbar-expand-lg bg-light">
-                <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
-                    </button>
-                </div>
-            </nav>
-            <!-- content here -->
-            <div class="container-fluid text-center">
-                <!-- back button -->
-                <button class="btn btn-lg btn-dark col-12 mb-4" id="back">
-                    <i class="bi bi-arrow-left me-1"></i>
-                    BACK
-                </button>
-                <script>
-                var accountType = "<?php echo  $_SESSION['accountType'];?>";
-                document.getElementById("back").onclick = function() {
-                    if (accountType == 'customer')
-                        window.location.replace('customerMenu.php');
-                    else if (accountType == 'admin' || accountType == 'manager')
-                        window.location.replace('admin.php');
-                };
-                </script>
-
-                <!-- table -->
-                <?php
-                    $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_feedback_tb.order_id = WEBOMS_order_tb.order_id;";
-                    $resultSet =  getQuery($query);
-                ?>
-                <div class="table-responsive col-lg-12">
-                    <table class="table table-bordered col-lg-12">
-                        <thead>
-                            <tr>
-                                <th scope="col">NAME</th>
-                                <th scope="col">FEEDBACK</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                if($resultSet!= null)
-                                foreach($resultSet as $row){ ?>
-                            <tr>
-                                <td><?php echo $row['name']; ?></td>
-                                <td><?php echo $row['feedback'];?></td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                    <?php ?>
-                </div>
-            </div>
+        <!-- table -->
+        <?php
+            $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_feedback_tb.order_id = WEBOMS_order_tb.order_id;";
+            $resultSet =  getQuery($query);
+        ?>
+        <div class="table-responsive col-lg-12">
+            <table class="table table-bordered col-lg-12">
+                <thead>
+                    <tr>
+                        <th scope="col">NAME</th>
+                        <th scope="col">FEEDBACK</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        if($resultSet!= null)
+                        foreach($resultSet as $row){ ?>
+                    <tr>
+                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo $row['feedback'];?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php ?>
         </div>
     </div>
 
