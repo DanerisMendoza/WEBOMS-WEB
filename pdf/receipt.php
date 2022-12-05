@@ -19,6 +19,9 @@
     $priceArr = $_SESSION['priceArr'];
     $dishesQuantity = $_SESSION['dishesQuantity'];
     $order_id = $_SESSION['order_id'];
+    $or_number = $_SESSION['or_number'];
+    $customerName = $_SESSION['customerName'];
+
     $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Receipt");  
@@ -56,9 +59,11 @@
     $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
     $pdf -> ln(20);
     $pdf->SetFont('dejavusans', '', 11);  
-    $pdf -> Cell(122,10,"Customer: ",'','0','L');
+    $pdf -> Cell(122,10,"Customer: $customerName",'','0','L');
     $pdf -> ln(10);
     $pdf -> Cell(122,10,"Order Type: POS",'','0','L');
+    $pdf -> ln(10);
+    $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
     ob_end_clean();
     $pdf->Output('file.pdf', 'I');
 

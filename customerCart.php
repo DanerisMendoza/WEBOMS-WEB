@@ -189,18 +189,26 @@ document.getElementById("back").onclick = function () {window.location.replace('
             $order_id = uniqid();
             $total = number_format($total,2);
             $name = $_SESSION['name'];
+
+            //or number process
             $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $year = date("Y");
             if($or_last == null){
-                $year = date("Y");
                 $num = 1;
-                $or_number =  $year.'-'.$num;
             }
             else{
-                $year = date("Y");
                 $num = substr($or_last,5);
                 $num = $num + 1;
-                $or_number =  $year.'-'.$num;
             }
+            $input = $num;
+            $inputSize = strlen(strval($input));
+            if($inputSize > 4)
+                $str_length = $inputSize;
+            else
+                $str_length = 4;
+            $temp = substr("0000{$input}", -$str_length);
+            $or_number =  $year.'-'.$temp;
+
 
             $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
@@ -262,14 +270,14 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 //Create an instance; passing `true` enables exceptions
                 $mail = new PHPMailer(true);
                 //Server settings
-                $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+                $mail->SMTPDebug  = 1;                                      //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host = 'mail.ucc-csd-bscs.com';		                  //Set the SMTP server to send through
+                $mail->Host = 'mail.ucc-csd-bscs.com';		                //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
                 $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
                 $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
                 $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-                $mail->Port       =  465;          //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
                 //Recipients
                 $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
