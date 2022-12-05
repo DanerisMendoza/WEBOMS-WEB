@@ -186,3 +186,28 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<script>
+// for navbar click locations
+document.getElementById("pos").onclick = function() {
+    window.location.replace('adminPos.php');
+};
+document.getElementById("orders").onclick = function() {
+    window.location.replace('adminOrders.php');
+};
+document.getElementById("inventory").onclick = function() {
+    window.location.replace('adminInventory.php');
+};
+document.getElementById("salesReport").onclick = function() {
+    window.location.replace('adminSalesReport.php');
+};
+document.getElementById("accountManagement").onclick = function() {
+    window.location.replace('accountManagement.php');
+};
+document.getElementById("customerFeedback").onclick = function() {
+    window.location.replace('customerFeedbackList.php');
+};
+document.getElementById("adminTopUp").onclick = function() {
+    window.location.replace('adminTopUp.php');
+};
+</script>

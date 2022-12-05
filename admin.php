@@ -152,9 +152,6 @@ document.getElementById("pos").onclick = function() {
 document.getElementById("orders").onclick = function() {
     window.location.replace('adminOrders.php');
 };
-document.getElementById("orders").onclick = function() {
-    window.location.replace('adminOrders.php');
-};
 document.getElementById("ordersQueue").onclick = function() {
     window.location.replace('adminOrdersQueue.php');
 };
@@ -173,6 +170,7 @@ document.getElementById("customerFeedback").onclick = function() {
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
 };
+// wala pa yung para sa logout
 </script>
 
 <script>
