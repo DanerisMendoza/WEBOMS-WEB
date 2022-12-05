@@ -140,7 +140,7 @@
             }
         }
         session_destroy();
-        echo "<script>window.location.replace('Login.php');</script>";
+        echo "<script>window.location.replace('index.php');</script>";
     }
 ?>
 
@@ -170,7 +170,6 @@ document.getElementById("customerFeedback").onclick = function() {
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
 };
-// wala pa yung para sa logout
 </script>
 
 <script>

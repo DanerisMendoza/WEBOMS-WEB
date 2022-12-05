@@ -128,7 +128,7 @@
                     <?php }else{?>
                     <!-- logout -->
                     <form method="post" class="col-12">
-                        <button class="btn btn-lg btn-danger col-12 mb-4" id="logout" name="logout">
+                        <button class="btn btn-lg btn-danger col-12 mb-4" id="Logout" name="logout">
                             <i class="bi bi-power"></i>
                             <span class="ms-1">LOGOUT</span>
                         </button>
