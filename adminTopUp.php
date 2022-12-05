@@ -155,7 +155,7 @@
                                         </a>
                                     </td>
                                     <?php } else {?>
-                                    <td colspan="3">none</td>
+                                    <td colspan="3">NONE</td>
                                     <?php } ?>
                                 </tr>
                                 <?php } ?>

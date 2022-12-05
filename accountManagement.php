@@ -26,7 +26,9 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">Admin</h3>
+                <h3 class="mt-3">
+                    <a href="admin.php">Admin</a>
+                </h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -98,6 +100,7 @@
                     </button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
@@ -136,7 +139,7 @@
                                     <!-- email -->
                                     <td><?php echo $row['email']; ?></td>
                                     <!-- account type -->
-                                    <td><?php echo $row['accountType'];?></td>
+                                    <td><?php echo strtoupper($row['accountType']);?></td>
                                     <!-- options -->
                                     <td>
                                         <a class="btn btn-warning"
@@ -284,11 +287,11 @@
         $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
         $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
         if(!Query($query1))
-          echo "fail to save to database";
+          echo "FAIL TO SAVE TO DATABASE!";
         elseif(!Query($query2))
-          echo "fail to save to database";
+          echo "FAIL TO SAVE TO DATABASE!";
         else
-          echo ("<script>window.location.replace('accountManagement.php'); alert('Sucess');</script>");
+          echo ("<script>window.location.replace('accountManagement.php'); alert('SUCCESS!');</script>");
   
     }
     //update form
@@ -319,7 +322,7 @@
 
         $query = "update WEBOMS_user_tb as a inner join WEBOMS_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
         if(Query($query)){
-            echo "<script>alert('sucess');</script>";
+            echo "<script>alert('SUCCESS!');</script>";
             echo "<script>history.replaceState({},'','accountManagement.php');</script>";
             echo "<script>window.location.replace('accountManagement.php');</script>";
         }
@@ -371,6 +374,7 @@ document.getElementById("adminTopUp").onclick = function() {
 </script>
 
 <?php 
+// logout
     if(isset($_POST['logout'])){
         $dishesArr = array();
         $dishesQuantity = array();

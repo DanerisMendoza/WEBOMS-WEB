@@ -208,7 +208,8 @@
                                     <!-- date and time -->
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                     <!-- staff in charge -->
-                                    <td><?php echo $row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge']?></td>
+                                    <td><?php echo strtoupper($row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge'])?>
+                                    </td>
                                     <!-- order details -->
                                     <td>
                                         <a class="btn btn-light border-secondary"

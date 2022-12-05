@@ -48,32 +48,32 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-3">
                         <a class="nav-link" href="#home">
-                            <i class="bi bi-house-door"></i>
+                            <i class="bi bi-house-door me-1"></i>
                             HOME
                         </a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link" href="#menu">
-                            <i class="bi bi-list"></i>
+                            <i class="bi bi-list me-1"></i>
                             MENU
                         </a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link" href="#about">
-                            <i class="bi bi-info-circle"></i>
+                            <i class="bi bi-info-circle me-1"></i>
                             ABOUT
                         </a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link" href="#contact">
-                            <i class="bi bi-telephone"></i>
+                            <i class="bi bi-telephone me-1"></i>
                             CONTACT
                         </a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <a class="btn btn-outline-light" type="button" href="Login.php">
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-person-circle me-1"></i>
                         LOGIN
                     </a>
                 </form>
@@ -147,8 +147,11 @@
                     <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
                         alt="" wdith="100">
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <h5 class="card-title">Name</h5>
+                        <p class="card-text">
+                            $0.00 <br>
+                            Description
+                        </p>
                     </div>
                 </div>
             </div>
@@ -157,8 +160,11 @@
                     <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
                         alt="" wdith="100">
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <h5 class="card-title">Name</h5>
+                        <p class="card-text">
+                            $0.00 <br>
+                            Description
+                        </p>
                     </div>
                 </div>
             </div>
@@ -167,8 +173,11 @@
                     <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
                         alt="" wdith="100">
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <h5 class="card-title">Name</h5>
+                        <p class="card-text">
+                            $0.00 <br>
+                            Description
+                        </p>
                     </div>
                 </div>
             </div>
@@ -177,8 +186,11 @@
                     <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
                         alt="" wdith="100">
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <h5 class="card-title">Name</h5>
+                        <p class="card-text">
+                            $0.00 <br>
+                            Description
+                        </p>
                     </div>
                 </div>
             </div>
@@ -244,21 +256,11 @@
     <!-- contact -->
     <section id="contact" class="container mb-5 text-white">
         <p class="fs-1 text-center">CONTACT US</p>
-        <div class="card mb-3 bg-transparent border-secondary">
-            <div class="row g-0">
-                <div class="container col-md-4 mt-4 mb-4">
-                    <input type="text" class="form-control form-control-lg mb-3" placeholder="YOUR NAME">
-                    <input type="text" class="form-control form-control-lg mb-3" placeholder="YOUR EMAIL">
-                    <input type="text" class="form-control form-control-lg mb-3" placeholder="SUBJECT">
-                    <textarea name="" id="" cols="30" rows="6" class="form-control form-control-lg mb-3"
-                        placeholder="ENTER MESSAGE"></textarea>
-                    <button class="btn btn-lg btn-danger col-12">SUBMIT</button>
-                </div>
-                <div class="col-md-8">
-                    <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 500px">
-                        <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                            frameborder="0" style="border:0" allowfullscreen></iframe>
-                    </div>
+        <div class="row g-0">
+            <div class="container col-lg-12">
+                <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 500px">
+                    <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
