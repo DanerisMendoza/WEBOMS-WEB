@@ -128,7 +128,7 @@
                             <option value="order complete">ORDER COMPLETE</option>
                         </select>
                         <!-- button sort -->
-                        <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4">
+                        <input type="submit" value="SORT" class="btn btn-lg btn-success col-12 mb-4">
                     </form>
                     <?php
                         if(isset($_GET['sort'])){
