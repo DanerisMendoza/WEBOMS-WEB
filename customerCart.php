@@ -189,8 +189,20 @@ document.getElementById("back").onclick = function () {window.location.replace('
             $order_id = uniqid();
             $total = number_format($total,2);
             $name = $_SESSION['name'];
+            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            if($or_last == null){
+                $year = date("Y");
+                $num = 1;
+                $or_number =  $year.'-'.$num;
+            }
+            else{
+                $year = date("Y");
+                $num = substr($or_last,5);
+                $num = $num + 1;
+                $or_number =  $year.'-'.$num;
+            }
 
-            $query1 = "insert into WEBOMS_order_tb( user_id, status, order_id, date, totalOrder, payment, staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$total', 'online order')";
+            $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
@@ -241,6 +253,8 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 $pdf -> Cell(122,10,"Customer: $name",'','0','L');
                 $pdf -> ln(10);
                 $pdf -> Cell(122,10,"Order Type: Online Order",'','0','L');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
                 ob_end_clean();
                 $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
