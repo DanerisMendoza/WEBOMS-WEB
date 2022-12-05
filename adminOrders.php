@@ -27,7 +27,9 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">Admin</h3>
+                <h3 class="mt-3">
+                    <a href="admin.php">Admin</a>
+                </h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -203,10 +205,10 @@
                                     <?php
                                         }
                                     ?>
-                                    <!-- staff in charge -->
-                                    <td><?php echo $row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge']?></td>
                                     <!-- date and time -->
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
+                                    <!-- staff in charge -->
+                                    <td><?php echo $row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge']?></td>
                                     <!-- order details -->
                                     <td>
                                         <a class="btn btn-light border-secondary"
@@ -351,5 +353,30 @@ document.getElementById("customerFeedback").onclick = function() {
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
 };
-// yung logout wala pa
 </script>
+
+<?php 
+    if(isset($_POST['logout'])){
+        $dishesArr = array();
+        $dishesQuantity = array();
+        if(isset($_SESSION['dishes'])){
+            for($i=0; $i<count($_SESSION['dishes']); $i++){
+                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
+                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
+                }
+                else{
+                    array_push($dishesArr,$_SESSION['dishes'][$i]);
+                }
+            }
+            foreach(array_count_values($_SESSION['dishes']) as $count){
+                array_push($dishesQuantity,$count);
+            }
+            for($i=0; $i<count($dishesArr); $i++){ 
+                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                Query($updateQuery);    
+            }
+        }
+        session_destroy();
+        echo "<script>window.location.replace('Login.php');</script>";
+    }
+?>

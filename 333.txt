@@ -1,1 +1,66 @@
-nikol
+<!-- table container -->
+                    <!-- <div class="container col-lg-7">
+                        <div class="row g-3">
+                            <?php 
+                                $query = "select * from WEBOMS_menu_tb";
+                                $resultSet =  getQuery($query)
+                            ?>
+                            <?php 
+                                if($resultSet != null)
+                                foreach($resultSet as $rows){ ?>
+                            <div class="col-sm-3">
+                                <div class="card bg-light">
+                                    <button class="btn btn-light">
+                                        insert image
+                                        <a href="#" class="text-decoration-none fw-normal text-danger">
+                                            <?=$rows['dish']?>
+                                        </a> <br>
+                                        <a href="#" class="text-decoration-none fw-normal text-danger">
+                                            Stock:
+                                            <?php echo $rows['stock']; ?>
+                                        </a> <br>
+                                        <a href="#" class="text-decoration-none fw-normal text-danger">
+                                            Price:
+                                            <?php echo number_format($rows['price'],2); ?>
+                                        </a> <br>
+                                        <a class="text-decoration-none fw-normal text-black" <?php if($rows['stock'] <= 0) 
+                                                    echo "<button>Out of Stock</button>";
+                                                    else{
+                                                ?>
+                                            href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
+                                            Add to Cart
+                                        </a>
+                                    </button>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div> -->
+
+adminPos.php
+                    <?php if($_SESSION['accountType'] != 'cashier'){?>
+                    <!-- admin -->
+                    <!-- <button class="btn btn-lg btn-dark col-12 mb-4" id="admin">
+                        <i class="bi bi-arrow-left"></i>
+                        <span class="ms-1">ADMIN</span>
+                    </button> -->
+                    <h1 class="text-center fw-normal mb-4 bg-dark text-white">ADMIN</h1>
+
+                    <script>
+                    document.getElementById("admin").onclick = function() {
+                        window.location.replace('admin.php');
+                    };
+                    </script>
+
+                    <?php }else{?>
+                    <!-- logout -->
+                    <!-- <form method="post" class="col-12">
+                        <button class="btn btn-lg btn-danger col-12 mb-4" id="Logout" name="logout">
+                            <i class="bi bi-power"></i>
+                            <span class="ms-1">LOGOUT</span>
+                        </button>
+                    </form> -->
+                    <h1 class="text-center fw-normal mb-4 bg-danger text-white">CASHIER</h1>
+
+                    <?php }?>

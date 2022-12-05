@@ -37,7 +37,9 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">Admin</h3>
+                <h3 class="mt-3">
+                    <a href="admin.php">Admin</a>
+                </h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2 active">
@@ -113,96 +115,13 @@
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
-                    <!-- admin -->
-                    <button class="btn btn-lg btn-dark col-12 mb-4" id="admin">
-                        <i class="bi bi-arrow-left"></i>
-                        <span class="ms-1">ADMIN</span>
-                    </button>
-
-                    <script>
-                    document.getElementById("admin").onclick = function() {
-                        window.location.replace('admin.php');
-                    };
-                    </script>
-
+                    <h1 class="text-center fw-normal mb-4 bg-dark text-white">ADMIN</h1>
                     <?php }else{?>
-                    <!-- logout -->
-                    <form method="post" class="col-12">
-                        <button class="btn btn-lg btn-danger col-12 mb-4" id="Logout" name="logout">
-                            <i class="bi bi-power"></i>
-                            <span class="ms-1">LOGOUT</span>
-                        </button>
-                    </form> <br>
+                    <h1 class="text-center fw-normal mb-4 bg-danger text-white">CASHIER</h1>
                     <?php }?>
 
-                    <?php 
-                        if(isset($_POST['logout'])){
-                        $dishesArr = array();
-                        $dishesQuantity = array();
-                        if(isset($_SESSION['dishes'])){
-                            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                                $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                                }
-                                else{
-                                array_push($dishesArr,$_SESSION['dishes'][$i]);
-                                }
-                            }
-                            foreach(array_count_values($_SESSION['dishes']) as $count){
-                            array_push($dishesQuantity,$count);
-                            }
-                            for($i=0; $i<count($dishesArr); $i++){ 
-                            $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                            Query($updateQuery);    
-                            }
-                        }
-                        session_destroy();
-                        echo "<script>window.location.replace('index.php');</script>";
-                        }
-                    ?>
-
                     <!-- table container -->
-                    <!-- <div class="container col-lg-7">
-                        <div class="row g-3">
-                            <?php 
-                                $query = "select * from WEBOMS_menu_tb";
-                                $resultSet =  getQuery($query)
-                            ?>
-                            <?php 
-                                if($resultSet != null)
-                                foreach($resultSet as $rows){ ?>
-                            <div class="col-sm-3">
-                                <div class="card bg-light">
-                                    <button class="btn btn-light">
-                                        insert image
-                                        <a href="#" class="text-decoration-none fw-normal text-danger">
-                                            <?=$rows['dish']?>
-                                        </a> <br>
-                                        <a href="#" class="text-decoration-none fw-normal text-danger">
-                                            Stock:
-                                            <?php echo $rows['stock']; ?>
-                                        </a> <br>
-                                        <a href="#" class="text-decoration-none fw-normal text-danger">
-                                            Price:
-                                            <?php echo number_format($rows['price'],2); ?>
-                                        </a> <br>
-                                        <a class="text-decoration-none fw-normal text-black" <?php if($rows['stock'] <= 0) 
-                                                    echo "<button>Out of Stock</button>";
-                                                    else{
-                                                ?>
-                                            href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
-                                            Add to Cart
-                                        </a>
-                                    </button>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <?php } ?>
-                        </div>
-                    </div> -->
-
-                    <!-- table container -->
-                    <div class="table-responsive col-lg-6">
+                    <div class="table-responsive col-lg-7">
                         <?php 
                             $query = "select * from WEBOMS_menu_tb";
                             $resultSet =  getQuery($query)
@@ -246,13 +165,13 @@
                     </div>
 
                     <!-- 2nd table container -->
-                    <div class="table-responsive col-lg-6">
+                    <div class="table-responsive col-lg-5">
                         <table class="table table-bordered col-lg-12">
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
-                                    <th scope="col">PRICE</th>
                                     <th scope="col" colspan="2">QUANTITY</th>
+                                    <th scope="col">PRICE</th>
                                 </tr>
                             </thead>
                             <?php 
@@ -296,33 +215,31 @@
                             <tr>
                                 <!-- dish -->
                                 <td><?php echo $arr['dish'];?></td>
-                                <!-- price -->
-                                <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                                 <!-- quantity -->
                                 <td><?php echo $arr['quantity'];?></td>
                                 <td>
                                     <!-- check stock -->
                                     <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                                    <a class="btn btn-light border-secondary"
+                                    <a class="btn btn-success"
                                         href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
                                         <i class="bi bi-plus"></i>
                                     </a>
                                     <?php }else{ ?>
                                     <a class="btn btn-success border-dark">OUT OF STOCK</a>
                                     <?php } ?>
-                                    <a class="btn btn-light border-secondary"
+                                    <a class="btn btn-danger"
                                         href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
                                         <i class="bi bi-dash"></i>
                                     </a>
                                 </td>
+                                <!-- price -->
+                                <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                             </tr>
                             <?php }?>
                             <tr>
                                 <!-- total amount -->
-                                <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+                                <td colspan="3"><b>TOTAL AMOUNT:</b></td>
                                 <td><b>₱<?php echo number_format($total,2); ?></b></td>
-                                <!-- check stock -->
-                                <td></td>
                             </tr>
                         </table>
                         <form method="post">
@@ -508,3 +425,29 @@ document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
 };
 </script>
+
+<?php 
+    if(isset($_POST['logout'])){
+        $dishesArr = array();
+        $dishesQuantity = array();
+        if(isset($_SESSION['dishes'])){
+            for($i=0; $i<count($_SESSION['dishes']); $i++){
+                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
+                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
+                }
+                else{
+                    array_push($dishesArr,$_SESSION['dishes'][$i]);
+                }
+            }
+            foreach(array_count_values($_SESSION['dishes']) as $count){
+                array_push($dishesQuantity,$count);
+            }
+            for($i=0; $i<count($dishesArr); $i++){ 
+                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                Query($updateQuery);    
+            }
+        }
+        session_destroy();
+        echo "<script>window.location.replace('Login.php');</script>";
+    }
+?>
