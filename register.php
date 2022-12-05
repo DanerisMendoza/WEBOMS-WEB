@@ -4,52 +4,64 @@
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Sign up</title>
 
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css"></head>
-  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign up</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 </head>
+<script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+
 <body class="bg-light">
 
-<div class="container">
-  <div class="row justify-content-center">
-    <form method="post" class="form2">
-      <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
-      <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter Username" value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>" required>
-      <input type="text" class="form-control form-control-lg mb-3" name="firstName" placeholder="First Name" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
-      <input type="text" class="form-control form-control-lg mb-3" name="middleName" placeholder="Middle Name" value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
-      <input type="text" class="form-control form-control-lg mb-3" name="lastName" placeholder="Last Name" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>"required>
-      <select name='gender' class="form-control form-control-lg mb-3">
-        <option value="null">Gender</option>
-        <option value="m">Male</option>
-        <option value="f">Female</option>
-        <option value="NA">Rather Not Say</option>
-      </select>
-      <input type="number" class="form-control form-control-lg mb-3" name="age" placeholder="Age" value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
-      <input type="number" class="form-control form-control-lg mb-3" id="phone" name="phone" placeholder="Phone Number" value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>" required>
-      <input type="text" class="form-control form-control-lg mb-3" name="address" placeholder="Address" value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
-      <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email" value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
-      <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter Password" required>
-      <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" id="createAccount" name="createAccount">Sign Up</button><br>
-      <div class="mb-5 text-muted text-center">Have already an account? <a href="Login.php" class="login_link text-muted">Log in</a>
-      </div>
-    </form>
-  </div>
-</div>
-    
+    <div class="container">
+        <div class="row justify-content-center">
+            <form method="post" class="form2">
+                <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
+                <input type="text" class="form-control form-control-lg mb-3" name="username"
+                    placeholder="Enter Username" value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>"
+                    required>
+                <input type="text" class="form-control form-control-lg mb-3" name="firstName" placeholder="First Name"
+                    value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
+                <input type="text" class="form-control form-control-lg mb-3" name="middleName" placeholder="Middle Name"
+                    value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
+                <input type="text" class="form-control form-control-lg mb-3" name="lastName" placeholder="Last Name"
+                    value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
+                <select name='gender' class="form-control form-control-lg mb-3">
+                    <option value="null">Gender</option>
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                    <option value="NA">Rather Not Say</option>
+                </select>
+                <input type="number" class="form-control form-control-lg mb-3" name="age" placeholder="Age"
+                    value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
+                <input type="number" class="form-control form-control-lg mb-3" id="phone" name="phone"
+                    placeholder="Phone Number" value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>"
+                    required>
+                <input type="text" class="form-control form-control-lg mb-3" name="address" placeholder="Address"
+                    value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
+                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email"
+                    value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
+                <input type="password" class="form-control form-control-lg mb-3" name="password"
+                    placeholder="Enter Password" required>
+                <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" id="createAccount"
+                    name="createAccount">Sign Up</button><br>
+                <div class="mb-5 text-muted text-center">Have already an account? <a href="Login.php"
+                        class="login_link text-muted">Log in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
+
 </html>
 
-<script>
-    document.getElementById("back").addEventListener("click",function(){
-        window.location.replace('Login.php');
-    });
-</script>
 
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
@@ -92,14 +104,13 @@
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
         //Server settings
-        $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                     //Enable verbose debug output
+        $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+        $mail->Host = 'mail.ucc-csd-bscs.com';		                  //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'weboms098@gmail.com'; //from //SMTP username
-        $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
-        $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
+        $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
+        $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
+        $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
         $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
@@ -123,12 +134,11 @@
     }
 ?>
 <script>
-    //cut phone nu
-    $("#phone").bind("change paste input", function(){
-        var phone = document.forms[0].phone.value;
-        if(phone.length >= 11){
-          document.forms[0].phone.value = phone.substring(0, 11);
-        }
-    });
-</script> 
-
+//cut phone nu
+$("#phone").bind("change paste input", function() {
+    var phone = document.forms[0].phone.value;
+    if (phone.length >= 11) {
+        document.forms[0].phone.value = phone.substring(0, 11);
+    }
+});
+</script>

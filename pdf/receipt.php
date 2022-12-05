@@ -8,10 +8,12 @@
     }
     $date = date('m/d/Y h:i:s a ', strtotime($_SESSION['date']));
     $cash = $_SESSION['cash'];
-    $cash = number_format($cash,2);
     $total = $_SESSION['total'];
-    $total = number_format($total,2);
+ 
     $change =  $cash-$total;
+    $cash = number_format($cash,2);
+    $total = number_format($total,2);
+   
     $change = number_format($change,2);
     $dishesArr = $_SESSION['dishesArr'];
     $priceArr = $_SESSION['priceArr'];

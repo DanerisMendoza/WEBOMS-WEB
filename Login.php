@@ -1,55 +1,47 @@
 <?php     
   $page = 'notLogin';
-  include('method/checkIfAccountLoggedIn.php'); 
+  include('method/checkIfAccountLoggedIn.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Log in</title>
 
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Log in</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
+    <!-- online css bootsrap icon -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"> -->
 </head>
-<body class="bg-light">
 
-<div class="container">
-  <div class="row justify-content-center">
-    <form  method="post" class="form1">
-      <h1 class="font-weight-normal mt-5 mb-4 text-center">Log in to your account</h1>
-      <input class="form-control form-control-lg mb-3" type="text" name="username" placeholder="Username" required>
-      <input class="form-control form-control-lg mb-3" type="password" name="password" placeholder="Password" required>
-      <div class="mb-3">
-        <a href="forgetPassword.php" class="pass text-muted">Forgot Password?</a>
-      </div>
-      <button class="btn btn-primary btn-lg col-12 mb-3" type="submit" name="Login" value="Login">Login</button>
-      <div class="text-center text-muted mb-5">
-        Dont'have an account yet? <a href="register.php" class="signup_link text-muted">Sign up</a>
-      </div>
-    </form>
-
-    <!-- otp (Bootstrap MODAL) -->
-    <div class="modal fade" id="otpModal" role="dialog" >
-      <div class="modal-dialog">
-        <div class="modal-content container">
-          <div class="modal-body">
-            <form method="post" class="form-group">
-              <h3 class="font-weight-normal mb-3">Please Enter Your OTP</h3>
-              <input type="text" class="form-control form-control-lg mb-3" placeholder="OTP" name="otp" >  
-              <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12 mb-1">
-              <!-- <input type="submit" value="Resend" name="Resend" class="btn btn-secondary btn-lg col-12 mb-1"> -->
-              <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-1">
-            </form>
-          </div>
+<body class="bg-dark">
+        <!-- otp (Bootstrap MODAL) -->
+        <div class="modal fade" id="otpModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content container">
+                    <div class="modal-body">
+                        <form method="post" class="form-group">
+                            <h3 class="fw-normal mb-3">Please Enter Your OTP</h3>
+                            <input type="text"
+                                class="form-control form-control-lg mb-3"
+                                placeholder="OTP" name="otp">
+                            <input type="submit" value="Verify" name="Verify"
+                                class="btn btn-success btn-lg col-12 mb-1">
+                            <!-- <input type="submit" value="Resend" name="Resend" class="btn btn-secondary btn-lg col-12 mb-1"> -->
+                            <input data-dismiss="modal" type="submit" value="Cancel"
+                                name="Cancel"
+                                class="btn btn-danger btn-lg col-12 mb-1">
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-
-    <?php
+        
+        <?php
         include_once('connection.php');
         include('method/query.php');
         if(isset($_POST['Login'])){
@@ -133,5 +125,74 @@
               echo  '<script>alert("Incorrect Otp!"); </script>';
         }
     ?>
+
+        <a href="index.php" type="button" class="btn btn-lg btn-dark text-white">
+            <i class="bi bi-arrow-left"></i>
+            BACK
+        </a>
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card mb-5" style="border-radius: 1rem;">
+                        <div class="row g-0">
+                            <div class="col-md-6 col-lg-5">
+                                <img src="https://images.unsplash.com/photo-1611657366409-55549160be82?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&w=1000&q=80"
+                                alt="login form" class="img-fluid" style="border-radius: 1rem;" />
+                            </div>
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <form method="post" class="form1">
+                                                <h1 class="fw-normal mt-5 mb-4 text-center">Log in to your
+                                                    account</h1>
+
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text bg-dark">
+                                                        <i class="bi bi-person text-white"></i>
+                                                    </span>
+                                                    <input class="form-control form-control-lg" type="text"
+                                                        name="username" placeholder="Username" required>
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text bg-dark">
+                                                        <i class="bi bi-lock text-white"></i>
+                                                    </span>
+                                                    <input class="form-control form-control-lg" type="password"
+                                                        name="password" placeholder="Password" required>
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <a href="forgetPassword.php"
+                                                        class="pass text-muted text-decoration-none">
+                                                        Forgot Password?
+                                                    </a>
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <button class="btn btn-dark btn-lg col-12" type="submit"
+                                                        name="Login" value="Login">
+                                                        Login
+                                                    </button>
+                                                </div>
+
+                                                <div class="text-center text-muted mb-5">
+                                                    Dont'have an account yet? <a href="register.php"
+                                                        class="signup_link text-muted text-decoration-none">Sign up
+                                                        here</a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
+
 </html>
+
