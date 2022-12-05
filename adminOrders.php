@@ -101,7 +101,7 @@
                 </div>
             </nav>
             <!-- content here -->
-            <div class="container-fluid text-center mt-5">
+            <div class="container-fluid text-center">
                 <div class="row justify-content-center">
                     <?php
                         include('method/query.php');
@@ -112,20 +112,20 @@
                             <?php 
                                 if(isset($_GET['sort'])){ ?>
                             <option value="<?php echo $_GET['sort'];?>" selected>
-                                Sort
+                                SORT
                                 <?php echo strtoupper($_GET['sort']);?>
                             </option>
                             <?php
                                 }else{ ?>
                             <option value="all" selected>
-                                Select Option
+                                SELECT OPTION
                             </option>
                             <?php } ?>
                             </option>
-                            <option value="all">All</option>
-                            <option value="prepairing">Preparing</option>
-                            <option value="serving">Serving</option>
-                            <option value="order complete">Order Complete</option>
+                            <option value="all">ALL</option>
+                            <option value="prepairing">PREPARING</option>
+                            <option value="serving">SERVING</option>
+                            <option value="order complete">ORDER COMPLETE</option>
                         </select>
                         <!-- button sort -->
                         <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4">
@@ -174,7 +174,7 @@
                                         ?>
                                     <td>
                                         <i class="bi bi-check"></i>
-                                        <span class="ms-1">Approved</span>
+                                        <span class="ms-1">APPROVED</span>
                                     </td>
                                     <?php
                                         }
@@ -182,7 +182,7 @@
                                         ?>
                                     <td>
                                         <i class="bi bi-clock"></i>
-                                        <span class="ms-1">Preparing</span>
+                                        <span class="ms-1">PREPARING</span>
                                     </td>
                                     <?php
                                         }
@@ -190,7 +190,7 @@
                                         ?>
                                     <td>
                                         <i class="bi bi-box-arrow-right"></i>
-                                        <span class="ms-1">Serving</span>
+                                        <span class="ms-1">SERVING</span>
                                     </td>
                                     <?php
                                         }
@@ -198,7 +198,7 @@
                                         ?>
                                     <td>
                                         <i class="bi bi-check"></i>
-                                        <span class="ms-1">Order Complete</span>
+                                        <span class="ms-1">ORDER COMPLETE</span>
                                     </td>
                                     <?php
                                         }
@@ -212,7 +212,7 @@
                                         <a class="btn btn-light border-secondary"
                                             href="adminOrder_details.php?idAndPic=<?php echo $row['order_id']?>">
                                             <i class="bi bi-list"></i>
-                                            <span class="ms-1">View</span>
+                                            <span class="ms-1">VIEW</span>
                                         </a>
                                     </td>
                                     <!-- options -->
@@ -222,7 +222,7 @@
                                     <td colspan='2'>
                                         <a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>">
                                             <i class="bi bi-box-arrow-right"></i>
-                                            <span class="ms-1">Serve</span>
+                                            <span class="ms-1">SERVE</span>
                                         </a>
                                     </td>
                                     <?php
@@ -232,21 +232,21 @@
                                     <td colspan="2">
                                         <a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>">
                                             <i class="bi bi-check"></i>
-                                            <span class="ms-1">Order Complete</span>
+                                            <span class="ms-1">ORDER COMPLETE</span>
                                         </a>
                                     </td>
                                     <?php
                                         }
                                         elseif($row['status'] == 'complete'){
                                         ?>
-                                    <td colspan="2">None</td>
+                                    <td colspan="2">NONE</td>
                                     <?php } ?>
                                     <!-- delete -->
                                     <td>
                                         <a class="btn btn-danger"
                                             href="?delete=<?php echo $row['ID'].','.$row['order_id'] ?>">
                                             <i class="bi bi-trash"></i>
-                                            <span class="ms-1">Delete</span>
+                                            <span class="ms-1">DELETE</span>
                                         </a>
                                     </td>
                                 </tr>

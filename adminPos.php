@@ -110,13 +110,13 @@
                 </div>
             </nav>
             <!-- content here -->
-            <div class="container-fluid text-center mt-5">
+            <div class="container-fluid text-center">
                 <div class="row justify-content-center">
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
                     <!-- admin -->
                     <button class="btn btn-lg btn-dark col-12 mb-4" id="admin">
                         <i class="bi bi-arrow-left"></i>
-                        <span class="ms-1">Admin</span>
+                        <span class="ms-1">ADMIN</span>
                     </button>
 
                     <script>
@@ -130,7 +130,7 @@
                     <form method="post" class="col-12">
                         <button class="btn btn-lg btn-danger col-12 mb-4" id="logout" name="logout">
                             <i class="bi bi-power"></i>
-                            <span class="ms-1">Logout</span>
+                            <span class="ms-1">LOGOUT</span>
                         </button>
                     </form> <br>
                     <?php }?>
@@ -235,7 +235,7 @@
                                         ?>
                                             href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
                                             <i class="bi bi-cart-plus"></i>
-                                            <span class="ms-1">Add to Cart</span>
+                                            <span class="ms-1">ADD TO CART</span>
                                         </a>
                                         <?php } ?>
                                     </td>
@@ -328,19 +328,19 @@
                         <form method="post">
                             <!-- cash amount -->
                             <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any
-                                placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3"
+                                placeholder="CASH AMOUNT" type="number" class="form-control form-control-lg mb-3"
                                 required></input>
                             <!-- place order -->
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">
                                 <i class="bi bi-cart"></i>
-                                <span class="ms-1">Place Order</span>
+                                <span class="ms-1">PLACE ORDER</span>
                             </button>
                         </form>
                         <form method="post">
                             <!-- clear order -->
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12 mb-5" name="clear">
                                 <i class="bi bi-trash"></i>
-                                <span class="ms-1">Clear Order</span>
+                                <span class="ms-1">CLEAR ORDER</span>
                             </button>
                         </form>
                     </div>
