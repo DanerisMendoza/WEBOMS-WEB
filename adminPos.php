@@ -308,7 +308,7 @@
                                         <i class="bi bi-plus"></i>
                                     </a>
                                     <?php }else{ ?>
-                                    <a class="btn btn-success border-dark">OUT OF STOCK</a>
+                                    <a class="btn btn-light border-dark">OUT OF STOCK</a>
                                     <?php } ?>
                                     <a class="btn btn-light border-secondary"
                                         href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">

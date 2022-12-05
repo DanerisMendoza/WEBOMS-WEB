@@ -1,7 +1,7 @@
 <?php 
 session_start();
 //account not valid
-if( isset($_SESSION['account']) && $_SESSION['account'] != 'valid' && $page != 'notLogin'){
+if((!isset($_SESSION['username']) || isset($_SESSION['account'])) != 'valid' && $page != 'notLogin'){
     die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
 }
 
