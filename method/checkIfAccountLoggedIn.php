@@ -1,17 +1,17 @@
 <?php 
 session_start();
-//account not valid
-if( isset($_SESSION['account']) && $_SESSION['account'] != 'valid' && $page != 'notLogin'){
+// account not valid
+if(isset($_SESSION['account']) && $_SESSION['account'] != 'valid'  && $page != 'notLogin'){
     die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
 }
 
-//account is already login
-if($page == 'notLogin' && isset($_SESSION['accountType']) ){
+// account is already login
+if($page == 'notLogin' && $_SESSION['account'] == 'valid'){
     if($_SESSION['accountType'] == 'customer')
         die ("<script>window.location.replace('customer.php'); alert('Already Loggedin!');</script>");
     else if($_SESSION['accountType'] == 'admin' || $_SESSION['accountType'] == 'manager')
         die ("<script>window.location.replace('admin.php'); alert('Already Loggedin!');</script>");
-    else
+    else if($_SESSION['accountType'] == 'cashier')
         die ("<script>window.location.replace('adminPos.php'); alert('Already Loggedin!');</script>");
 }
 
