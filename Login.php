@@ -22,16 +22,15 @@
 
     <section class="vh-100">
         <a href="index.php" type="button" class="btn btn-lg btn-dark text-white">
-            <i class="bi bi-arrow-left"></i>
-            BACK
+            <i class="bi bi-arrow-left me-1"></i>
+            HOME
         </a>
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-10">
-                    <div class="card mb-5" style="border-radius: 1rem;">
+                    <div class="card" style="border-radius: 1rem;">
                         <div class="row g-0">
                             <div class="col-md-6 col-lg-5">
-                                <!-- <div class="col-md-6 col-lg-5 d-none d-md-block"> -->
                                 <img src="https://images.unsplash.com/photo-1611657366409-55549160be82?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&w=1000&q=80"
                                     alt="login form" class="img-fluid" style="border-radius: 1rem;" />
                             </div>
@@ -39,45 +38,48 @@
                                 <div class="card-body p-4 p-lg-5 text-black">
                                     <div class="container">
                                         <div class="row justify-content-center">
+
                                             <form method="post" class="form1">
-                                                <h1 class="fw-normal mt-5 mb-4 text-center">Log in to your
+
+                                                <h1 class="fw-normal mb-5 text-center">Log in to your
                                                     account</h1>
 
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text bg-dark">
-                                                        <i class="bi bi-person text-white"></i>
+                                                <div class="input-group mb-4">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-person"></i>
                                                     </span>
                                                     <input class="form-control form-control-lg" type="text"
                                                         name="username" placeholder="Username" required>
                                                 </div>
 
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text bg-dark">
-                                                        <i class="bi bi-lock text-white"></i>
+                                                <div class="input-group mb-4">
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-lock"></i>
                                                     </span>
                                                     <input class="form-control form-control-lg" type="password"
                                                         name="password" placeholder="Password" required>
                                                 </div>
 
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-4">
                                                     <a href="forgetPassword.php"
                                                         class="pass text-muted text-decoration-none">
                                                         Forgot Password?
                                                     </a>
                                                 </div>
 
-                                                <div class="input-group mb-3">
+                                                <div class="input-group mb-4">
                                                     <button class="btn btn-dark btn-lg col-12" type="submit"
                                                         name="Login" value="Login">
                                                         Login
                                                     </button>
                                                 </div>
 
-                                                <div class="text-center text-muted mb-5">
+                                                <div class="text-center text-muted">
                                                     Dont'have an account yet? <a href="register.php"
                                                         class="signup_link text-muted text-decoration-none">Sign up
                                                         here</a>
                                                 </div>
+
                                             </form>
 
                                             <!-- otp (Bootstrap MODAL) -->
@@ -102,8 +104,18 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                                            <?php
+    <?php
         include_once('connection.php');
         include('method/query.php');
         if(isset($_POST['Login'])){
@@ -120,52 +132,52 @@
                     $user_id = $row['user_id'];
                 }
                 if($valid){
-                  //setting credential if valid
-                  $query = "select * from WEBOMS_userInfo_tb where user_id = '$user_id'";
-                  $resultSet = getQuery($query);
-                  foreach($resultSet as $row){
-                    $_SESSION['name'] = $row['name'];
-                    $otp = $row['otp'];
-                  }
-                  $_SESSION['user_id'] = $user_id;
-                  $_SESSION['accountType'] = $accountType;
-                  $_SESSION['username'] = $username;
-                  $_SESSION['account'] = 'valid';
-                  switch($accountType){
-                    case ('admin'):
-                      echo "<script> window.location.replace('admin.php');</script>";
-                    break;
+                    //setting credential if valid
+                    $query = "select * from WEBOMS_userInfo_tb where user_id = '$user_id'";
+                    $resultSet = getQuery($query);
+                    foreach($resultSet as $row){
+                        $_SESSION['name'] = $row['name'];
+                        $otp = $row['otp'];
+                    }
+                    $_SESSION['user_id'] = $user_id;
+                    $_SESSION['accountType'] = $accountType;
+                    $_SESSION['username'] = $username;
+                    $_SESSION['account'] = 'valid';
+                    switch($accountType){
+                        case ('admin'):
+                        echo "<script> window.location.replace('admin.php');</script>";
+                        break;
 
-                    case ('manager'):
-                      echo "<script> window.location.replace('admin.php');</script>";
-                    break;
+                        case ('manager'):
+                        echo "<script> window.location.replace('admin.php');</script>";
+                        break;
 
-                    case 'cashier';
-                      echo "<script> window.location.replace('adminPos.php');</script>";
-                    break;
+                        case 'cashier';
+                        echo "<script> window.location.replace('adminPos.php');</script>";
+                        break;
 
-                    case 'customer':
-                      //if customer account is valid
-                      if($valid && $otp == ''){
-                        echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
-                      }
-                      //if customer account need to validate first via otp
-                      else if($valid && $otp != ""){
-                        echo "<script>$('#otpModal').modal('show');</script>";
-                      }
-                      //if customer password is wrong
-                      else{
-                        echo "<script>alert('incorrect username or password!');</script>";
-                      }
-                    break;
-                  }
+                        case 'customer':
+                        //if customer account is valid
+                        if($valid && $otp == ''){
+                            echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
+                        }
+                        //if customer account need to validate first via otp
+                        else if($valid && $otp != ""){
+                            echo "<script>$('#otpModal').modal('show');</script>";
+                        }
+                        //if customer password is wrong
+                        else{
+                            echo "<script>alert('Incorrect Username or Password!');</script>";
+                        }
+                        break;
+                    }
                 }
                 else{
-                    echo "<script>alert('incorrect username or password!');</script>";
+                    echo "<script>alert('Incorrect Username or Password!');</script>";
                 }
             }
             else{
-                echo "<script>alert('incorrect username or password!');</script>";
+                echo "<script>alert('Incorrect Username or Password!');</script>";
             }
         }
         if(isset($_POST['Verify'])){
@@ -184,31 +196,10 @@
                 }
             }
             else
-              echo  '<script>alert("Incorrect Otp!"); </script>';
+              echo '<script>alert("Incorrect OTP!"); </script>';
         }
     ?>
 
 </body>
 
 </html>
-
-<!-- <div class="container">
-        <div class="row justify-content-center">
-            <form method="post" class="form1">
-                <img src="settings/logo.png"><br>
-                <h1 class="font-weight-normal mt-5 mb-4 text-center">Log in to your account</h1>
-                <input class="form-control form-control-lg mb-3" type="text" name="username" placeholder="Username"
-                    required>
-                <input class="form-control form-control-lg mb-3" type="password" name="password" placeholder="Password"
-                    required>
-                <div class="mb-3">
-                    <a href="#" class="pass text-muted">Forgot Password?</a>
-                </div>
-                <button class="btn btn-primary btn-lg col-12 mb-3" type="submit" name="Login"
-                    value="Login">Login</button>
-                <div class="text-center text-muted mb-5">
-                    Dont'have an account yet? <a href="register.php" class="signup_link text-muted">Sign up</a>
-                </div>
-            </form>
-        </div>
-    </div> -->
