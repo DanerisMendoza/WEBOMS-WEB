@@ -1,6 +1,6 @@
 <?php     
   $page = 'notLogin';
-  include('method/checkIfAccountLoggedIn.php'); 
+  include('method/checkIfAccountLoggedIn.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,11 +11,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Log in</title>
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"> -->
 </head>
 
 <body class="bg-dark">
@@ -156,21 +156,22 @@
                         echo "<script> window.location.replace('adminPos.php');</script>";
                         break;
 
-                        case 'customer':
-                        //if customer account is valid
-                        if($valid && $otp == ''){
-                            echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
-                        }
-                        //if customer account need to validate first via otp
-                        else if($valid && $otp != ""){
-                            echo "<script>$('#otpModal').modal('show');</script>";
-                        }
-                        //if customer password is wrong
-                        else{
-                            echo "<script>alert('Incorrect Username or Password!');</script>";
-                        }
-                        break;
-                    }
+                    case 'customer':
+                      //if customer account is valid
+                      if($valid && $otp == ''){
+                        echo "<SCRIPT> window.location.replace('customer.php');  </SCRIPT>";
+                      }
+                      //if customer account need to validate first via otp
+                      else if($valid && $otp != ""){
+                        $_SESSION['account'] = '';
+                        echo "<script>$('#otpModal').modal('show');</script>";
+                      }
+                      //if customer password is wrong
+                      else{
+                        echo "<script>alert('incorrect username or password!');</script>";
+                      }
+                    break;
+                  }
                 }
                 else{
                     echo "<script>alert('Incorrect Username or Password!');</script>";
