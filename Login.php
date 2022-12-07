@@ -89,6 +89,7 @@
                       }
                       //if customer account need to validate first via otp
                       else if($valid && $otp != ""){
+                        $_SESSION['account'] = '';
                         echo "<script>$('#otpModal').modal('show');</script>";
                       }
                       //if customer password is wrong
@@ -130,7 +131,7 @@
             <i class="bi bi-arrow-left"></i>
             BACK
         </a>
-        <div class="container py-5 h-100">
+        <div class="container">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-10">
                     <div class="card mb-5" style="border-radius: 1rem;">

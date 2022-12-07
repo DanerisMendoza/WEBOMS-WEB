@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Point of Sales</title>
+    <title>Point of Sales</title>
 
     <link rel="stylesheet" href="css/bootstrap 5/bootstrap.min.css">
     <link rel="stylesheet" href="css/admin.css">
@@ -37,7 +37,9 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">Admin</h3>
+                <h3 class="mt-3">
+                    <a href="admin.php">Admin</a>
+                </h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2 active">
@@ -110,99 +112,16 @@
                 </div>
             </nav>
             <!-- content here -->
-            <div class="container-fluid text-center mt-5">
+            <div class="container-fluid text-center">
                 <div class="row justify-content-center">
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
-                    <!-- admin -->
-                    <button class="btn btn-lg btn-dark col-12 mb-4" id="admin">
-                        <i class="bi bi-arrow-left"></i>
-                        <span class="ms-1">Admin</span>
-                    </button>
-
-                    <script>
-                    document.getElementById("admin").onclick = function() {
-                        window.location.replace('admin.php');
-                    };
-                    </script>
-
+                    <h1 class="text-center fw-normal mb-4 bg-dark text-white">ADMIN</h1>
                     <?php }else{?>
-                    <!-- logout -->
-                    <form method="post" class="col-12">
-                        <button class="btn btn-lg btn-danger col-12 mb-4" id="logout" name="logout">
-                            <i class="bi bi-power"></i>
-                            <span class="ms-1">Logout</span>
-                        </button>
-                    </form> <br>
+                    <h1 class="text-center fw-normal mb-4 bg-danger text-white">CASHIER</h1>
                     <?php }?>
 
-                    <?php 
-                        if(isset($_POST['logout'])){
-                        $dishesArr = array();
-                        $dishesQuantity = array();
-                        if(isset($_SESSION['dishes'])){
-                            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                                $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                                }
-                                else{
-                                array_push($dishesArr,$_SESSION['dishes'][$i]);
-                                }
-                            }
-                            foreach(array_count_values($_SESSION['dishes']) as $count){
-                            array_push($dishesQuantity,$count);
-                            }
-                            for($i=0; $i<count($dishesArr); $i++){ 
-                            $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                            Query($updateQuery);    
-                            }
-                        }
-                        session_destroy();
-                        echo "<script>window.location.replace('index.php');</script>";
-                        }
-                    ?>
-
                     <!-- table container -->
-                    <!-- <div class="container col-lg-7">
-                        <div class="row g-3">
-                            <?php 
-                                $query = "select * from WEBOMS_menu_tb";
-                                $resultSet =  getQuery($query)
-                            ?>
-                            <?php 
-                                if($resultSet != null)
-                                foreach($resultSet as $rows){ ?>
-                            <div class="col-sm-3">
-                                <div class="card bg-light">
-                                    <button class="btn btn-light">
-                                        insert image
-                                        <a href="#" class="text-decoration-none fw-normal text-danger">
-                                            <?=$rows['dish']?>
-                                        </a> <br>
-                                        <a href="#" class="text-decoration-none fw-normal text-danger">
-                                            Stock:
-                                            <?php echo $rows['stock']; ?>
-                                        </a> <br>
-                                        <a href="#" class="text-decoration-none fw-normal text-danger">
-                                            Price:
-                                            <?php echo number_format($rows['price'],2); ?>
-                                        </a> <br>
-                                        <a class="text-decoration-none fw-normal text-black" <?php if($rows['stock'] <= 0) 
-                                                    echo "<button>Out of Stock</button>";
-                                                    else{
-                                                ?>
-                                            href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
-                                            Add to Cart
-                                        </a>
-                                    </button>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <?php } ?>
-                        </div>
-                    </div> -->
-
-                    <!-- table container -->
-                    <div class="table-responsive col-lg-6">
+                    <div class="table-responsive col-lg-7">
                         <?php 
                             $query = "select * from WEBOMS_menu_tb";
                             $resultSet =  getQuery($query)
@@ -235,7 +154,7 @@
                                         ?>
                                             href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
                                             <i class="bi bi-cart-plus"></i>
-                                            <span class="ms-1">Add to Cart</span>
+                                            <span class="ms-1">ADD TO CART</span>
                                         </a>
                                         <?php } ?>
                                     </td>
@@ -246,13 +165,13 @@
                     </div>
 
                     <!-- 2nd table container -->
-                    <div class="table-responsive col-lg-6">
+                    <div class="table-responsive col-lg-5">
                         <table class="table table-bordered col-lg-12">
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
-                                    <th scope="col">PRICE</th>
                                     <th scope="col" colspan="2">QUANTITY</th>
+                                    <th scope="col">PRICE</th>
                                 </tr>
                             </thead>
                             <?php 
@@ -296,51 +215,53 @@
                             <tr>
                                 <!-- dish -->
                                 <td><?php echo $arr['dish'];?></td>
-                                <!-- price -->
-                                <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                                 <!-- quantity -->
                                 <td><?php echo $arr['quantity'];?></td>
                                 <td>
                                     <!-- check stock -->
                                     <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                                    <a class="btn btn-light border-secondary"
+                                    <a class="btn btn-success"
                                         href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
                                         <i class="bi bi-plus"></i>
                                     </a>
                                     <?php }else{ ?>
                                     <a class="btn btn-light border-dark">OUT OF STOCK</a>
                                     <?php } ?>
-                                    <a class="btn btn-light border-secondary"
+                                    <a class="btn btn-danger"
                                         href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
                                         <i class="bi bi-dash"></i>
                                     </a>
                                 </td>
+                                <!-- price -->
+                                <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                             </tr>
                             <?php }?>
                             <tr>
                                 <!-- total amount -->
-                                <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+                                <td colspan="3"><b>TOTAL AMOUNT:</b></td>
                                 <td><b>₱<?php echo number_format($total,2); ?></b></td>
-                                <!-- check stock -->
-                                <td></td>
                             </tr>
                         </table>
                         <form method="post">
                             <!-- cash amount -->
+                                <input  name="customerName"                                
+                                placeholder="Customer Name (optional)" type="text" class="form-control form-control-lg mb-3"
+                                ></input>
+                            <!-- cash amount -->
                             <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any
-                                placeholder="Cash Amount" type="number" class="form-control form-control-lg mb-3"
+                                placeholder="CASH AMOUNT" type="number" class="form-control form-control-lg mb-3"
                                 required></input>
                             <!-- place order -->
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">
                                 <i class="bi bi-cart"></i>
-                                <span class="ms-1">Place Order</span>
+                                <span class="ms-1">PLACE ORDER</span>
                             </button>
                         </form>
                         <form method="post">
                             <!-- clear order -->
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12 mb-5" name="clear">
                                 <i class="bi bi-trash"></i>
-                                <span class="ms-1">Clear Order</span>
+                                <span class="ms-1">CLEAR ORDER</span>
                             </button>
                         </form>
                     </div>
@@ -390,7 +311,7 @@ $(document).ready(function() {
         echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-    // add
+    // add quantity
     if(isset($_GET['add'])){
         $arr = explode(',',$_GET['add']);
         $dish = $arr[0];
@@ -405,7 +326,7 @@ $(document).ready(function() {
           echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-    //minus
+    //minus quantity
     if(isset($_GET['minus'])){
         $arr = explode(',',$_GET['minus']);
         $dish = $arr[0];
@@ -431,12 +352,34 @@ $(document).ready(function() {
     //order button (php)
     if(isset($_POST['order'])){
         $cash = $_POST['cash'];
+        $customerName = $_POST['customerName'];
         if($cash >= $total && $total != 0){
             $_SESSION['continue'] = true;
             date_default_timezone_set('Asia/Manila');
             $date = new DateTime();
             $today =  $date->format('Y-m-d'); 
             $todayWithTime =  $date->format('Y-m-d H:i:s'); 
+
+            //or number process
+            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $year = date("Y");
+            if($or_last == null){
+                $num = 1;
+            }
+            else{
+                $num = substr($or_last,5);
+                $num = $num + 1;
+            }
+            $input = $num;
+            $inputSize = strlen(strval($input));
+            if($inputSize > 4)
+                $str_length = $inputSize;
+            else
+                $str_length = 4;
+            $temp = substr("0000{$input}", -$str_length);
+            $or_number =  $year.'-'.$temp;
+            $_SESSION['or_number'] = $or_number;
+            $_SESSION['customerName'] = $customerName;
             $_SESSION['date'] = $todayWithTime;
             $_SESSION['cash'] = $cash;
             $_SESSION['total'] = $total;
@@ -447,7 +390,7 @@ $(document).ready(function() {
             $user_id = $_SESSION['user_id'];
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
-            $query1 = "insert into WEBOMS_order_tb(user_id, status, order_id, date, totalOrder, payment,  staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$cash', '$staff')";
+            $query1 = "insert into WEBOMS_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
@@ -508,3 +451,29 @@ document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
 };
 </script>
+
+<?php 
+    if(isset($_POST['logout'])){
+        $dishesArr = array();
+        $dishesQuantity = array();
+        if(isset($_SESSION['dishes'])){
+            for($i=0; $i<count($_SESSION['dishes']); $i++){
+                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
+                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
+                }
+                else{
+                    array_push($dishesArr,$_SESSION['dishes'][$i]);
+                }
+            }
+            foreach(array_count_values($_SESSION['dishes']) as $count){
+                array_push($dishesQuantity,$count);
+            }
+            for($i=0; $i<count($dishesArr); $i++){ 
+                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                Query($updateQuery);    
+            }
+        }
+        session_destroy();
+        echo "<script>window.location.replace('Login.php');</script>";
+    }
+?>

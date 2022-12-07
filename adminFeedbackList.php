@@ -32,7 +32,7 @@
         </button>
         <script>
         document.getElementById("back").onclick = function() {
-            window.location.replace('customerMenu.php');
+            window.location.replace('admin.php');
         };
         </script>
 

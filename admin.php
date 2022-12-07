@@ -140,7 +140,7 @@
             }
         }
         session_destroy();
-        echo "<script>window.location.replace('Login.php');</script>";
+        echo "<script>window.location.replace('index.php');</script>";
     }
 ?>
 
@@ -148,9 +148,6 @@
 // for navbar click locations
 document.getElementById("pos").onclick = function() {
     window.location.replace('adminPos.php');
-};
-document.getElementById("orders").onclick = function() {
-    window.location.replace('adminOrders.php');
 };
 document.getElementById("orders").onclick = function() {
     window.location.replace('adminOrders.php');
@@ -168,7 +165,7 @@ document.getElementById("accountManagement").onclick = function() {
     window.location.replace('accountManagement.php');
 };
 document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('customerFeedbackList.php');
+    window.location.replace('adminFeedbackList.php');
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');

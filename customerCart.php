@@ -15,36 +15,39 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Costumer Menu - View Cart</title>
-        
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> 
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script> 
-   
-</head>
-<body class="bg-light">    
 
-<div class="container text-center mt-5">
-    <div class="row justify-content-center">
-        <button class="btn btn-lg btn-dark col-6 mb-3" id="back">Back</button>
-        <button class="btn btn-lg btn-dark col-6 mb-3" id="home">Home</button>
-        <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>"/>
-        
-        <div class="table-responsive col-lg-12 mb-5">
-            <table id="tbl" class="table table-striped table-bordered col-lg-12 mb-4">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">DISH</th>
-                        <th scope="col">QUANTITY</th>
-                        <th scope="col">PRICE</th>
-                        <th scope="col" colspan="1">Option</th>
-                    </tr>
-                </thead>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+</head>
+
+<body class="bg-light">
+
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center">
+            <button class="btn btn-lg btn-dark col-6 mb-3" id="back">Back</button>
+            <button class="btn btn-lg btn-dark col-6 mb-3" id="home">Home</button>
+            <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date"
+                min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>" />
+
+            <div class="table-responsive col-lg-12 mb-5">
+                <table id="tbl" class="table table-striped table-bordered col-lg-12 mb-4">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">DISH</th>
+                            <th scope="col">QUANTITY</th>
+                            <th scope="col">PRICE</th>
+                            <th scope="col" colspan="1">Option</th>
+                        </tr>
+                    </thead>
                     <?php 
                     $dishesArr = array();
                     $priceArr = array();
@@ -83,18 +86,20 @@
 
                     //create a table using the multi dimensional array
                     foreach($_SESSION['multiArr'] as $arr){ ?>
-                    <tr>  
+                    <tr>
                         <td><?php echo $arr['dish'];?></td>
                         <td><?php echo $arr['quantity'];?></td>
                         <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                         <td>
                             <!-- check stock -->
                             <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                            <a class="btn btn-success border-dark" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <a class="btn btn-success border-dark"
+                                href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
                             <?php }else{ ?>
                             <a class="btn btn-success border-dark">Out of Stock</a>
-                            <?php } ?> 
-                            <a class="btn btn-success border-dark" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
+                            <?php } ?>
+                            <a class="btn btn-success border-dark"
+                                href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
                         </td>
                     </tr>
                     <?php }?>
@@ -102,27 +107,34 @@
                         <td colspan="2"><b>TOTAL AMOUNT:</b></td>
                         <td><b>₱<?php echo number_format($total,2); ?></b></td>
                     </tr>
-                </table> 
+                </table>
                 <!-- place order -->
-                <form method="post">           
+                <form method="post">
                     <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                 </form>
                 <!-- clear order -->
                 <form method="post">
                     <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
                 </form>
-                <script>document.getElementById("dateTime").disabled = true;</script>
+                <script>
+                document.getElementById("dateTime").disabled = true;
+                </script>
             </div>
         </div>
-        </div>
-    
+    </div>
+
 </body>
+
 </html>
 
 <script>
-document.getElementById("home").onclick = function () {window.location.replace('customer.php'); }; 
-document.getElementById("back").onclick = function () {window.location.replace('customerMenu.php'); }; 
-</script> 
+document.getElementById("home").onclick = function() {
+    window.location.replace('customer.php');
+};
+document.getElementById("back").onclick = function() {
+    window.location.replace('customerMenu.php');
+};
+</script>
 <?php
     $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
     $balance = getQueryOneVal($query,'balance');
@@ -190,7 +202,27 @@ document.getElementById("back").onclick = function () {window.location.replace('
             $total = number_format($total,2);
             $name = $_SESSION['name'];
 
-            $query1 = "insert into WEBOMS_order_tb( user_id, status, order_id, date, totalOrder, payment, staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$total', 'online order')";
+            //or number process
+            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $year = date("Y");
+            if($or_last == null){
+                $num = 1;
+            }
+            else{
+                $num = substr($or_last,5);
+                $num = $num + 1;
+            }
+            $input = $num;
+            $inputSize = strlen(strval($input));
+            if($inputSize > 4)
+                $str_length = $inputSize;
+            else
+                $str_length = 4;
+            $temp = substr("0000{$input}", -$str_length);
+            $or_number =  $year.'-'.$temp;
+
+
+            $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
@@ -241,6 +273,8 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 $pdf -> Cell(122,10,"Customer: $name",'','0','L');
                 $pdf -> ln(10);
                 $pdf -> Cell(122,10,"Order Type: Online Order",'','0','L');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
                 ob_end_clean();
                 $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
@@ -249,14 +283,7 @@ document.getElementById("back").onclick = function () {window.location.replace('
                 $mail = new PHPMailer(true);
                 //Server settings
                 $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
-                $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host = 'mail.ucc-csd-bscs.com';		                  //Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
-                $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
-                $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-                $mail->Port       =  465;          //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+                include('phpMailerServerSettings.php');
                 //Recipients
                 $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
                 $mail->addAddress("$email");                                //sent to
@@ -276,15 +303,15 @@ document.getElementById("back").onclick = function () {window.location.replace('
 ?>
 
 <script>
-    //order button (js)
-    document.getElementById("orderBtn").addEventListener("click", () => {
-        if(<?php echo $total == 0 ? 'true':'false';?>){
-            alert('Please place your order!');
-            return;
-        }
-        if(<?php echo $balance < $total ? 'true':'false';?>){
-            alert('Your balance is less than your total order amount!');
-            return;
-        }
-    });
+//order button (js)
+document.getElementById("orderBtn").addEventListener("click", () => {
+    if (<?php echo $total == 0 ? 'true':'false';?>) {
+        alert('Please place your order!');
+        return;
+    }
+    if (<?php echo $balance < $total ? 'true':'false';?>) {
+        alert('Your balance is less than your total order amount!');
+        return;
+    }
+});
 </script>

@@ -8,66 +8,71 @@
 ?>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TopUp</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    </head>
-    <body>
+
+<head>
+    <title>TopUp</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
     <body>
         <br></br>
         <div class="container">
-        <div class="container text-center mt-5">
+            <div class="container text-center mt-5">
                 <button class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
-                    <form method="post" enctype="multipart/form-data" class="col-12">   
-                        <select name="amount" class="form-control form-control-lg col-12 mb-3">
-                            <option value="100">₱100</option>  
-                            <option value="300">₱300</option>  
-                            <option value="500">₱500</option>  
-                            <option value="1000">₱1000</option>  
-                            <option value="3000">₱3000</option>  
-                            <option value="5000">₱5000</option>  
-                        </select>     
-                        <label for="fileInput">PROOF OF PAYMENT:</label>
-                        <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
-                        <button class="btn btn-lg btn-success col-12 mb-3" name="submit">TopUp</button>
-                    </form>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered mb-5 col-lg-12">
-                            <thead class="table-dark">
-                            <tr>	
-                            <th scope="col">NAME</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Proof Of Payment</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Date</th>
-                            <th scope="col" colspan="3">Action</th>
+                <form method="post" enctype="multipart/form-data" class="col-12">
+                    <select name="amount" class="form-control form-control-lg col-12 mb-3">
+                        <option value="100">₱100</option>
+                        <option value="300">₱300</option>
+                        <option value="500">₱500</option>
+                        <option value="1000">₱1000</option>
+                        <option value="3000">₱3000</option>
+                        <option value="5000">₱5000</option>
+                    </select>
+                    <label for="fileInput">PROOF OF PAYMENT:</label>
+                    <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
+                    <button class="btn btn-lg btn-success col-12 mb-3" name="submit">TopUp</button>
+                </form>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered mb-5 col-lg-12">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">NAME</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Date</th>
+                                <th scope="col" colspan="3">Proof Of Payment</th>
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             <?php
                             if($resultSet!= null)
                             foreach($resultSet as $row){ ?>
-                            <tr>	   
+                            <tr>
                                 <td><?php echo $row['name']; ?></td>
                                 <td><?php echo '₱'.$row['amount'];?></td>
-                                <td><?php echo $row['proofOfPayment'];?></td>
                                 <td><?php echo $row['status'];?></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
                                 <?php if($row['status'] != 'approved'){?>
-                                <td><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
-                                <td><a class="btn btn-danger border-dark" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>">Cancel</a></td>
+                                <td><a class="btn btn-primary border-dark"
+                                        href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
+                                <td><a class="btn btn-danger border-dark"
+                                        href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>">Cancel</a>
+                                </td>
                                 <?php }else{ ?>
-                                <td colspan="2"><a class="btn btn-primary border-dark" href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
+                                <td colspan="2"><a class="btn btn-primary border-dark"
+                                        href="?viewPic=<?php echo $row['proofOfPayment'];?>">View</a></td>
                                 <?php }?>
-                                </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- pic (Bootstrap MODAL) -->
-                    <div class="modal fade" id="viewPic" role="dialog" >
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- pic (Bootstrap MODAL) -->
+                <div class="modal fade" id="viewPic" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content container">
                             <div class="modal-body">
@@ -77,8 +82,9 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </body>
+
 </html>
 <?php 
     //view pic
@@ -137,5 +143,7 @@
     }
 ?>
 <script>
-    	document.getElementById("back").onclick = function () {window.location.replace('customer.php'); };
+document.getElementById("back").onclick = function() {
+    window.location.replace('customer.php');
+};
 </script>

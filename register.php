@@ -11,52 +11,109 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-</head>
-<script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
+    <!-- online css bootsrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
-<body class="bg-light">
+<body class="bg-dark">
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <form method="post" class="form2">
-                <h1 class="font-weight-normal mt-5 mb-4 text-center">Register your account</h1>
-                <input type="text" class="form-control form-control-lg mb-3" name="username"
-                    placeholder="Enter Username" value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>"
-                    required>
-                <input type="text" class="form-control form-control-lg mb-3" name="firstName" placeholder="First Name"
-                    value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
-                <input type="text" class="form-control form-control-lg mb-3" name="middleName" placeholder="Middle Name"
-                    value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
-                <input type="text" class="form-control form-control-lg mb-3" name="lastName" placeholder="Last Name"
-                    value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
-                <select name='gender' class="form-control form-control-lg mb-3">
-                    <option value="null">Gender</option>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                    <option value="NA">Rather Not Say</option>
-                </select>
-                <input type="number" class="form-control form-control-lg mb-3" name="age" placeholder="Age"
-                    value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
-                <input type="number" class="form-control form-control-lg mb-3" id="phone" name="phone"
-                    placeholder="Phone Number" value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>"
-                    required>
-                <input type="text" class="form-control form-control-lg mb-3" name="address" placeholder="Address"
-                    value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
-                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter Email"
-                    value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
-                <input type="password" class="form-control form-control-lg mb-3" name="password"
-                    placeholder="Enter Password" required>
-                <button type="submit" class="btn btn-primary btn-lg col-12 mb-3" id="createAccount"
-                    name="createAccount">Sign Up</button><br>
-                <div class="mb-5 text-muted text-center">Have already an account? <a href="Login.php"
-                        class="login_link text-muted">Log in</a>
+    <section class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="card-body p-4 p-md-5">
+
+                        <form method="post" class="form2 px-md-2">
+
+                            <h1 class="fw-normal mb-5 text-center">Register your account</h1>
+
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="username"
+                                    placeholder="Username"
+                                    value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>" required>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="firstName"
+                                    placeholder="First Name"
+                                    value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="middleName"
+                                    placeholder="Middle Name"
+                                    value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="lastName"
+                                    placeholder="Last Name"
+                                    value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-outline mb-4 col-6">
+                                    <select name='gender' class="form-control form-control-lg">
+                                        <option value="null">Gender</option>
+                                        <option value="m">Male</option>
+                                        <option value="f">Female</option>
+                                        <option value="NA">Rather Not Say</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-outline mb-4 col-6">
+                                    <input type="number" class="form-control form-control-lg" name="age"
+                                        placeholder="Age" value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="number" class="form-control form-control-lg" id="phone" name="phone"
+                                    placeholder="Phone Number"
+                                    value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>" required>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="address"
+                                    placeholder="Address"
+                                    value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="email" class="form-control form-control-lg" name="email"
+                                    placeholder="Email"
+                                    value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <input type="password" class="form-control form-control-lg" name="password"
+                                    placeholder="Password" required>
+                            </div>
+
+                            <div class="input-group mb-4">
+                                <button type="submit" class="btn btn-dark btn-lg col-12" id="createAccount"
+                                    name="createAccount">
+                                    Create Account
+                                </button>
+                            </div>
+
+                            <div class="text-center text-muted">
+                                Have already an account? <a href="Login.php"
+                                    class="login_link text-muted text-decoration-none">Log in
+                                    here</a>
+                            </div>
+
+                        </form>
+
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </section>
 
 </body>
 
@@ -105,20 +162,13 @@
         $mail = new PHPMailer(true);
         //Server settings
         $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host = 'mail.ucc-csd-bscs.com';		                  //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
-        $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
-        $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-        $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+        include('phpMailerServerSettings.php');
         //Recipients
         $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
         $mail->addAddress("$email");                                //sent to
         //Content
         $mail->Subject = 'OTP';
-        $mail->Body    = "Good Day $name We would like to inform you that you create an account\nAnd you need to verify your account first using this OTP: ".$otp ."\nTHANK YOU!";
+        $mail->Body    = "Good Day! "."$name"." \nWe would like to inform you that you create an account and you need to verify your account first using this OTP: ".$otp ."\nTHANK YOU!";
         $mail->send();
 
         $user_id = uniqid('',true);

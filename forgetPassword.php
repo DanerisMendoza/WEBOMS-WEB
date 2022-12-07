@@ -7,56 +7,64 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
     include('method/query.php');
-    session_start();
+    // session_start();
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Forget Password</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>  
+<html lang="en">
 
-    </head>
-    <body>
-        <br></br>
-        <div class="container">
-            <div class="row justify-content-center">
+<head>
+    <title>Forget Password</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
             <button class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
-                <form method="post" class="form1 col-12">
-                    <input type="text" name="email" placeholder="Please Enter Your Email" required class="form-control form-control-lg mb-3">
-                    <button type="submit" name="submit" class="btn btn-primary btn-lg col-12 mb-3">Submit</button>
-                </form>
-            </div>
+            <form method="post" class="form1 col-12">
+                <input type="text" name="email" placeholder="Please Enter Your Email" required
+                    class="form-control form-control-lg mb-3">
+                <button type="submit" name="submit" class="btn btn-primary btn-lg col-12 mb-3">Submit</button>
+            </form>
         </div>
-         <!-- Enter forgetPasswordOtp -->
-         <div class="modal fade" role="dialog" id="forgetPassModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body ">
-                        <form method="post" class="form-group">
-                            <input type="text" class="form-control form-control-lg mb-3" name="forgetPasswordOtp" placeholder="Enter Otp" required>
-                            <button type="submit" class="btn btn-lg btn-success col-12" name="forgetPasswordOtpSubmit">Submit</button>
-                        </form>
-                    </div>
+    </div>
+
+    <!-- Enter forgetPasswordOtp -->
+    <div class="modal fade" role="dialog" id="forgetPassModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body ">
+                    <form method="post" class="form-group">
+                        <input type="text" class="form-control form-control-lg mb-3" name="forgetPasswordOtp"
+                            placeholder="Enter Otp" required>
+                        <button type="submit" class="btn btn-lg btn-success col-12"
+                            name="forgetPasswordOtpSubmit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
-         <!-- Enter New Password -->
-         <div class="modal fade" role="dialog" id="newPassModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body ">
-                        <form method="post" class="form-group">
-                            <input type="password" class="form-control form-control-lg mb-3" name="newPass" placeholder="Enter New Password" required>
-                            <button type="submit" class="btn btn-lg btn-success col-12" name="newPassSubmit">Submit</button>
-                        </form>
-                    </div>
+    </div>
+
+    <!-- Enter New Password -->
+    <div class="modal fade" role="dialog" id="newPassModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body ">
+                    <form method="post" class="form-group">
+                        <input type="password" class="form-control form-control-lg mb-3" name="newPass"
+                            placeholder="Enter New Password" required>
+                        <button type="submit" class="btn btn-lg btn-success col-12" name="newPassSubmit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+
+</body>
+
 </html>
 <?php 
     if(isset($_POST['submit'])){
@@ -80,15 +88,9 @@
                 require 'vendor/autoload.php';
                 //Create an instance; passing `true` enables exceptions
                 $mail = new PHPMailer(true);
-               //Server settings
+                //Server settings
                 $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
-                $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host = 'mail.ucc-csd-bscs.com';		                  //Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
-                $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
-                $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-                $mail->Port       =  465;  
+                include('phpMailerServerSettings.php');
                 //Recipients
                 $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
                 $mail->addAddress("$email");                                //sent to
@@ -137,6 +139,9 @@
         }
     }
 ?>
+
 <script>
-        document.getElementById("back").onclick = function () {window.location.replace('Login.php'); };
+document.getElementById("back").onclick = function() {
+    window.location.replace('Login.php');
+};
 </script>

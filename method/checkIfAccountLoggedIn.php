@@ -1,17 +1,21 @@
 <?php 
 session_start();
-//account not valid
-if((!isset($_SESSION['username']) || isset($_SESSION['account'])) != 'valid' && $page != 'notLogin'){
+// account is not set and account is in account pages 
+if(!isset($_SESSION['account']) && $page != 'notLogin'){
     die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
 }
+// account is not set and account is in non account pages
+elseif(!isset($_SESSION['account']) && $page == 'notLogin'){
+    return;
+}
 
-//account is already login
-if($page == 'notLogin' && isset($_SESSION['accountType']) ){
+// account is already login
+if($page == 'notLogin' && $_SESSION['account'] == 'valid'){
     if($_SESSION['accountType'] == 'customer')
         die ("<script>window.location.replace('customer.php'); alert('Already Loggedin!');</script>");
     else if($_SESSION['accountType'] == 'admin' || $_SESSION['accountType'] == 'manager')
         die ("<script>window.location.replace('admin.php'); alert('Already Loggedin!');</script>");
-    else
+    else if($_SESSION['accountType'] == 'cashier')
         die ("<script>window.location.replace('adminPos.php'); alert('Already Loggedin!');</script>");
 }
 

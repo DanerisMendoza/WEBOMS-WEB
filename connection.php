@@ -1,8 +1,8 @@
 <?php
 $dbhost = "localhost";
-$dbuser = "ytoovumw_bscs3a";
-$dbpass = "kaAGi]gz8H2*";
-$dbname = "ytoovumw_bscs3a";
+$dbuser = "root";
+$dbpass = "";
+$dbname = "ordering_db";
 
 
 $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);	
@@ -43,6 +43,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		$queryCreateOrder_tb = "create table if not exists WEBOMS_order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
 		user_id varchar(255), 
 		order_id varchar(255),
+		or_number varchar(255),
 		status varchar(255),
 		date datetime not null,
 		totalOrder int,
