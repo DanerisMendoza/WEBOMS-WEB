@@ -94,7 +94,7 @@ document.getElementById("viewCart").onclick = function() {
     window.location.replace('customerCart.php');
 };
 document.getElementById("customersFeedback").onclick = function() {
-    window.location.replace('customersFeedbackList.php');
+    window.location.replace('customerFeedbackList.php');
 };
 </script>
 
