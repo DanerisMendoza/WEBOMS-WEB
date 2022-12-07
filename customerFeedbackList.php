@@ -2,6 +2,8 @@
   $page = 'feedback';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
+  $query = "select a.user_id, b.name, c.feedback from weboms_order_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id inner join WEBOMS_feedback_tb c on c.user_id = a.user_id";
+  $resultSet =  getQuery($query);
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Feedback</title>
-
+    <!-- for modal -->
     <link rel="stylesheet" href="css/bootstrap 5/bootstrap.min.css">
     <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
@@ -29,20 +31,12 @@
             BACK
         </button>
         <script>
-        var accountType = "<?php echo  $_SESSION['accountType'];?>";
         document.getElementById("back").onclick = function() {
-            if (accountType == 'customer')
-                window.location.replace('customerMenu.php');
-            else if (accountType == 'admin' || accountType == 'manager')
-                window.location.replace('admin.php');
+            window.location.replace('customerMenu.php');
         };
         </script>
 
         <!-- table -->
-        <?php
-            $query = "select WEBOMS_userInfo_tb.*, WEBOMS_feedback_tb.*, WEBOMS_order_tb.* from WEBOMS_userInfo_tb, WEBOMS_order_tb, WEBOMS_feedback_tb where WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id and WEBOMS_feedback_tb.order_id = WEBOMS_order_tb.order_id;";
-            $resultSet =  getQuery($query);
-        ?>
         <div class="table-responsive col-lg-12">
             <table class="table table-bordered col-lg-12">
                 <thead>

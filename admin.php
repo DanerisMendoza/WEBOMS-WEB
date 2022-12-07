@@ -165,7 +165,7 @@ document.getElementById("accountManagement").onclick = function() {
     window.location.replace('accountManagement.php');
 };
 document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('customerFeedbackList.php');
+    window.location.replace('adminFeedbackList.php');
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');

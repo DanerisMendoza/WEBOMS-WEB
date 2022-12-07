@@ -225,7 +225,7 @@
                                         <i class="bi bi-plus"></i>
                                     </a>
                                     <?php }else{ ?>
-                                    <a class="btn btn-success border-dark">OUT OF STOCK</a>
+                                    <a class="btn btn-light border-dark">OUT OF STOCK</a>
                                     <?php } ?>
                                     <a class="btn btn-danger"
                                         href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
@@ -243,6 +243,10 @@
                             </tr>
                         </table>
                         <form method="post">
+                            <!-- cash amount -->
+                                <input  name="customerName"                                
+                                placeholder="Customer Name (optional)" type="text" class="form-control form-control-lg mb-3"
+                                ></input>
                             <!-- cash amount -->
                             <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any
                                 placeholder="CASH AMOUNT" type="number" class="form-control form-control-lg mb-3"
@@ -307,7 +311,7 @@ $(document).ready(function() {
         echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-    // add
+    // add quantity
     if(isset($_GET['add'])){
         $arr = explode(',',$_GET['add']);
         $dish = $arr[0];
@@ -322,7 +326,7 @@ $(document).ready(function() {
           echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-    //minus
+    //minus quantity
     if(isset($_GET['minus'])){
         $arr = explode(',',$_GET['minus']);
         $dish = $arr[0];
@@ -348,12 +352,34 @@ $(document).ready(function() {
     //order button (php)
     if(isset($_POST['order'])){
         $cash = $_POST['cash'];
+        $customerName = $_POST['customerName'];
         if($cash >= $total && $total != 0){
             $_SESSION['continue'] = true;
             date_default_timezone_set('Asia/Manila');
             $date = new DateTime();
             $today =  $date->format('Y-m-d'); 
             $todayWithTime =  $date->format('Y-m-d H:i:s'); 
+
+            //or number process
+            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $year = date("Y");
+            if($or_last == null){
+                $num = 1;
+            }
+            else{
+                $num = substr($or_last,5);
+                $num = $num + 1;
+            }
+            $input = $num;
+            $inputSize = strlen(strval($input));
+            if($inputSize > 4)
+                $str_length = $inputSize;
+            else
+                $str_length = 4;
+            $temp = substr("0000{$input}", -$str_length);
+            $or_number =  $year.'-'.$temp;
+            $_SESSION['or_number'] = $or_number;
+            $_SESSION['customerName'] = $customerName;
             $_SESSION['date'] = $todayWithTime;
             $_SESSION['cash'] = $cash;
             $_SESSION['total'] = $total;
@@ -364,7 +390,7 @@ $(document).ready(function() {
             $user_id = $_SESSION['user_id'];
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
-            $query1 = "insert into WEBOMS_order_tb(user_id, status, order_id, date, totalOrder, payment,  staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$cash', '$staff')";
+            $query1 = "insert into WEBOMS_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);

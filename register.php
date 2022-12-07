@@ -119,11 +119,6 @@
 
 </html>
 
-<script>
-document.getElementById("back").addEventListener("click", function() {
-    window.location.replace('Login.php');
-});
-</script>
 
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
@@ -166,22 +161,14 @@ document.getElementById("back").addEventListener("click", function() {
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
         //Server settings
-        $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                     //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'weboms098@gmail.com'; //from //SMTP username
-        $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
-        $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-        $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+        $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+        include('phpMailerServerSettings.php');
         //Recipients
         $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
         $mail->addAddress("$email");                                //sent to
         //Content
         $mail->Subject = 'OTP';
-        $mail->Body    = "Good Day $name We would like to inform you that you create an account\nAnd you need to verify your account first using this OTP: ".$otp ."\nTHANK YOU!";
+        $mail->Body    = "Good Day! "."$name"." \nWe would like to inform you that you create an account and you need to verify your account first using this OTP: ".$otp ."\nTHANK YOU!";
         $mail->send();
 
         $user_id = uniqid('',true);

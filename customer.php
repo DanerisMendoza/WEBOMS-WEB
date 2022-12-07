@@ -26,18 +26,17 @@
 <body class="bg-light">
     <div class="container text-center">
         <div class="row justify-content-center">
-            <h2 class="font-weight-normal mt-3  mb-3 col-12">Customer, Hi <?php echo $_SESSION['name'];?>!</h1>
-                <!--mt for margin top and mb for margin bot -->
-                <h2 class="font-weight-normal mb-3 col-12">Balance: ₱<?php echo $balance; ?></h1>
-                    <button class="btn btn-lg btn-primary col-12 mb-3" id="menu">Browse Menu</button>
-                    <button class="btn btn-lg btn-primary col-12 mb-3" id="topUp">Top-up</button>
-                    <button class="btn btn-lg btn-primary col-12 mb-3" id="customerOrders">View Your Orders</button>
-                    <form method="POST">
-                        <button class="btn btn-lg btn-dark col-12 mb-3" id="Logout" name="logout">Logout</button>
-                    </form>
+            <h2 class="font-weight-normal mt-3  mb-3 col-12">Customer, Hi <?php echo $_SESSION['name'];?>!</h1> <!--mt for margin top and mb for margin bot -->
+            <h2 class="font-weight-normal mb-3 col-12">Balance: ₱<?php echo $balance; ?></h1>
+            <button class="btn btn-lg btn-primary col-12 mb-3" id="customerProfile">Customer Profile</button> 
+            <button class="btn btn-lg btn-primary col-12 mb-3" id="menu">Browse Menu</button> 
+            <button class="btn btn-lg btn-primary col-12 mb-3" id="topUp">Top-up</button>
+            <button class="btn btn-lg btn-primary col-12 mb-3" id="customerOrders">View Your Orders</button>
+            <form method="POST">
+                <button class="btn btn-lg btn-dark col-12 mb-3" id="Logout" name="logout">Logout</button>
+            </form>
         </div>
     </div>
-
 </body>
 
 </html>
@@ -52,6 +51,9 @@ document.getElementById("topUp").onclick = function() {
 };
 document.getElementById("customerOrders").onclick = function() {
     window.location.replace('customerOrdersList.php');
+};
+document.getElementById("customerProfile").onclick = function() {
+    window.location.replace('customerProfile.php');
 };
 </script>
 

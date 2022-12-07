@@ -202,7 +202,27 @@ document.getElementById("back").onclick = function() {
             $total = number_format($total,2);
             $name = $_SESSION['name'];
 
-            $query1 = "insert into WEBOMS_order_tb( user_id, status, order_id, date, totalOrder, payment, staffInCharge) values('$user_id','prepairing','$order_id','$todayWithTime','$total','$total', 'online order')";
+            //or number process
+            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $year = date("Y");
+            if($or_last == null){
+                $num = 1;
+            }
+            else{
+                $num = substr($or_last,5);
+                $num = $num + 1;
+            }
+            $input = $num;
+            $inputSize = strlen(strval($input));
+            if($inputSize > 4)
+                $str_length = $inputSize;
+            else
+                $str_length = 4;
+            $temp = substr("0000{$input}", -$str_length);
+            $or_number =  $year.'-'.$temp;
+
+
+            $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
@@ -253,6 +273,8 @@ document.getElementById("back").onclick = function() {
                 $pdf -> Cell(122,10,"Customer: $name",'','0','L');
                 $pdf -> ln(10);
                 $pdf -> Cell(122,10,"Order Type: Online Order",'','0','L');
+                $pdf -> ln(10);
+                $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
                 ob_end_clean();
                 $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
@@ -260,16 +282,8 @@ document.getElementById("back").onclick = function() {
                 //Create an instance; passing `true` enables exceptions
                 $mail = new PHPMailer(true);
                 //Server settings
-                $mail->SMTPDebug  = SMTP::DEBUG_OFF;
-                //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                     //Enable verbose debug output
-                $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'weboms098@gmail.com'; //from //SMTP username
-                $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
-                $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;           //Enable implicit TLS encryption
-                $mail->Port       =  465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
+                $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+                include('phpMailerServerSettings.php');
                 //Recipients
                 $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
                 $mail->addAddress("$email");                                //sent to

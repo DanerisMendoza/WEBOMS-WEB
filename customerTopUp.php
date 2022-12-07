@@ -42,10 +42,9 @@
                             <tr>
                                 <th scope="col">NAME</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Proof Of Payment</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Date</th>
-                                <th scope="col" colspan="3">Action</th>
+                                <th scope="col" colspan="3">Proof Of Payment</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,7 +54,6 @@
                             <tr>
                                 <td><?php echo $row['name']; ?></td>
                                 <td><?php echo '₱'.$row['amount'];?></td>
-                                <td><?php echo $row['proofOfPayment'];?></td>
                                 <td><?php echo $row['status'];?></td>
                                 <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
                                 <?php if($row['status'] != 'approved'){?>
