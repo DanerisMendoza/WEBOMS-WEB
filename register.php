@@ -161,13 +161,14 @@
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
         //Server settings
+        $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
         include('phpMailerServerSettings.php');
         //Recipients
         $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
         $mail->addAddress("$email");                                //sent to
         //Content
         $mail->Subject = 'OTP';
-        $mail->Body    = "Good Day $name We would like to inform you that you create an account\nAnd you need to verify your account first using this OTP: ".$otp ."\nTHANK YOU!";
+        $mail->Body    = "Good Day! "."$name"." \nWe would like to inform you that you create an account and you need to verify your account first using this OTP: ".$otp ."\nTHANK YOU!";
         $mail->send();
 
         $user_id = uniqid('',true);

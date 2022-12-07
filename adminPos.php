@@ -311,7 +311,7 @@ $(document).ready(function() {
         echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-    // add
+    // add quantity
     if(isset($_GET['add'])){
         $arr = explode(',',$_GET['add']);
         $dish = $arr[0];
@@ -326,7 +326,7 @@ $(document).ready(function() {
           echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
-    //minus
+    //minus quantity
     if(isset($_GET['minus'])){
         $arr = explode(',',$_GET['minus']);
         $dish = $arr[0];

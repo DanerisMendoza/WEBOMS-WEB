@@ -2,7 +2,7 @@
     $page = 'cashier';
     include('../method/checkIfAccountLoggedIn.php');
     require_once('../TCPDF-main/tcpdf.php'); 
-    if($_SESSION['refreshCount'] < 1){
+    if($_SESSION['refreshCount'] < 2){
         $_SESSION['refreshCount'] += 1;
         die ("<script>window.location.replace('receipt.php');</script>");
     }

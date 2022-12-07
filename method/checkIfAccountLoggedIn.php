@@ -1,12 +1,13 @@
 <?php 
 session_start();
-// account not valid
-if(isset($_SESSION['account'])){
-    if($_SESSION['account'] != 'valid'  && $page != 'notLogin')
-        die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
+// account is not set and account is in account pages 
+if(!isset($_SESSION['account']) && $page != 'notLogin'){
+    die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
 }
-else
+// account is not set and account is in non account pages
+elseif(!isset($_SESSION['account']) && $page == 'notLogin'){
     return;
+}
 
 // account is already login
 if($page == 'notLogin' && $_SESSION['account'] == 'valid'){
