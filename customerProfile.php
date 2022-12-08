@@ -57,7 +57,9 @@
                 ?>
                 <tr>
                     <th scope="col">Profile Info</th>
+                    <?php if($picName != null){?>
                     <img src="profilePic/<?php echo $picName; ?>" style=width:200px;height:200px>
+                    <?php } ?>
                 </tr>
                 <tr><td><?php echo $name;?></td></tr>
                 <tr><td><strong>Username: </strong> <?php echo $username;?></td></tr>
