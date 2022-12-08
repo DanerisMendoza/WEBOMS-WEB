@@ -32,8 +32,14 @@
     $pdf->SetAutoPageBreak(TRUE, 10);  
     $pdf->SetFont('dejavusans', '', 11);  
     $pdf->AddPage('P','a6');
-    $pdf -> Cell(60,10,"$date",'0','C');
-    $pdf -> ln(10);
+    $pdf -> Cell(183,10,"$_SESSION[companyName]",'','0','C');
+    $pdf -> ln(8);
+    $pdf -> Cell(183,10,"$_SESSION[companyAddress]",'','0','C');
+    $pdf -> ln(8);
+    $pdf -> Cell(183,10,"$_SESSION[companyTel]",'','0','C');
+    $pdf -> ln(8);
+    $pdf -> Cell(183,10,"$date",'','0','C');
+    $pdf -> ln(15);
     $pdf -> Cell(61,10,"Dish",'B,T','0','C');
     $pdf -> Cell(61,10,"Quantity",'B,T','0','C');
     $pdf -> Cell(61,10,"Price",'B,T','0','C');
@@ -64,6 +70,8 @@
     $pdf -> Cell(122,10,"Order Type: POS",'','0','L');
     $pdf -> ln(10);
     $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
+    $pdf -> ln(10);
+    $pdf -> Cell(122,10,"Cashier: $_SESSION[name]",'','0','L');
     ob_end_clean();
     $pdf->Output('file.pdf', 'I');
 

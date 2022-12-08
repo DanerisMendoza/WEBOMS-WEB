@@ -30,7 +30,6 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		otp varchar(255),
 		forgetPasswordOtp varchar(255),
 		balance int)";
-		
 
 		//menu
 		$queryCreateMenu_tb = "create table if not exists WEBOMS_menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
@@ -70,7 +69,13 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		proofOfPayment varchar(255),
 		date datetime)";
 
-		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb)) {
+		//company settings
+		$queryCreateCompany_tb = "create table if not exists WEBOMS_company_tb(id int PRIMARY KEY AUTO_INCREMENT, 
+		name varchar(255), 
+		address varchar(255), 
+		tel varchar(255))";
+
+		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb) && $conn->query($queryCreateCompany_tb)) {
 			$checkQuery = "select * from WEBOMS_user_tb";
 			if($resultSet = $conn->query($checkQuery)){  
 				if($resultSet->num_rows <= 0){
@@ -78,9 +83,9 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 					$user_id = uniqid('',true);
 					$queryInsertAdmin = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('admin','$hash','admin','$user_id')";
 					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, user_id) values('admin', '$user_id')";
-					if($conn->query($queryInsertAdmin))
-						if($conn->query($queryInsertAdminInfo))
-							echo  '<script>alert("Success creating table");</script>';						
+					$queryInsertComapnyInfo = "insert into WEBOMS_company_tb(name, address, tel) values('companyName', 'address', '0000')";
+					if($conn->query($queryInsertAdmin) && $conn->query($queryInsertAdminInfo) && $conn->query($queryInsertComapnyInfo))
+						echo  '<script> alert("Success creating table"); </script>';						
 					}
 			}
 		}
@@ -88,4 +93,3 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 			echo  '<script type="text/javascript">alert("Error creating table");</script>';						
 	}
 ?>
-

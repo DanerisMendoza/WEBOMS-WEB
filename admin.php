@@ -82,6 +82,12 @@
                         Top-Up
                     </a>
                 </li>
+                <li class="mb-1">
+                    <a href="#" id="settings">
+                        <i class="bi bi-cash-stack me-2"></i>
+                        Settings
+                    </a>
+                </li>
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
@@ -169,6 +175,9 @@ document.getElementById("customerFeedback").onclick = function() {
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
+};
+document.getElementById("settings").onclick = function() {
+    window.location.replace('settings.php');
 };
 </script>
 

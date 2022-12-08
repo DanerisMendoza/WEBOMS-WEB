@@ -61,7 +61,7 @@
                     <img src="profilePic/<?php echo $picName; ?>" style=width:200px;height:200px>
                     <?php } ?>
                 </tr>
-                <tr><td><?php echo $name;?></td></tr>
+                <tr><td><strong>Name: <?php echo $name;?></strong></td></tr>
                 <tr><td><strong>Username: </strong> <?php echo $username;?></td></tr>
                 <tr><td><strong>Email: </strong> <?php echo $email;?></td></tr>
                 <tr><td><strong>Gender: </strong> <?php echo $gender;?></td></tr>
@@ -154,6 +154,7 @@ document.getElementById("updatePassword").onclick = function () {
             die ("<script>alert('Email Already Exist!');</script>");
 
         //file input process
+        $name = $_POST['name'];
         $username = $_POST['username'];
         $email = $_POST['email'];
         $phoneNumber = $_POST['phoneNumber'];
@@ -162,7 +163,7 @@ document.getElementById("updatePassword").onclick = function () {
         $fileName = $_FILES['fileInput']['name'];
         //if image didn't change 
         if($fileName == ''){
-        $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET  username = '$username', picName = '$picName', email = '$email', gender = '$g', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
+        $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$picName', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
             if(Query($query)){
                 die ("<script>alert('Sucess updating the database!'); window.location.replace('customerProfile.php');</script>");       
             }
@@ -181,7 +182,7 @@ document.getElementById("updatePassword").onclick = function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'profilePic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
-                    $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET  username = '$username', picName = '$fileNameNew', email = '$email', gender = '$g', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
+                    $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$fileNameNew', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
                     if(Query($query)){
                         echo '<script>alert("Sucess updating the database!");</script>';
                         if($picName != null)       

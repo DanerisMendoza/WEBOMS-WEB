@@ -9,6 +9,15 @@
     }
     $_SESSION['refreshCount'] = 0;
     $_SESSION['multiArr'] = array();
+    //company variables init
+    $query = "select * from WEBOMS_company_tb";
+    $resultSet = getQuery($query);
+    if($resultSet!=null)
+        foreach($resultSet as $row){
+          $_SESSION['companyName'] = $row['name'];
+          $_SESSION['companyAddress'] = $row['address'];
+          $_SESSION['companyTel'] = $row['tel'];
+        }
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +57,8 @@
                         Point of Sales
                     </a>
                 </li>
+            <?php if($_SESSION['accountType'] != 'cashier'){?>
+
                 <li class="mb-2">
                     <a href="#" id="orders">
                         <i class="bi bi-minecart me-2"></i>
@@ -90,6 +101,7 @@
                         Top-Up
                     </a>
                 </li>
+            <?php } ?>
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">

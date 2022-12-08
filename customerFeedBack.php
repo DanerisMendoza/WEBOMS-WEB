@@ -19,7 +19,7 @@
 <div class="container text-center mt-5">
     <div class="row justify-content-center">
         <button class="btn btn-lg btn-dark col-12 mb-3" id="orderList">Order List</button>
-        <script>document.getElementById("orderList").onclick = function () {window.location.replace('customerOrdersList.php'); }; </script> 
+        <script>document.getElementById("orderList").onclick = function () {window.location.replace('customerOrders.php'); }; </script> 
             
         <div class="col-lg-12">
             <form method="post">
@@ -40,6 +40,6 @@
         $feedback = $_POST['feedback'];
         $query = "insert into WEBOMS_feedback_tb(feedback, order_id, user_id) values('$feedback', '$order_id', '$user_id')";
         if(Query($query))
-            echo "<script>alert('feedback sent thanks!'); window.location.replace('customerOrdersList.php');</script>";
+            echo "<script>alert('feedback sent thanks!'); window.location.replace('customerOrders.php');</script>";
     }
 ?>

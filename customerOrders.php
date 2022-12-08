@@ -8,49 +8,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Costumer - Orders</title>
-  
+  <title>Costumer - View Your Orders</title>
+
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+  <link rel="stylesheet" type="text/css" href="css/style.css">
     
 </head>
 <body class="bg-light">
     
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <button class="btn btn-lg btn-dark col-12 mb-4" id="orderList">Order List</button>
+    <button class="btn btn-lg btn-dark col-12 mb-4" id="customer">Customer</button>
+        <script>
+            document.getElementById("customer").onclick = function () {window.location.replace('customer.php'); };    
+        </script> 
+        
     <div class="table-responsive col-lg-12">
-            <?php 
-            
-              $id =  $_GET['id'];
-              include('method/query.php');
-              $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$id' ";
-              $resultSet =  getQuery($query); 
-            ?>
-            
-      <table class="table table-striped table-bordered col-lg-12 mb-4">
+      <table class="table table-striped table-bordered col-lg-12">
         <thead class="table-dark">
           <tr>	
-            <th scope="col">QUANTITY</th>
-            <th scope="col">DISH</th>
-            <th scope="col">PRICE</th>
+            <th scope="col">NAME</th>
+            <th scope="col">STATUS</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">FEEDBACK</th>
+            <th scope="col">DATE & TIME</th>
+            <th scope="col">ORDER DETAILS</th>
           </tr>
         </thead>
         <tbody>
-          <?php 
-          $total = 0;
-          if($resultSet != null)
-          foreach($resultSet as $row){ ?>
-          <tr>	   
-            <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
-            <td><?php echo $row['quantity']; ?></td>
-            <td><?php echo $row['dish']; ?></td>
-            <td><?php echo '₱' .$price?></td>
-          </tr>
-          <?php }?>
-          <tr>
-            <td colspan="2"><b>TOTAL AMOUNT:</b></td>
-            <td><b>₱<?php echo $total?></b></td>
-          </tr>
+              <?php
+              include('method/query.php');
+                $user_id = $_SESSION["user_id"];  
+                $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
+                $resultSet = getQuery($getCustomerOrders);
+                if($resultSet != null)
+                foreach($resultSet as $row){ ?>
+                <tr>	   
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['status']; ?></td>
+                <td><?php echo $row['email']; ?></td>
+                <td><?php 
+                  $order_id = $row['order_id'];
+                  $user_id = $row['user_id'];
+                  $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
+                  $resultSet = getQuery($checkIfAlreadyFeedback);
+                  if($row['status'] == 'complete' && $resultSet == null){
+                    ?>  <a class="btn btn-light border-dark" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>">Feedback</a>  <?php
+                  }
+                  elseif($row['status'] == 'complete'){
+                    echo "You have already feedback!";
+                  }
+                  else{
+                    echo "Please wait until order is Complete.";
+                  }
+                ?>
+                </td>
+                <td><?php echo date('m/d/Y h:i:s a ', strtotime($row['date'])); ?></td>
+                <td><a class="btn btn-light border-dark" href="customerOrder_details.php?id=<?php echo $row['order_id'];?>">View Order</a></td>
+                </tr>
+                <?php } ?>
         </tbody>
       </table>
     </div>
@@ -60,6 +76,3 @@
 </body>
 </html>
 
-<script>
-  document.getElementById("orderList").onclick = function () {window.location.replace('customerOrdersList.php'); };
-</script> 
