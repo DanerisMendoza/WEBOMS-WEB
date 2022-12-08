@@ -115,7 +115,7 @@
                                     <th scope="col">DISH</th>
                                     <th scope="col">PRICE</th>
                                     <th scope="col">STOCK</th>
-                                    <th scope="col">STAFF (IN-CHARGE)</th>
+                                    <th scope="col">Last Modified By:</th>
                                     <th scope="col">
                                         <button id="addButton" type="button" class="btn btn-success"
                                             data-bs-toggle="modal" data-bs-target="#loginModal">
@@ -280,7 +280,7 @@ document.getElementById("accountManagement").onclick = function() {
     window.location.replace('accountManagement.php');
 };
 document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('customerFeedbackList.php');
+    window.location.replace('adminFeedbackList.php');
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');

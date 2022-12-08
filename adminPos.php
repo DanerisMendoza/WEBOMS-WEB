@@ -386,7 +386,7 @@ $(document).ready(function() {
             $_SESSION['dishesArr'] = $dishesArr;
             $_SESSION['priceArr'] = $priceArr;
             $_SESSION['dishesQuantity'] = $dishesQuantity;
-            $staff = $_SESSION['name'].'('.$_SESSION['accountType'].')';
+            $staff = $_SESSION['name'].' via POS';
             $user_id = $_SESSION['user_id'];
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
@@ -396,7 +396,11 @@ $(document).ready(function() {
                 Query($query2);
             }
             Query($query1);
-            echo "<script>document.getElementById('clear').click();</script>";
+            // Query($query3);
+            $_SESSION["dishes"] = array();
+            $_SESSION["price"] = array();
+            $_SESSION["orderType"] = array(); 
+            echo "<script>window.location.replace('adminPos.php');</script>";
         }   
     }
 ?>
@@ -445,7 +449,7 @@ document.getElementById("accountManagement").onclick = function() {
     window.location.replace('accountManagement.php');
 };
 document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('customerFeedbackList.php');
+    window.location.replace('adminFeedbackList.php');
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
