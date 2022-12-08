@@ -27,65 +27,36 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">
-                    <a href="admin.php">Admin</a>
-                </h3>
+                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="#" id="pos">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
+                    <a href="#" id="pos"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
+                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="ordersQueue">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
+                    <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="inventory">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
+                    <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="salesReport">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
+                    <a href="#" id="salesReport"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2 active">
-                    <a href="#">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
+                    <a href="#"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="customerFeedback">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
+                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
+                    <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li>
                     <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>
                 </li>
             </ul>
@@ -96,8 +67,7 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
+                        <i class="bi bi-list me-1"></i>Dashboard
                     </button>
                 </div>
             </nav>
@@ -119,10 +89,8 @@
                                     <th scope="col">EMAIL</th>
                                     <th scope="col">ACCOUNT TYPE</th>
                                     <th scope="col">
-                                        <button id="addButton" type="button" class="btn btn-success mb-1"
-                                            data-bs-toggle="modal" data-bs-target="#loginModal">
-                                            <i class="bi bi-person-plus me-1"></i>
-                                            ADD NEW ACCOUNT
+                                        <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                            <i class="bi bi-person-plus me-1"></i>ADD NEW ACCOUNT
                                         </button>
                                     </th>
                                     <th scope="col">OPTIONS</th>
@@ -143,18 +111,11 @@
                                     <td><?php echo strtoupper($row['accountType']);?></td>
                                     <!-- options -->
                                     <td>
-                                        <a class="btn btn-warning"
-                                            href="?update=<?php echo $row['username'].','.$row['email'] ?>">
-                                            <i class="bi bi-arrow-repeat me-1"></i>
-                                            UPDATE
-                                        </a>
+                                        <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</a>
                                     </td>
                                     <td>
                                         <?php if($row['username'] != 'admin'){?>
-                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'] ?>">
-                                            <i class="bi bi-trash me-1"></i>
-                                            DELETE
-                                        </a>
+                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'] ?>"><i class="bi bi-trash me-1"></i>DELETE</a>
                                         <?php } 
                                             else
                                                 echo "YOU CAN NOT DELETE </BR> ADMIN ACCOUNT!" ?>
@@ -173,28 +134,15 @@
                     <div class="modal-content">
                         <div class="modal-body ">
                             <form method="post" class="form-group">
-                                <!-- username -->
-                                <input type="text" class="form-control form-control-lg mb-3" name="username"
-                                    placeholder="ENTER USERNAME" required>
-                                <!-- name -->
-                                <input type="text" class="form-control form-control-lg mb-3" name="name"
-                                    placeholder="ENTER NAME" required>
-                                <!-- email -->
-                                <input type="email" class="form-control form-control-lg mb-3" name="email"
-                                    placeholder="ENTER EMAIL" required>
-                                <!-- password -->
-                                <input type="password" class="form-control form-control-lg mb-3" name="password"
-                                    placeholder="ENTER PASSWORD" required>
-                                <!-- manager/cashier -->
+                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="ENTER USERNAME" required>
+                                <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="ENTER NAME" required>
+                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="ENTER EMAIL" required>
+                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="ENTER PASSWORD" required>
                                 <select name="accountType" class="form-control form-control-lg col-12 mb-3">
                                     <option value="manager">MANAGER</option>
                                     <option value="cashier">CASHIER</option>
                                 </select>
-                                <!-- button -->
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert">
-                                    <i class="bi bi-plus me-1"></i>
-                                    INSERT
-                                </button>
+                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus me-1"></i>INSERT</button>
                             </form>
                         </div>
                     </div>
@@ -235,20 +183,10 @@
                     <div class="modal-content">
                         <div class="modal-body ">
                             <form method="post" class="form-group">
-                                <!-- username -->
-                                <input type="text" class="form-control form-control-lg mb-3" name="username"
-                                    placeholder="ENTER NEW USERNAME" required>
-                                <!-- email -->
-                                <input type="email" class="form-control form-control-lg mb-3" name="email"
-                                    placeholder="ENTER NEW EMAIL">
-                                <!-- password -->
-                                <input type="password" class="form-control form-control-lg mb-3" name="password"
-                                    placeholder="ENTER NEW PASSWORD" required>
-                                <!-- button -->
-                                <button type="submit" class="btn btn-lg btn-warning col-12" name="updateAdmin">
-                                    <i class="bi bi-arrow-repeat me-1"></i>
-                                    UPDATE
-                                </button>
+                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="ENTER NEW USERNAME" required>
+                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="ENTER NEW EMAIL">
+                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="ENTER NEW PASSWORD" required>
+                                <button type="submit" class="btn btn-lg btn-warning col-12" name="updateAdmin"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
                             </form>
                         </div>
                     </div>
@@ -276,13 +214,13 @@
         //validation
         $query = "select * from WEBOMS_user_tb where username = '$username'";
         if(getQuery($query) != null)
-            die ("<script>alert('Name Already Exist!');</script>");
+            die ("<script>alert('NAME ALREADY EXIST!');</script>");
         $query = "select * from WEBOMS_userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
-            die ("<script>alert('Name Already Exist!');</script>");
+            die ("<script>alert('NAME ALREADY EXIST!');</script>");
         $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
-            die ("<script>alert('Email Already Exist!');</script>");
+            die ("<script>alert('EMAIL ALREADY EXIST!');</script>");
 
         //insert
         $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";

@@ -3,6 +3,7 @@
   include('method/query.php');
   include('method/checkIfAccountLoggedIn.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,65 +30,36 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">
-                    <a href="admin.php">Admin</a>
-                </h3>
+                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="#" id="pos">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
+                    <a href="#" id="pos"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
+                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="ordersQueue">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
+                    <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
                 <li class="mb-2 active">
-                    <a href="#">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
+                    <a href="#"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="salesReport">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
+                    <a href="#" id="salesReport"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="accountManagement">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
+                    <a href="#" id="accountManagement"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="customerFeedback">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
+                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
+                    <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li>
                     <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>
                 </li>
             </ul>
@@ -98,29 +70,28 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
+                        <i class="bi bi-list"></i>Dashboard
                     </button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
 
+                    <!-- table -->
                     <div class="table-responsive col-lg-12 mb-5">
-                        <table class="table table-striped table-bordered col-lg-12" id="tbl">
+                        <table class="table table-bordered table-hover col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">IMAGE</th>
                                     <th scope="col">DISH</th>
                                     <th scope="col">PRICE</th>
                                     <th scope="col">STOCK</th>
-                                    <th scope="col">Last Modified By:</th>
+                                    <th scope="col">LAST MODIFIED BY:</th>
                                     <th scope="col">
-                                        <button id="addButton" type="button" class="btn btn-success"
-                                            data-bs-toggle="modal" data-bs-target="#loginModal">
-                                            <i class="bi bi-plus me-1"></i>
-                                            ADD NEW DISH
+                                        <button id="addButton" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                            <i class="bi bi-plus me-1"></i>ADD NEW DISH
                                         </button>
                                     </th>
                                 </tr>
@@ -146,16 +117,8 @@
                                     <td><?php echo strtoupper($row['lastModifiedBy']); ?></td>
                                     <!-- options -->
                                     <td>
-                                        <a class="btn btn-danger"
-                                            href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>">
-                                            <i class="bi bi-trash me-1"></i>
-                                            DELETE
-                                        </a>
-                                        <a class="btn btn-warning"
-                                            href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>">
-                                            <i class="bi bi-arrow-repeat me-1"></i>
-                                            UPDATE
-                                        </a>
+                                        <a class="btn btn-danger" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>"><i class="bi bi-trash me-1"></i>DELETE</a>
+                                        <a class="btn btn-warning" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</a>
                                     </td>
                                 </tr>
                                 <?php } 
@@ -171,18 +134,14 @@
             <div class="modal fade" role="dialog" id="loginModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-body ">
+                        <div class="modal-body">
                             <form method="post" class="form-group" enctype="multipart/form-data">
-                                <input type="text" class="form-control form-control-lg mb-3" name="dishes"
-                                    placeholder="ENTER DISH NAME" required>
-                                <input type="number" class="form-control form-control-lg mb-3" name="price" step="any"
-                                    placeholder="ENTER PRICE" required>
-                                <input type="number" class="form-control form-control-lg mb-3" name="stock"
-                                    placeholder="ENTER NUMBER OF STOCK" required>
+                                <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="ENTER DISH NAME" required>
+                                <input type="number" class="form-control form-control-lg mb-3" name="price" step="any" placeholder="ENTER PRICE" required>
+                                <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="ENTER NUMBER OF STOCK" required>
                                 <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
                                 <button type="submit" class="btn btn-lg btn-success col-12" name="insert">
-                                    <i class="bi bi-plus me-1"></i>
-                                    INSERT
+                                    <i class="bi bi-plus me-1"></i>INSERT
                                 </button>
                             </form>
                         </div>
@@ -236,13 +195,13 @@
                 echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }
           else
-              echo "your file is too big!";
+              echo "YOUR FILE IS TOO BIG!";
       }
       else
-          echo "there was an error uploading your file!";
+          echo "THERE WAS AN ERROR UPLOADING YOUR FILE!";
   }
   else
-      echo "you cannot upload files of this type";     
+      echo "YOU CANNOT UPLOAD FILES OF THIS TYPE!";     
   }
 ?>
 

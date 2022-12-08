@@ -58,65 +58,36 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">
-                    <a href="admin.php">Admin</a>
-                </h3>
+                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="#" id="pos">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
+                    <a href="#" id="pos"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
+                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="ordersQueue">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
+                    <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="inventory">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
+                    <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2 active">
-                    <a href="#">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
+                    <a href="#"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="accountManagement">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
+                    <a href="#" id="accountManagement"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="customerFeedback">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
+                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
+                    <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li>
                     <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>
                 </li>
             </ul>
@@ -127,11 +98,11 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
+                        <i class="bi bi-list"></i>Dashboard
                     </button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center g-3">
@@ -139,6 +110,8 @@
                         <button class="btn btn-lg btn-dark border-secondary" id="viewGraph">VIEW GRAPH</button>
                         <button class="btn btn-lg btn-dark border-secondary" id="viewInPdf">VIEW IN PDF</button>
                     </div>
+
+                    <!-- table -->
                     <form method="post" class="col-lg-12">
                         <div class="table-responsive col-lg-12">
                             <table class="table table-bordered border-white col-lg-12">
@@ -174,19 +147,9 @@
                                 </tr>
                             </table>
                         </div>
-                        <!-- <h1 class="fw-normal h3 form-control form-control-lg">FROM:</h1>
-                        <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg"
-                            value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>">
-                        <h1 class="fw-normal h3 form-control form-control-lg">TO:</h1>
-                        <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg"
-                            value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>">
-                        <button type="submit" name="fetch" class="btn btn-lg btn-success col-12">
-                            FETCH (BETWEEN)
-                        </button>
-                        <button type="submit" name="showAll" class="btn btn-lg btn-success col-12 mb-4">
-                            SHOW ALL
-                        </button> -->
                     </form>
+
+                    <!-- table 2 -->
                     <div class="table-responsive col-lg-12">
                         <table class="table table-bordered col-lg-12">
                             <thead>
