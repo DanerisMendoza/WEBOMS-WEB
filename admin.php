@@ -35,52 +35,28 @@
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="#" id="pos">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
+                    <a href="#" id="pos"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
+                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="ordersQueue">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
+                    <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="inventory">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
+                    <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="salesReport">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
+                    <a href="#" id="salesReport"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="accountManagement">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
+                    <a href="#" id="accountManagement"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="customerFeedback">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
+                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
+                    <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li class="mb-1">
                     <a href="#" id="settings">
@@ -90,10 +66,7 @@
                 </li>
                 <li>
                     <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>
                 </li>
             </ul>
@@ -104,17 +77,16 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
+                        <i class="bi bi-list me-1"></i>Dashboard
                     </button>
                 </div>
             </nav>
+
             <!-- content here -->
-            <h2 class="text-secondary"
-                style="margin:0; position:absolute; top:50%; left:30%; transform:translate(-50%, -50%); font-size:50px;">
+            <h1 class="h1Admin text-white fw-normal">
                 Welcome <br>
                 <?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')!';?>
-            </h2>
+            </h1>
         </div>
     </div>
 

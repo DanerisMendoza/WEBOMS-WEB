@@ -46,68 +46,39 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">
-                    <a href="admin.php">Admin</a>
-                </h3>
+                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2 active">
-                    <a href="#">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
+                    <a href="#"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
             <?php if($_SESSION['accountType'] != 'cashier'){?>
 
                 <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
+                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="ordersQueue">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
+                    <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="inventory">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
+                    <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="salesReport">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
+                    <a href="#" id="salesReport"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="accountManagement">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
+                    <a href="#" id="accountManagement"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="customerFeedback">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
+                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
+                    <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
             <?php } ?>
                 <li>
                     <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>
                 </li>
             </ul>
@@ -118,18 +89,18 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
+                        <i class="bi bi-list me-1"></i>Dashboard
                     </button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
-                <div class="row justify-content-center">
+                <div class="row g-5 justify-content-center">
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
-                    <h1 class="text-center fw-normal mb-4 bg-dark text-white">ADMIN</h1>
+                    <h1 class="text-center bg-dark text-white">ADMIN</h1>
                     <?php }else{?>
-                    <h1 class="text-center fw-normal mb-4 bg-danger text-white">CASHIER</h1>
+                    <h1 class="text-center bg-danger text-white">CASHIER</h1>
                     <?php }?>
 
                     <!-- table container -->
@@ -138,13 +109,13 @@
                             $query = "select * from WEBOMS_menu_tb";
                             $resultSet =  getQuery($query)
                         ?>
-                        <table class="table table-striped table-bordered col-lg-12" id="tbl">
+                        <table class="table table-hover table-bordered col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">DISH</th>
                                     <th scope="col">PRICE</th>
                                     <th scope="col">STOCK</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">ADD TO CART</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -155,18 +126,18 @@
                                     <!-- dish -->
                                     <td><?=$rows['dish']?></td>
                                     <!-- price -->
-                                    <td><?php echo number_format($rows['price'],2); ?></td>
+                                    <td><?php echo "₱".number_format($rows['price'],2); ?></td>
                                     <!-- stock -->
                                     <td><?php echo $rows['stock']; ?></td>
                                     <!-- add to cart -->
                                     <td>
-                                        <a class="btn btn-light border-secondary" <?php if($rows['stock'] <= 0) 
-                                            echo "<button>Out of stock</button>";
+                                        <a class="text-danger"><?php if($rows['stock'] <= 0) 
+                                            echo "OUT OF STOCK";
                                             else{
                                         ?>
-                                            href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
+                                        </a>
+                                        <a class="btn btn-light border-secondary" href="?order=<?php echo $rows['dish'].",".$rows['price'].",".$rows['orderType']?>">
                                             <i class="bi bi-cart-plus"></i>
-                                            <span class="ms-1">ADD TO CART</span>
                                         </a>
                                         <?php } ?>
                                     </td>
@@ -177,8 +148,8 @@
                     </div>
 
                     <!-- 2nd table container -->
-                    <div class="table-responsive col-lg-5">
-                        <table class="table table-bordered col-lg-12">
+                    <div class="table-responsive col-lg-5 mb-5">
+                        <table class="table table-bordered col-lg-12 mb-4">
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
@@ -232,15 +203,13 @@
                                 <td>
                                     <!-- check stock -->
                                     <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                                    <a class="btn btn-success"
-                                        href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
+                                    <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
                                         <i class="bi bi-plus"></i>
                                     </a>
                                     <?php }else{ ?>
-                                    <a class="btn btn-light border-dark">OUT OF STOCK</a>
+                                    <a class="text-danger me-2">OUT OF STOCK</a>
                                     <?php } ?>
-                                    <a class="btn btn-danger"
-                                        href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
+                                    <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
                                         <i class="bi bi-dash"></i>
                                     </a>
                                 </td>
@@ -256,24 +225,20 @@
                         </table>
                         <form method="post">
                             <!-- cash amount -->
-                                <input  name="customerName"                                
-                                placeholder="Customer Name (optional)" type="text" class="form-control form-control-lg mb-3"
-                                ></input>
+                                <input name="customerName" placeholder="CUSTOMER NAME (OPTIONAL)" type="text" class="form-control form-control-lg mb-3">
                             <!-- cash amount -->
-                            <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any
-                                placeholder="CASH AMOUNT" type="number" class="form-control form-control-lg mb-3"
-                                required></input>
+                            <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any placeholder="CASH AMOUNT" type="number" class="form-control form-control-lg mb-4" required>
                             <!-- place order -->
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">
-                                <i class="bi bi-cart"></i>
-                                <span class="ms-1">PLACE ORDER</span>
+                                <i class="bi bi-cart me-1"></i>
+                                PLACE ORDER
                             </button>
                         </form>
                         <form method="post">
                             <!-- clear order -->
-                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12 mb-5" name="clear">
-                                <i class="bi bi-trash"></i>
-                                <span class="ms-1">CLEAR ORDER</span>
+                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">
+                                <i class="bi bi-trash me-1"></i>
+                                CLEAR ORDER
                             </button>
                         </form>
                     </div>
@@ -423,11 +388,11 @@ var orderBtn = document.getElementById("orderBtn");
 orderBtn.addEventListener("click", () => {
     var num = document.getElementById("cashNum").value;
     if (<?php echo $total == 0 ? 'true':'false';?>) {
-        alert('Please place your order!');
+        alert('PLEASE PLACE YOUR ORDER!');
         return;
     }
     if (num >= <?php echo $total;?>) {
-        alert("Sucess Placing Order!");
+        alert("SUCCESS PLACING ORDER!");
         window.open("pdf/receipt.php");
     }
 });

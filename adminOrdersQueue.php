@@ -27,65 +27,36 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">
-                    <a href="admin.php">Admin</a>
-                </h3>
+                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="#" id="pos">
-                        <i class="bi bi-tag me-2"></i>
-                        Point of Sales
-                    </a>
+                    <a href="#" id="pos"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="orders">
-                        <i class="bi bi-minecart me-2"></i>
-                        Orders
-                    </a>
+                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2 active">
-                    <a href="#">
-                        <i class="bi bi-clock me-2"></i>
-                        Orders Queue
-                    </a>
+                    <a href="#"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="inventory">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Inventory
-                    </a>
+                    <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="salesReport">
-                        <i class="bi bi-bar-chart me-2"></i>
-                        Sales Report
-                    </a>
+                    <a href="#" id="salesReport"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="accountManagement">
-                        <i class="bi bi-person-circle me-2"></i>
-                        Account Management
-                    </a>
+                    <a href="#" id="accountManagement"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="customerFeedback">
-                        <i class="bi bi-chat-square-text me-2"></i>
-                        Customer Feedback
-                    </a>
+                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="adminTopUp">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Top-Up
-                    </a>
+                    <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li>
                     <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout">
-                            <i class="bi bi-power me-2"></i>
-                            Logout
-                        </button>
+                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>
                 </li>
             </ul>
@@ -96,11 +67,11 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>
-                        <span>Dashboard</span>
+                        <i class="bi bi-list me-1"></i>Dashboard
                     </button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
@@ -110,15 +81,10 @@
                         $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and status = 'serving' ORDER BY WEBOMS_order_tb.id asc; ";
                         $resultSet = getQuery($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered bg-light col-lg-12">
+                        <table class="table table-bordered table-hover bg-light col-lg-12">
                             <thead class="bg-success text-white">
                                 <tr>
-                                    <th scope="col">
-                                        <h2>
-                                            <i class="bi bi-box-arrow-right me-1"></i>
-                                            SERVING
-                                        </h2>
-                                    </th>
+                                    <th scope="col"><h2><i class="bi bi-box-arrow-right me-1"></i>SERVING</h2></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,10 +93,7 @@
                                     foreach($resultSet as $row){ ?>
                                 <tr>
                                     <!-- orders id -->
-                                    <td>
-                                        <strong style="font-size: 35px;">
-                                            <?php echo $row['order_id']; ?>
-                                        </strong>
+                                    <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong>
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -143,15 +106,10 @@
                         $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and status = 'prepairing' ORDER BY WEBOMS_order_tb.id asc; ";
                         $resultSet = getQuery($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered bg-light col-lg-12">
+                        <table class="table table-bordered table-hover bg-light col-lg-12">
                             <thead class="bg-danger text-white">
                                 <tr>
-                                    <th scope="col">
-                                        <h2>
-                                            <i class="bi bi-clock me-1"></i>
-                                            PREPARING
-                                        </h2>
-                                    </th>
+                                    <th scope="col"><h2><i class="bi bi-clock me-1"></i>PREPARING</h2></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -160,11 +118,7 @@
                                     foreach($resultSet as $row){ ?>
                                 <tr>
                                     <!-- orders id -->
-                                    <td>
-                                        <strong style="font-size: 35px;">
-                                            <?php echo $row['order_id']; ?>
-                                        </strong>
-                                    </td>
+                                    <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
