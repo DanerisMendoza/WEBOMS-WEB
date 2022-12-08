@@ -155,15 +155,6 @@ a.article:hover {
     }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300&display=swap');
-
-.h1Admin {
-    font-family: 'Cormorant', serif;
-    font-size: 200px;
-    margin-top: 250px;
-    margin-left: 100px;
-}
-
 table {
     font-size: 20px;
 }

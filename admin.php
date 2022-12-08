@@ -19,6 +19,16 @@
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
+
+        .h1Admin {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13vw;
+            font-weight: normal;
+        }
+    </style>
 </head>
 
 <body style="background: url(https://images.pexels.com/photos/3298637/pexels-photo-3298637.jpeg?cs=srgb&dl=pexels-cottonbro-studio-3298637.jpg&fm=jpg) no-repeat center center fixed; 
@@ -55,14 +65,11 @@
                 <li class="mb-2">
                     <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
-                <li class="mb-1">
+                <li class="mb-2">
                     <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="settings">
-                        <i class="bi bi-cash-stack me-2"></i>
-                        Settings
-                    </a>
+                    <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
                 <li>
                     <form method="post">
@@ -124,33 +131,15 @@
 
 <script>
 // for navbar click locations
-document.getElementById("pos").onclick = function() {
-    window.location.replace('adminPos.php');
-};
-document.getElementById("orders").onclick = function() {
-    window.location.replace('adminOrders.php');
-};
-document.getElementById("ordersQueue").onclick = function() {
-    window.location.replace('adminOrdersQueue.php');
-};
-document.getElementById("inventory").onclick = function() {
-    window.location.replace('adminInventory.php');
-};
-document.getElementById("salesReport").onclick = function() {
-    window.location.replace('adminSalesReport.php');
-};
-document.getElementById("accountManagement").onclick = function() {
-    window.location.replace('accountManagement.php');
-};
-document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('adminFeedbackList.php');
-};
-document.getElementById("adminTopUp").onclick = function() {
-    window.location.replace('adminTopUp.php');
-};
-document.getElementById("settings").onclick = function() {
-    window.location.replace('settings.php');
-};
+document.getElementById("pos").onclick = function() { window.location.replace('adminPos.php'); };
+document.getElementById("orders").onclick = function() { window.location.replace('adminOrders.php'); };
+document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
+document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
+document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
+document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
+document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
+document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
+document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
 </script>
 
 <script>

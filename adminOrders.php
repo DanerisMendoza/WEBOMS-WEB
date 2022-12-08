@@ -53,8 +53,11 @@
                 <li class="mb-2">
                     <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
-                <li class="mb-1">
+                <li class="mb-2">
                     <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
+                </li>
+                <li class="mb-1">
+                    <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
                 <li>
                     <form method="post">
@@ -123,7 +126,7 @@
                                         <th scope="col">STAFF <br> (IN-CHARGE)</th>
                                         <th scope="col">ORDER <br> DETAILS</th>
                                         <th scope="col">CUSTOMER <br> INFO</th>
-                                        <th scope="col" colspan="3">OPTIONS</th>
+                                        <th scope="col" colspan="2">OPTIONS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -175,7 +178,7 @@
                                             <?php }elseif($row['status'] == 'serving'){ ?>
                                                     <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
                                                 elseif($row['status'] == 'complete'){?>
-                                                    <td colspan="2"><a class="text-danger">NONE</a></td><?php } ?>
+                                                    <td><a class="text-danger">NONE</a></td><?php } ?>
 
                                         <!-- admin -->
                                         <?php } else{ ?>
@@ -183,11 +186,11 @@
                                             <td></td>
                                             <!-- status -->
                                             <?php  if($row['status'] == 'prepairing'){ ?>
-                                                    <td colspan="2"><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
+                                                    <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
                                             <?php }elseif($row['status'] == 'serving'){ ?>
-                                                    <td colspan="2"><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
+                                                    <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
                                                 elseif($row['status'] == 'complete'){?>
-                                                    <td colspan="2"><a class="text-danger">NONE</a></td><?php } ?>
+                                                    <td><a class="text-danger">NONE</a></td><?php } ?>
                                         <?php } ?>
                                         <!-- delete -->
                                         <td><a class="btn btn-danger" href="?delete=<?php echo $row['ID'].','.$row['order_id'] ?>"><i class="bi bi-trash me-1"></i>DELETE</a></td>
@@ -343,27 +346,14 @@ $(document).ready(function() {
 
 <script>
     // for navbar click locations
-    document.getElementById("pos").onclick = function() {
-        window.location.replace('adminPos.php');
-    };
-    document.getElementById("ordersQueue").onclick = function() {
-        window.location.replace('adminOrdersQueue.php');
-    };
-    document.getElementById("inventory").onclick = function() {
-        window.location.replace('adminInventory.php');
-    };
-    document.getElementById("salesReport").onclick = function() {
-        window.location.replace('adminSalesReport.php');
-    };
-    document.getElementById("accountManagement").onclick = function() {
-        window.location.replace('accountManagement.php');
-    };
-    document.getElementById("customerFeedback").onclick = function() {
-        window.location.replace('adminFeedbackList.php');
-    };
-    document.getElementById("adminTopUp").onclick = function() {
-        window.location.replace('adminTopUp.php');
-    };
+    document.getElementById("pos").onclick = function() { window.location.replace('adminPos.php'); };
+document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
+document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
+document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
+document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
+document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
+document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
+document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
 </script>
 
 <?php 

@@ -51,8 +51,11 @@
                 <li class="mb-2">
                     <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
-                <li class="mb-1">
+                <li class="mb-2">
                     <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
+                </li>
+                <li class="mb-1">
+                    <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
                 <li>
                     <form method="post">
@@ -289,27 +292,14 @@ $(document).ready(function() {
 
 <script>
 // for navbar click locations
-document.getElementById("pos").onclick = function() {
-    window.location.replace('adminPos.php');
-};
-document.getElementById("orders").onclick = function() {
-    window.location.replace('adminOrders.php');
-};
-document.getElementById("ordersQueue").onclick = function() {
-    window.location.replace('adminOrdersQueue.php');
-};
-document.getElementById("inventory").onclick = function() {
-    window.location.replace('adminInventory.php');
-};
-document.getElementById("salesReport").onclick = function() {
-    window.location.replace('adminSalesReport.php');
-};
-document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('adminFeedbackList.php');
-};
-document.getElementById("adminTopUp").onclick = function() {
-    window.location.replace('adminTopUp.php');
-};
+document.getElementById("pos").onclick = function() { window.location.replace('adminPos.php'); };
+document.getElementById("orders").onclick = function() { window.location.replace('adminOrders.php'); };
+document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
+document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
+document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
+document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
+document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
+document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
 </script>
 
 <?php 
