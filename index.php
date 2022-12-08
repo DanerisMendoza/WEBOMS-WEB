@@ -26,29 +26,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#home">
-                            <i class="bi bi-house-door me-1"></i>
-                            HOME
-                        </a>
+                        <a class="nav-link" href="#home"><i class="bi bi-house-door me-1"></i>HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#menu">
-                            <i class="bi bi-list me-1"></i>
-                            MENU
-                        </a>
+                        <a class="nav-link" href="#menu"><i class="bi bi-list me-1"></i>MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#about">
-                            <i class="bi bi-info-circle me-1"></i>
-                            ABOUT
-                        </a>
+                        <a class="nav-link" href="#about"><i class="bi bi-info-circle me-1"></i>ABOUT</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <a class="btn btn-outline-light" type="button" href="Login.php">
-                        <i class="bi bi-person-circle me-1"></i>
-                        LOGIN
-                    </a>
+                    <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle me-1"></i>LOGIN</a>
                 </form>
             </div>
         </div>
@@ -58,12 +46,9 @@
     <section id="home" class="container mb-5" style="margin-top:100px;">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -97,13 +82,11 @@
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -116,8 +99,7 @@
         <div class="row g-3">
             <div class="col-sm-3">
                 <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
-                        alt="" wdith="100">
+                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
                     <div class="card-body">
                         <h5 class="card-title">Name</h5>
                         <p class="card-text">
@@ -129,8 +111,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
-                        alt="" wdith="100">
+                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
                     <div class="card-body">
                         <h5 class="card-title">Name</h5>
                         <p class="card-text">
@@ -142,8 +123,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
-                        alt="" wdith="100">
+                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
                     <div class="card-body">
                         <h5 class="card-title">Name</h5>
                         <p class="card-text">
@@ -155,8 +135,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg"
-                        alt="" wdith="100">
+                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
                     <div class="card-body">
                         <h5 class="card-title">Name</h5>
                         <p class="card-text">
@@ -175,8 +154,7 @@
         <div class="card mb-3 bg-transparent border-secondary">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlc3RhdXJhbnR8ZW58MHx8MHx8&w=1000&q=80"
-                        class="img-fluid" alt="...">
+                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlc3RhdXJhbnR8ZW58MHx8MHx8&w=1000&q=80" class="img-fluid" alt="...">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -228,29 +206,14 @@
     <!-- footer -->
     <section class="">
         <footer class="bg-black text-center text-white">
-            <!-- <div class="container py-4 pb-0">
-                reviews dito
-            </div> -->
             <div class="container p-4 pb-0">
                 <section class="mb-4">
-                    <a href="#" class="text-decoration-none text-white me-3">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white me-3">
-                        <i class="bi bi-twitter"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white me-3">
-                        <i class="bi bi-google"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white me-3">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white me-3">
-                        <i class="bi bi-linkedin"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white">
-                        <i class="bi bi-github"></i>
-                    </a>
+                    <a href="#" class="text-decoration-none text-white me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-decoration-none text-white me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-decoration-none text-white me-3"><i class="bi bi-google"></i></a>
+                    <a href="#" class="text-decoration-none text-white me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-decoration-none text-white me-3"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="text-decoration-none text-white"><i class="bi bi-github"></i></a>
                 </section>
             </div>
             <hr>

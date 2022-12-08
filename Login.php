@@ -125,10 +125,7 @@
     ?>
 
         <!-- home button -->
-        <a href="index.php" type="button" class="btn btn-lg btn-dark text-white">
-            <i class="bi bi-arrow-left me-1"></i>
-            HOME
-        </a>
+        <a href="index.php" type="button" class="btn btn-lg btn-dark text-white"> <i class="bi bi-arrow-left me-1"></i>HOME</a>
         
         <!-- login form -->
         <div class="container mt-5">
@@ -138,8 +135,7 @@
                         <div class="row g-0">
                             <!-- image -->
                             <div class="col-md-6 col-lg-5">
-                                <img src="https://images.unsplash.com/photo-1611657366409-55549160be82?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9vZCUyMHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-                                alt="login form" class="img-fluid" style="border-radius: 1rem;" />
+                                <img src="https://thumbs.dreamstime.com/b/dark-plate-italian-spaghetti-dark-tasty-appetizing-classic-italian-spaghetti-pasta-tomato-sauce-cheese-parmesan-119870253.jpg" alt="login form" class="img-fluid" style="border-radius: 1rem;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
@@ -166,25 +162,17 @@
 
                                                 <!-- forgot password -->
                                                 <div class="input-group mb-4">
-                                                    <a href="forgetPassword.php"
-                                                        class="pass text-muted text-decoration-none">
-                                                        Forgot Password?
-                                                    </a>
+                                                    <a href="forgetPassword.php" class="pass text-muted text-decoration-none">Forgot Password?</a>
                                                 </div>
 
                                                 <!-- login button -->
                                                 <div class="input-group mb-4">
-                                                    <button class="btn btn-dark btn-lg col-12" type="submit"
-                                                        name="Login" value="Login">
-                                                        Login
-                                                    </button>
+                                                    <button class="btn btn-dark btn-lg col-12" type="submit"name="Login" value="Login">Login</button>
                                                 </div>
 
                                                 <!-- sign up here -->
                                                 <div class="text-center text-muted mb-4">
-                                                    Dont'have an account yet? <a href="register.php"
-                                                        class="signup_link text-muted text-decoration-none">Sign up
-                                                        here</a>
+                                                    Dont'have an account yet? <a href="register.php" class="signup_link text-muted text-decoration-none">Sign up here</a>
                                                 </div>
                                             </form>
                                         </div>
