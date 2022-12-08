@@ -31,7 +31,7 @@
             <button class="btn btn-lg btn-primary col-12 mb-3" id="customerProfile">Customer Profile</button> 
             <button class="btn btn-lg btn-primary col-12 mb-3" id="menu">Browse Menu</button> 
             <button class="btn btn-lg btn-primary col-12 mb-3" id="topUp">Top-up</button>
-            <button class="btn btn-lg btn-primary col-12 mb-3" id="customerOrders">View Your Orders</button>
+            <button class="btn btn-lg btn-primary col-12 mb-3" id="customerOrder_details">View Your Orders</button>
             <form method="POST">
                 <button class="btn btn-lg btn-dark col-12 mb-3" id="Logout" name="logout">Logout</button>
             </form>
@@ -49,8 +49,8 @@ document.getElementById("menu").onclick = function() {
 document.getElementById("topUp").onclick = function() {
     window.location.replace('customerTopUp.php');
 };
-document.getElementById("customerOrders").onclick = function() {
-    window.location.replace('customerOrdersList.php');
+document.getElementById("customerOrder_details").onclick = function() {
+    window.location.replace('customerOrders.php');
 };
 document.getElementById("customerProfile").onclick = function() {
     window.location.replace('customerProfile.php');

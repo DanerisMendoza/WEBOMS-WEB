@@ -58,6 +58,12 @@
                 <li class="mb-1">
                     <a href="#" id="adminTopUp"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
+                <li class="mb-1">
+                    <a href="#" id="settings">
+                        <i class="bi bi-cash-stack me-2"></i>
+                        Settings
+                    </a>
+                </li>
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
@@ -141,6 +147,9 @@ document.getElementById("customerFeedback").onclick = function() {
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');
+};
+document.getElementById("settings").onclick = function() {
+    window.location.replace('settings.php');
 };
 </script>
 

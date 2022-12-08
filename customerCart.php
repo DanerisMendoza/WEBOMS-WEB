@@ -195,12 +195,22 @@ document.getElementById("back").onclick = function() {
     //order button
     if(isset($_POST['order'])){
         if($total != 0 && $balance >= $total){
+        
             $user_id = $_SESSION['user_id'];
             $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
             $order_id = uniqid();
             $total = number_format($total,2);
             $name = $_SESSION['name'];
+            //company variables init
+            $query = "select * from WEBOMS_company_tb";
+            $resultSet = getQuery($query);
+            if($resultSet!=null)
+                foreach($resultSet as $row){
+                $companyName = $row['name'];
+                $companyAddress = $row['address'];
+                $companyTel = $row['tel'];
+            }
 
             //or number process
             $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
@@ -246,8 +256,14 @@ document.getElementById("back").onclick = function() {
                 $pdf->AddPage('P','A4');
                 date_default_timezone_set('Asia/Manila');
                 $date = date("j-m-Y  h:i:s A"); 
-                $pdf -> Cell(60,10,"$date",'0','C');
-                $pdf -> ln(10);
+                $pdf -> Cell(183,10,"$companyName",'','0','C');
+                $pdf -> ln(8);
+                $pdf -> Cell(183,10,"$companyAddress",'','0','C');
+                $pdf -> ln(8);
+                $pdf -> Cell(183,10,"$companyTel",'','0','C');
+                $pdf -> ln(8);
+                $pdf -> Cell(183,10,"$date",'','0','C');
+                $pdf -> ln(15);
                 $pdf -> Cell(61,10,"Dish",'B,T','0','C');
                 $pdf -> Cell(61,10,"Quantity",'B,T','0','C');
                 $pdf -> Cell(61,10,"Price",'B,T','0','C');

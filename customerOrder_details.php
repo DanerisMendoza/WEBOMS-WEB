@@ -1,0 +1,65 @@
+<?php 
+  $page = 'customer';
+  include('method/checkIfAccountLoggedIn.php');
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Costumer - Orders</title>
+  
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+    
+</head>
+<body class="bg-light">
+    
+<div class="container text-center mt-5">
+  <div class="row justify-content-center">
+    <button class="btn btn-lg btn-dark col-12 mb-4" id="orderList">Order List</button>
+    <div class="table-responsive col-lg-12">
+            <?php 
+            
+              $id =  $_GET['id'];
+              include('method/query.php');
+              $query = "select WEBOMS_menu_tb.*, WEBOMS_ordersDetail_tb.* from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb where WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType and WEBOMS_ordersDetail_tb.order_id = '$id' ";
+              $resultSet =  getQuery($query); 
+            ?>
+            
+      <table class="table table-striped table-bordered col-lg-12 mb-4">
+        <thead class="table-dark">
+          <tr>	
+            <th scope="col">QUANTITY</th>
+            <th scope="col">DISH</th>
+            <th scope="col">PRICE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php 
+          $total = 0;
+          if($resultSet != null)
+          foreach($resultSet as $row){ ?>
+          <tr>	   
+            <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
+            <td><?php echo $row['quantity']; ?></td>
+            <td><?php echo $row['dish']; ?></td>
+            <td><?php echo '₱' .$price?></td>
+          </tr>
+          <?php }?>
+          <tr>
+            <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+            <td><b>₱<?php echo $total?></b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+    
+</body>
+</html>
+
+<script>
+  document.getElementById("orderList").onclick = function () {window.location.replace('customerOrders.php'); };
+</script> 
