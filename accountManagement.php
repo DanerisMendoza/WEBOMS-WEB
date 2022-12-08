@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="css/bootstrap 5/bootstrap.min.css">
     <link rel="stylesheet" href="css/admin.css">
+    <!-- modal script -->
     <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
@@ -366,7 +367,7 @@ document.getElementById("salesReport").onclick = function() {
     window.location.replace('adminSalesReport.php');
 };
 document.getElementById("customerFeedback").onclick = function() {
-    window.location.replace('customerFeedbackList.php');
+    window.location.replace('adminFeedbackList.php');
 };
 document.getElementById("adminTopUp").onclick = function() {
     window.location.replace('adminTopUp.php');

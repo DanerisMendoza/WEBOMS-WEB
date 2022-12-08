@@ -21,6 +21,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		$queryCreateUserInfo_tb = "create table if not exists WEBOMS_userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
 		user_id varchar(255),
 		name varchar(255),
+		picName varchar(255),
 		gender varchar(255),
 		age int,
 		phoneNumber varchar(255),

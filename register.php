@@ -184,7 +184,7 @@
     }
 ?>
 <script>
-//cut phone nu
+//cut phone num if excess
 $("#phone").bind("change paste input", function() {
     var phone = document.forms[0].phone.value;
     if (phone.length >= 11) {

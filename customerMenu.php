@@ -20,6 +20,11 @@
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <script type="text/javascript" src="js/bootstrap.js"></script>
+        <!-- data tables -->
+    <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body class="bg-light">
