@@ -1,7 +1,3 @@
-<?php
-    // header("location:Login.php");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,23 +11,6 @@
     <script src="js/bootstrap 5/bootstrap.min.js"></script>
     <!-- css online icon bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-
-    <style>
-    .map-container {
-        overflow: hidden;
-        padding-bottom: 56.25%;
-        position: relative;
-        height: 0;
-    }
-
-    .map-container iframe {
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-    }
-    </style>
 </head>
 
 <body class="bg-dark">
@@ -46,28 +25,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-3">
+                    <li class="nav-item me-2">
                         <a class="nav-link" href="#home">
                             <i class="bi bi-house-door me-1"></i>
                             HOME
                         </a>
                     </li>
-                    <li class="nav-item me-3">
+                    <li class="nav-item me-2">
                         <a class="nav-link" href="#menu">
                             <i class="bi bi-list me-1"></i>
                             MENU
                         </a>
                     </li>
-                    <li class="nav-item me-3">
+                    <li class="nav-item me-2">
                         <a class="nav-link" href="#about">
                             <i class="bi bi-info-circle me-1"></i>
                             ABOUT
-                        </a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="#contact">
-                            <i class="bi bi-telephone me-1"></i>
-                            CONTACT
                         </a>
                     </li>
                 </ul>
@@ -82,7 +55,7 @@
     </nav>
 
     <!-- home -->
-    <section id="home" class="container mb-5" style="margin-top:80px;">
+    <section id="home" class="container mb-5" style="margin-top:100px;">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
@@ -247,19 +220,6 @@
                             cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         </p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- contact -->
-    <section id="contact" class="container mb-5 text-white">
-        <p class="fs-1 text-center">CONTACT US</p>
-        <div class="row g-0">
-            <div class="container col-lg-12">
-                <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 500px">
-                    <iframe src="https://maps.google.com/maps?q=manhatan&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                        frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
