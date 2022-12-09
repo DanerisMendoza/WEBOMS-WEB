@@ -2,7 +2,7 @@
   $page = 'customer';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
-  $query = "select a.user_id, b.name, c.feedback from weboms_order_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id inner join WEBOMS_feedback_tb c on c.user_id = a.user_id";
+  $query = "select a.user_id, b.name, c.feedback from WEBOMS_order_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id inner join WEBOMS_feedback_tb c on c.user_id = a.user_id";
   $resultSet =  getQuery($query);
 ?>
 

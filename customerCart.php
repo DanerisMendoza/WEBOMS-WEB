@@ -214,22 +214,19 @@ document.getElementById("back").onclick = function() {
 
             //or number process
             $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
-            $year = date("Y");
             if($or_last == null){
-                $num = 1;
+                $or_last = 1;
             }
             else{
-                $num = substr($or_last,5);
-                $num = $num + 1;
+                $or_last = $or_last + 1;
             }
-            $input = $num;
-            $inputSize = strlen(strval($input));
+            $inputSize = strlen(strval($or_last));
             if($inputSize > 4)
                 $str_length = $inputSize;
             else
                 $str_length = 4;
-            $temp = substr("0000{$input}", -$str_length);
-            $or_number =  $year.'-'.$temp;
+            $temp = substr("0000{$or_last}", -$str_length);
+            $or_number = $temp;
 
 
             $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
@@ -299,6 +296,13 @@ document.getElementById("back").onclick = function() {
                 $mail = new PHPMailer(true);
                 //Server settings
                 $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+                $mail->isSMTP();                                            //Send using SMTP
+                $mail->Host = 'mail.ucc-csd-bscs.com';		                //Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
+                $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
+                $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
+                $mail->Port       =  465;       
                 include('phpMailerServerSettings.php');
                 //Recipients
                 $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
@@ -307,11 +311,13 @@ document.getElementById("back").onclick = function() {
                 $mail->Subject = 'Receipt';
                 $mail->Body    = 'Thank you for ordering!';
                 $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
-                $mail->send();   
+                if($mail->send())
+                    echo '<script>alert("Sucess Placing Order!");</script>';    
+                else
+                    echo '<script>alert("Error Placing Order!");</script>';    
                 $_SESSION["dishes"] = array();
                 $_SESSION["price"] = array();      
                 $_SESSION["orderType"] = array();                     
-                echo '<script>alert("Sucess Placing Order!");</script>';    
                 echo "<script>window.location.replace('customerCart.php')</script>";          
             }
         }  

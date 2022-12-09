@@ -5,6 +5,11 @@
     $user_id = $_SESSION['user_id'];
     $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by a.id desc";
     $resultSet =  getQuery($query);
+    //getting balance amount
+    $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
+    $balance = getQueryOneVal($query,'balance');
+    $balance = $balance == null ? 0 : $balance;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +28,7 @@
         <div class="container">
             <div class="container text-center mt-5">
                 <button class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
+                <h1>Balance: ₱<?php echo $balance;?> </h1>
                 <form method="post" enctype="multipart/form-data" class="col-12">
                     <select name="amount" class="form-control form-control-lg col-12 mb-3">
                         <option value="100">₱100</option>

@@ -342,22 +342,19 @@ $(document).ready(function() {
 
             //or number process
             $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
-            $year = date("Y");
             if($or_last == null){
-                $num = 1;
+                $or_last = 1;
             }
             else{
-                $num = substr($or_last,5);
-                $num = $num + 1;
+                $or_last = $or_last + 1;
             }
-            $input = $num;
-            $inputSize = strlen(strval($input));
+            $inputSize = strlen(strval($or_last));
             if($inputSize > 4)
                 $str_length = $inputSize;
             else
                 $str_length = 4;
-            $temp = substr("0000{$input}", -$str_length);
-            $or_number =  $year.'-'.$temp;
+            $temp = substr("0000{$or_last}", -$str_length);
+            $or_number = $temp;
             $_SESSION['or_number'] = $or_number;
             $_SESSION['customerName'] = $customerName;
             $_SESSION['date'] = $todayWithTime;

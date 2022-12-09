@@ -49,10 +49,12 @@
                     <li class="nav-item me-2">
                         <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
                     </li>
+                    <li>
+                        <form method="post">
+                            <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                        </form>
+                    </li>
                 </ul>
-                <form method="post">
-                    <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
-                </form>
             </div>
         </div>
     </nav>
@@ -176,12 +178,12 @@
 <script>
 document.getElementById("update").onclick = function () {
     $('#userInfoUpdate').modal('show'); 
-    document.forms[0].name.value = '<?php echo $name;?>';
-    document.forms[0].username.value = '<?php echo $username;?>';
-    document.forms[0].email.value = '<?php echo $email;?>';
-    document.forms[0].gender.selectedIndex  = <?php echo $genderIndex; ?>;
-    document.forms[0].address.value  = '<?php echo $address; ?>';
-    document.forms[0].phoneNumber.value  = '<?php echo $phoneNumber; ?>';
+    document.forms[1].name.value = '<?php echo $name;?>';
+    document.forms[1].username.value = '<?php echo $username;?>';
+    document.forms[1].email.value = '<?php echo $email;?>';
+    document.forms[1].gender.selectedIndex  = <?php echo $genderIndex; ?>;
+    document.forms[1].address.value  = '<?php echo $address; ?>';
+    document.forms[1].phoneNumber.value  = '<?php echo $phoneNumber; ?>';
 }; 
 document.getElementById("updatePassword").onclick = function () {
     $('#passwordUpdateModal').modal('show'); 
@@ -224,7 +226,7 @@ document.getElementById("updatePassword").onclick = function () {
         if($fileName == ''){
         $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$picName', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
             if(Query($query)){
-                die ("<script>alert('SUCCESS UPDATING THE DATABASE!'); window.location.replace('customerProfile.php');</script>");       
+                die ("<script>alert('SUCCESS UPDATING THE DATABASE!'); window.location.replace('customerProfile.php');</script>");    
             }
         }
         //if image change block
