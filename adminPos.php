@@ -364,7 +364,8 @@ $(document).ready(function() {
             $_SESSION['priceArr'] = $priceArr;
             $_SESSION['dishesQuantity'] = $dishesQuantity;
             $staff = $_SESSION['name'].' via POS';
-            $user_id = $_SESSION['user_id'];
+            // $user_id = $_SESSION['user_id'];
+            $user_id = uniqid('',true);
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
             $query1 = "insert into WEBOMS_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
@@ -372,8 +373,9 @@ $(document).ready(function() {
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
             }
+            $query3 = "insert into WEBOMS_userInfo_tb(name,user_id) values('$customerName','$user_id')";
+            Query($query3);
             Query($query1);
-            // Query($query3);
             $_SESSION["dishes"] = array();
             $_SESSION["price"] = array();
             $_SESSION["orderType"] = array(); 

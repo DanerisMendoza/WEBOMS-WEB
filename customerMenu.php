@@ -106,23 +106,4 @@ document.getElementById("customersFeedback").onclick = function() {
 $(document).ready(function() {
     $('#tbl').DataTable();
 });
-
-// $('#tbl').dataTable( {
-//       "aoColumnDefs": [
-//           { 'bSortable': false, 'aTargets': [ 3 ] }
-//        ]
-// });
-
-// $('#tbl').tablesorter({
-//         headers: {
-//             0: { sorter: false },
-//             4: { sorter: false }
-//         }
-//     });
-
-// $(document).ready(function() {
-//     $('#tbl').dataTable( {
-//         "aaSorting": [[ 1, "desc" ]]
-//     } );
-// } );
 </script>

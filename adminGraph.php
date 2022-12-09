@@ -139,7 +139,7 @@
 
         var options = {
           title: '',
-          backgroundColor: 'transparent',
+          backgroundColor: 'white',
           is3D: false,
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
