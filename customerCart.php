@@ -198,7 +198,6 @@ document.getElementById("back").onclick = function() { window.location.replace('
             $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
             $order_id = uniqid();
-            $total = number_format($total,2);
             $name = $_SESSION['name'];
             //company variables init
             $query = "select * from WEBOMS_company_tb";
@@ -238,6 +237,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $query = "UPDATE WEBOMS_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
                 Query($query);
                 //send receipt to email
+                $total = number_format($total,2);
                 require_once('TCPDF-main/tcpdf.php'); 
                 $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
                 $pdf->SetCreator(PDF_CREATOR);  

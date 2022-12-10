@@ -96,13 +96,16 @@
                                             <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                             <td><?php echo $row['stock']; ?></td>
                                             <td>
-                                                <a class="text-danger text-decoration-none">
-                                                <?php if($row['stock'] <= 0) 
-                                                    echo "OUT OF STOCK";
-                                                    else{
-                                                ?>
-                                                </a>
-                                                <a class="btn btn-light border-secondary" href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>">ADD TO CART</a>
+                                                <!-- out of stock -->
+                                                <?php if($row['stock'] <= 0){ ?>
+                                                <a class="text-danger">OUT OF STOCK</a>
+                                                <!-- not out of stock -->
+                                                <?php } else{ ?>
+                                                    <form method="post">
+                                                        <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
+                                                        <input type="number" placeholder="Quantity" name="qty" value="1">
+                                                        <button type="submit" name="addToCartSubmit"><i class="bi bi-cart-plus"></i></button>
+                                                    </form>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -126,18 +129,37 @@
 </html>
 <?php 
     //add to cart
-	if(isset($_GET['order'])){
-        $order = explode(',',$_GET['order']);  
+    if(isset($_POST['addToCartSubmit'])){
+        $order = explode(',',$_POST['order']);  
+        //init
         $dish = $order[0];
         $price = $order[1];
-		$orderType = $order[2];
-        array_push($_SESSION['dishes'], $dish);
-        array_push($_SESSION['price'], $price);
-        array_push($_SESSION['orderType'], $orderType);
-        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
-        if(Query($updateQuery))
-          echo "<script>window.location.replace('customerMenu.php');</script>";    
-    }				
+        $orderType = $order[2];
+        $stock = $order[3];
+        $qty = $_POST['qty'];
+    //validation
+    if($qty <= 0 && !str_contains($qty, '.')){
+      die ("<script>
+      alert('Quantity Invalid');
+      window.location.replace('customerMenu.php');
+      </script>");    
+    }
+    if($qty > $stock){
+      die ("<script>
+      alert('Stock is less than Quantity');
+      window.location.replace('customerMenu.php');
+      </script>");    
+    }
+    //process
+    for($i=0; $i<$qty; $i++){
+      array_push($_SESSION['dishes'], $dish);
+      array_push($_SESSION['price'], $price);
+      array_push($_SESSION['orderType'], $orderType);
+    }
+    $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
+    if(Query($updateQuery))
+      echo "<script>window.location.replace('customerMenu.php');</script>";    
+  }	
 ?>
 
 <script>

@@ -30,7 +30,7 @@
                             <h3 class="fw-normal mt-4 mb-4 ms-1">PLEASE ENTER YOUR OTP</h3>
                             <input type="text" class="form-control form-control-lg mb-4" placeholder="OTP" name="otp">
                             <input type="submit" value="VERIFY" name="Verify" class="btn btn-success btn-lg col-12 mb-2">
-                            <!-- <input type="submit" value="Resend" name="Resend" class="btn btn-secondary btn-lg col-12 mb-1"> -->
+                            <input type="submit" value="Resend" name="Resend" class="btn btn-warning btn-lg col-12 mb-1">
                             <input data-dismiss="modal" type="submit" value="CANCEL" name="Cancel" class="btn btn-danger btn-lg col-12 mb-4">
                         </form>
                     </div>
@@ -39,6 +39,9 @@
         </div>
         
         <?php
+        use PHPMailer\PHPMailer\PHPMailer;
+        use PHPMailer\PHPMailer\SMTP;
+        use PHPMailer\PHPMailer\Exception;
         include_once('connection.php');
         include('method/query.php');
         if(isset($_POST['Login'])){
@@ -61,7 +64,9 @@
                   foreach($resultSet as $row){
                     $_SESSION['name'] = $row['name'];
                     $otp = $row['otp'];
+                    $email = $row['email'];
                   }
+                  $_SESSION['email'] = $email;
                   $_SESSION['user_id'] = $user_id;
                   $_SESSION['accountType'] = $accountType;
                   $_SESSION['username'] = $username;
@@ -104,6 +109,7 @@
                 echo "<script>alert('INCORRECT USERNAME OR PASSWORD!');</script>";
             }
         }
+        // verifiy otp
         if(isset($_POST['Verify'])){
             $username = $_SESSION["username"];
             $otp = $_POST['otp'];
@@ -121,6 +127,41 @@
             }
             else
               echo  '<script>alert("INCORRECT OTP!"); </script>';
+        }
+        // resent otp
+        if(isset($_POST['Resend'])){
+            $otp = uniqid();
+            // email proccess
+            //Load Composer's autoloader
+            require 'vendor/autoload.php';
+            //Create an instance; passing `true` enables exceptions
+            $mail = new PHPMailer(true);
+            //Server settings
+            $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host = 'mail.ucc-csd-bscs.com';		                //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
+            $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
+            $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
+            $mail->Port       =  465;       
+            //Recipients
+            $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
+            $mail->addAddress("$_SESSION[email]");                                //sent to
+            //Content
+            $mail->Subject = 'OTP';
+            $mail->Body    = "Good Day, ".$_SESSION['name']." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
+            $mail->send();
+            // query
+            $updateOtp = "update WEBOMS_userInfo_tb as a inner join WEBOMS_user_tb as b on a.user_id = b.user_id set otp = '$otp' where b.username = '$_SESSION[username]' ";
+            if(Query($updateOtp)){
+                echo "<script>
+                alert('OTP Resend Successfull!');
+                window.location.replace('Login.php');
+                </script>";  
+            }
+
+
         }
     ?>
 
