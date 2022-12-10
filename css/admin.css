@@ -47,10 +47,13 @@ a:focus {
     max-width: 250px;
     color: #fff;
     transition: all 0.3s;
+
 }
 
 #sidebar.active {
     margin-left: -250px;
+    min-height: 1150px;
+    max-height: 1000px;
 }
 
 #sidebar .sidebar-header {

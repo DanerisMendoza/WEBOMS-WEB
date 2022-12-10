@@ -31,9 +31,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container py-3">
             <a class="navbar-brand fs-4" href="#"><?php echo $name;?></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -48,15 +46,13 @@
                         <a class="nav-link" href="#about"><i class="bi bi-info-circle me-1"></i>ABOUT</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle me-1"></i>LOGIN</a>
-                </form>
+                <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle me-1"></i>LOGIN</a>
             </div>
         </div>
     </nav>
 
     <!-- home -->
-    <section id="home" class="container mb-5" style="margin-top:100px;">
+    <section id="home" class="container mb-5" style="margin-top:60px;">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -65,33 +61,41 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="https://media.self.com/photos/622912847b959736301bfb91/2:1/w_2119,h_1059,c_limit/GettyImages-1301412050.jpg"
+                    <img src="https://media.cntraveler.com/photos/61f975646ddac9f81df58a62/16:9/w_2560%2Cc_limit/GettyImages-1280180647.jpg"
                         class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
-                            <p>Telephone: <?php echo $tel;?></p>
-                            <p>Address: <?php echo $address;?></p>
+                            <p>
+                                <i class="bi bi-telephone me-1"></i>TELEPHONE: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map me-1"></i>ADDRESS: <?php echo strtoupper($address);?>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://media.self.com/photos/622912847b959736301bfb91/2:1/w_2119,h_1059,c_limit/GettyImages-1301412050.jpg"
+                    <img src="https://images.everydayhealth.com/images/ww-guide-how-winter-affects-our-eating-1440x810.jpg"
                         class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <div class="card bg-dark border-secondary pt-2">
-                            <h5>Second slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
+                            <h5><?php echo $name;?></h5>
+                            <p>
+                                <i class="bi bi-telephone me-1"></i>TELEPHONE: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map me-1"></i>ADDRESS: <?php echo strtoupper($address);?>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="https://media.self.com/photos/622912847b959736301bfb91/2:1/w_2119,h_1059,c_limit/GettyImages-1301412050.jpg"
+                    <img src="https://images.thequint.com/thequint-fit%2F2021-12%2Fc35dfeb7-a734-41b4-b85d-6a2ff043f75e%2FiStock_1064522252.jpg?auto=format%2Ccompress&fmt=webp&width=720"
                         class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <div class="card bg-dark border-secondary pt-2">
-                            <h5>Third slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
+                            <h5><?php echo $name;?></h5>
+                            <p>
+                                <i class="bi bi-telephone me-1"></i>TELEPHONE: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map me-1"></i>ADDRESS: <?php echo strtoupper($address);?>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -106,31 +110,32 @@
             </button>
         </div>
     </section>
+
     <!-- menu -->
     <section id="menu" class="container text-white mb-5">
-    <div class="row g-2">
-        <?php 
-            $query = "select * from WEBOMS_menu_tb limit 4";
-            $resultSet =  getQuery($query);
-            if($resultSet != null){
-                foreach($resultSet as $row){
-        ?>
+        <p class="fs-1 text-center">OUR MENU</p>
+        <div class="row g-3">
+            <?php 
+                $query = "select * from WEBOMS_menu_tb limit 4";
+                $resultSet =  getQuery($query);
+                if($resultSet != null){
+                    foreach($resultSet as $row){
+            ?>
 
-       
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="card h-100 bg-transparent border-secondary">
-                    <?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:310px;height:250px>";?> 
+                    <?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style='width:auto; height:200px;'>";?> 
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['dish'];?></h5>
+                        <h5 class="card-title"><?php echo strtoupper($row['dish']);?></h5>
                         <p class="card-text">
                             <?php echo '₱'.$row['price']; ?> <br>
                         </p>
                     </div>
                 </div>
             </div>
-        
-        <?php } 
-        }?>
+            
+            <?php } 
+            }?>
         </div>
     </section>
 
@@ -140,7 +145,7 @@
         <div class="card mb-3 bg-transparent border-secondary">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlc3RhdXJhbnR8ZW58MHx8MHx8&w=1000&q=80" class="img-fluid" alt="...">
+                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlc3RhdXJhbnR8ZW58MHx8MHx8&w=1000&q=80" class="img-fluid" alt="..." style="width:100%; height:100%;">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">

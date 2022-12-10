@@ -88,8 +88,8 @@
                         $resultSet =  getQuery($selectAllUser);
                     ?>
                     <div class="table-responsive col-lg-12">
-                        <table id="tbl" class="table table-bordered col-lg-12">
-                            <thead>
+                        <table id="tbl" class="table table-bordered table-light table-hover col-lg-12">
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col">USERNAME</th>
                                     <th scope="col">NAME</th>

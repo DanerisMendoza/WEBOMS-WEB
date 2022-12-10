@@ -93,7 +93,7 @@
                             </tr>
                             <tr>
                                 <td><b>PRICE:</b></td>
-                                <td><?php echo $priceOriginal; ?></td>
+                                <td><?php echo '₱'.number_format($priceOriginal,2); ?></td>
                             </tr>
                             <tr>
                                 <td><b>STOCK:</b></td>

@@ -5,17 +5,16 @@
     $query = "select a.*,b.* from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_SESSION[user_id]' ";
     $resultSet =  getQuery($query);
     $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
-
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Costumer - Feedback</title>
+    <title>Profile</title>
 
     <!-- modal script -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css"> 
@@ -26,9 +25,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
-<body>
+<body style="background:#e0e0e0">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="border-bottom:1px solid #e3e1e1;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow">
         <div class="container py-3">
             <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,9 +60,9 @@
         </div>
     </nav>
     
-<div class="container text-center" style="margin-top:120px;">
+<div class="container text-center bg-white shadow mb-5" style="margin-top:175px;">
     <div class="row g-5 justify-content-center">
-        <div class="table-responsive col-lg-12">
+        <div class="table-responsive col-lg-12 px-5">
             <table class="table table-bordered col-lg-12 mb-4">
                 <tbody>
                     <?php
@@ -95,12 +94,9 @@
                     ?>
                     <tr>
                         <?php if($picName != null){?>
-                        <img src="profilePic/<?php echo $picName; ?>" style="width:300px; height:300px;" class="mb-4">
+                        <img src="profilePic/<?php echo $picName; ?>" style="width:300px; height:300px; border-radius:10rem;" class="mb-3"> <br>
                         <?php } ?>
-                    </tr>
-                    <tr>
-                        <td><b>NAME</b></td>
-                        <td><?php echo $name;?></td>
+                        <a class="h1 text-decoration-none text-dark"><?php echo strtoupper($name);?></a> <br><br>
                     </tr>
                     <tr>
                         <td><b>USERNAME</b></td>
@@ -122,15 +118,15 @@
                         <td><b>ADDRESS</b></td>
                         <td><?php echo $address;?></td>
                     </tr>
-                    <tr>
+                    <tr class="bg-success text-white">
                         <td><b>BALANCE</b></td>
-                        <td><?php echo '₱'.$balance;?></td>
+                        <td><?php echo '₱'. number_format($balance,2);?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
             <button class="btn btn-lg btn-warning col-12 mb-3" id="update"><i class="bi bi-arrow-repeat me-1"></i>UPDATE INFO</button>
-            <button class="btn btn-lg btn-warning col-12 mb-3" id="updatePassword"><i class="bi bi-arrow-repeat me-1"></i>UPDATE PASSWORD</button>
+            <button class="btn btn-lg btn-warning col-12 mb-5" id="updatePassword"><i class="bi bi-arrow-repeat me-1"></i>UPDATE PASSWORD</button>
         </div>
     </div>
     

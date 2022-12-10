@@ -102,35 +102,23 @@
                                     <!-- name -->
                                     <td><?php echo $row['name']; ?></td>
                                     <!-- amount -->
-                                    <td><?php echo '₱'.$row['amount'];?></td>
+                                    <td><?php echo '₱'. number_format($row['amount'],2);?></td>
                                     <!-- status -->
-                                    <td><?php echo $row['status'];?></td>
+                                    <td><?php echo strtoupper($row['status']);?></td>
                                     <!-- date and time -->
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
                                     <!-- proof of payment -->
                                     <td>
-                                        <!-- <?php echo $row['proofOfPayment'];?> -->
-                                        <a class="btn btn-light border-dark"
-                                            href="?viewPic=<?php echo $row['proofOfPayment'];?>">
-                                            <i class="bi bi-list me-1"></i>
-                                            VIEW
-                                        </a>
+                                        <a class="btn btn-light border-dark"href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list me-1"></i>VIEW</a>
                                     </td>
                                     <!-- action -->
                                     <?php if($row['status'] == 'pending') {?>
                                     <td>
-                                        <a class="btn btn-success"
-                                            href="?approve=<?php echo $row['id'].','.$row['user_id'].','.$row['amount'];?>">
-                                            <i class="bi bi-check me-1"></i>
-                                            APPROVE
-                                        </a>
-                                        <a class="btn btn-danger" href="?disapprove=<?php echo $row['id'];?>">
-                                            <i class="bi bi-x me-1"></i>
-                                            DISAPPROVE
-                                        </a>
+                                        <a class="btn btn-success" href="?approve=<?php echo $row['id'].','.$row['user_id'].','.$row['amount'];?>"><i class="bi bi-check me-1"></i>APPROVE</a>
+                                        <a class="btn btn-danger" href="?disapprove=<?php echo $row['id'];?>"><i class="bi bi-x me-1"></i>DISAPPROVE</a>
                                     </td>
                                     <?php } else {?>
-                                    <td colspan="3">NONE</td>
+                                    <td class="text-danger">NONE</td>
                                     <?php } ?>
                                 </tr>
                                 <?php } ?>
@@ -143,7 +131,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content container">
                                 <div class="modal-body">
-                                    <?php  echo "<img src='payment/$_GET[viewPic]' style=width:300px;height:500px>";?>
+                                    <?php  echo "<img src='payment/$_GET[viewPic]' style=width:300px;height:550px>";?>
                                 </div>
                             </div>
                         </div>

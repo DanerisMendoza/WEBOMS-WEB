@@ -114,6 +114,7 @@
 
                         $resultSet =  getQuery($query);
                         if($resultSet != null){ ?>
+                        
                         <!-- table container -->
                         <div class="table-responsive col-lg-12">
                             <table class="table table-bordered table-hover col-lg-12">
@@ -162,7 +163,7 @@
                                         <!-- date and time -->
                                         <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                         <!-- staff in charge -->
-                                        <td><?php echo $row['staffInCharge'] == 'online order' ? '('.strtoupper($row['staffInCharge']).')' : $row['staffInCharge'] .' via POS'?></td>
+                                        <td><?php echo strtoupper($row['staffInCharge'] == 'online order' ? '('.$row['staffInCharge'].')' : $row['staffInCharge'] .' via POS');?></td>
                                         <!-- order details -->
                                         <td>
                                             <a class="btn btn-light border-secondary" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list me-1"></i>VIEW</a>

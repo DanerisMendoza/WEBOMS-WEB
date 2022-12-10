@@ -33,7 +33,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3">Admin</h3>
+                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -83,23 +83,21 @@
 
             <!-- content here -->
             <div class="container-fluid text-center">
-            <form method="post">
-                <label>Company Name</label>
-                <input type="text" name="name" placeholder="ENTER NEW COMPANY NAME" class="form-control form-control-lg mb-3" value="<?php echo $name; ?>" required></textarea>
-                <label>Company Address</label>
-                <input type="text" name="address" placeholder="ENTER NEW COMPANY ADDRESS" class="form-control form-control-lg mb-3" value="<?php echo $address; ?>" required></textarea>
-                <label>Company Telephone</label>
-                <input type="number" name="tel" placeholder="ENTER NEW COMPANY TELEPHONE NUMBER" class="form-control form-control-lg mb-3" value="<?php echo $tel; ?>" required></textarea>
-                <label>Company Description</label>
-                <textarea rows="8" name="description" placeholder="ENTER NEW COMPANY DESCRIPTION" class="form-control form-control-lg mb-3"  required><?php echo $description; ?></textarea>
-                <button type="submit" name="update" class="btn btn-lg btn-warning col-12"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
-            </form>
-            <script>
-                document.getElementById("back").onclick = function() {
-                    window.location.replace('admin.php');
-                };
-            </script>
-        </div>
+                <form method="post">
+                    <h4 class="text-start">COMPANY NAME</h4>
+                    <input type="text" name="name" placeholder="ENTER NEW COMPANY NAME" class="form-control form-control-lg mb-5" value="<?php echo $name; ?>" required></textarea>
+                    <h4 class="text-start">COMPANY ADDRESS</h4>
+                    
+                    <input type="text" name="address" placeholder="ENTER NEW COMPANY ADDRESS" class="form-control form-control-lg mb-5" value="<?php echo $address; ?>" required></textarea>
+                    <h4 class="text-start">COMPANY TELEPHONE/PHONE NUMBER</h4>
+                    
+                    <input type="number" name="tel" placeholder="ENTER NEW COMPANY TELEPHONE NUMBER" class="form-control form-control-lg mb-5" value="<?php echo $tel; ?>" required></textarea>
+                    <h4 class="text-start">COMPANY DESCRIPTION/HISTORY</h4>
+                    
+                    <textarea rows="8" name="description" placeholder="ENTER NEW COMPANY DESCRIPTION" class="form-control form-control-lg mb-4"  required><?php echo $description; ?></textarea>
+                    <button type="submit" name="update" class="btn btn-lg btn-warning col-12"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
+                </form>
+            </div>
         </div>
     </div>
         

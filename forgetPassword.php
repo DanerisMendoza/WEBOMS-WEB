@@ -2,6 +2,7 @@
   $page = 'notLogin';
   include('method/checkIfAccountLoggedIn.php'); 
 ?>
+
 <?php 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
@@ -9,25 +10,30 @@
     include('method/query.php');
     // session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Forget Password</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Forgot Password</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- online css bootsrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <button class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
+            <button class="btn btn-lg btn-dark col-12 mb-5" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
             <form method="post" class="form1 col-12">
-                <input type="text" name="email" placeholder="Please Enter Your Email" required
-                    class="form-control form-control-lg mb-3">
-                <button type="submit" name="submit" class="btn btn-primary btn-lg col-12 mb-3">Submit</button>
+                <input type="text" name="email" placeholder="PLEASE ENTER YOUR EMAIL" class="form-control form-control-lg mb-3" required>
+                <button type="submit" name="submit" class="btn btn-primary btn-lg col-12 mb-3"><i class="bi bi-box-arrow-in-left me-1"></i>SUBMIT</button>
             </form>
         </div>
     </div>
@@ -38,10 +44,8 @@
             <div class="modal-content">
                 <div class="modal-body ">
                     <form method="post" class="form-group">
-                        <input type="text" class="form-control form-control-lg mb-3" name="forgetPasswordOtp"
-                            placeholder="Enter Otp" required>
-                        <button type="submit" class="btn btn-lg btn-success col-12"
-                            name="forgetPasswordOtpSubmit">Submit</button>
+                        <input type="text" class="form-control form-control-lg mb-3" name="forgetPasswordOtp" placeholder="ENTER OTP" required>
+                        <button type="submit" class="btn btn-lg btn-success col-12" name="forgetPasswordOtpSubmit"><i class="bi bi-box-arrow-in-left me-1"></i>SUBMIT</button>
                     </form>
                 </div>
             </div>
@@ -54,9 +58,8 @@
             <div class="modal-content">
                 <div class="modal-body ">
                     <form method="post" class="form-group">
-                        <input type="password" class="form-control form-control-lg mb-3" name="newPass"
-                            placeholder="Enter New Password" required>
-                        <button type="submit" class="btn btn-lg btn-success col-12" name="newPassSubmit">Submit</button>
+                        <input type="password" class="form-control form-control-lg mb-3" name="newPass" placeholder="ENTER NEW PASSWORD" required>
+                        <button type="submit" class="btn btn-lg btn-success col-12" name="newPassSubmit"><i class="bi bi-box-arrow-in-left me-1"></i>SUBMIT</button>
                     </form>
                 </div>
             </div>
@@ -72,7 +75,7 @@
         $name = getQueryOneVal("select b.name from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where email = '$email';",'name');
         if($name == null){
             echo "<script>
-            alert('email do not exist!');
+            alert('EMAIL DO NOT EXIST!');
             window.location.replace('forgetPassword.php');
             </script>"; 
             return;
@@ -101,7 +104,7 @@
                 $mail->addAddress("$email");                                //sent to
                 //Content
                 $mail->Subject = 'Forget Password OTP:';
-                $mail->Body    = "Good Day $name We would like to inform you that you're trying to change your password\nTo confirm please use this OTP:$forgetPasswordOtp\nTHANK YOU!";
+                $mail->Body    = "Good Day, $name \n \nWe would like to inform you that you're trying to change your password. \nTo confirm please use this OTP: $forgetPasswordOtp \n \nThank You!";
                 $mail->send();
             }
         }

@@ -33,7 +33,7 @@
 
         .h1Admin {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 7vw;
+            font-size: 10vw;
             font-weight: normal;
         }
     </style>
@@ -45,7 +45,7 @@
             -o-background-size: cover;
             background-size: cover;">
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
         <div class="container py-3">
             <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,16 +57,16 @@
                         <a class="nav-link text-danger" href="#"><i class="bi bi-house-door me-1"></i>HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-white" href="#home" id="customerProfile"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
+                        <a class="nav-link text-dark" href="#home" id="customerProfile"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-white" href="#home" id="menu"><i class="bi bi-book me-1"></i>MENU</a>
+                        <a class="nav-link text-dark" href="#home" id="menu"><i class="bi bi-book me-1"></i>MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-white" href="#home" id="topUp"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
+                        <a class="nav-link text-dark" href="#home" id="topUp"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-white" href="#home" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="#home" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
                     </li>
                 </ul>
                 <form method="post">
@@ -79,7 +79,7 @@
     <div class="container text-white" style="margin-top:150px;">
         <div class="row justify-content-center">
             <h1 class="col-12 h1Admin">Hi Customer, <br><?php echo $_SESSION['name'];?>!</h1>
-            <h2 class="fw-normal col-12 ms-3">Your balance is ₱<?php echo $balance; ?></h2>
+            <h1 class="fw-normal col-12 ms-3">Your balance is ₱<?php echo $balance; ?></h1>
         </div>
     </div>
 </body>

@@ -84,7 +84,7 @@
 
                     <!-- table -->
                     <div class="table-responsive col-lg-12 mb-5">
-                        <table class="table table-bordered table-hover col-lg-12" id="tbl">
+                        <table class="table table-bordered table-hover table-light col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">IMAGE</th>
@@ -113,7 +113,7 @@
                                     <!-- dish -->
                                     <td><?php echo $row['dish'];?></td>
                                     <!-- price -->
-                                    <td><?php echo '₱'.$row['price']; ?></td>
+                                    <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                     <!-- stock -->
                                     <td><?php echo $row['stock']; ?></td>
                                     <!-- staff (in-charge) -->
