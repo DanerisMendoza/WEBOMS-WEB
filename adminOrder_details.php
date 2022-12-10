@@ -79,12 +79,44 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 cont2">
                         <button class="btn btn-lg btn-dark col-12 mb-3" id="back"><i class="bi bi-arrow-left me-1"></i>BACK </button>
+                        <button class="btn btn-lg btn-dark col-12 mb-3" id="viewInPdf"><i class="bi bi-arrow-right me-1"></i>View In Pdf </button>
 
                         <!-- table -->
                         <div class="table-responsive col-lg-12">
                             <?php 
-                                $arr = explode(',',$_GET['idAndPic']);
+                                $arr = explode(',',$_GET['order_id']);
                                 $id = $arr[0];
+                                $_SESSION['dishesArr'] = array();
+                                $_SESSION['priceArr'] = array();
+                                $_SESSION['dishesQuantity'] = array();
+
+                                $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
+                                $resultSet = getQuery($query); 
+                                if($resultSet != null){
+                                    foreach($resultSet as $row){ 
+                                        //init
+                                        $_SESSION['order_id'] = $row['order_id'];
+                                        $_SESSION['or_number'] = $row['or_number'];
+                                        $_SESSION['customerName'] = $row['name'];
+                                        $_SESSION['date'] = $row['date'];
+                                        $_SESSION['cash'] = $row['payment'];
+                                        $_SESSION['total'] = $row['totalOrder'];
+                                        $_SESSION['name'] = $row['staffInCharge'];
+
+                                    }
+                                }
+
+                                 //company variables init
+                                $query = "select * from WEBOMS_company_tb";
+                                $resultSet = getQuery($query);
+                                if($resultSet!=null){
+                                    foreach($resultSet as $row){
+                                    $_SESSION['companyName'] = $row['name'];
+                                    $_SESSION['companyAddress'] = $row['address'];
+                                    $_SESSION['companyTel'] = $row['tel'];
+                                    }
+                                }
+
                                 $query = "select a.*, b.* from WEBOMS_menu_tb a inner join WEBOMS_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$id' ";
                                 $resultSet = getQuery($query); 
                             ?>
@@ -102,7 +134,11 @@
                                         if($resultSet != null)
                                         foreach($resultSet as $row){ ?>
                                     <tr>
-                                        <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
+                                        <?php 
+                                        array_push($_SESSION['dishesArr'],$row['dish']);
+                                        array_push($_SESSION['priceArr'],$row['price']);
+                                        array_push($_SESSION['dishesQuantity'],$row['quantity']);
+                                        $price = ($row['price']*$row['quantity']);  $total += $price;?>
                                         <td><?php echo $row['quantity']; ?></td>
                                         <td><?php echo $row['dish']; ?></td>
                                         <td><?php echo '₱'.$price?></td>
@@ -129,10 +165,18 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
+
+<script>
+//order button (js)
+var viewInPdf = document.getElementById("viewInPdf");
+viewInPdf.addEventListener("click", () => {
+        window.open("pdf/receipt.php");
+});
+</script>
+
 
 <script>
 var from = "<?php echo $_SESSION['from'];?>";
@@ -156,13 +200,13 @@ $(document).ready(function() {
 <script>
     // for navbar click locations
     document.getElementById("pos").onclick = function() { window.location.replace('adminPos.php'); };
-document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
-document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
-document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
-document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
-document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
-document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
-document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
+    document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
+    document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
+    document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
+    document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
+    document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
+    document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
+    document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
 </script>
 
 <?php 

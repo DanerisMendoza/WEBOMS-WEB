@@ -357,13 +357,14 @@ $(document).ready(function() {
             $or_number = $temp;
             $_SESSION['or_number'] = $or_number;
             $_SESSION['customerName'] = $customerName;
+            $_SESSION['staffInCharge'] = 'POS';
             $_SESSION['date'] = $todayWithTime;
             $_SESSION['cash'] = $cash;
             $_SESSION['total'] = $total;
             $_SESSION['dishesArr'] = $dishesArr;
             $_SESSION['priceArr'] = $priceArr;
             $_SESSION['dishesQuantity'] = $dishesQuantity;
-            $staff = $_SESSION['name'].' via POS';
+            $staff = $_SESSION['name'];
             // $user_id = $_SESSION['user_id'];
             $user_id = uniqid('',true);
             $order_id = uniqid();

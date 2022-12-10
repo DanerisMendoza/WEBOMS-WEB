@@ -4,6 +4,8 @@
     include('method/query.php');
     $query = "select a.*,b.* from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_SESSION[user_id]' ";
     $resultSet =  getQuery($query);
+    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +30,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="border-bottom:1px solid #e3e1e1;">
         <div class="container py-3">
-            <a class="navbar-brand fs-4" href="#">RESTONAME</a>
+            <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
