@@ -1,3 +1,16 @@
+<?php 
+      include('method/query.php');
+      $query = "select * from WEBOMS_company_tb";
+      $resultSet = getQuery($query);
+      if($resultSet!=null){
+        foreach($resultSet as $row){
+            $name = $row['name'];
+            $address = $row['address'];
+            $tel = $row['tel'];
+            $description = $row['description'];
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +30,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container py-3">
-            <a class="navbar-brand fs-4" href="#">RESTONAME</a>
+            <a class="navbar-brand fs-4" href="#"><?php echo $name;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -56,8 +69,9 @@
                         class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <div class="card bg-dark border-secondary pt-2">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
+                            <h5><?php echo $name;?></h5>
+                            <p>Telephone: <?php echo $tel;?></p>
+                            <p>Address: <?php echo $address;?></p>
                         </div>
                     </div>
                 </div>
@@ -92,59 +106,31 @@
             </button>
         </div>
     </section>
-
     <!-- menu -->
     <section id="menu" class="container text-white mb-5">
-        <p class="fs-1 text-center">OUR MENU</p>
-        <div class="row g-3">
+    <div class="row g-2">
+        <?php 
+            $query = "select * from WEBOMS_menu_tb limit 4";
+            $resultSet =  getQuery($query);
+            if($resultSet != null){
+                foreach($resultSet as $row){
+        ?>
+
+       
             <div class="col-sm-3">
                 <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
+                    <?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:310px;height:250px>";?> 
                     <div class="card-body">
-                        <h5 class="card-title">Name</h5>
+                        <h5 class="card-title"><?php echo $row['dish'];?></h5>
                         <p class="card-text">
-                            $0.00 <br>
-                            Description
+                            <?php echo '₱'.$row['price']; ?> <br>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Name</h5>
-                        <p class="card-text">
-                            $0.00 <br>
-                            Description
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Name</h5>
-                        <p class="card-text">
-                            $0.00 <br>
-                            Description
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="card h-100 bg-transparent border-secondary">
-                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/02/05/Baked-Feta-Pasta-4_s4x3.jpg.rend.hgtvcom.616.493.suffix/1615916524567.jpeg" alt="" wdith="100">
-                    <div class="card-body">
-                        <h5 class="card-title">Name</h5>
-                        <p class="card-text">
-                            $0.00 <br>
-                            Description
-                        </p>
-                    </div>
-                </div>
-            </div>
+        
+        <?php } 
+        }?>
         </div>
     </section>
 
@@ -158,44 +144,9 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h3 class="card-title fw-normal">RESTONAME</h3> <br>
+                        <h3 class="card-title fw-normal"><?php echo $name;?></h3> <br>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. In egestas erat imperdiet sed euismod nisi porta lorem
-                            mollis. In
-                            dictum non consectetur a erat nam at lectus urna. Pharetra pharetra massa massa ultricies mi
-                            quis hendrerit. Porta lorem mollis aliquam ut porttitor leo. Et leo duis ut diam. Malesuada
-                            fames ac turpis egestas. Purus sit amet volutpat consequat. Mattis nunc sed blandit libero
-                            volutpat sed cras ornare arcu. Lectus sit amet est placerat in egestas erat. Pharetra
-                            convallis
-                            posuere morbi leo urna molestie at elementum eu. Ac tortor vitae purus faucibus ornare.
-                            Gravida
-                            rutrum quisque non tellus. Proin fermentum leo vel orci porta non pulvinar neque laoreet.
-                            Lacus
-                            vel facilisis volutpat est velit. Facilisis sed odio morbi quis. Sit amet consectetur
-                            adipiscing
-                            elit ut aliquam purus. Maecenas sed enim ut sem. <br><br>
-
-                            Lacus luctus accumsan tortor posuere ac ut consequat semper. Lobortis elementum nibh tellus
-                            molestie nunc non blandit massa. Blandit turpis cursus in hac habitasse platea dictumst.
-                            Rutrum
-                            tellus pellentesque eu tincidunt. Aenean sed adipiscing diam donec adipiscing. Id diam vel
-                            quam
-                            elementum pulvinar etiam non. Elit at imperdiet dui accumsan sit amet nulla facilisi morbi.
-                            Lectus urna duis convallis convallis tellus. Vitae congue eu consequat ac felis. Id diam vel
-                            quam elementum pulvinar etiam non quam. Sed nisi lacus sed viverra. At auctor urna nunc id
-                            cursus metus aliquam. Sed viverra ipsum nunc aliquet bibendum. Nec dui nunc mattis enim ut
-                            tellus elementum sagittis vitae. Vestibulum lorem sed risus ultricies tristique nulla
-                            aliquet
-                            enim tortor. Euismod lacinia at quis risus sed vulputate. Convallis convallis tellus id
-                            interdum
-                            velit laoreet. Nulla posuere sollicitudin aliquam ultrices sagittis orci a. <br><br>
-
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            <?php echo $description;?>
                         </p>
                     </div>
                 </div>

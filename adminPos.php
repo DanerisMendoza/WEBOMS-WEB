@@ -342,32 +342,31 @@ $(document).ready(function() {
 
             //or number process
             $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
-            $year = date("Y");
             if($or_last == null){
-                $num = 1;
+                $or_last = 1;
             }
             else{
-                $num = substr($or_last,5);
-                $num = $num + 1;
+                $or_last = $or_last + 1;
             }
-            $input = $num;
-            $inputSize = strlen(strval($input));
+            $inputSize = strlen(strval($or_last));
             if($inputSize > 4)
                 $str_length = $inputSize;
             else
                 $str_length = 4;
-            $temp = substr("0000{$input}", -$str_length);
-            $or_number =  $year.'-'.$temp;
+            $temp = substr("0000{$or_last}", -$str_length);
+            $or_number = $temp;
             $_SESSION['or_number'] = $or_number;
             $_SESSION['customerName'] = $customerName;
+            $_SESSION['staffInCharge'] = 'POS';
             $_SESSION['date'] = $todayWithTime;
             $_SESSION['cash'] = $cash;
             $_SESSION['total'] = $total;
             $_SESSION['dishesArr'] = $dishesArr;
             $_SESSION['priceArr'] = $priceArr;
             $_SESSION['dishesQuantity'] = $dishesQuantity;
-            $staff = $_SESSION['name'].' via POS';
-            $user_id = $_SESSION['user_id'];
+            $staff = $_SESSION['name'];
+            // $user_id = $_SESSION['user_id'];
+            $user_id = uniqid('',true);
             $order_id = uniqid();
             $_SESSION['order_id'] = $order_id;
             $query1 = "insert into WEBOMS_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
@@ -375,8 +374,9 @@ $(document).ready(function() {
                 $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
             }
+            $query3 = "insert into WEBOMS_userInfo_tb(name,user_id) values('$customerName','$user_id')";
+            Query($query3);
             Query($query1);
-            // Query($query3);
             $_SESSION["dishes"] = array();
             $_SESSION["price"] = array();
             $_SESSION["orderType"] = array(); 

@@ -1,12 +1,16 @@
 <?php 
     $page = 'customer';
     include('method/checkIfAccountLoggedIn.php');
+    include('method/query.php');
+
     if(!isset($_SESSION["dishes"]) || !isset($_SESSION["price"]) || !isset($_SESSION["orderType"])){
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array(); 
         $_SESSION["orderType"] = array(); 
     }
     $_SESSION['multiArr'] = array();
+    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +38,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="border-bottom:1px solid #e3e1e1;">
         <div class="container py-3">
-            <a class="navbar-brand fs-4" href="#">RESTONAME</a>
+            <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -84,7 +88,6 @@
                     </thead>
                     <tbody>
                         <?php 
-                        include_once('method/query.php');
                         $query = "select * from WEBOMS_menu_tb";
                         $resultSet =  getQuery($query);
                         if($resultSet != null)
@@ -140,28 +143,9 @@ document.getElementById("customersFeedback").onclick = function() { window.locat
 </script>
 
 <script>
-$(document).ready(function() {
-    $('#tbl').DataTable();
-});
-
-// $('#tbl').dataTable( {
-//       "aoColumnDefs": [
-//           { 'bSortable': false, 'aTargets': [ 3 ] }
-//        ]
-// });
-
-// $('#tbl').tablesorter({
-//         headers: {
-//             0: { sorter: false },
-//             4: { sorter: false }
-//         }
-//     });
-
-// $(document).ready(function() {
-//     $('#tbl').dataTable( {
-//         "aaSorting": [[ 1, "desc" ]]
-//     } );
-// } );
+    $(document).ready(function() {
+        $('#tbl').DataTable();
+    });
 </script>
 
 <script>

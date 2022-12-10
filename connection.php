@@ -73,7 +73,8 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		$queryCreateCompany_tb = "create table if not exists WEBOMS_company_tb(id int PRIMARY KEY AUTO_INCREMENT, 
 		name varchar(255), 
 		address varchar(255), 
-		tel varchar(255))";
+		tel varchar(255),
+		description TEXT)";
 
 		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb) && $conn->query($queryCreateCompany_tb)) {
 			$checkQuery = "select * from WEBOMS_user_tb";
@@ -83,7 +84,7 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 					$user_id = uniqid('',true);
 					$queryInsertAdmin = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('admin','$hash','admin','$user_id')";
 					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, user_id) values('admin', '$user_id')";
-					$queryInsertComapnyInfo = "insert into WEBOMS_company_tb(name, address, tel) values('companyName', 'address', '0000')";
+					$queryInsertComapnyInfo = "insert into WEBOMS_company_tb(name, address, tel, description) values('companyName', 'address', '0000', 'description')";
 					if($conn->query($queryInsertAdmin) && $conn->query($queryInsertAdminInfo) && $conn->query($queryInsertComapnyInfo))
 						echo  '<script> alert("Success creating table"); </script>';						
 					}

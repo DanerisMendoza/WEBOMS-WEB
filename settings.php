@@ -9,6 +9,7 @@
         $name = $row['name'];
         $address = $row['address'];
         $tel = $row['tel'];
+        $description = $row['description'];
     }
 ?>
 <!DOCTYPE html>
@@ -83,9 +84,14 @@
             <!-- content here -->
             <div class="container-fluid text-center">
             <form method="post">
+                <label>Company Name</label>
                 <input type="text" name="name" placeholder="ENTER NEW COMPANY NAME" class="form-control form-control-lg mb-3" value="<?php echo $name; ?>" required></textarea>
+                <label>Company Address</label>
                 <input type="text" name="address" placeholder="ENTER NEW COMPANY ADDRESS" class="form-control form-control-lg mb-3" value="<?php echo $address; ?>" required></textarea>
+                <label>Company Telephone</label>
                 <input type="number" name="tel" placeholder="ENTER NEW COMPANY TELEPHONE NUMBER" class="form-control form-control-lg mb-3" value="<?php echo $tel; ?>" required></textarea>
+                <label>Company Description</label>
+                <textarea rows="8" name="description" placeholder="ENTER NEW COMPANY DESCRIPTION" class="form-control form-control-lg mb-3"  required><?php echo $description; ?></textarea>
                 <button type="submit" name="update" class="btn btn-lg btn-warning col-12"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
             </form>
             <script>
@@ -106,7 +112,8 @@
         $name = $_POST['name'];
         $address = $_POST['address'];
         $tel = $_POST['tel'];
-        $query = "update WEBOMS_company_tb SET name = '$name', address = '$address', tel = '$tel'";
+        $description = $_POST['description'];
+        $query = "update WEBOMS_company_tb SET name = '$name', address = '$address', tel = '$tel', description = '$description' ";
         if(Query($query)){
             echo "<script>alert('SUCCESS!'); window.location.replace('settings.php');</script>";
         }

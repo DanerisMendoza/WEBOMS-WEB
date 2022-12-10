@@ -7,8 +7,8 @@
     $_SESSION["price"] = array(); 
     $_SESSION["orderType"] = array(); 
     }
-    $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
-    $balance = getQueryOneVal($query,'balance');
+    $balance = getQueryOneVal("SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ",'balance');
+    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
     $balance = $balance == null ? 0 : $balance;
 ?>
 
@@ -47,7 +47,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container py-3">
-            <a class="navbar-brand fs-4" href="#">RESTONAME</a>
+            <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

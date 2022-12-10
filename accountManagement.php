@@ -19,6 +19,10 @@
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <!-- data tables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -84,7 +88,7 @@
                         $resultSet =  getQuery($selectAllUser);
                     ?>
                     <div class="table-responsive col-lg-12">
-                        <table class="table table-bordered col-lg-12">
+                        <table id="tbl" class="table table-bordered col-lg-12">
                             <thead>
                                 <tr>
                                     <th scope="col">USERNAME</th>
@@ -328,3 +332,9 @@ document.getElementById("settings").onclick = function() { window.location.repla
         echo "<script>window.location.replace('Login.php');</script>";
     }
 ?>
+
+<script>
+$(document).ready(function() {
+    $('#tbl').DataTable();
+});
+</script>

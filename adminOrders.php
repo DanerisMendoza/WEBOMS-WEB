@@ -104,13 +104,13 @@
                             $_SESSION['query'] = $_GET['sort'];
                         }
                         if($_SESSION['query'] == 'all')
-                            $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id order by b.id asc " ;
+                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
                         elseif($_SESSION['query'] == 'prepairing')
-                            $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'prepairing' order by b.id asc " ;
+                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'prepairing' order by b.id asc " ;
                         elseif($_SESSION['query'] == 'serving')
-                            $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'serving' order by b.id asc " ;
+                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
                         elseif($_SESSION['query'] == 'order complete')
-                            $query = "select a.*, b.*, c.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id inner join WEBOMS_user_tb c on a.user_id = c.user_id where b.status = 'complete' order by b.id asc " ;
+                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
 
                         $resultSet =  getQuery($query);
                         if($resultSet != null){ ?>
@@ -133,7 +133,7 @@
                                     <?php foreach($resultSet as $row){?>
                                     <tr>
                                         <!-- name -->
-                                        <td><?php echo $row['accountType'] == 'customer'  ? $row['name']:'POS'; ?></td>
+                                        <td><?php echo $row['name']; ?></td>
                                         <!-- orders link id -->
                                         <td><?php echo $row['order_id'];?></td>
                                         <!-- order status -->
@@ -162,10 +162,10 @@
                                         <!-- date and time -->
                                         <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                         <!-- staff in charge -->
-                                        <td><?php echo strtoupper($row['staffInCharge'] == 'null' ? ' ' :$row['staffInCharge'])?></td>
+                                        <td><?php echo $row['staffInCharge'] == 'online order' ? '('.strtoupper($row['staffInCharge']).')' : $row['staffInCharge'] .' via POS'?></td>
                                         <!-- order details -->
                                         <td>
-                                            <a class="btn btn-light border-secondary" href="adminOrder_details.php?idAndPic=<?php echo $row['order_id']?>"><i class="bi bi-list me-1"></i>VIEW</a>
+                                            <a class="btn btn-light border-secondary" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list me-1"></i>VIEW</a>
                                         </td>
                                         <!-- options -->
                                         <!-- online -->
@@ -239,9 +239,11 @@
                                                         $genderIndex = 2;
                                                     }
                                                     ?>
-                                                    <tr class="text-center">
-                                                        <th colspan="2"><img src="profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
-                                                    </tr>
+                                                    <?php if($picName != null){ ?>
+                                                        <tr class="text-center">
+                                                            <th colspan="2"><img src="profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
+                                                        </tr>
+                                                    <?php } ?>
                                                     <tr>
                                                         <td><b>NAME</b></td>
                                                         <td><?php echo $name;?></td>
@@ -270,17 +272,6 @@
                                                         <td><b>BALANCE</b></td>
                                                         <td><?php echo '₱'.$balance;?></td>
                                                     </tr>
-                                                    <!-- <tr>
-                                                        <th scope="col">Profile Info</th>
-                                                        <img src="profilePic/<?php echo $picName; ?>" style=width:200px;height:200px>
-                                                    </tr>
-                                                    <tr><td><?php echo $name;?></td></tr>
-                                                    <tr><td><strong>Username: </strong> <?php echo $username;?></td></tr>
-                                                    <tr><td><strong>Email: </strong> <?php echo $email;?></td></tr>
-                                                    <tr><td><strong>Gender: </strong> <?php echo $gender;?></td></tr>
-                                                    <tr><td><strong>Phone Number: </strong> <?php echo $phoneNumber;?></td></tr>
-                                                    <tr><td><strong>Address: </strong> <?php echo $address;?></td></tr>
-                                                    <tr><td><strong>Balance: </strong> <?php echo '₱'.$balance;?></td></tr> -->
                                                     <?php } ?>
                                             </tbody>
                                         </table>
@@ -347,13 +338,13 @@ $(document).ready(function() {
 <script>
     // for navbar click locations
     document.getElementById("pos").onclick = function() { window.location.replace('adminPos.php'); };
-document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
-document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
-document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
-document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
-document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
-document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
-document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
+    document.getElementById("ordersQueue").onclick = function() { window.location.replace('adminOrdersQueue.php'); };
+    document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
+    document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
+    document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
+    document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
+    document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
+    document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
 </script>
 
 <?php 
