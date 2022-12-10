@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Costumer - Feedback</title>
+    <title>Profile</title>
 
     <!-- modal script -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css"> 
@@ -90,9 +90,9 @@
                         }
                     ?>
                     <tr>
-                        <?php if($picName != null){?>
-                        <img src="profilePic/<?php echo $picName; ?>" style="width:300px; height:300px;" class="mb-4">
-                        <?php } ?>
+                            <?php if($picName != null){?>
+                            <img src="profilePic/<?php echo $picName; ?>" style="width:300px; height:300px; border-radius:10rem;" class="mb-4">
+                            <?php } ?>
                     </tr>
                     <tr>
                         <td><b>NAME</b></td>

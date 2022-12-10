@@ -16,10 +16,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Costumer Menu</title>
+    <title>Menu</title>
     
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/customer.css">
+    <script type="text/javascript" src="js/bootstrap 5/bootstrap.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <!-- data tables -->
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
@@ -56,26 +57,29 @@
                     </li>
                 </ul>
                 <form method="post">
-                    <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
                 </form>
             </div>
         </div>
     </nav>
 
     <div class="container text-center" style="margin-top:120px;">
-        <div class="row justify-content-center">
-            <button type="button" class="btn btn-lg btn-dark col-12 mb-3" id="back">Back</button>
-            <button class="btn btn-lg btn-success col-6 mb-4" id="customersFeedback">Customers Feedback</button>
-            <button type="button" class="btn btn-lg btn-success col-6 mb-4" id="viewCart">View Cart</button>
+        <div class="row">
+            <!-- <div class="container col-lg-12 text-end">
+            <button class="btn btn-lg btn-primary mb-4" id="customersFeedback"><i class="bi bi-chat-square-text me-1"></i>FEEDBACK</button>
+            <button type="button" class="btn btn-lg btn-light border-secondary mb-4" id="viewCart"><i class="bi bi-cart me-1"></i>CART</button>
+            </div> -->
             <div class="table-responsive col-lg-12">
                 <table id="tbl" class="table table-bordered table-hover col-lg-12">
                     <thead class="table-dark">
                         <tr>
+                            <th scope="col">IMAGE</th>
                             <th scope="col">DISH</th>
                             <th scope="col">PRICE</th>
                             <th scope="col">STOCK</th>
-                            <th scope="col">IMAGE</th>
-                            <th scope="col"></th>
+                            <th scope="col">
+                                <button type="button" class="btn btn-light border-secondary" id="viewCart"><i class="bi bi-cart me-1"></i>CART</button>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,17 +90,22 @@
                         if($resultSet != null)
                             foreach($resultSet as $row){ ?>
                         <tr>
+                            <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px;height:150px>";?></td>
                             <td><?=$row['dish']?></td>
-                            <td><?php echo $row['price']; ?></td>
+                            <td><?php echo '₱'.$row['price']; ?></td>
                             <td><?php echo $row['stock']; ?></td>
-                            <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:100px;height:100px>";?>
-                            </td>
-                            <td><a class="btn btn-light border-dark" <?php   if($row['stock'] <= 0) 
-                                                echo "<button>Out of stock</button>";
-                                            else{
-                                    ?>
-                                    href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>">Add
-                                    To Cart</a><?php } ?>
+                            <td>
+                                <a class="text-danger text-decoration-none">
+                                <?php if($row['stock'] <= 0) 
+                                    echo "OUT OF STOCK";
+                                    else{
+                                ?>
+                                </a>
+                                <a class="btn btn-light border-dark" href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>">
+                                    <!-- <i class="bi bi-cart-plus me-1"></i> -->
+                                    ADD TO CART
+                                </a>
+                                <?php } ?>
                             </td>
                         </tr>
                         <?php } ?>
@@ -126,7 +135,6 @@
 ?>
 
 <script>
-document.getElementById("back").onclick = function() { window.location.replace('customer.php'); };
 document.getElementById("viewCart").onclick = function() { window.location.replace('customerCart.php'); };
 document.getElementById("customersFeedback").onclick = function() { window.location.replace('customerFeedbackList.php'); };
 </script>
