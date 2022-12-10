@@ -174,7 +174,7 @@
                                     <?php $total += $row['totalOrder'];?>
                                     <!-- order detail -->
                                     <td>
-                                        <a class="btn btn-light border-dark" href="adminOrder_details.php?idAndPic=<?php echo $row['order_id']?>"><i class="bi bi-list"></i>VIEW</a>
+                                        <a class="btn btn-light border-dark" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list"></i>VIEW</a>
                                     </td>
                                 </tr>
                                 <?php } ?>
