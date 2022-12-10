@@ -25,7 +25,7 @@
 
         .h1Admin {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 13vw;
+            font-size: 10vw;
             font-weight: normal;
         }
     </style>

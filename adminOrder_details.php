@@ -78,8 +78,10 @@
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 cont2">
-                        <button class="btn btn-lg btn-dark col-12 mb-3" id="back"><i class="bi bi-arrow-left me-1"></i>BACK </button>
-                        <button class="btn btn-lg btn-dark col-12 mb-3" id="viewInPdf"><i class="bi bi-arrow-right me-1"></i>View In Pdf </button>
+                        <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
+                            <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+                            <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="viewInPdf"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+                        </div>
 
                         <!-- table -->
                         <div class="table-responsive col-lg-12">
@@ -141,21 +143,21 @@
                                         $price = ($row['price']*$row['quantity']);  $total += $price;?>
                                         <td><?php echo $row['quantity']; ?></td>
                                         <td><?php echo $row['dish']; ?></td>
-                                        <td><?php echo '₱'.$price?></td>
+                                        <td><?php echo '₱'. number_format($price,2)?></td>
                                     </tr>
                                     <?php }?>
                                     <tr>
                                         <td colspan="2"><b>TOTAL AMOUNT:</b></td>
-                                        <td><b>₱<?php echo $total?></b></td>
+                                        <td><b>₱<?php echo number_format($total,2)?></b></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"><b>PAYMENT:</b></td>
                                         <?php $payment = getQueryOneVal("SELECT a.payment FROM WEBOMS_order_tb a where a.order_id = '$id' ",'payment');?>
-                                        <td><b>₱<?php echo $payment; ?></b></td>
+                                        <td><b>₱<?php echo number_format($payment,2); ?></b></td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"><b>CHANGE:</b></td>
-                                        <td><b>₱<?php echo $payment-$total; ?></b></td>
+                                        <td><b>₱<?php echo number_format($payment-$total,2); ?></b></td>
                                     </tr>
                                 </tbody>
                             </table>

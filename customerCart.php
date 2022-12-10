@@ -10,42 +10,43 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
     $_SESSION['multiArr'] = array();
-
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Costumer Menu - View Cart</title>
+    <title>Cart</title>
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/customer.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
+    <!-- online css bootsrap icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
-<body class="bg-light">
+<body>
 
     <div class="container text-center mt-5">
         <div class="row justify-content-center">
-            <button class="btn btn-lg btn-dark col-6 mb-3" id="back">Back</button>
-            <button class="btn btn-lg btn-dark col-6 mb-3" id="home">Home</button>
-            <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4" name="date"
-                min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>" />
+            <button class="btn btn-lg btn-dark col-6 mb-5" id="back">Back</button>
+            <button class="btn btn-lg btn-dark col-6 mb-5" id="home">Home</button>
+            <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4 bg-white text-center" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>" />
 
+            <!-- table -->
             <div class="table-responsive col-lg-12 mb-5">
-                <table id="tbl" class="table table-striped table-bordered col-lg-12 mb-4">
-                    <thead class="table-dark">
+                <table id="tbl" class="table table-hover table-bordered col-lg-12 mb-4">
+                    <thead>
                         <tr>
                             <th scope="col">DISH</th>
                             <th scope="col">QUANTITY</th>
                             <th scope="col">PRICE</th>
-                            <th scope="col" colspan="1">Option</th>
+                            <th scope="col">OPTION</th>
                         </tr>
                     </thead>
                     <?php 
@@ -93,32 +94,28 @@
                         <td>
                             <!-- check stock -->
                             <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                            <a class="btn btn-success border-dark"
-                                href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
                             <?php }else{ ?>
-                            <a class="btn btn-success border-dark">Out of Stock</a>
+                            <a class="btn text-danger">OUT OF STOCK</a>
                             <?php } ?>
-                            <a class="btn btn-success border-dark"
-                                href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
+                            <a class="btn btn-success" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
                         </td>
                     </tr>
                     <?php }?>
                     <tr>
                         <td colspan="2"><b>TOTAL AMOUNT:</b></td>
                         <td><b>₱<?php echo number_format($total,2); ?></b></td>
+                        <td></td>
                     </tr>
                 </table>
-                <!-- place order -->
                 <form method="post">
-                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+                    <!-- place order -->
+                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order"><i class="bi bi-cart me-1"></i>PLACE ORDER</button>
+                <!-- </form>
+                <form method="post"> -->
+                    <!-- clear order -->
+                    <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear"><i class="bi bi-trash me-1"></i>CLEAR ORDER</button>
                 </form>
-                <!-- clear order -->
-                <form method="post">
-                    <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
-                </form>
-                <script>
-                document.getElementById("dateTime").disabled = true;
-                </script>
             </div>
         </div>
     </div>
@@ -128,13 +125,14 @@
 </html>
 
 <script>
-document.getElementById("home").onclick = function() {
-    window.location.replace('customer.php');
-};
-document.getElementById("back").onclick = function() {
-    window.location.replace('customerMenu.php');
-};
+    document.getElementById("dateTime").disabled = true;
 </script>
+
+<script>
+document.getElementById("home").onclick = function() { window.location.replace('customer.php'); };
+document.getElementById("back").onclick = function() { window.location.replace('customerMenu.php'); };
+</script>
+
 <?php
     $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
     $balance = getQueryOneVal($query,'balance');
@@ -311,9 +309,9 @@ document.getElementById("back").onclick = function() {
                 $mail->Body    = 'Thank you for ordering!';
                 $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
                 if($mail->send())
-                    echo '<script>alert("Sucess Placing Order!");</script>';    
+                    echo '<script>alert("SUCCESS PLACING ORDER!");</script>';    
                 else
-                    echo '<script>alert("Error Placing Order!");</script>';    
+                    echo '<script>alert("ERROR PLACING ORDER!");</script>';    
                 $_SESSION["dishes"] = array();
                 $_SESSION["price"] = array();      
                 $_SESSION["orderType"] = array();                     
@@ -327,11 +325,11 @@ document.getElementById("back").onclick = function() {
 //order button (js)
 document.getElementById("orderBtn").addEventListener("click", () => {
     if (<?php echo $total == 0 ? 'true':'false';?>) {
-        alert('Please place your order!');
+        alert('PLEASE PLACE YOUR ORDER!');
         return;
     }
     if (<?php echo $balance < $total ? 'true':'false';?>) {
-        alert('Your balance is less than your total order amount!');
+        alert('YOUR BALANCE IS LESS THAN YOUR TOTAL ORDER AMOUNT!');
         return;
     }
 });

@@ -112,7 +112,7 @@
                             $query = "select * from WEBOMS_menu_tb";
                             $resultSet =  getQuery($query)
                         ?>
-                        <table class="table table-hover table-bordered col-lg-12" id="tbl">
+                        <table class="table table-hover table-bordered table-light col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">DISH</th>

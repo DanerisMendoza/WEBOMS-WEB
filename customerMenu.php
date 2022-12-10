@@ -34,9 +34,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 
-<body>
+<body style="background:#e0e0e0">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="border-bottom:1px solid #e3e1e1;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow">
         <div class="container py-3">
             <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,53 +67,56 @@
         </div>
     </nav>
 
-    <div class="container text-center" style="margin-top:120px;">
-        <div class="row">
-            <!-- <div class="container col-lg-12 text-end">
-            <button class="btn btn-lg btn-primary mb-4" id="customersFeedback"><i class="bi bi-chat-square-text me-1"></i>FEEDBACK</button>
-            <button type="button" class="btn btn-lg btn-light border-secondary mb-4" id="viewCart"><i class="bi bi-cart me-1"></i>CART</button>
-            </div> -->
-            <div class="table-responsive col-lg-12">
-                <table id="tbl" class="table table-bordered table-hover col-lg-12">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">IMAGE</th>
-                            <th scope="col">DISH</th>
-                            <th scope="col">PRICE</th>
-                            <th scope="col">STOCK</th>
-                            <th scope="col">
-                                <button type="button" class="btn btn-light border-secondary" id="viewCart"><i class="bi bi-cart me-1"></i>CART</button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        $query = "select * from WEBOMS_menu_tb";
-                        $resultSet =  getQuery($query);
-                        if($resultSet != null)
-                            foreach($resultSet as $row){ ?>
-                        <tr>
-                            <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px;height:150px>";?></td>
-                            <td><?=$row['dish']?></td>
-                            <td><?php echo '₱'.$row['price']; ?></td>
-                            <td><?php echo $row['stock']; ?></td>
-                            <td>
-                                <a class="text-danger text-decoration-none">
-                                <?php if($row['stock'] <= 0) 
-                                    echo "OUT OF STOCK";
-                                    else{
-                                ?>
-                                </a>
-                                <a class="btn btn-light border-dark" href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>">
-                                    <!-- <i class="bi bi-cart-plus me-1"></i> -->
-                                    ADD TO CART
-                                </a>
-                                <?php } ?>
-                            </td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+    <div class="container text-center" style="margin-top:175px;">    
+        <div class="row g-5 content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-10 bg-white shadow mb-5"> 
+                        <div class="container p-4">
+                            <div class="table-responsive col-lg-12">
+                                <table id="tbl" class="table table-bordered table-hover table-light col-lg-12">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th scope="col">IMAGE</th>
+                                            <th scope="col">DISH</th>
+                                            <th scope="col">PRICE</th>
+                                            <th scope="col">STOCK</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $query = "select * from WEBOMS_menu_tb";
+                                        $resultSet =  getQuery($query);
+                                        if($resultSet != null)
+                                            foreach($resultSet as $row){ ?>
+                                        <tr>
+                                            <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px;height:150px>";?></td>
+                                            <td><?=$row['dish']?></td>
+                                            <td><?php echo '₱'. number_format($row['price'],2); ?></td>
+                                            <td><?php echo $row['stock']; ?></td>
+                                            <td>
+                                                <a class="text-danger text-decoration-none">
+                                                <?php if($row['stock'] <= 0) 
+                                                    echo "OUT OF STOCK";
+                                                    else{
+                                                ?>
+                                                </a>
+                                                <a class="btn btn-light border-secondary" href="?order=<?php echo $row['dish'].",".$row['price'].",".$row['orderType']?>">ADD TO CART</a>
+                                                <?php } ?>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 sidenav px-4">
+                        <button class="btn btn-lg btn-success col-12 p-4 mb-3 shadow" id="viewCart"><i class="bi bi-cart me-1"></i>CART</button>
+                        <button class="btn btn-lg btn-primary col-12 p-4 mb-5" id="customersFeedback"><i class="bi bi-chat-square-text me-1"></i>FEEDBACK</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

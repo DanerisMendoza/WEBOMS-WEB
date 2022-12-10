@@ -21,27 +21,25 @@
 
 <body class="bg-dark">
 
-    <div class="container mt-5">
+    <div class="container mt-4">
         <div class="row g-5 justify-content-center h-100">
             <div class="col-lg-12 col-xl-8">
                 <div class="card" style="border-radius: 1rem;">
                     <div class="card-body p-4 p-md-5">
                         <form method="post" class="form2 px-md-2">
-                            <h1 class="fw-normal text-center mb-5">Register your account</h1>
+                            <h1 class="fw-normal text-center mb-4">Register your account</h1>
 
-                            <div class="row mb-4">
-                                <!-- first name -->
-                                <div class="form-outline col-4">
-                                    <input type="text" class="form-control form-control-lg" name="firstName" placeholder="First Name" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
-                                </div>
-                                <!-- middle name -->
-                                <div class="form-outline col-4">
-                                    <input type="text" class="form-control form-control-lg" name="middleName" placeholder="Middle Name" value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
-                                </div>
-                                <!-- last name -->
-                                <div class="form-outline col-4">
-                                    <input type="text" class="form-control form-control-lg" name="lastName" placeholder="Last Name" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
-                                </div>
+                            <!-- first name -->
+                            <div class="input-groupe mb-4">
+                                <input type="text" class="form-control form-control-lg" name="firstName" placeholder="First Name" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
+                            </div>
+                            <!-- middle name -->
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="middleName" placeholder="Middle Name" value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
+                            </div>
+                            <!-- last name --> 
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg" name="lastName" placeholder="Last Name" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
                             </div>
 
                             <!-- email -->
