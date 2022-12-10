@@ -38,4 +38,10 @@ session_start();
     elseif($page == 'cashier' && ($_SESSION['accountType'] != 'admin' && $_SESSION['accountType'] != 'cashier'  && $_SESSION['accountType'] != 'manager')){
         die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
     }
+
+    //account is not customer or admin or manager or cashier
+    elseif($page == 'receipt' && ($_SESSION['accountType'] != 'admin' && $_SESSION['accountType'] != 'manager' && $_SESSION['accountType'] != 'customer' && $_SESSION['accountType'] != 'cashier')){
+        die ("<script>window.location.replace('Login.php'); alert('credential invalid!');</script>");
+    }
+
 ?>

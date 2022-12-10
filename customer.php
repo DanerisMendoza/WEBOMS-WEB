@@ -79,7 +79,7 @@
     <div class="container text-white" style="margin-top:150px;">
         <div class="row justify-content-center">
             <h1 class="col-12 h1Admin">Hi Customer, <br><?php echo $_SESSION['name'];?>!</h1>
-            <h1 class="fw-normal col-12 ms-3">Your balance is ₱<?php echo $balance; ?></h1>
+            <h1 class="fw-normal col-12 ms-3">Your balance is ₱<?php echo number_format($balance,2); ?></h1>
         </div>
     </div>
 </body>

@@ -1,5 +1,5 @@
 <?php 
-    $page = 'feedback';
+    $page = 'receipt';
     include('../method/checkIfAccountLoggedIn.php');
     require_once('../TCPDF-main/tcpdf.php'); 
     if($_SESSION['refreshCount'] < 2){

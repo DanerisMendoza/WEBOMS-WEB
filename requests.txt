@@ -1,9 +1,0 @@
-customerCart
-customerFeedbackList
-customerFeedBack
-customerOrder_details
-forgotPassword
-
-
-<td><?php echo '₱'.number_format($arr['price'],2);?></td>
-<td><b>₱<?php echo number_format($total,2); ?></b></td>
