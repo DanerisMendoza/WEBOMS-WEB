@@ -62,10 +62,10 @@
             <thead>
               <tr>	
                 <th scope="col">NAME</th>
+                <th scope="col">Order#</th>
                 <th scope="col">STATUS</th>
-                <th scope="col">EMAIL</th>
-                <th scope="col">FEEDBACK</th>
                 <th scope="col">DATE & TIME</th>
+                <th scope="col">FEEDBACK</th>
                 <th scope="col">ORDER DETAILS</th>
               </tr>
             </thead>
@@ -79,8 +79,9 @@
                 foreach($resultSet as $row){ ?>
                 <tr>	   
                 <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['order_id']; ?></td>
                 <td><?php echo $row['status']; ?></td>
-                <td><?php echo $row['email']; ?></td>
+                <td><?php echo date('m/d/Y h:i:s a ', strtotime($row['date'])); ?></td>
                 <td>
                   <?php 
                   $order_id = $row['order_id'];
@@ -98,7 +99,6 @@
                   }
                 ?>
                 </td>
-                <td><?php echo date('m/d/Y h:i:s a ', strtotime($row['date'])); ?></td>
                 <td><a class="btn btn-light border-secondary" href="customerOrder_details.php?id=<?php echo $row['order_id'];?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
                 </tr>
                 <?php } ?>

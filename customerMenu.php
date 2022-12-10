@@ -103,7 +103,7 @@
                                                 <?php } else{ ?>
                                                     <form method="post">
                                                         <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
-                                                        <input type="number" placeholder="Quantity" name="qty" value="1">
+                                                        <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
                                                         <button type="submit" name="addToCartSubmit"><i class="bi bi-cart-plus"></i></button>
                                                     </form>
                                                 <?php } ?>

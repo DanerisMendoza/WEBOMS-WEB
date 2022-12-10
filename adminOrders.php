@@ -21,6 +21,8 @@
     <!-- modal script  -->
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -117,9 +119,10 @@
                         
                         <!-- table container -->
                         <div class="table-responsive col-lg-12">
-                            <table class="table table-bordered table-hover col-lg-12">
+                            <table class="table table-bordered table-hover col-lg-12" id="tb1">
                                 <thead>
                                     <tr>
+                                        <th scope="col">no</th>
                                         <th scope="col">CUSTOMER <br> NAME</th>
                                         <th scope="col">ORDERS <br> ID</th>
                                         <th scope="col">ORDER <br> STATUS</th>
@@ -133,6 +136,8 @@
                                 <tbody>
                                     <?php foreach($resultSet as $row){?>
                                     <tr>
+                                        <!-- no -->
+                                        <td><?php echo $row['ID']; ?></td>
                                         <!-- name -->
                                         <td><?php echo $row['name']; ?></td>
                                         <!-- orders link id -->
@@ -373,3 +378,13 @@ $(document).ready(function() {
         echo "<script>window.location.replace('Login.php');</script>";
     }
 ?>
+<script>
+    $(document).ready(function() {
+        $('#tb1').DataTable();
+    });
+    $('#tb1').dataTable({
+    "columnDefs": [
+        { "targets": [6,7,8,9], "orderable": false }
+    ]
+    });
+</script>
