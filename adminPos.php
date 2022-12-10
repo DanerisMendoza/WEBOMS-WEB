@@ -125,14 +125,14 @@
                             <tbody>
                                 <?php 
                                     if($resultSet != null)
-                                        foreach($resultSet as $rows){ ?>
+                                        foreach($resultSet as $row){ ?>
                                 <tr>
                                     <!-- dish -->
-                                    <td><?=$rows['dish']?></td>
+                                    <td><?=$row['dish']?></td>
                                     <!-- price -->
-                                    <td><?php echo "₱".number_format($rows['price'],2); ?></td>
+                                    <td><?php echo "₱".number_format($row['price'],2); ?></td>
                                     <!-- stock -->
-                                    <td><?php echo $rows['stock']; ?></td>
+                                    <td><?php echo $row['stock']; ?></td>
                                     <!-- add to cart -->
                                     <td>
                                         <!-- out of stock -->
