@@ -9,6 +9,7 @@
     }
     $_SESSION['refreshCount'] = 0;
     $_SESSION['multiArr'] = array();
+    $_SESSION['fromReceipt'] = 'pos';
     //company variables init
     $query = "select * from WEBOMS_company_tb";
     $resultSet = getQuery($query);

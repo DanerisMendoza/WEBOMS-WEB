@@ -69,9 +69,8 @@
 <?php 
     if(isset($_POST['submit'])){
         $_SESSION['email'] = $email = $_POST['email'];
-        $selectEmail = "select * from WEBOMS_user_tb inner join WEBOMS_userInfo_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where email = '$email' ";
-        //email not exist
-        if(getQuery($selectEmail) == null){
+        $name = getQueryOneVal("select b.name from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where email = '$email';",'name');
+        if($name == null){
             echo "<script>
             alert('email do not exist!');
             window.location.replace('forgetPassword.php');

@@ -80,7 +80,9 @@
     ob_end_clean();
     $pdf->Output('file.pdf', 'I');
 
-    $_SESSION["dishes"] = $_SESSION["price"] = $_SESSION["orderType"] = $_SESSION['multiArr'] = array(); 
-    $_SESSION['staffInCharge'] = $_SESSION['total'] = $_SESSION['cash'] = $_SESSION['order_id'] = null;
+    if($_SESSION['fromReceipt'] == 'pos'){
+        $_SESSION["dishes"] = $_SESSION["price"] = $_SESSION["orderType"] = $_SESSION['multiArr'] = array(); 
+        $_SESSION['fromReceipt'] = $_SESSION['staffInCharge'] = $_SESSION['total'] = $_SESSION['cash'] = $_SESSION['order_id'] = null;
+    }
   
 ?>
