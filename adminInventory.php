@@ -72,9 +72,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
@@ -84,7 +82,7 @@
 
                     <!-- table -->
                     <div class="table-responsive col-lg-12 mb-5">
-                        <table class="table table-bordered table-hover table-light col-lg-12" id="tbl">
+                        <table class="table table-bordered table-hover col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">IMAGE</th>
@@ -94,7 +92,7 @@
                                     <th scope="col">LAST MODIFIED BY:</th>
                                     <th scope="col">
                                         <button id="addButton" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                            <i class="bi bi-plus me-1"></i>ADD NEW DISH
+                                            <i class="bi bi-plus"></i> ADD NEW DISH
                                         </button>
                                     </th>
                                 </tr>
@@ -111,17 +109,17 @@
                                         <?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px; height:150px>";?>
                                     </td>
                                     <!-- dish -->
-                                    <td><?php echo $row['dish'];?></td>
+                                    <td><?php echo ucwords($row['dish']);?></td>
                                     <!-- price -->
                                     <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                     <!-- stock -->
                                     <td><?php echo $row['stock']; ?></td>
                                     <!-- staff (in-charge) -->
-                                    <td><?php echo strtoupper($row['lastModifiedBy']); ?></td>
+                                    <td><?php echo ucwords($row['lastModifiedBy']); ?></td>
                                     <!-- options -->
                                     <td>
-                                        <a class="btn btn-danger" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>"><i class="bi bi-trash me-1"></i>DELETE</a>
-                                        <a class="btn btn-warning" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</a>
+                                        <a class="btn btn-danger" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>"><i class="bi bi-trash3"></i> Delete</a>
+                                        <a class="btn btn-warning" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
                                     </td>
                                 </tr>
                                 <?php } 
@@ -139,13 +137,11 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <form method="post" class="form-group" enctype="multipart/form-data">
-                                <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="ENTER DISH NAME" required>
-                                <input type="number" class="form-control form-control-lg mb-3" name="price" step="any" placeholder="ENTER PRICE" required>
-                                <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="ENTER NUMBER OF STOCK" required>
+                                <input type="text" class="form-control form-control-lg mb-3" name="dishes" placeholder="Enter dish name" required>
+                                <input type="number" class="form-control form-control-lg mb-3" name="price" step="any" placeholder="Enter price" required>
+                                <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter number of stock" required>
                                 <input type="file" class="form-control form-control-lg mb-3" name="fileInput" required>
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert">
-                                    <i class="bi bi-plus me-1"></i>INSERT
-                                </button>
+                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus-circle"></i> Insert</button>
                             </form>
                         </div>
                     </div>

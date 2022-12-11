@@ -27,11 +27,11 @@
                 <div class="modal-content container">
                     <div class="modal-body">
                         <form method="post" class="form-group">
-                            <h3 class="fw-normal mt-4 mb-4 ms-1">PLEASE ENTER YOUR OTP</h3>
+                            <h3 class="fw-normal mt-4 mb-4 ms-1">PPLEASE ENTER YOUR OTP</h3>
                             <input type="text" class="form-control form-control-lg mb-4" placeholder="OTP" name="otp">
-                            <input type="submit" value="VERIFY" name="Verify" class="btn btn-success btn-lg col-12 mb-2">
-                            <input type="submit" value="Resend" name="Resend" class="btn btn-warning btn-lg col-12 mb-1">
-                            <input data-dismiss="modal" type="submit" value="CANCEL" name="Cancel" class="btn btn-danger btn-lg col-12 mb-4">
+                            <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12 mb-2">
+                            <input type="submit" value="Resend" name="Resend" class="btn btn-warning btn-lg col-12 mb-2">
+                            <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-4">
                         </form>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
     ?>
 
         <!-- home button -->
-        <a href="index.php" type="button" class="btn btn-lg btn-dark text-white"> <i class="bi bi-arrow-left me-1"></i>HOME</a>
+        <a href="index.php" type="button" class="btn btn-lg btn-dark text-white"> <i class="bi bi-arrow-left-short"></i> Home</a>
         
         <!-- login form -->
         <div class="container mt-5">
@@ -184,33 +184,24 @@
                                         <div class="row justify-content-center">
                                             <form method="post" class="form1">
                                                 <h1 class="fw-normal text-center mb-5 mt-3">Log in to your account</h1>
-
                                                 <!-- username -->
                                                 <div class="input-group mb-4">
-                                                    <span class="input-group-text">
-                                                        <i class="bi bi-person"></i>
-                                                    </span>
+                                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
                                                     <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" required>
                                                 </div>
-
                                                 <!-- password -->
                                                 <div class="input-group mb-4">
-                                                    <span class="input-group-text">
-                                                        <i class="bi bi-lock"></i>
-                                                    </span>
+                                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                                     <input class="form-control form-control-lg" type="password" name="password" placeholder="Password" required>
                                                 </div>
-
                                                 <!-- forgot password -->
                                                 <div class="input-group mb-4">
                                                     <a href="forgetPassword.php" class="pass text-muted text-decoration-none">Forgot Password?</a>
                                                 </div>
-
                                                 <!-- login button -->
                                                 <div class="input-group mb-4">
                                                     <button class="btn btn-dark btn-lg col-12" type="submit"name="Login" value="Login">Login</button>
                                                 </div>
-
                                                 <!-- sign up here -->
                                                 <div class="text-center text-muted mb-4">
                                                     Dont'have an account yet? <a href="register.php" class="signup_link text-muted text-decoration-none">Sign up here</a>

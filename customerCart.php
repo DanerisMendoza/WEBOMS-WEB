@@ -88,33 +88,31 @@
                     //create a table using the multi dimensional array
                     foreach($_SESSION['multiArr'] as $arr){ ?>
                     <tr>
-                        <td><?php echo $arr['dish'];?></td>
+                        <td><?php echo ucwords($arr['dish']);?></td>
                         <td><?php echo $arr['quantity'];?></td>
                         <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                         <td>
                             <!-- check stock -->
                             <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                            <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">+</a>
+                            <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                             <?php }else{ ?>
-                            <a class="btn text-danger">OUT OF STOCK</a>
+                            <a class="text-danger text-decoration-none fw-bold me-2">Out of Stock</a>
                             <?php } ?>
-                            <a class="btn btn-success" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">-</a>
+                            <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
                         </td>
                     </tr>
                     <?php }?>
                     <tr>
-                        <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+                        <td colspan="2"><b>Total Amount:</b></td>
                         <td><b>₱<?php echo number_format($total,2); ?></b></td>
                         <td></td>
                     </tr>
                 </table>
                 <form method="post">
                     <!-- place order -->
-                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order"><i class="bi bi-cart me-1"></i>PLACE ORDER</button>
-                <!-- </form>
-                <form method="post"> -->
+                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                     <!-- clear order -->
-                    <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear"><i class="bi bi-trash me-1"></i>CLEAR ORDER</button>
+                    <button type="submit" class="btn btn-lg btn-danger col-12 mb-3" name="clear">Clear Order</button>
                 </form>
             </div>
         </div>

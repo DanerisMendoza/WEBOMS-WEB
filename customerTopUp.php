@@ -43,23 +43,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door me-1"></i>HOME</a>
+                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> Home</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
+                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book me-1"></i>MENU</a>
+                        <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> Menu</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
+                        <a class="nav-link text-danger" href="#"><i class="bi bi-cash-stack"></i> Top-Up</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
                     </li>
                 </ul>
                 <form method="post">
-                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
                 </form>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     <div class="col-sm-4 bg-white"> 
                         <div class="container py-4">
                             <!-- content here -->
-                            <h2 class="fw-normal mt-3 mb-4">TOP-UP</h2>
+                            <h2 class="fw-normal mt-3 mb-4">Top-Up</h2>
                             <form method="post" enctype="multipart/form-data" class="col-12">
                                 <select name="amount" class="form-control form-control-lg col-12 mb-4">
                                     <option value="100">₱100.00</option>
@@ -84,14 +84,14 @@
                                 </select>
                                 <h5 class="fw-normal">PROOF OF PAYMENT:</h5>
                                 <input type="file" class="form-control form-control-lg mb-4" name="fileInput" required>
-                                <button class="btn btn-lg btn-primary col-12 mb-3" name="submit"><i class="bi bi-cash-stack me-1"></i>TOPUP</button>
+                                <button class="btn btn-lg btn-success col-12 mb-3" name="submit"><i class="bi bi-cash-stack"></i> Top-Up</button>
                             </form>
                         </div>
                     </div>
                     <div class="col-sm-8 bg-white">
                         <div class="container py-4">
                             <!-- content here -->
-                            <h2 class="mt-3 mb-4 bg-primary text-white">YOUR BALANCE IS ₱<?php echo number_format($balance,2);?></h2>
+                            <h2 class="mt-3 mb-4 bg-success text-white">Your balance is ₱<?php echo number_format($balance,2);?></h2>
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered col-lg-12">
                                     <thead >
@@ -109,21 +109,23 @@
                                         if($resultSet!= null)
                                         foreach($resultSet as $row){ ?>
                                         <tr>
-                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo ucwords($row['name']); ?></td>
                                             <td><?php echo '₱'. number_format($row['amount'],2);?></td>
-                                            <td><?php echo strtoupper($row['status']);?></td>
+                                            <td><?php echo ucwords($row['status']);?></td>
                                             <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
                                             <?php if($row['status'] != 'approved'){?>
                                             <td>
-                                                <a class="btn btn-light border-secondary" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i>VIEW</a>
+                                                <a class="btn btn-light" style="border:1px solid #cccccc;" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i> View</a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi bi-x"></i>CANCEL</a>
+                                                <a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi bi-dash-circle"></i> Cancel</a>
                                             </td>
                                             <?php }else{ ?>
                                             <td>
-                                                <a class="btn btn-light border-secondary" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i>VIEW</a></td>
-                                            <td></td>
+                                                <a class="btn btn-light" style="border:1px solid #cccccc;" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i> View</a></td>
+                                            <td>
+                                                <a class="text-danger text-decoration-none">None</a>
+                                            </td>
                                             <?php }?>
                                         </tr>
                                         <?php } ?>

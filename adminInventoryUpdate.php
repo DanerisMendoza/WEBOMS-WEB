@@ -65,16 +65,13 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>Dashboard (Inventory Update)
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard (Inventory Update)</button>
                 </div>
             </nav>
 
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
-                    <!-- <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left me-1"></i>BACK </button> -->
                     <?php
                         $idAndPicname = explode(',',$_GET['idAndPicnameUpdate']);    
                         $id = $idAndPicname[0];
@@ -89,7 +86,7 @@
                         <table class="table table-bordered col-lg-12">
                             <tr>
                                 <td><b>DISH:</b></td>
-                                <td><?php echo $dishOriginal; ?></td>
+                                <td><?php echo ucwords($dishOriginal); ?></td>
                             </tr>
                             <tr>
                                 <td><b>PRICE:</b></td>
@@ -108,12 +105,12 @@
 
                     <div class="container-fluid">
                         <form method="post" class="form-group" enctype="multipart/form-data">
-                            <input type="text" class="form-control form-control-lg mb-3" name="dish" placeholder="ENTER NEW DISH NAME">
-                            <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="ENTER NEW PRICE">
-                            <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="ENTER NEW NUMBER OF STOCK">
+                            <input type="text" class="form-control form-control-lg mb-3" name="dish" placeholder="Enter new dish name">
+                            <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter new price">
+                            <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter new number of stock">
                             <input type="file" class="form-control form-control-lg mb-4" name="fileInput">
-                            <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel"><i class="bi bi-x me-1"></i>CANCEL</button>
-                            <button type="submit" class="btn btn-lg btn-success col-12" name="update"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
+                            <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel"><i class="bi bi-x-circle"></i> Cancel</button>
+                            <button type="submit" class="btn btn-lg btn-warning col-12" name="update"><i class="bi bi-arrow-repeat"></i> Update</button>
                         </form>
                     </div>
                 </div>

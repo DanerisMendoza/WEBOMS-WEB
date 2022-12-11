@@ -68,9 +68,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard (Order Details)
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard (Order Details)</button>
                 </div>
             </nav>
 
@@ -79,8 +77,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 cont2">
                         <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                            <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
-                            <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="viewInPdf"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+                            <button class="btn btn-lg btn-dark col-6 mb-3" id="back"><i class="bi bi-arrow-left-short"></i> BACK</button>
+                            <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
                         </div>
 
                         <!-- table -->
@@ -125,8 +123,8 @@
                             <table class="table table-bordered table-hover col-lg-12">
                                 <thead>
                                     <tr>
-                                        <th scope="col">QUANTITY</th>
                                         <th scope="col">DISH</th>
+                                        <th scope="col">QUANTITY</th>
                                         <th scope="col">PRICE</th>
                                     </tr>
                                 </thead>
@@ -141,22 +139,23 @@
                                         array_push($_SESSION['priceArr'],$row['price']);
                                         array_push($_SESSION['dishesQuantity'],$row['quantity']);
                                         $price = ($row['price']*$row['quantity']);  $total += $price;?>
+
+                                        <td><?php echo ucwords($row['dish']); ?></td>
                                         <td><?php echo $row['quantity']; ?></td>
-                                        <td><?php echo $row['dish']; ?></td>
                                         <td><?php echo '₱'. number_format($price,2)?></td>
                                     </tr>
                                     <?php }?>
                                     <tr>
-                                        <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+                                        <td colspan="2"><b>Total Amount:</b></td>
                                         <td><b>₱<?php echo number_format($total,2)?></b></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><b>PAYMENT:</b></td>
+                                        <td colspan="2"><b>Payment:</b></td>
                                         <?php $payment = getQueryOneVal("SELECT a.payment FROM WEBOMS_order_tb a where a.order_id = '$id' ",'payment');?>
                                         <td><b>₱<?php echo number_format($payment,2); ?></b></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><b>CHANGE:</b></td>
+                                        <td colspan="2"><b>Change:</b></td>
                                         <td><b>₱<?php echo number_format($payment-$total,2); ?></b></td>
                                     </tr>
                                 </tbody>

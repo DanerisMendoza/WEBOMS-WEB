@@ -28,7 +28,6 @@
                     <div class="card-body p-4 p-md-5">
                         <form method="post" class="form2 px-md-2">
                             <h1 class="fw-normal text-center mb-4">Register your account</h1>
-
                             <!-- first name -->
                             <div class="input-groupe mb-4">
                                 <input type="text" class="form-control form-control-lg" name="firstName" placeholder="First Name" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
@@ -41,22 +40,18 @@
                             <div class="input-group mb-4">
                                 <input type="text" class="form-control form-control-lg" name="lastName" placeholder="Last Name" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
                             </div>
-
                             <!-- email -->
                             <div class="input-group mb-4">
                                 <input type="email" class="form-control form-control-lg" name="email" placeholder="Email" value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
                             </div>
-
                             <!-- username -->
                             <div class="input-group mb-4">
                                 <input type="text" class="form-control form-control-lg" name="username" placeholder="Username" value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>" required>
                             </div>
-
                             <!-- password -->
                             <div class="input-group mb-4">
                                 <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" required>
                             </div>
-
                             <div class="row mb-4">
                                 <!-- gender -->
                                 <div class="form-outline col-6">
@@ -67,38 +62,30 @@
                                         <option value="NA">Rather Not Say</option>
                                     </select>
                                 </div>
-
                                 <!-- age -->
                                 <div class="form-outline col-6">
                                     <input type="number" class="form-control form-control-lg" name="age" placeholder="Age" value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
                                 </div>
                             </div>
-
                             <!-- address -->
                             <div class="input-group mb-4">
                                 <input type="text" class="form-control form-control-lg" name="address" placeholder="Address" value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
                             </div>
-
                             <!-- phone number -->
                             <div class="input-group mb-4">
                                 <input type="number" class="form-control form-control-lg" id="phone" name="phone" placeholder="Phone Number" value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>" required>
                             </div>
-
                             <!-- create account button -->
                             <div class="input-group mb-4">
                                 <button type="submit" class="btn btn-dark btn-lg col-12" id="createAccount" name="createAccount">
                                     Create Account
                                 </button>
                             </div>
-
                             <!-- login here -->
                             <div class="text-center text-muted">
-                                Have already an account? <a href="Login.php" class="login_link text-muted text-decoration-none">
-                                    Log in here</a>
+                                Have already an account? <a href="Login.php" class="login_link text-muted text-decoration-none">Log in here</a>
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>

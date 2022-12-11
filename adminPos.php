@@ -94,17 +94,18 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row g-5 justify-content-center">
+                    <!-- admin -->
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
                     <h1 class="text-center bg-dark text-white">ADMIN</h1>
+
+                    <!-- cashier -->
                     <?php }else{?>
                     <h1 class="text-center bg-danger text-white">CASHIER</h1>
                     <?php }?>
@@ -115,7 +116,7 @@
                             $query = "select * from WEBOMS_menu_tb";
                             $resultSet =  getQuery($query)
                         ?>
-                        <table class="table table-hover table-bordered table-light col-lg-12" id="tbl">
+                        <table class="table table-hover table-bordered col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">DISH</th>
@@ -130,7 +131,7 @@
                                         foreach($resultSet as $row){ ?>
                                 <tr>
                                     <!-- dish -->
-                                    <td><?=$row['dish']?></td>
+                                    <td><?= ucwords($row['dish']);?></td>
                                     <!-- price -->
                                     <td><?php echo "₱".number_format($row['price'],2); ?></td>
                                     <!-- stock -->
@@ -139,13 +140,13 @@
                                     <td>
                                         <!-- out of stock -->
                                         <?php if($row['stock'] <= 0){ ?>
-                                            <a class="text-danger">OUT OF STOCK</a>
+                                            <a class="text-danger">Out of Stock</a>
                                             <!-- not out of stock -->
                                             <?php } else{ ?>
                                                 <form method="post">
                                                     <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
                                                     <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
-                                                    <button type="submit" name="addToCartSubmit" class="btn btn-light col-12 border-secondary"><i class="bi bi-cart-plus"></i></button>
+                                                    <button type="submit" name="addToCartSubmit" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
                                                 </form>
                                         <?php } ?>
                                     </td>
@@ -205,21 +206,17 @@
                                 foreach($_SESSION['multiArr'] as $arr){ ?>
                             <tr>
                                 <!-- dish -->
-                                <td><?php echo $arr['dish'];?></td>
+                                <td><?php echo ucwords($arr['dish']);?></td>
                                 <!-- quantity -->
                                 <td><?php echo $arr['quantity'];?></td>
                                 <td>
                                     <!-- check stock -->
                                     <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                                    <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
-                                        <i class="bi bi-plus"></i>
-                                    </a>
+                                    <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                                     <?php }else{ ?>
-                                    <a class="text-danger me-2">OUT OF STOCK</a>
+                                    <a class="text-danger me-2">Out of Stock</a>
                                     <?php } ?>
-                                    <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>">
-                                        <i class="bi bi-dash"></i>
-                                    </a>
+                                    <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
                                 </td>
                                 <!-- price -->
                                 <td><?php echo '₱'.number_format($arr['price'],2);?></td>
@@ -227,27 +224,21 @@
                             <?php }?>
                             <tr>
                                 <!-- total amount -->
-                                <td colspan="3"><b>TOTAL AMOUNT:</b></td>
+                                <td colspan="3"><b>Total Amount:</b></td>
                                 <td><b>₱<?php echo number_format($total,2); ?></b></td>
                             </tr>
                         </table>
                         <form method="post">
                             <!-- cash amount -->
-                                <input name="customerName" placeholder="CUSTOMER NAME (OPTIONAL)" type="text" class="form-control form-control-lg mb-3">
+                            <input name="customerName" placeholder="Customer Name (Optional)" type="text" class="form-control form-control-lg mb-3">
                             <!-- cash amount -->
-                            <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any placeholder="CASH AMOUNT" type="number" class="form-control form-control-lg mb-4" required>
+                            <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
                             <!-- place order -->
-                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">
-                                <i class="bi bi-cart me-1"></i>
-                                PLACE ORDER
-                            </button>
+                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                         </form>
                         <form method="post">
                             <!-- clear order -->
-                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">
-                                <i class="bi bi-trash me-1"></i>
-                                CLEAR ORDER
-                            </button>
+                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                         </form>
                     </div>
                 </div>

@@ -30,10 +30,10 @@
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <button class="btn btn-lg btn-dark col-12 mb-5" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+            <button class="btn btn-lg btn-dark col-12 mb-5" id="back">Back</button>
             <form method="post" class="form1 col-12">
-                <input type="text" name="email" placeholder="PLEASE ENTER YOUR EMAIL" class="form-control form-control-lg mb-3" required>
-                <button type="submit" name="submit" class="btn btn-primary btn-lg col-12 mb-3"><i class="bi bi-box-arrow-in-left me-1"></i>SUBMIT</button>
+                <input type="text" name="email" placeholder="Enter your email" class="form-control form-control-lg mb-3" required>
+                <button type="submit" name="submit" class="btn btn-success btn-lg col-12 mb-3"><i class="bi bi-arrow-bar-left"></i> Submit</button>
             </form>
         </div>
     </div>
@@ -44,8 +44,8 @@
             <div class="modal-content">
                 <div class="modal-body ">
                     <form method="post" class="form-group">
-                        <input type="text" class="form-control form-control-lg mb-3" name="forgetPasswordOtp" placeholder="ENTER OTP" required>
-                        <button type="submit" class="btn btn-lg btn-success col-12" name="forgetPasswordOtpSubmit"><i class="bi bi-box-arrow-in-left me-1"></i>SUBMIT</button>
+                        <input type="text" class="form-control form-control-lg mb-3" name="forgetPasswordOtp" placeholder="Enter OTP" required>
+                        <button type="submit" class="btn btn-lg btn-success col-12" name="forgetPasswordOtpSubmit"><i class="bi bi-arrow-bar-left"></i> Submit</button>
                     </form>
                 </div>
             </div>
@@ -58,8 +58,8 @@
             <div class="modal-content">
                 <div class="modal-body ">
                     <form method="post" class="form-group">
-                        <input type="password" class="form-control form-control-lg mb-3" name="newPass" placeholder="ENTER NEW PASSWORD" required>
-                        <button type="submit" class="btn btn-lg btn-success col-12" name="newPassSubmit"><i class="bi bi-box-arrow-in-left me-1"></i>SUBMIT</button>
+                        <input type="password" class="form-control form-control-lg mb-3" name="newPass" placeholder="Enter new password" required>
+                        <button type="submit" class="btn btn-lg btn-success col-12" name="newPassSubmit"><i class="bi bi-arrow-bar-left"></i> Submit</button>
                     </form>
                 </div>
             </div>

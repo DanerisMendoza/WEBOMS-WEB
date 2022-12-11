@@ -132,28 +132,26 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>Dashboard (View Graph)
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i>Dashboard (View Graph)</button>
                 </div>
             </nav>
 
             <!-- content here -->
             <div class="container-fluid text-center ">
                 <div class="row justify-content-center">
-                    <button class="btn btn-lg btn-dark col-12 mb-3" id="viewSalesReport"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+                    <button class="btn btn-lg btn-dark col-12 mb-3" id="viewSalesReport"><i class="bi bi-arrow-left-short"></i> Back</button>
                     <div class="table-responsive col-lg-12 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
-                                <td>TOTAL AMOUNT OF STOCK</td>
+                                <td>Total Amount of Stock</td>
                                 <td><?php echo $countOfSold+$stockLeft?></td>
                             </tr>
                             <tr>
-                                <td>TOTAL COUNT OF SOLD</td>
+                                <td>Total Count of Sold</td>
                                 <td><?php echo $countOfSold?></td>
                             </tr>
                             <tr>
-                                <td>TOTAL COUNT OF STOCK LEFT</td>
+                                <td>Total Count of Stock Left</td>
                                 <td><?php echo $stockLeft?></td>
                             </tr>
                         </table>
@@ -161,10 +159,10 @@
                     <div class="row">
                         <div class="clearfix"></div>
                         <div class="col-md-6 mb-4">
-                            <div class="chart" id="piechart" ></div>
+                            <div class="chart" id="piechart" style="border:1px solid #cccccc;"></div>
                         </div>
                         <div class="col-md-6 mb-4">
-                            <div class="chart" id="columnchart" ></div> 
+                            <div class="chart" id="columnchart" style="border:1px solid #cccccc;"></div> 
                         </div>
                     </div>
                 </div>

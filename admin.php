@@ -28,7 +28,7 @@
 
         .h1Admin {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 10vw;
+            font-size: 13vw;
             font-weight: normal;
         }
     </style>
@@ -86,16 +86,14 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
             <!-- content here -->
             <h1 class="h1Admin text-white fw-normal">
-                Welcome <br>
-                <?php echo $_SESSION['name'].'('.$_SESSION['accountType'].')!';?>
+                <!-- Welcome <br> <?php echo ucwords($_SESSION['name']).'('.ucwords($_SESSION['accountType']).')!';?> -->
+                Welcome <br> <?php echo ucwords($_SESSION['name']).'!';?>
             </h1>
         </div>
     </div>

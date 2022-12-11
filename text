@@ -1,0 +1,22 @@
+#cccccc == view/add to cart border color
+
+arrow-bar-left == serve/fetch icon
+arrow-left-short == back icon
+arrow-repeat == update icon
+book == menu icon 
+cart-plus == add to cart icon
+cash-stack == top-up icon
+check == order complete icon
+clock == preparing icon
+dash-circle == void/cancel icon
+file-pdf == pdf icon
+house-door == home icon
+info-circle == about icon
+list == view/show all/view orders icon
+trash3 == delete icon
+perso-circle == login/profile icon
+person-plus == add new account icon
+pie-chart == graph icon
+pin-map == address icon
+power == logout icon
+telephone == telephone icon

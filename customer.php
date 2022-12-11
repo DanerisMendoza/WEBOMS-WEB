@@ -54,23 +54,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-house-door me-1"></i>HOME</a>
+                        <a class="nav-link text-danger" href="#"><i class="bi bi-house-door"></i> Home</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="customerProfile"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
+                        <a class="nav-link text-dark" href="#home" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="menu"><i class="bi bi-book me-1"></i>MENU</a>
+                        <a class="nav-link text-dark" href="#home" id="menu"><i class="bi bi-book"></i> Menu</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="topUp"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
+                        <a class="nav-link text-dark" href="#home" id="topUp"><i class="bi bi-cash-stack"></i> Top-Up</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="#home" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
                     </li>
                 </ul>
                 <form method="post">
-                    <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                    <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
                 </form>
             </div>
         </div>
@@ -78,8 +78,8 @@
 
     <div class="container text-white" style="margin-top:150px;">
         <div class="row justify-content-center">
-            <h1 class="col-12 h1Admin">Hi Customer, <br><?php echo $_SESSION['name'];?>!</h1>
-            <h1 class="fw-normal col-12 ms-3">Your balance is ₱<?php echo number_format($balance,2); ?></h1>
+            <h1 class="col-12 h1Admin">Hi Customer, <br><?php echo ucwords($_SESSION['name']);?>!</h1>
+            <h1 class="fw-normal col-12 ms-3 ">Your balance is ₱<?php echo number_format($balance,2); ?></h1>
         </div>
     </div>
 </body>

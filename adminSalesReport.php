@@ -100,9 +100,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
@@ -110,8 +108,8 @@
             <div class="container-fluid text-center">
                 <div class="row justify-content-center g-3">
                     <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                        <button class="btn btn-lg btn-dark border-secondary" id="viewGraph"><i class="bi bi-pie-chart me-1"></i>GRAPH</button>
-                        <button class="btn btn-lg btn-dark border-secondary" id="viewInPdf"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+                        <button class="btn btn-lg btn-dark" id="viewGraph"><i class="bi bi-pie-chart"></i> Graph</button>
+                        <button class="btn btn-lg btn-danger" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
                     </div>
 
                     <!-- table -->
@@ -126,7 +124,7 @@
                                         <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>">
                                     </td>
                                     <td>
-                                        <button type="submit" name="fetch" class="btn btn-lg btn-secondary col-12"><i class="bi bi-box-arrow-in-left me-1"></i>FETCH (BETWEEN)</button>
+                                        <button type="submit" name="fetch" class="btn btn-lg btn-primary col-12"><i class="bi bi-arrow-bar-left"></i> Fetch (between)</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -137,7 +135,7 @@
                                         <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>">
                                     </td>
                                     <td>
-                                        <button type="submit" name="showAll" class="btn btn-lg btn-primary col-12"><i class="bi bi-list-ul me-1"></i>SHOW ALL</button>
+                                        <button type="submit" name="showAll" class="btn btn-lg btn-primary col-12"><i class="bi bi-list"></i> Show All</button>
                                     </td>
                                 </tr>
                             </table>
@@ -150,7 +148,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">NAME</th>
-                                    <th scope="col">TRANSACTION NO</th>
+                                    <th scope="col">TRANSACTION NO.</th>
                                     <th scope="col">DATE & TIME</th>
                                     <th scope="col">TOTAL ORDER</th>
                                     <th scope="col">ORDER DETAILS</th>
@@ -164,7 +162,7 @@
                                 <?php array_push($_SESSION['resultSet'], $row)?>
                                 <tr>
                                     <!-- name -->
-                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo ucwords($row['name']); ?></td>
                                     <!-- order id -->
                                     <td><?php echo $row['order_id'];?></td>
                                     <!-- date and time -->
@@ -174,12 +172,12 @@
                                     <?php $total += $row['totalOrder'];?>
                                     <!-- order detail -->
                                     <td>
-                                        <a class="btn btn-light border-dark" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list"></i>VIEW</a>
+                                        <a class="btn btn-light" style="border:1px solid #cccccc;" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list"></i> View</a>
                                     </td>
                                 </tr>
                                 <?php } ?>
                                 <tr>
-                                    <td colspan="3"><strong>TOTAL AMOUNT:</strong></td>
+                                    <td colspan="3"><strong>Total Amount:</strong></td>
                                     <td><strong><?php echo '₱'. number_format($total,2);?></strong></td>
                                     <td></td>
                                 </tr>

@@ -13,6 +13,7 @@
         }
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,16 +40,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#home"><i class="bi bi-house-door me-1"></i>HOME</a>
+                        <a class="nav-link" href="#home"><i class="bi bi-house-door"></i> Home</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#menu"><i class="bi bi-list me-1"></i>MENU</a>
+                        <a class="nav-link" href="#menu"><i class="bi bi-book"></i> Menu</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#about"><i class="bi bi-info-circle me-1"></i>ABOUT</a>
+                        <a class="nav-link" href="#about"><i class="bi bi-info-circle"></i> About</a>
                     </li>
                 </ul>
-                <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle me-1"></i>LOGIN</a>
+                <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle"></i> Login</a>
             </div>
         </div>
     </nav>
@@ -69,8 +70,8 @@
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
                             <p>
-                                <i class="bi bi-telephone me-1"></i>TELEPHONE: <?php echo $tel;?> <br>
-                                <i class="bi bi-pin-map me-1"></i>ADDRESS: <?php echo strtoupper($address);?>
+                                <i class="bi bi-telephone"></i> Telephone: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map"></i> Address: <?php echo ucwords($address);?>
                             </p>
                         </div>
                     </div>
@@ -82,8 +83,8 @@
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
                             <p>
-                                <i class="bi bi-telephone me-1"></i>TELEPHONE: <?php echo $tel;?> <br>
-                                <i class="bi bi-pin-map me-1"></i>ADDRESS: <?php echo strtoupper($address);?>
+                                <i class="bi bi-telephone"></i> Telephone: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map"></i> Address: <?php echo ucwords($address);?>
                             </p>
                         </div>
                     </div>
@@ -95,8 +96,8 @@
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
                             <p>
-                                <i class="bi bi-telephone me-1"></i>TELEPHONE: <?php echo $tel;?> <br>
-                                <i class="bi bi-pin-map me-1"></i>ADDRESS: <?php echo strtoupper($address);?>
+                                <i class="bi bi-telephone"></i> Telephone: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map"></i> Address: <?php echo ucwords($address);?>
                             </p>
                         </div>
                     </div>
@@ -128,9 +129,9 @@
                 <div class="card h-100 bg-transparent border-secondary">
                     <?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style='width:auto; height:200px;'>";?> 
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo strtoupper($row['dish']);?></h5>
+                        <h5 class="card-title"><?php echo ucwords($row['dish']);?></h5>
                         <p class="card-text">
-                            <?php echo '₱'.$row['price']; ?> <br>
+                            <?php echo '₱'. number_format($row['price'],2); ?> <br>
                         </p>
                     </div>
                 </div>

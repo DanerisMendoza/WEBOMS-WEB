@@ -26,7 +26,7 @@
         <div class="col-lg-12">
             <form method="post">
                 <textarea type="text" name="feedback" placeholder="Enter your feedback" class="form-control form-control-lg mb-3" rows="5" required></textarea>
-                <button type="submit" name="submit" class="btn btn-lg btn-success col-12"><i class="bi bi-box-arrow-right me-1"></i>SUBMIT</button>
+                <button type="submit" name="submit" class="btn btn-lg btn-success col-12"><i class="bi bi-arrow-bar-left"></i> Submit</button>
             </form>
         </div>
 	</div>

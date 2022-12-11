@@ -21,8 +21,10 @@
     
 <div class="container text-center mt-5">
   <div class="row justify-content-center">
-    <button class="btn btn-lg btn-dark col-6 mb-4" id="orderList"><i class="bi bi-arrow-left me-1"></i>Order List</button>
-    <button class="btn btn-lg btn-primary col-6 mb-4" id="viewInPdf"><i class="bi bi-file-earmark-pdf me-1"></i>View In Pdf </button>
+    <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
+      <button class="btn btn-lg btn-dark col-6 mb-4" id="orderList">Order List</button>
+      <button class="btn btn-lg btn-danger col-6 mb-4" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
+    </div>
 
     <!-- table -->
     <div class="table-responsive col-lg-12">
@@ -65,8 +67,8 @@
       <table class="table table-hover table-bordered col-lg-12 mb-4">
         <thead>
           <tr>	
-            <th scope="col">QUANTITY</th>
             <th scope="col">DISH</th>
+            <th scope="col">QUANTITY</th>
             <th scope="col">PRICE</th>
           </tr>
         </thead>
@@ -81,13 +83,13 @@
           ?>
           <tr>	   
             <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
+            <td><?php echo ucwords($row['dish']); ?></td>
             <td><?php echo $row['quantity']; ?></td>
-            <td><?php echo $row['dish']; ?></td>
             <td><?php echo '₱' . number_format($price,2);?></td>
           </tr>
           <?php }?>
           <tr>
-            <td colspan="2"><b>TOTAL AMOUNT:</b></td>
+            <td colspan="2"><b>Total Amount:</b></td>
             <td><b>₱<?php echo number_format($total,2);?></b></td>
           </tr>
         </tbody>

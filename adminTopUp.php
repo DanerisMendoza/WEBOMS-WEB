@@ -70,9 +70,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
             <!-- content here -->
@@ -90,7 +88,7 @@
                                     <th scope="col">AMOUNT</th>
                                     <th scope="col">STATUS</th>
                                     <th scope="col">DATE & TIME</th>
-                                    <th scope="col">PROOF OF PAYMENT</th>
+                                    <th scope="col">PAYMENT</th>
                                     <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
@@ -100,25 +98,25 @@
                                     foreach($resultSet as $row){ ?>
                                 <tr>
                                     <!-- name -->
-                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo ucwords($row['name']); ?></td>
                                     <!-- amount -->
                                     <td><?php echo '₱'. number_format($row['amount'],2);?></td>
                                     <!-- status -->
-                                    <td><?php echo strtoupper($row['status']);?></td>
+                                    <td><?php echo ucwords($row['status']);?></td>
                                     <!-- date and time -->
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
                                     <!-- proof of payment -->
                                     <td>
-                                        <a class="btn btn-light border-dark"href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list me-1"></i>VIEW</a>
+                                        <a class="btn btn-light" style="border:1px solid #cccccc;" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i> View</a>
                                     </td>
                                     <!-- action -->
                                     <?php if($row['status'] == 'pending') {?>
                                     <td>
-                                        <a class="btn btn-success" href="?approve=<?php echo $row['id'].','.$row['user_id'].','.$row['amount'];?>"><i class="bi bi-check me-1"></i>APPROVE</a>
-                                        <a class="btn btn-danger" href="?disapprove=<?php echo $row['id'];?>"><i class="bi bi-x me-1"></i>DISAPPROVE</a>
+                                        <a class="btn btn-success" href="?approve=<?php echo $row['id'].','.$row['user_id'].','.$row['amount'];?>"><i class="bi bi-check"></i> Approve</a>
+                                        <a class="btn btn-danger" href="?disapprove=<?php echo $row['id'];?>"><i class="bi bi-x"></i> Disapprove</a>
                                     </td>
                                     <?php } else {?>
-                                    <td class="text-danger">NONE</td>
+                                    <td class="text-danger">None</td>
                                     <?php } ?>
                                 </tr>
                                 <?php } ?>

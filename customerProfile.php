@@ -36,23 +36,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door me-1"></i>HOME</a>
+                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> Home</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
+                        <a class="nav-link text-danger" href="#"><i class="bi bi-person-circle"></i> Profile</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book me-1"></i>MENU</a>
+                        <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> Menu</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
+                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> Top-Up</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
                     </li>
                     <li>
                         <form method="post">
-                            <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                            <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
                         </form>
                     </li>
                 </ul>
@@ -116,17 +116,17 @@
                     </tr>
                     <tr>
                         <td><b>ADDRESS</b></td>
-                        <td><?php echo $address;?></td>
+                        <td><?php echo ucwords($address);?></td>
                     </tr>
                     <tr class="bg-success text-white">
                         <td><b>BALANCE</b></td>
-                        <td><?php echo '₱'. number_format($balance,2);?></td>
+                        <td><b><?php echo '₱'. number_format($balance,2);?></b></td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
-            <button class="btn btn-lg btn-warning col-12 mb-3" id="update"><i class="bi bi-arrow-repeat me-1"></i>UPDATE INFO</button>
-            <button class="btn btn-lg btn-warning col-12 mb-5" id="updatePassword"><i class="bi bi-arrow-repeat me-1"></i>UPDATE PASSWORD</button>
+            <button class="btn btn-lg btn-warning col-12 mb-3" id="update"><i class="bi bi-info-circle"></i> Update Info</button>
+            <button class="btn btn-lg btn-warning col-12 mb-5" id="updatePassword"><i class="bi bi-lock"></i> Update Password</button>
         </div>
     </div>
     
@@ -138,17 +138,17 @@
                     <form method="post" class="form-group" enctype="multipart/form-data">
                         <!-- profile pic -->
                         <input type="file" class="form-control form-control-lg mb-3" name="fileInput">
-                        <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="ENTER NEW NAME" required>
-                        <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="ENTER NEW USERNAME" required>
-                        <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="ENTER NEW EMAIL" required>
+                        <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter new name" required>
+                        <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter new username" required>
+                        <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter new email" required>
                         <select name='gender' class="form-control form-control-lg mb-3" required>
                             <option value="m">Male</option>
                             <option value="f">Female</option>
                             <option value="NA">Rather Not Say</option>
                         </select>
-                        <input type="text" class="form-control form-control-lg mb-3" name="address" placeholder="ENTER NEW ADDRESS" required>
-                        <input id="phone" type="number" class="form-control form-control-lg mb-3" name="phoneNumber" id="phoneNumber"  placeholder="ENTER NEW PHONE NUMBER" required>
-                        <button type="submit" class="btn btn-lg btn-warning col-12" name="updateUserInfo">UPDATE</button>
+                        <input type="text" class="form-control form-control-lg mb-3" name="address" placeholder="Enter new address" required>
+                        <input id="phone" type="number" class="form-control form-control-lg mb-3" name="phoneNumber" id="phoneNumber"  placeholder="Enter new phone number" required>
+                        <button type="submit" class="btn btn-lg btn-warning col-12" name="updateUserInfo"><i class="bi bi-arrow-repeat"></i> Update</button>
                     </form>
                 </div>
             </div>
@@ -161,8 +161,8 @@
             <div class="modal-content">
                 <div class="modal-body ">
                     <form method="post" class="form-group">
-                        <input  type="password" class="form-control form-control-lg mb-3" name="password"  placeholder="ENTER NEW PASSWORD" required>
-                        <button type="submit" class="btn btn-lg btn-warning col-12" name="updatePassword">UPDATE</button>
+                        <input  type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter new password" required>
+                        <button type="submit" class="btn btn-lg btn-warning col-12" name="updatePassword"><i class="bi bi-arrow-repeat"></i> Update</button>
                     </form>
                 </div>
             </div>

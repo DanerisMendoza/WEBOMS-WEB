@@ -73,9 +73,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
@@ -88,7 +86,7 @@
                         $resultSet =  getQuery($selectAllUser);
                     ?>
                     <div class="table-responsive col-lg-12">
-                        <table id="tbl" class="table table-bordered table-light table-hover col-lg-12">
+                        <table id="tbl" class="table table-bordered table-hover col-lg-12">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">USERNAME</th>
@@ -97,9 +95,7 @@
                                     <th scope="col">ACCOUNT TYPE</th>
                                     <th scope="col">CUSTOMER INFO</th>
                                     <th scope="col">
-                                        <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                            <i class="bi bi-person-plus me-1"></i>ADD NEW ACCOUNT
-                                        </button>
+                                        <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
                                     </th>
                                     <th scope="col">OPTIONS</th>
                                 </tr>
@@ -112,22 +108,22 @@
                                     <!-- username -->
                                     <td><?php echo $row['username']; ?></td>
                                     <!-- name -->
-                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo ucwords($row['name']); ?></td>
                                     <!-- email -->
                                     <td><?php echo $row['email']; ?></td>
                                     <!-- account type -->
-                                    <td><?php echo strtoupper($row['accountType']);?></td>
+                                    <td><?php echo ucwords($row['accountType']);?></td>
                                     <!-- options -->
-                                    <td><a class="btn btn-info border-secondary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
+                                    <td><a class="btn btn-info" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
                                     <td>
-                                        <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</a>
+                                        <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
                                     </td>
                                     <td>
                                         <?php if($row['username'] != 'admin'){?>
-                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'] ?>"><i class="bi bi-trash me-1"></i>DELETE</a>
+                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'] ?>"><i class="bi bi-trash3"></i> Delete</a>
                                         <?php } 
                                             else
-                                                echo "YOU CAN NOT DELETE </BR> ADMIN ACCOUNT!" ?>
+                                                echo "<a class='text-danger'>You cannot delete this account</a>" ?>
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -143,15 +139,15 @@
                     <div class="modal-content">
                         <div class="modal-body ">
                             <form method="post" class="form-group">
-                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="ENTER USERNAME" required>
-                                <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="ENTER NAME" required>
-                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="ENTER EMAIL" required>
-                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="ENTER PASSWORD" required>
+                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter username" required>
+                                <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter name" required>
+                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter email" required>
+                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter password" required>
                                 <select name="accountType" class="form-control form-control-lg col-12 mb-3">
-                                    <option value="manager">MANAGER</option>
-                                    <option value="cashier">CASHIER</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="cashier">Cashier</option>
                                 </select>
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus me-1"></i>INSERT</button>
+                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus-circle"></i> Insert</button>
                             </form>
                         </div>
                     </div>

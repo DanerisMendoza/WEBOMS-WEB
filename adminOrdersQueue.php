@@ -69,9 +69,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
@@ -84,10 +82,10 @@
                         $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and status = 'serving' ORDER BY WEBOMS_order_tb.id asc; ";
                         $resultSet = getQuery($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered table-hover bg-light col-lg-12">
+                        <table class="table table-bordered table-hover col-lg-12">
                             <thead class="bg-success text-white">
                                 <tr>
-                                    <th scope="col"><h2><i class="bi bi-box-arrow-right me-1"></i>SERVING</h2></th>
+                                    <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,10 +107,10 @@
                         $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb inner join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  and status = 'prepairing' ORDER BY WEBOMS_order_tb.id asc; ";
                         $resultSet = getQuery($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered table-hover bg-light col-lg-12">
+                        <table class="table table-bordered table-hover col-lg-12">
                             <thead class="bg-danger text-white">
                                 <tr>
-                                    <th scope="col"><h2><i class="bi bi-clock me-1"></i>PREPARING</h2></th>
+                                    <th scope="col"><h2><i class="bi bi-clock"></i> PREPARING</h2></th>
                                 </tr>
                             </thead>
                             <tbody>

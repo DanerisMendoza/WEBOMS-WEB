@@ -71,9 +71,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
 
@@ -93,7 +91,7 @@
                                 if($resultSet!= null)
                                 foreach($resultSet as $row){ ?>
                             <tr>
-                                <td><?php echo $row['name']; ?></td>
+                                <td><?php echo ucwords($row['name']); ?></td>
                                 <td><?php echo $row['feedback'];?></td>
                             </tr>
                             <?php } ?>

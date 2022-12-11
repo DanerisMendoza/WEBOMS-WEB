@@ -27,7 +27,7 @@
 
     <div class="container text-center mt-5">
         <!-- back button -->
-        <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+        <button class="btn btn-lg btn-dark col-12 mb-4" id="back">Back</button>
         <script>
         document.getElementById("back").onclick = function() {
             window.location.replace('customerMenu.php');
@@ -48,7 +48,7 @@
                         if($resultSet!= null)
                         foreach($resultSet as $row){ ?>
                     <tr>
-                        <td><?php echo $row['name']; ?></td>
+                        <td><?php echo ucwords($row['name']); ?></td>
                         <td><?php echo $row['feedback'];?></td>
                     </tr>
                     <?php } ?>

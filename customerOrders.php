@@ -33,23 +33,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door me-1"></i>HOME</a>
+                    <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> Home</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
+                    <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book me-1"></i>MENU</a>
+                    <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> Menu</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
+                    <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i>Top-Up</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-danger" href="#" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
+                    <a class="nav-link text-danger" href="#" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
                 </li>
             </ul>
             <form method="post">
-                <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
             </form>
         </div>
       </div>
@@ -62,7 +62,7 @@
             <thead>
               <tr>	
                 <th scope="col">NAME</th>
-                <th scope="col">Order#</th>
+                <th scope="col">ORDER NO.</th>
                 <th scope="col">STATUS</th>
                 <th scope="col">DATE & TIME</th>
                 <th scope="col">FEEDBACK</th>
@@ -78,9 +78,9 @@
                 if($resultSet != null)
                 foreach($resultSet as $row){ ?>
                 <tr>	   
-                <td><?php echo $row['name']; ?></td>
+                <td><?php echo ucwords($row['name']); ?></td>
                 <td><?php echo $row['order_id']; ?></td>
-                <td><?php echo $row['status']; ?></td>
+                <td><?php echo ucwords($row['status']); ?></td>
                 <td><?php echo date('m/d/Y h:i:s a ', strtotime($row['date'])); ?></td>
                 <td>
                   <?php 
@@ -89,17 +89,17 @@
                   $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
                   $resultSet = getQuery($checkIfAlreadyFeedback);
                   if($row['status'] == 'complete' && $resultSet == null){
-                    ?>  <a class="btn btn-primary" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>"><i class="bi bi-chat-square-text me-1"></i>FEEDBACK</a>  <?php
+                    ?>  <a class="btn btn-primary" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>"><i class="bi bi-chat-square-text"></i> Feedback</a>  <?php
                   }
                   elseif($row['status'] == 'complete'){
-                    echo "FEEDBACK ALREADY SENT!";
+                    echo "Feedback already sent!";
                   }
                   else{
-                    echo "PLEASE WAIT UNTIL ORDER IS COMPLETE!";
+                    echo "Please wait until order is complete!";
                   }
                 ?>
                 </td>
-                <td><a class="btn btn-light border-secondary" href="customerOrder_details.php?id=<?php echo $row['order_id'];?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
+                <td><a class="btn btn-light" style="border:1px solid #cccccc;" href="customerOrder_details.php?id=<?php echo $row['order_id'];?>"><i class="bi bi-list"></i> View</a></td>
                 </tr>
                 <?php } ?>
             </tbody>

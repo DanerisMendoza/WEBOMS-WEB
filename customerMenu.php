@@ -45,23 +45,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door me-1"></i>HOME</a>
+                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> Home</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle me-1"></i>PROFILE</a>
+                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-book me-1"></i>MENU</a>
+                        <a class="nav-link text-danger" href="#"><i class="bi bi-book"></i> Menu</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack me-1"></i>TOP-UP</a>
+                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> Top-Up</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list me-1"></i>VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
                     </li>
                 </ul>
                 <form method="post">
-                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power me-1"></i>LOGOUT</button>
+                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
                 </form>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     <div class="col-sm-10 bg-white shadow mb-5"> 
                         <div class="container p-4">
                             <div class="table-responsive col-lg-12">
-                                <table id="tbl" class="table table-bordered table-hover table-light col-lg-12">
+                                <table id="tbl" class="table table-bordered table-hover col-lg-12">
                                     <thead class="table-dark">
                                         <tr>
                                             <th scope="col">IMAGE</th>
@@ -92,19 +92,19 @@
                                             foreach($resultSet as $row){ ?>
                                         <tr>
                                             <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px;height:150px>";?></td>
-                                            <td><?=$row['dish']?></td>
+                                            <td><?= ucwords($row['dish']);?></td>
                                             <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                             <td><?php echo $row['stock']; ?></td>
                                             <td>
                                                 <!-- out of stock -->
                                                 <?php if($row['stock'] <= 0){ ?>
-                                                <a class="text-danger">OUT OF STOCK</a>
+                                                <a class="text-danger text-decoration-none fw-bold">Out of Stock</a>
                                                 <!-- not out of stock -->
                                                 <?php } else{ ?>
                                                     <form method="post">
                                                         <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
                                                         <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
-                                                        <button type="submit" name="addToCartSubmit"><i class="bi bi-cart-plus"></i></button>
+                                                        <button type="submit" name="addToCartSubmit" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
                                                     </form>
                                                 <?php } ?>
                                             </td>
@@ -116,8 +116,8 @@
                         </div>
                     </div>
                     <div class="col-sm-2 sidenav px-4">
-                        <button class="btn btn-lg btn-success col-12 p-4 mb-3 shadow" id="viewCart"><i class="bi bi-cart me-1"></i>CART</button>
-                        <button class="btn btn-lg btn-primary col-12 p-4 mb-5" id="customersFeedback"><i class="bi bi-chat-square-text me-1"></i>FEEDBACK</button>
+                        <button class="btn btn-lg btn-success col-12 p-4 mb-3 shadow" id="viewCart"><i class="bi bi-cart"></i> Cart</button>
+                        <button class="btn btn-lg btn-primary col-12 p-4 mb-5 shadow" id="customersFeedback"><i class="bi bi-chat-square-text"></i> Feedback</button>
                     </div>
                 </div>
             </div>

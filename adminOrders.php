@@ -73,9 +73,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;">
-                        <i class="bi bi-list me-1"></i>Dashboard
-                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
             <!-- content here -->
@@ -86,19 +84,19 @@
                         <select name="sort" class="form-control form-control-lg col-12 mb-3" method="get">
                             <?php 
                                 if(isset($_GET['sort'])){ ?>
-                            <option value="<?php echo $_GET['sort'];?>" selected>SORT <?php echo strtoupper($_GET['sort']);?></option>
+                            <option value="<?php echo $_GET['sort'];?>" selected>Sort <?php echo ucwords($_GET['sort']);?></option>
                             <?php
                                 }else{ ?>
-                            <option value="all" selected>SELECT OPTION</option>
+                            <option value="all" selected>Select Option</option>
                             <?php } ?>
-                            <option value="all">ALL</option>
-                            <option value="prepairing">PREPARING</option>
-                            <option value="serving">SERVING</option>
-                            <option value="order complete">ORDER COMPLETE</option>
+                            <option value="all">All</option>
+                            <option value="prepairing">Preparing</option>
+                            <option value="serving">Serving</option>
+                            <option value="order complete">Order Complete</option>
                             <option value="void">Void</option>
                         </select>
                         <!-- button sort -->
-                        <input type="submit" value="SORT" class="btn btn-lg btn-success col-12 mb-4">
+                        <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4">
                     </form>
                         <!-- sorted table -->
                         <?php
@@ -126,13 +124,13 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">NO.</th>
-                                        <th scope="col">CUSTOMER <br> NAME</th>
-                                        <th scope="col">ORDERS <br> ID</th>
-                                        <th scope="col">ORDER <br> STATUS</th>
-                                        <th scope="col">DATE <br> & TIME</th>
-                                        <th scope="col">STAFF <br> (IN-CHARGE)</th>
-                                        <th scope="col">ORDER <br> DETAILS</th>
-                                        <th scope="col">CUSTOMER <br> INFO</th>
+                                        <th scope="col">CUSTOMER NAME</th>
+                                        <th scope="col">ORDERS ID</th>
+                                        <th scope="col">ORDER STATUS</th>
+                                        <th scope="col">DATE & TIME</th>
+                                        <th scope="col">STAFF (IN-CHARGE)</th>
+                                        <th scope="col">ORDER DETAILS</th>
+                                        <th scope="col">CUSTOMER INFO</th>
                                         <th scope="col" colspan="2">OPTIONS</th>
                                     </tr>
                                 </thead>
@@ -142,57 +140,58 @@
                                         <!-- no -->
                                         <td><?php echo $row['ID']; ?></td>
                                         <!-- name -->
-                                        <td><?php echo $row['name']; ?></td>
+                                        <td><?php echo ucwords($row['name']); ?></td>
                                         <!-- orders link id -->
                                         <td><?php echo $row['order_id'];?></td>
                                         <!-- order status -->
                                         <?php 
                                             if($row['status'] == 'approved'){
                                             ?>
-                                        <td><i class="bi bi-check me-1"></i>APPROVED</td>
+                                        <td>Approved</td>
                                         <?php
                                             }
                                             elseif($row['status'] == 'prepairing'){
                                             ?>
-                                        <td><i class="bi bi-clock me-1"></i>PREPARING</td>
+                                        <td>Preparing</td>
                                         <?php
                                             }
                                             elseif($row['status'] == 'serving'){
                                             ?>
-                                        <td><i class="bi bi-box-arrow-right me-1"></i>SERVING</td>
+                                        <td>Serving</td>
                                         <?php
                                             }
                                             elseif($row['status'] == 'complete'){
                                             ?>
-                                        <td><i class="bi bi-check me-1"></i>ORDER COMPLETE</td>
+                                        <td>Order Complete</td>
                                         <?php
                                             }
                                             elseif($row['status'] == 'void'){
                                             ?>
-                                        <td><i class="bi bi-x-octagon me-1"></i>Void</td>
+                                        <td>Void</td>
                                         <?php
                                             }
                                         ?>
                                         <!-- date and time -->
                                         <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                         <!-- staff in charge -->
-                                        <td><?php echo strtoupper($row['staffInCharge'] == 'online order' ? '('.$row['staffInCharge'].')' : $row['staffInCharge'] .' via POS');?></td>
+                                        <td><?php echo ucwords($row['staffInCharge'] == 'online order' ? '('.$row['staffInCharge'].')' : $row['staffInCharge'] .' via POS');?></td>
                                         <!-- order details -->
                                         <td>
-                                            <a class="btn btn-light border-secondary" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list me-1"></i>VIEW</a>
+                                            <a class="btn btn-light" style="border:1px solid #cccccc;" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list"></i> View</a>
                                         </td>
                                         <!-- options -->
+
                                             <!-- online -->
                                             <?php if($row['staffInCharge'] == 'online order') {?>
                                                 <!-- customer info -->
-                                                <td><a class="btn btn-info border-secondary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
+                                                <td><a class="btn btn-info" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
                                                 <!-- status -->
                                                 <?php  if($row['status'] == 'prepairing'){ ?>
-                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
+                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-arrow-bar-left"></i> Serve</a></td>
                                                 <?php }elseif($row['status'] == 'serving'){ ?>
-                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
+                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check"></i> Order Complete</a></td><?php }
                                                     elseif($row['status'] == 'complete' || $row['status'] == 'void'){?>
-                                                        <td><a class="text-danger">NONE</a></td><?php } ?>
+                                                        <td><a class="text-danger">None</a></td><?php } ?>
 
                                             <!-- pos -->
                                             <?php } else{ ?>
@@ -200,19 +199,19 @@
                                                 <td></td>
                                                 <!-- status -->
                                                 <?php  if($row['status'] == 'prepairing'){ ?>
-                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
+                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-arrow-bar-left"></i> Serve</a></td>
                                                 <?php }elseif($row['status'] == 'serving'){ ?>
-                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td>
+                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check"></i> Order Complete</a></td>
                                                 <?php }elseif($row['status'] == 'complete' || $row['status'] == 'void'){?>
-                                                        <td><a class="text-danger">NONE</a></td>
+                                                        <td><a class="text-danger">None</a></td>
                                                         
                                                 <?php } ?>
                                             <?php } ?>
                                         <!-- void -->
                                         <?php if($row['status'] != 'void'){?>
-                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'] ?>"><i class="bi bi-trash me-1"></i>VOID</a></td>
+                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'] ?>"><i class="bi bi-dash-circle"></i> Void</a></td>
                                         <?php }else{ ?>
-                                            <td><a class="text-danger">NONE</a></td>
+                                            <td><a class="text-danger">None</a></td>
                                         <?php }?>
                                     </tr>
                                     <?php } ?>
