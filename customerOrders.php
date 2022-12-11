@@ -71,7 +71,6 @@
             </thead>
             <tbody>
               <?php
-              // include('method/query.php');
                 $user_id = $_SESSION["user_id"];  
                 $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
                 $resultSet = getQuery($getCustomerOrders);
@@ -94,8 +93,11 @@
                   elseif($row['status'] == 'complete'){
                     echo "FEEDBACK ALREADY SENT!";
                   }
-                  else{
+                  elseif($row['status'] == 'prepairing'){
                     echo "PLEASE WAIT UNTIL ORDER IS COMPLETE!";
+                  }
+                  else{
+                    echo "ORDER IS VOID";
                   }
                 ?>
                 </td>

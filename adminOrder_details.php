@@ -104,6 +104,7 @@
                                         $_SESSION['cash'] = $row['payment'];
                                         $_SESSION['total'] = $row['totalOrder'];
                                         $_SESSION['name'] = $row['staffInCharge'];
+                                        $_SESSION['staffInCharge'] = $row['staffInCharge'];
 
                                     }
                                 }
