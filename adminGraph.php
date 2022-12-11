@@ -21,6 +21,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <style>
+        .chart {
+            width: 100%; 
+            min-height: 450px;
+        }
+        .row {
+            margin:0 !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -131,8 +141,8 @@
             <!-- content here -->
             <div class="container-fluid text-center ">
                 <div class="row justify-content-center">
-                    <button class="btn btn-lg btn-dark col-12 mb-4" id="viewSalesReport"><i class="bi bi-arrow-left me-1"></i>BACK</button>
-                    <div class="table-responsive col-lg-12">
+                    <button class="btn btn-lg btn-dark col-12 mb-3" id="viewSalesReport"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+                    <div class="table-responsive col-lg-12 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td>TOTAL AMOUNT OF STOCK</td>
@@ -147,12 +157,15 @@
                                 <td><?php echo $stockLeft?></td>
                             </tr>
                         </table>
-                        <table class="col-lg-12 table-responsive">
-                            <tr>
-                                <div class="col-lg-12 bg-secondary" id="piechart" ></div>
-                                <div class="col-lg-12 bg-secondary" id="columnchart" ></div>
-                            </tr>
-                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="clearfix"></div>
+                        <div class="col-md-6 mb-4">
+                            <div class="chart" id="piechart" ></div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="chart" id="columnchart" ></div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,7 +192,7 @@
 
         var options = {
           title: '',
-          backgroundColor: 'white',
+          backgroundColor: '',
           is3D: false,
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -209,7 +222,7 @@
         ]);
 
         var options = {
-         backgroundColor: 'white',
+         backgroundColor: '',
           legend: { position: 'none' },
           chart: {
             title: 'Most Ordered Food',

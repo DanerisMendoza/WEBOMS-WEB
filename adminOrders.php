@@ -120,9 +120,9 @@
                         <!-- table container -->
                         <div class="table-responsive col-lg-12">
                             <table class="table table-bordered table-hover col-lg-12" id="tb1">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
-                                        <th scope="col">no</th>
+                                        <th scope="col">NO.</th>
                                         <th scope="col">CUSTOMER <br> NAME</th>
                                         <th scope="col">ORDERS <br> ID</th>
                                         <th scope="col">ORDER <br> STATUS</th>
