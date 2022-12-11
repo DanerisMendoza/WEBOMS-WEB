@@ -174,30 +174,30 @@
                                             <a class="btn btn-light border-secondary" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list me-1"></i>VIEW</a>
                                         </td>
                                         <!-- options -->
-                                        <!-- online -->
-                                        <?php if($row['staffInCharge'] == 'online order') {?>
-                                            <!-- customer info -->
-                                            <td><a class="btn btn-info border-secondary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
-                                            <!-- status -->
-                                            <?php  if($row['status'] == 'prepairing'){ ?>
-                                                    <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
-                                            <?php }elseif($row['status'] == 'serving'){ ?>
-                                                    <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
-                                                elseif($row['status'] == 'complete'){?>
-                                                    <td><a class="text-danger">NONE</a></td><?php } ?>
+                                            <!-- online -->
+                                            <?php if($row['staffInCharge'] == 'online order') {?>
+                                                <!-- customer info -->
+                                                <td><a class="btn btn-info border-secondary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
+                                                <!-- status -->
+                                                <?php  if($row['status'] == 'prepairing'){ ?>
+                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
+                                                <?php }elseif($row['status'] == 'serving'){ ?>
+                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
+                                                    elseif($row['status'] == 'complete'){?>
+                                                        <td><a class="text-danger">NONE</a></td><?php } ?>
 
-                                        <!-- admin -->
-                                        <?php } else{ ?>
-                                            <!-- customer info -->
-                                            <td></td>
-                                            <!-- status -->
-                                            <?php  if($row['status'] == 'prepairing'){ ?>
-                                                    <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
-                                            <?php }elseif($row['status'] == 'serving'){ ?>
-                                                    <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
-                                                elseif($row['status'] == 'complete'){?>
-                                                    <td><a class="text-danger">NONE</a></td><?php } ?>
-                                        <?php } ?>
+                                            <!-- pos -->
+                                            <?php } else{ ?>
+                                                <!-- customer info -->
+                                                <td></td>
+                                                <!-- status -->
+                                                <?php  if($row['status'] == 'prepairing'){ ?>
+                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
+                                                <?php }elseif($row['status'] == 'serving'){ ?>
+                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
+                                                    elseif($row['status'] == 'complete'){?>
+                                                        <td><a class="text-danger">NONE</a></td><?php } ?>
+                                            <?php } ?>
                                         <!-- delete -->
                                         <td><a class="btn btn-danger" href="?delete=<?php echo $row['ID'].','.$row['order_id'] ?>"><i class="bi bi-trash me-1"></i>DELETE</a></td>
                                     </tr>

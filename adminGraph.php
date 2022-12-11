@@ -12,32 +12,66 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>View Graph</title>
         
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script> 
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <!-- charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
     <?php
+        $dishesArr = array();
+        $qantityArr = array();
         $sold = 0;
         $countOfSold = 0;
         $stockLeft = 0;
         $query = "select * from WEBOMS_menu_tb;";
         $resultSet = getQuery($query);
+        // get stock left
         if($resultSet!=null){
             foreach($resultSet as $row){
                 $stockLeft += $row['stock'];
             }
         }
-        $query = "select WEBOMS_menu_tb.*,WEBOMS_ordersDetail_tb.*,WEBOMS_order_tb.status from WEBOMS_menu_tb inner join WEBOMS_ordersDetail_tb on WEBOMS_menu_tb.orderType = WEBOMS_ordersDetail_tb.orderType inner join WEBOMS_order_tb on WEBOMS_order_tb.order_id = WEBOMS_ordersDetail_tb.order_id where status = 'complete';";
+
+        $query = "select dish,quantity from WEBOMS_ordersDetail_tb a inner join WEBOMS_menu_tb b on a.orderType = b.orderType inner join WEBOMS_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
         $resultSet = getQuery($query);
         if($resultSet!=null){
             foreach($resultSet as $row){
+                // get sold stock
                 $countOfSold += $row['quantity'];
+                //merge dish quantity into 1 
+                if(in_array($row['dish'], $dishesArr)){
+                    $index = array_search($row['dish'], $dishesArr);
+                    $newQuantity = $qantityArr[$index] + $row['quantity'];
+                    $qantityArr[$index] = $newQuantity;
+                }
+                else{
+                    array_push($dishesArr,$row['dish']);
+                    array_push($qantityArr,$row['quantity']);
+                }
+            }
+            // merge multiple array into multi arr
+            $multiArr = array();
+            for($i=0; $i<sizeof($dishesArr); $i++){
+                $arr = array('dish' => $dishesArr[$i], 'quantity' => $qantityArr[$i]);
+                array_push($multiArr,$arr);
+            }
+
+            // manual sort
+            for($i=0; $i<sizeof($multiArr); $i++){
+                for($j=$i+1; $j<sizeof($multiArr); $j++){
+                    if($multiArr[$i]['quantity'] > $multiArr[$j]['quantity']){
+                        $tempArr = $multiArr[$i];
+                        $multiArr[$i] = $multiArr[$j];
+                        $multiArr[$j] = $tempArr;
+                    }
+                }                
             }
         }
     ?>
@@ -113,8 +147,11 @@
                                 <td><?php echo $stockLeft?></td>
                             </tr>
                         </table>
-                        <table class="col-lg-12">
-                            <div class="col-lg-12 bg-secondary" id="piechart" style="width:1000px; height:500px;"></div>
+                        <table class="col-lg-12 table-responsive">
+                            <tr>
+                                <div class="col-lg-12 bg-secondary" id="piechart" ></div>
+                                <div class="col-lg-12 bg-secondary" id="columnchart" ></div>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -149,6 +186,43 @@
         chart.draw(data, options);
     
         }
+</script>
+
+<script>
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+        ['Order Counts', 'Order Counts'],
+
+            <?php
+                $i = 0;
+                foreach($multiArr as $arr){
+                    if($i!=sizeof($multiArr))
+                        echo "['$arr[dish]','$arr[quantity]'],";
+                    else
+                        echo "['$arr[dish]','$arr[quantity]']";
+                    $i++;
+                }    
+            ?>
+        ]);
+
+        var options = {
+         backgroundColor: 'white',
+          legend: { position: 'none' },
+          chart: {
+            title: 'Most Ordered Food',
+            subtitle: '' },
+          axes: {
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      };
 </script>
 
 <script>

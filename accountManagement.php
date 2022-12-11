@@ -95,6 +95,7 @@
                                     <th scope="col">NAME</th>
                                     <th scope="col">EMAIL</th>
                                     <th scope="col">ACCOUNT TYPE</th>
+                                    <th scope="col">CUSTOMER INFO</th>
                                     <th scope="col">
                                         <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal">
                                             <i class="bi bi-person-plus me-1"></i>ADD NEW ACCOUNT
@@ -117,6 +118,7 @@
                                     <!-- account type -->
                                     <td><?php echo strtoupper($row['accountType']);?></td>
                                     <!-- options -->
+                                    <td><a class="btn btn-info border-secondary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list me-1"></i>VIEW</a></td>
                                     <td>
                                         <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</a>
                                     </td>
@@ -199,9 +201,88 @@
                     </div>
                 </div>
             </div>
+
+            <!-- customerProfileModal (Bootstrap MODAL) -->
+            <div class="modal fade" id="customerProfileModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content container">
+                        <div class="modal-body">
+                            <!-- table -->
+                            <div class="table-responsive col-lg-12">
+                                <table class="table table-bordered col-lg-12 text-start">
+                                    <tbody>
+                                        <?php
+                                        $query = "select a.*,b.* from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
+                                        $resultSet =  getQuery($query);
+                                        if($resultSet!= null)
+                                        foreach($resultSet as $row){ 
+                                        // init
+                                        $id = $row['id'];
+                                        $name = $row['name'];
+                                        $picName = $row['picName'];
+                                        $username = $row['username'];
+                                        $g = $row['gender'];
+                                        $phoneNumber = $row['phoneNumber'];
+                                        $address = $row['address'];
+                                        $balance = $row['balance'];
+                                        $email = $row['email'];
+                                        //gender process
+                                        $g = $row['gender'];
+                                        if($g == 'm'){
+                                            $gender = 'male';
+                                            $genderIndex = 0;
+                                        }
+                                        elseif($g == 'f'){
+                                            $gender = 'female';
+                                            $genderIndex = 1;
+                                        }else{
+                                            $gender = 'NA';
+                                            $genderIndex = 2;
+                                        }
+                                        ?>
+                                        <?php if($picName != null){ ?>
+                                            <tr class="text-center">
+                                                <th colspan="2"><img src="profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
+                                            </tr>
+                                        <?php } ?>
+                                        <tr>
+                                            <td><b>NAME</b></td>
+                                            <td><?php echo $name;?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>USERNAME</b></td>
+                                            <td><?php echo $username;?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>EMAIL</b></td>
+                                            <td><?php echo $email;?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>GENDER</b></td>
+                                            <td><?php echo ucfirst($gender);?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>PHONE NUMBER</b></td>
+                                            <td><?php echo $phoneNumber;?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>ADDRESS</b></td>
+                                            <td><?php echo $address;?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>BALANCE</b></td>
+                                            <td><?php echo '₱'.$balance;?></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
 
 </html>
@@ -282,6 +363,11 @@
         if(Query($query))
             if(Query($query2))
                 echo "<script>window.location.replace('accountManagement.php');</script>";
+    }
+
+    //view customer info
+    if(isset($_GET['viewCustomerInfo'])){
+        echo "<script>$('#customerProfileModal').modal('show');</script>";
     }
 ?>
 
