@@ -19,6 +19,8 @@
           $_SESSION['companyAddress'] = $row['address'];
           $_SESSION['companyTel'] = $row['tel'];
         }
+    // redefining name
+    $_SESSION['name'] = getQueryOneVal("select name from WEBOMS_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 ?>
 
 <!DOCTYPE html>

@@ -1,7 +1,10 @@
 <?php 
     $page = 'admin';
     include('method/checkIfAccountLoggedIn.php');
+    include('method/query.php');
     $_SESSION['query'] = 'all';
+    // redefining name
+    $_SESSION['name'] = getQueryOneVal("select name from WEBOMS_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +106,6 @@
 
 <?php 
     // logout
-    include('method/query.php');
     if(isset($_POST['logout'])){
         $dishesArr = array();
         $dishesQuantity = array();

@@ -1,8 +1,10 @@
 <?php 
-      include('method/query.php');
-      $query = "select * from WEBOMS_company_tb";
-      $resultSet = getQuery($query);
-      if($resultSet!=null){
+    $page = 'notLogin';
+    include('method/query.php');
+    include('method/checkIfAccountLoggedIn.php');
+    $query = "select * from WEBOMS_company_tb";
+    $resultSet = getQuery($query);
+    if($resultSet!=null){
         foreach($resultSet as $row){
             $name = $row['name'];
             $address = $row['address'];

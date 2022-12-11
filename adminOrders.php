@@ -95,6 +95,7 @@
                             <option value="prepairing">PREPARING</option>
                             <option value="serving">SERVING</option>
                             <option value="order complete">ORDER COMPLETE</option>
+                            <option value="void">Void</option>
                         </select>
                         <!-- button sort -->
                         <input type="submit" value="SORT" class="btn btn-lg btn-success col-12 mb-4">
@@ -113,6 +114,8 @@
                             $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
                         elseif($_SESSION['query'] == 'order complete')
                             $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
+                        elseif($_SESSION['query'] == 'void')
+                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'void' order by b.id asc " ;
 
                         $resultSet =  getQuery($query);
                         if($resultSet != null){ ?>
@@ -164,6 +167,11 @@
                                         <td><i class="bi bi-check me-1"></i>ORDER COMPLETE</td>
                                         <?php
                                             }
+                                            elseif($row['status'] == 'void'){
+                                            ?>
+                                        <td><i class="bi bi-x-octagon me-1"></i>Void</td>
+                                        <?php
+                                            }
                                         ?>
                                         <!-- date and time -->
                                         <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
@@ -183,7 +191,7 @@
                                                         <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
                                                 <?php }elseif($row['status'] == 'serving'){ ?>
                                                         <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
-                                                    elseif($row['status'] == 'complete'){?>
+                                                    elseif($row['status'] == 'complete' || $row['status'] == 'void'){?>
                                                         <td><a class="text-danger">NONE</a></td><?php } ?>
 
                                             <!-- pos -->
@@ -194,12 +202,18 @@
                                                 <?php  if($row['status'] == 'prepairing'){ ?>
                                                         <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-box-arrow-right me-1"></i>SERVE</a></td>
                                                 <?php }elseif($row['status'] == 'serving'){ ?>
-                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td><?php }
-                                                    elseif($row['status'] == 'complete'){?>
-                                                        <td><a class="text-danger">NONE</a></td><?php } ?>
+                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check me-1"></i>ORDER COMPLETE</a></td>
+                                                <?php }elseif($row['status'] == 'complete' || $row['status'] == 'void'){?>
+                                                        <td><a class="text-danger">NONE</a></td>
+                                                        
+                                                <?php } ?>
                                             <?php } ?>
-                                        <!-- delete -->
-                                        <td><a class="btn btn-danger" href="?delete=<?php echo $row['ID'].','.$row['order_id'] ?>"><i class="bi bi-trash me-1"></i>DELETE</a></td>
+                                        <!-- void -->
+                                        <?php if($row['status'] != 'void'){?>
+                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'] ?>"><i class="bi bi-trash me-1"></i>VOID</a></td>
+                                        <?php }else{ ?>
+                                            <td><a class="text-danger">NONE</a></td>
+                                        <?php }?>
                                     </tr>
                                     <?php } ?>
                                 </tbody>
@@ -323,16 +337,13 @@ $(document).ready(function() {
             echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
     }
 
-    //delete button
-    if(isset($_GET['delete'])){
-        $arr = explode(',',$_GET['delete']);
-        $id = $arr[0];
-        $linkId = $arr[1];
-        $query1 = "DELETE FROM WEBOMS_order_tb WHERE id='$id'";
-        $query2 = "DELETE FROM WEBOMS_ordersDetail_tb WHERE order_id='$linkId'";
-            if(Query($query1) && Query($query2)){
-                echo "<script> window.location.replace('adminOrders.php'); alert('DELETE DATA SUCCESSFULLY!'); </script>";  
-            }
+    //void button
+    if(isset($_GET['void'])){
+        $order_id = $_GET['void'];
+        $query = "UPDATE WEBOMS_order_tb SET status='void' WHERE order_id='$order_id' ";     
+        if(Query($query)){
+            echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
+        }
     }
 
     //view customer info

@@ -82,7 +82,7 @@
 
     if($_SESSION['fromReceipt'] == 'pos'){
         $_SESSION["dishes"] = $_SESSION["price"] = $_SESSION["orderType"] = $_SESSION['multiArr'] = array(); 
-        $_SESSION['fromReceipt'] = $_SESSION['staffInCharge'] = $_SESSION['total'] = $_SESSION['cash'] = $_SESSION['order_id'] = null;
+        $_SESSION['fromReceipt'] =  $_SESSION['total'] = $_SESSION['cash'] = $_SESSION['order_id'] = null;
     }
   
 ?>
