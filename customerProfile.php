@@ -222,7 +222,7 @@ document.getElementById("updatePassword").onclick = function () {
         $fileName = $_FILES['fileInput']['name'];
         //if image didn't change 
         if($fileName == ''){
-        $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$picName', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
+        $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$picName', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.user_id = '$_SESSION[user_id]' ";
             if(Query($query)){
                 die ("<script>alert('SUCCESS UPDATING THE DATABASE!'); window.location.replace('customerProfile.php');</script>");    
             }
@@ -241,7 +241,7 @@ document.getElementById("updatePassword").onclick = function () {
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'profilePic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
-                    $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$fileNameNew', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.id='$id' ";
+                    $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$fileNameNew', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.user_id = '$_SESSION[user_id]' ";
                     if(Query($query)){
                         echo '<script>alert("SUCCESS UPDATING THE DATABASE!");</script>';
                         if($picName != null)       
