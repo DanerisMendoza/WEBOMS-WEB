@@ -30,6 +30,10 @@
     <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <!-- data table -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body style="background:#e0e0e0">
@@ -93,7 +97,7 @@
                             <!-- content here -->
                             <h2 class="mt-3 mb-4 bg-primary text-white">YOUR BALANCE IS ₱<?php echo number_format($balance,2);?></h2>
                             <div class="table-responsive">
-                                <table class="table table-hover table-bordered col-lg-12">
+                                <table class="table table-hover table-bordered col-lg-12" id="tb1">
                                     <thead >
                                         <tr>
                                             <th scope="col">NAME</th>
@@ -121,8 +125,7 @@
                                                 <a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi bi-x"></i>CANCEL</a>
                                             </td>
                                             <?php }else{ ?>
-                                            <td>
-                                                <a class="btn btn-light border-secondary" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i>VIEW</a></td>
+                                            <td><a class="btn btn-light border-secondary" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i>VIEW</a></td>
                                             <td></td>
                                             <?php }?>
                                         </tr>
@@ -241,3 +244,13 @@ document.getElementById("customerOrder_details").onclick = function() { window.l
     echo "<script>window.location.replace('Login.php');</script>";
   }
 ?>
+<script>
+    $(document).ready(function() {
+        $('#tb1').DataTable();
+    });
+    $('#tb1').dataTable({
+    "columnDefs": [
+        { "targets": [4,5], "orderable": false }
+    ]
+    });
+</script>

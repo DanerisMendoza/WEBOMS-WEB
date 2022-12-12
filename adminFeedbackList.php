@@ -2,7 +2,7 @@
   $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
-  $query = "select a.name, b.feedback from  WEBOMS_userInfo_tb a inner join WEBOMS_feedback_tb b on a.user_id = b.user_id";
+  $query = "select a.name, b.feedback, b.id from  WEBOMS_userInfo_tb a inner join WEBOMS_feedback_tb b on a.user_id = b.user_id";
   $resultSet =  getQuery($query);
 ?>
 
@@ -21,6 +21,10 @@
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <!-- data table -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -81,11 +85,12 @@
             <div class="container-fluid text-center">
                 <!-- table -->
                 <div class="table-responsive col-lg-12">
-                    <table class="table table-bordered table-hover col-lg-12">
+                    <table class="table table-bordered table-hover col-lg-12" id="tb1">
                         <thead>
                             <tr>
                                 <th scope="col">NAME</th>
                                 <th scope="col">FEEDBACK</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,6 +100,7 @@
                             <tr>
                                 <td><?php echo $row['name']; ?></td>
                                 <td><?php echo $row['feedback'];?></td>
+                                <td><a class="btn btn-danger" href="?delete=<?php echo $row['id'];?>" >Delete</a></td>
                             </tr>
                             <?php } ?>
                         </tbody>
@@ -130,7 +136,16 @@ $(document).ready(function() {
 });
 </script>
 
-<?php 
+<?php
+// delete feedback
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $query = "DELETE FROM weboms_feedback_tb WHERE id = '$id'";
+    if(Query($query)){
+        echo "<script>alert('SUCCESS!'); window.location.replace('adminFeedbackList.php');</script>";
+    }
+
+} 
 // logout
     if(isset($_POST['logout'])){
         $dishesArr = array();
@@ -156,3 +171,14 @@ $(document).ready(function() {
         echo "<script>window.location.replace('Login.php');</script>";
     }
 ?>
+
+<script>
+    $(document).ready(function() {
+        $('#tb1').DataTable();
+    });
+    $('#tb1').dataTable({
+    "columnDefs": [
+        { "targets": [2], "orderable": false }
+    ]
+    });
+</script>
