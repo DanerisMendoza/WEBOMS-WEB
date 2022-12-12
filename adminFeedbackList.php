@@ -140,7 +140,7 @@ $(document).ready(function() {
 // delete feedback
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $query = "DELETE FROM weboms_feedback_tb WHERE id = '$id'";
+    $query = "update WEBOMS_feedback_tb set feedback = 'Deleted due to inappropriate comment' WHERE id = '$id'";
     if(Query($query)){
         echo "<script>alert('SUCCESS!'); window.location.replace('adminFeedbackList.php');</script>";
     }

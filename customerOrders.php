@@ -98,10 +98,10 @@
                   elseif($row['status'] == 'complete'){
                     echo "FEEDBACK ALREADY SENT!";
                   }
-                  elseif($row['status'] == 'prepairing'){
+                  elseif($row['status'] == 'prepairing' || $row['status'] == 'serving'){
                     echo "PLEASE WAIT UNTIL ORDER IS COMPLETE!";
                   }
-                  else{
+                  elseif($row['status'] == 'void'){
                     echo "ORDER IS VOID";
                   }
                 ?>
