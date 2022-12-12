@@ -18,8 +18,13 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css"> 
   <link rel="stylesheet" type="text/css" href="css/customer.css">
   <script type="text/javascript" src="js/bootstrap 5/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
   <!-- online css bootsrap icon -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+  <!-- data table -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body style="background:#e0e0e0">
@@ -58,7 +63,7 @@
     <div class="container text-center bg-white shadow" style="margin-top:130px;">    
       <div class="row justify-content-center">
         <div class="table-responsive col-lg-12 mt-4 mb-3">
-          <table class="table table-bordered table-hover col-lg-12">
+          <table class="table table-bordered table-hover col-lg-12" id="tb1">
             <thead>
               <tr>	
                 <th scope="col">NAME</th>
@@ -71,7 +76,6 @@
             </thead>
             <tbody>
               <?php
-              // include('method/query.php');
                 $user_id = $_SESSION["user_id"];  
                 $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
                 $resultSet = getQuery($getCustomerOrders);
@@ -94,8 +98,11 @@
                   elseif($row['status'] == 'complete'){
                     echo "Feedback already sent!";
                   }
+                  elseif($row['status'] == 'prepairing'){
+                    echo "PLEASE WAIT UNTIL ORDER IS COMPLETE!";
+                  }
                   else{
-                    echo "Please wait until order is complete!";
+                    echo "ORDER IS VOID";
                   }
                 ?>
                 </td>
@@ -143,3 +150,13 @@ document.getElementById("customerProfile").onclick = function() { window.locatio
     echo "<script>window.location.replace('Login.php');</script>";
   }
 ?>
+<script>
+    $(document).ready(function() {
+        $('#tb1').DataTable();
+    });
+    $('#tb1').dataTable({
+    "columnDefs": [
+        { "targets": [5], "orderable": false }
+    ]
+    });
+</script>

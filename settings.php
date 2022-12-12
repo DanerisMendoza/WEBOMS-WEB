@@ -82,18 +82,18 @@
             <!-- content here -->
             <div class="container-fluid text-center">
                 <form method="post">
-                    <h4 class="fw-normal text-start">COMPANY NAME</h4>
-                    <input type="text" name="name" placeholder="Enter new company name" class="form-control form-control-lg mb-5" value="<?php echo $name; ?>" required></textarea>
-                    <h4 class="fw-normal text-start">COMPANY ADDRESS</h4>
+                    <h4 class="text-start">COMPANY NAME</h4>
+                    <input type="text" name="name" placeholder="ENTER NEW COMPANY NAME" class="form-control form-control-lg mb-2" value="<?php echo $name; ?>" required></textarea>
+                    <h4 class="text-start">COMPANY ADDRESS</h4>
                     
-                    <input type="text" name="address" placeholder="Enter new company address" class="form-control form-control-lg mb-5" value="<?php echo $address; ?>" required></textarea>
-                    <h4 class="fw-normal text-start">COMPANY TELEPHONE/PHONE NUMBER</h4>
+                    <input type="text" name="address" placeholder="ENTER NEW COMPANY ADDRESS" class="form-control form-control-lg mb-2" value="<?php echo $address; ?>" required></textarea>
+                    <h4 class="text-start">COMPANY TELEPHONE/PHONE NUMBER</h4>
                     
-                    <input type="number" name="tel" placeholder="Enter new company telephone/phone number" class="form-control form-control-lg mb-5" value="<?php echo $tel; ?>" required></textarea>
-                    <h4 class="fw-normal text-start">COMPANY DESCRIPTION/HISTORY</h4>
+                    <input type="number" name="tel" placeholder="ENTER NEW COMPANY TELEPHONE NUMBER" class="form-control form-control-lg mb-2" value="<?php echo $tel; ?>" required></textarea>
+                    <h4 class="text-start">COMPANY DESCRIPTION/HISTORY</h4>
                     
-                    <textarea rows="8" name="description" placeholder="Enter new company description/history" class="form-control form-control-lg mb-4"  required><?php echo $description; ?></textarea>
-                    <button type="submit" name="update" class="btn btn-lg btn-warning col-12"><i class="bi bi-arrow-repeat"></i> Update</button>
+                    <textarea rows="8" name="description" placeholder="ENTER NEW COMPANY DESCRIPTION" class="form-control form-control-lg mb-2"  required><?php echo $description; ?></textarea>
+                    <button type="submit" name="update" class="btn btn-lg btn-warning col-12 mb-5"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
                 </form>
             </div>
         </div>
@@ -114,6 +114,7 @@
             echo "<script>alert('SUCCESS!'); window.location.replace('settings.php');</script>";
         }
     }
+
 ?>
 
 <?php 

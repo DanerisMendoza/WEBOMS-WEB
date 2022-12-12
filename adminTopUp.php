@@ -20,6 +20,10 @@
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- data table -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -28,7 +32,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
+            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -81,7 +85,7 @@
                         $resultSet =  getQuery($query);
                     ?>
                     <div class="table-responsive col-lg-12">
-                        <table class="table table-bordered mb-5 col-lg-12">
+                        <table class="table table-bordered mb-5 col-lg-12" id="tb1">
                             <thead>
                                 <tr>
                                     <th scope="col">NAME</th>
@@ -216,3 +220,13 @@ document.getElementById("settings").onclick = function() { window.location.repla
         echo "<script>window.location.replace('Login.php');</script>";
     }
 ?>
+<script>
+    $(document).ready(function() {
+        $('#tb1').DataTable();
+    });
+    $('#tb1').dataTable({
+    "columnDefs": [
+        { "targets": [4,5], "orderable": false }
+    ]
+    });
+</script>

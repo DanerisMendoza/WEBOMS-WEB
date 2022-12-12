@@ -1,5 +1,5 @@
 <?php      
-  $page = 'admin';
+  $page = 'cashier';
   include('method/checkIfAccountLoggedIn.php');
   include('method/query.php');
 ?>
@@ -26,7 +26,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
+            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -38,6 +38,9 @@
                 <li class="mb-2">
                     <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
+
+            <?php if($_SESSION['accountType'] != 'cashier'){?>
+
                 <li class="mb-2">
                     <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
@@ -56,6 +59,9 @@
                 <li class="mb-1">
                     <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
+                
+            <?php } ?>
+
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
@@ -102,6 +108,7 @@
                                         $_SESSION['cash'] = $row['payment'];
                                         $_SESSION['total'] = $row['totalOrder'];
                                         $_SESSION['name'] = $row['staffInCharge'];
+                                        $_SESSION['staffInCharge'] = $row['staffInCharge'];
 
                                     }
                                 }
