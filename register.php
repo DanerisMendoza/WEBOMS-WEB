@@ -169,8 +169,8 @@
 <script>
 //cut phone num if excess
 $("#phone").bind("change paste input", function() {
-    var phone = document.forms[0].phone.value;
-    if (phone.length >= 11) {
+    var phone = ''+document.forms[0].phone.value;
+    if (phone.length >= 11 || !isNaN(phone) ) {
         document.forms[0].phone.value = phone.substring(0, 11);
     }
 });

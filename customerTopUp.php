@@ -117,7 +117,7 @@
                                             <td><?php echo '₱'. number_format($row['amount'],2);?></td>
                                             <td><?php echo ucwords($row['status']);?></td>
                                             <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
-                                            <?php if($row['status'] != 'approved'){?>
+                                            <?php if($row['status'] != 'approved' && $row['status'] != 'disapproved'){?>
                                             <td>
                                                 <a class="btn btn-light" style="border:1px solid #cccccc;" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i> View</a>
                                             </td>

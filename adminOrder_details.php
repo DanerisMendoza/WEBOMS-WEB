@@ -2,6 +2,11 @@
   $page = 'cashier';
   include('method/checkIfAccountLoggedIn.php');
   include('method/query.php');
+  $arr = explode(',',$_GET['order_id']);
+  $id = $arr[0];
+  $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
+  $resultSet = getQuery($query); 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -83,21 +88,19 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 cont2">
                         <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                            <button class="btn btn-lg btn-dark col-6 mb-3" id="back"><i class="bi bi-arrow-left-short"></i> BACK</button>
-                            <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
+                            <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+                            <?php if($resultSet != null){?>
+                                <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="viewInPdf"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+                            <?php } ?>
                         </div>
 
                         <!-- table -->
                         <div class="table-responsive col-lg-12">
                             <?php 
-                                $arr = explode(',',$_GET['order_id']);
-                                $id = $arr[0];
                                 $_SESSION['dishesArr'] = array();
                                 $_SESSION['priceArr'] = array();
                                 $_SESSION['dishesQuantity'] = array();
 
-                                $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
-                                $resultSet = getQuery($query); 
                                 if($resultSet != null){
                                     foreach($resultSet as $row){ 
                                         //init

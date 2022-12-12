@@ -33,7 +33,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType'];?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -138,7 +138,7 @@ $(document).ready(function() {
 // delete feedback
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $query = "DELETE FROM weboms_feedback_tb WHERE id = '$id'";
+    $query = "update WEBOMS_feedback_tb set feedback = 'Deleted due to inappropriate comment' WHERE id = '$id'";
     if(Query($query)){
         echo "<script>alert('SUCCESS!'); window.location.replace('adminFeedbackList.php');</script>";
     }
