@@ -185,20 +185,20 @@
                     move_uploaded_file($fileTmpName,$fileDestination);  
                     $query = "insert into WEBOMS_topUp_tb(user_id, amount,status, proofOfPayment, date) values('$user_id','$amount','pending','$fileNameNew','$todayWithTime')";
                     if(Query($query)){
-                        echo "<script>alert('SUCCESS PLACE TOPUP!'); window.location.replace('customerTopUp.php'); </script>";
+                        echo "<script>alert('Success place top-up!'); window.location.replace('customerTopUp.php'); </script>";
                     }
                     else{
-                        echo "<scrip>alert('SUCCESS PLACE TOPUP!');</script>";
+                        echo "<scrip>alert('Success place top-up!');</script>";
                     }
                 }
                 else
-                    echo "YOUR FILE IS TOO BIG!";
+                    echo "Your file is too big!";
             }
             else
-                echo "THERE WAS AN ERROR UPLOADING YOUR FILE!";
+                echo "There was an error uploading your file!";
         }
         else
-            echo "YOU CANNOT UPLOAD FILES OF THIS TYPE!";   
+            echo "You can't upload files of this type!";   
     }
     if(isset($_GET['cancel'])){
         $arr = explode(',',$_GET['cancel']);

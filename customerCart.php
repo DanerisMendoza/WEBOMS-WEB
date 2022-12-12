@@ -11,7 +11,7 @@
     use PHPMailer\PHPMailer\Exception;
     $_SESSION['multiArr'] = array();
     $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
-?>
+?>  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Menu - Cart</title>
+    <title>Cart</title>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/customer.css">
@@ -56,21 +56,23 @@
                     <li class="nav-item me-2">
                         <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> VIEW ORDERS</a>
                     </li>
+                    <li>
+                        <form method="post">
+                            <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
+                        </form>
+                    </li>
                 </ul>
-                <form method="post">
-                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
-                </form>
             </div>
         </div>
     </nav>
 
-    <div class="container text-center bg-white shadow" style="margin-top:130px;">
+    <div class="container text-center bg-white shadow p-5" style="margin-top:130px;">
         <div class="row justify-content-center">
+            <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
+            <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4 bg-light text-center" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>" />
 
             <!-- table -->
-            <div class="table-responsive col-lg-12 p-5">
-                <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
-                <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4 bg-light text-center" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>" />
+            <div class="table-responsive col-lg-12">
                 <table id="tbl" class="table table-hover table-bordered col-lg-12 mb-4">
                     <thead>
                         <tr>
@@ -125,7 +127,7 @@
                             <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
                             <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                             <?php }else{ ?>
-                            <a class="text-danger text-decoration-none me-2">Out of Stock</a>
+                            <a class="btn text-danger">OUT OF STOCK</a>
                             <?php } ?>
                             <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
                         </td>
@@ -138,7 +140,11 @@
                     </tr>
                 </table>
                 <form method="post">
+                    <!-- place order -->
                     <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+                <!-- </form>
+                <form method="post"> -->
+                    <!-- clear order -->
                     <button type="submit" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                 </form>
             </div>

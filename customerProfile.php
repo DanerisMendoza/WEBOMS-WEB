@@ -195,7 +195,7 @@ document.getElementById("updatePassword").onclick = function () {
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $query = "update WEBOMS_user_tb SET password = '$hash' WHERE user_id = '$_SESSION[user_id]' ";
         if(Query($query)){
-            echo "<script>alert('SUCCESS!');</script>";
+            echo "<script>alert('Success!');</script>";
         }
     }
 
@@ -204,13 +204,13 @@ document.getElementById("updatePassword").onclick = function () {
         //validation
         $query = "select * from WEBOMS_userInfo_tb where name = '$_POST[name]' && name != '$name' ";
         if(getQuery($query) != null)
-            die ("<script>alert('NAME ALREADY EXIST!');</script>");
+            die ("<script>alert('Name already exist!');</script>");
         $query = "select * from WEBOMS_user_tb where username = '$_POST[username]' && username != '$username' ";
         if(getQuery($query) != null)
-            die ("<script>alert('USERNAME ALREADY EXIST!');</script>");
+            die ("<script>alert('Name already exist!');</script>");
         $query = "select * from WEBOMS_userInfo_tb where email = '$_POST[email]' && email != '$email' ";
         if(getQuery($query) != null)
-            die ("<script>alert('EMAIL ALREADY EXIST!');</script>");
+            die ("<script>alert('Email already exist!');</script>");
 
         //file input process
         $name = $_POST['name'];
@@ -224,7 +224,7 @@ document.getElementById("updatePassword").onclick = function () {
         if($fileName == ''){
         $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$picName', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.user_id = '$_SESSION[user_id]' ";
             if(Query($query)){
-                die ("<script>alert('SUCCESS UPDATING THE DATABASE!'); window.location.replace('customerProfile.php');</script>");    
+                die ("<script>alert('Success updating the database!'); window.location.replace('customerProfile.php');</script>");    
             }
         }
         //if image change block
@@ -243,7 +243,7 @@ document.getElementById("updatePassword").onclick = function () {
                     move_uploaded_file($fileTmpName,$fileDestination);         
                     $query = "update WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$fileNameNew', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.user_id = '$_SESSION[user_id]' ";
                     if(Query($query)){
-                        echo '<script>alert("SUCCESS UPDATING THE DATABASE!");</script>';
+                        echo '<script>alert("Success updating the database!");</script>';
                         if($picName != null)       
                             unlink("profilePic/".$picName);                                        
                     }
