@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>View Orders</title>
+    <title>Orders - Order Details</title>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/admin.css">
@@ -31,7 +31,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -45,7 +45,6 @@
                 </li>
 
             <?php if($_SESSION['accountType'] != 'cashier'){?>
-
                 <li class="mb-2">
                     <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
@@ -64,7 +63,6 @@
                 <li class="mb-1">
                     <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
-                
             <?php } ?>
 
                 <li>
@@ -88,9 +86,9 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 cont2">
                         <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                            <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="back"><i class="bi bi-arrow-left me-1"></i>BACK</button>
+                            <button class="btn btn-lg btn-dark col-6 mb-3" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
                             <?php if($resultSet != null){?>
-                                <button class="btn btn-lg btn-dark border-secondary col-6 mb-3" id="viewInPdf"><i class="bi bi-file-earmark-pdf me-1"></i>PDF</button>
+                                <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
                             <?php } ?>
                         </div>
 

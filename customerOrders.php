@@ -38,23 +38,23 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> Home</a>
+                    <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> HOME</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
+                    <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> PROFILE</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> Menu</a>
+                    <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> MENU</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i>Top-Up</a>
+                    <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> TOP-UP</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a class="nav-link text-danger" href="#" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
+                    <a class="nav-link text-danger" href="#" id="customerOrder_details"><i class="bi bi-list"></i> VIEW ORDERS</a>
                 </li>
             </ul>
             <form method="post">
-                <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
+                <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
             </form>
         </div>
       </div>
@@ -62,9 +62,9 @@
     
     <div class="container text-center bg-white shadow" style="margin-top:130px;">    
       <div class="row justify-content-center">
-        <div class="table-responsive col-lg-12 mt-4 mb-3">
+        <div class="table-responsive col-lg-12 p-5">
           <table class="table table-bordered table-hover col-lg-12" id="tb1">
-            <thead>
+            <thead class="table-dark">
               <tr>	
                 <th scope="col">NAME</th>
                 <th scope="col">ORDER NO.</th>
@@ -93,16 +93,16 @@
                   $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
                   $resultSet = getQuery($checkIfAlreadyFeedback);
                   if($row['status'] == 'complete' && $resultSet == null){
-                    ?>  <a class="btn btn-primary" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>"><i class="bi bi-chat-square-text"></i> Feedback</a>  <?php
+                    ?>  <a class="btn btn-primary" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>"><i class="bi bi-chat-square-text"></i></a>  <?php
                   }
                   elseif($row['status'] == 'complete'){
                     echo "Feedback already sent!";
                   }
                   elseif($row['status'] == 'prepairing' || $row['status'] == 'serving'){
-                    echo "PLEASE WAIT UNTIL ORDER IS COMPLETE!";
+                    echo "Please wait until order is complete!";
                   }
                   elseif($row['status'] == 'void'){
-                    echo "ORDER IS VOID";
+                    echo "Order is void!";
                   }
                 ?>
                 </td>

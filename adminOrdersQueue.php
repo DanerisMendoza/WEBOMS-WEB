@@ -27,7 +27,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -41,7 +41,6 @@
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
-
                 <li class="mb-2">
                     <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
@@ -60,10 +59,9 @@
                 <li class="mb-1">
                     <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
-                <li>
-            
             <?php } ?>
 
+                <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
                     </form>

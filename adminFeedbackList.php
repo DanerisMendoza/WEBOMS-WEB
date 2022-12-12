@@ -33,7 +33,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType'];?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']);?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -84,11 +84,11 @@
                 <!-- table -->
                 <div class="table-responsive col-lg-12">
                     <table class="table table-bordered table-hover col-lg-12" id="tb1">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th scope="col">NAME</th>
                                 <th scope="col">FEEDBACK</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">ACTION</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,7 +98,7 @@
                             <tr>
                                 <td><?php echo ucwords($row['name']); ?></td>
                                 <td><?php echo $row['feedback'];?></td>
-                                <td><a class="btn btn-danger" href="?delete=<?php echo $row['id'];?>" >Delete</a></td>
+                                <td><a class="btn btn-danger" href="?delete=<?php echo $row['id'];?>" ><i class="bi bi-trash3"></i> Delete</a></td>
                             </tr>
                             <?php } ?>
                         </tbody>
@@ -140,7 +140,7 @@ if(isset($_GET['delete'])){
     $id = $_GET['delete'];
     $query = "update WEBOMS_feedback_tb set feedback = 'Deleted due to inappropriate comment' WHERE id = '$id'";
     if(Query($query)){
-        echo "<script>alert('SUCCESS!'); window.location.replace('adminFeedbackList.php');</script>";
+        echo "<script>alert('Success!'); window.location.replace('adminFeedbackList.php');</script>";
     }
 
 } 

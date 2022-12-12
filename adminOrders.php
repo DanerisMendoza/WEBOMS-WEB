@@ -32,7 +32,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -46,7 +46,6 @@
                 </li>
 
             <?php if($_SESSION['accountType'] != 'cashier'){?>
-
                 <li class="mb-2">
                     <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
@@ -66,6 +65,7 @@
                     <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
             <?php } ?>
+
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
@@ -81,6 +81,7 @@
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row g-3 justify-content-center">
@@ -142,11 +143,8 @@
                                 <tbody>
                                     <?php foreach($resultSet as $row){?>
                                     <tr>
-                                        <!-- no -->
                                         <td><?php echo $row['ID']; ?></td>
-                                        <!-- name -->
                                         <td><?php echo ucwords($row['name']); ?></td>
-                                        <!-- orders link id -->
                                         <td><?php echo $row['order_id'];?></td>
                                         <!-- order status -->
                                         <?php 
@@ -172,14 +170,12 @@
                                             }
                                             elseif($row['status'] == 'void'){
                                             ?>
-                                        <td>Void</td>
+                                        <td class="text-danger">Void</td>
                                         <?php
                                             }
                                         ?>
-                                        <!-- date and time -->
                                         <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
-                                        <!-- staff in charge -->
-                                        <td><?php echo ucwords($row['staffInCharge'] == 'online order' ? '('.$row['staffInCharge'].')' : $row['staffInCharge'] .' via POS');?></td>
+                                        <td><?php echo ucwords($row['staffInCharge'] == 'online order' ? '('. ucwords($row['staffInCharge']).')' : ucwords($row['staffInCharge']) .' via POS');?></td>
                                         <!-- order details -->
                                         <td>
                                             <a class="btn btn-light" style="border:1px solid #cccccc;" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list"></i> View</a>
@@ -189,7 +185,7 @@
                                             <!-- online -->
                                             <?php if($row['staffInCharge'] == 'online order') {?>
                                                 <!-- customer info -->
-                                                <td><a class="btn btn-info" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
+                                                <td><a class="btn btn-primary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
                                                 <!-- status -->
                                                 <?php  if($row['status'] == 'prepairing'){ ?>
                                                         <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-arrow-bar-left"></i> Serve</a></td>
@@ -214,7 +210,7 @@
                                             <?php } ?>
                                         <!-- void -->
                                         <?php if($row['status'] != 'void' && $_SESSION['accountType'] != 'cashier'){?>
-                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'].','.$row['user_id'] ?>"><i class="bi bi-trash me-1"></i>VOID</a></td>
+                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'].','.$row['user_id'] ?>"><i class="bi bi-dash-circle"></i> Void</a></td>
                                         <?php }else{ ?>
                                             <td><a class="text-danger">None</a></td>
                                         <?php }?>
@@ -232,7 +228,7 @@
                                 <div class="modal-body">
                                     <!-- table -->
                                     <div class="table-responsive col-lg-12">
-                                        <table class="table table-bordered col-lg-12 text-start">
+                                        <table class="table table-bordered table-hover col-lg-12 text-start">
                                             <tbody>
                                                 <?php
                                                     $query = "select a.*,b.* from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
@@ -270,7 +266,7 @@
                                                     <?php } ?>
                                                     <tr>
                                                         <td><b>NAME</b></td>
-                                                        <td><?php echo $name;?></td>
+                                                        <td><?php echo ucwords($name);?></td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>USERNAME</b></td>
@@ -282,7 +278,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><b>GENDER</b></td>
-                                                        <td><?php echo ucfirst($gender);?></td>
+                                                        <td><?php echo ucwords($gender);?></td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>PHONE NUMBER</b></td>
@@ -290,11 +286,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><b>ADDRESS</b></td>
-                                                        <td><?php echo $address;?></td>
+                                                        <td><?php echo ucwords($address);?></td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="bg-success text-white">
                                                         <td><b>BALANCE</b></td>
-                                                        <td><?php echo '₱'.$balance;?></td>
+                                                        <td><b><?php echo '₱'. number_format($balance,2);?></b></td>
                                                     </tr>
                                                     <?php } ?>
                                             </tbody>

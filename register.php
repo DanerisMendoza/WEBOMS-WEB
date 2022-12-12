@@ -116,20 +116,20 @@
         
      
         if($gender == "null"){
-          echo "<script>alert('PLEASE PICK A GENDER!');</script>";
+          echo "<script>alert('Please pick a gender!');</script>";
           return;
         }
 
 
         $query = "select * from WEBOMS_user_tb where username = '$username'";
         if(getQuery($query) != null)
-          die ("<script>alert('NAME ALREADY EXIST!');</script>");
+          die ("<script>alert('Name already exist!');</script>");
         $query = "select * from WEBOMS_userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
-          die ("<script>alert('NAME ALREADY EXIST!');</script>");
+          die ("<script>alert('Name already exist!');</script>");
         $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
-          die ("<script>alert('EMAIL ALREADY EXIST!');</script>");
+          die ("<script>alert('Email already exist!');</script>");
         
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
@@ -158,11 +158,11 @@
         $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
         $query2 = "insert into WEBOMS_userInfo_tb(name, gender, age, phoneNumber, address, email, otp, user_id, balance) values('$name','$gender','$age','$phone','$address','$email','$otp','$user_id',0)";
         if(!Query($query1))
-          echo "fail to save to database";
+          echo "Failed to save to database!";
         elseif(!Query($query2))
-          echo "fail to save to database";
+          echo "Failed to save to database!";
         else
-          echo "<script>window.location.replace('Login.php'); alert('OTP SENT! PLEASE VERIFY YOUR ACCOUNT FIRST!');</script>";
+          echo "<script>window.location.replace('Login.php'); alert('OTP sent! Please verify your account first!');</script>";
         
     }
 ?>

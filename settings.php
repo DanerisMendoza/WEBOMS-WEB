@@ -33,7 +33,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php">Admin</a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -83,17 +83,17 @@
             <div class="container-fluid text-center">
                 <form method="post">
                     <h4 class="text-start">COMPANY NAME</h4>
-                    <input type="text" name="name" placeholder="ENTER NEW COMPANY NAME" class="form-control form-control-lg mb-2" value="<?php echo $name; ?>" required></textarea>
+                    <input type="text" name="name" placeholder="Enter new company name" class="form-control form-control-lg mb-4" value="<?php echo $name; ?>" required></textarea>
                     <h4 class="text-start">COMPANY ADDRESS</h4>
                     
-                    <input type="text" name="address" placeholder="ENTER NEW COMPANY ADDRESS" class="form-control form-control-lg mb-2" value="<?php echo $address; ?>" required></textarea>
+                    <input type="text" name="address" placeholder="Enter new company address" class="form-control form-control-lg mb-4" value="<?php echo ucwords($address); ?>" required></textarea>
                     <h4 class="text-start">COMPANY TELEPHONE/PHONE NUMBER</h4>
                     
-                    <input type="number" name="tel" placeholder="ENTER NEW COMPANY TELEPHONE NUMBER" class="form-control form-control-lg mb-2" value="<?php echo $tel; ?>" required></textarea>
+                    <input type="number" name="tel" placeholder="Enter new company telephone/phone number" class="form-control form-control-lg mb-4" value="<?php echo $tel; ?>" required></textarea>
                     <h4 class="text-start">COMPANY DESCRIPTION/HISTORY</h4>
                     
-                    <textarea rows="8" name="description" placeholder="ENTER NEW COMPANY DESCRIPTION" class="form-control form-control-lg mb-2"  required><?php echo $description; ?></textarea>
-                    <button type="submit" name="update" class="btn btn-lg btn-warning col-12 mb-5"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
+                    <textarea rows="8" name="description" placeholder="Enter new company description/history" class="form-control form-control-lg mb-4"  required><?php echo $description; ?></textarea>
+                    <button type="submit" name="update" class="btn btn-lg btn-warning col-12 mb-5"><i class="bi bi-arrow-repeat"></i> Update</button>
                 </form>
             </div>
         </div>
@@ -111,7 +111,7 @@
         $description = $_POST['description'];
         $query = "update WEBOMS_company_tb SET name = '$name', address = '$address', tel = '$tel', description = '$description' ";
         if(Query($query)){
-            echo "<script>alert('SUCCESS!'); window.location.replace('settings.php');</script>";
+            echo "<script>alert('Success!'); window.location.replace('settings.php');</script>";
         }
     }
 

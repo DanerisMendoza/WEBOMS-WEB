@@ -50,7 +50,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2 active">
@@ -65,7 +65,6 @@
                 </li>
 
             <?php if($_SESSION['accountType'] != 'cashier'){?>
-
                 <li class="mb-2">
                     <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
@@ -85,6 +84,7 @@
                     <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
             <?php } ?>
+
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
@@ -106,7 +106,7 @@
                 <div class="row g-5 justify-content-center">
                     <!-- admin -->
                     <?php if($_SESSION['accountType'] != 'cashier'){?>
-                    <h1 class="text-center bg-dark text-white">ADMIN</h1>
+                    <h1 class="text-center bg-dark text-white"><?php echo strtoupper($_SESSION['accountType']); ?></h1>
 
                     <!-- cashier -->
                     <?php }else{?>
@@ -133,11 +133,8 @@
                                     if($resultSet != null)
                                         foreach($resultSet as $row){ ?>
                                 <tr>
-                                    <!-- dish -->
                                     <td><?= ucwords($row['dish']);?></td>
-                                    <!-- price -->
                                     <td><?php echo "₱".number_format($row['price'],2); ?></td>
-                                    <!-- stock -->
                                     <td><?php echo $row['stock']; ?></td>
                                     <!-- add to cart -->
                                     <td>
@@ -161,7 +158,7 @@
 
                     <!-- 2nd table container -->
                     <div class="table-responsive col-lg-5 mb-5">
-                        <table class="table table-bordered col-lg-12 mb-4">
+                        <table class="table table-bordered table-hover col-lg-12 mb-4">
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
@@ -208,39 +205,33 @@
                                 //create a table using the multi dimensional array
                                 foreach($_SESSION['multiArr'] as $arr){ ?>
                             <tr>
-                                <!-- dish -->
                                 <td><?php echo ucwords($arr['dish']);?></td>
-                                <!-- quantity -->
                                 <td><?php echo $arr['quantity'];?></td>
                                 <td>
                                     <!-- check stock -->
                                     <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
+                                    <!-- quantity plus -->
                                     <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                                     <?php }else{ ?>
                                     <a class="text-danger me-2">Out of Stock</a>
                                     <?php } ?>
+                                    <!-- quantity minus -->
                                     <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
                                 </td>
-                                <!-- price -->
                                 <td><?php echo '₱'.number_format($arr['price'],2);?></td>
                             </tr>
                             <?php }?>
                             <tr>
-                                <!-- total amount -->
                                 <td colspan="3"><b>Total Amount:</b></td>
                                 <td><b>₱<?php echo number_format($total,2); ?></b></td>
                             </tr>
                         </table>
                         <form method="post">
-                            <!-- cash amount -->
                             <input name="customerName" placeholder="Customer Name (Optional)" type="text" class="form-control form-control-lg mb-3">
-                            <!-- cash amount -->
                             <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
-                            <!-- place order -->
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
                         </form>
                         <form method="post">
-                            <!-- clear order -->
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                         </form>
                     </div>
@@ -287,7 +278,7 @@ $(document).ready(function() {
       //validation
       if($qty <= 0 && !str_contains($qty, '.')){
         die ("<script>
-        alert('Quantity Invalid');
+        alert('Quantity invalid');
         window.location.replace('adminPos.php');
         </script>");    
       }
@@ -408,11 +399,11 @@ var orderBtn = document.getElementById("orderBtn");
 orderBtn.addEventListener("click", () => {
     var num = document.getElementById("cashNum").value;
     if (<?php echo $total == 0 ? 'true':'false';?>) {
-        alert('PLEASE PLACE YOUR ORDER!');
+        alert('Please place your order!');
         return;
     }
     if (num >= <?php echo $total;?>) {
-        alert("SUCCESS PLACING ORDER!");
+        alert("Success placing order!");
         window.open("pdf/receipt.php");
     }
 });

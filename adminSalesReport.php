@@ -58,7 +58,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -161,13 +161,9 @@
                                         foreach($resultSet as $row){ ?>
                                 <?php array_push($_SESSION['resultSet'], $row)?>
                                 <tr>
-                                    <!-- name -->
                                     <td><?php echo ucwords($row['name']); ?></td>
-                                    <!-- order id -->
                                     <td><?php echo $row['order_id'];?></td>
-                                    <!-- date and time -->
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
-                                    <!-- total order -->
                                     <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>
                                     <?php $total += $row['totalOrder'];?>
                                     <!-- order detail -->
@@ -204,7 +200,7 @@ document.getElementById("viewGraph").onclick = function() {
 //order button (js)
 document.getElementById("viewInPdf").addEventListener("click", () => {
     if (<?php echo $resultSet == null ? 'true':'false';?>) {
-        alert('Pdf is Empty!');
+        alert('PDF is empty!');
         return;
     } else {
         window.open("pdf/salesReport.php");

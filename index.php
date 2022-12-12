@@ -40,16 +40,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#home"><i class="bi bi-house-door"></i> Home</a>
+                        <a class="nav-link" href="#home"><i class="bi bi-house-door"></i> HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#menu"><i class="bi bi-book"></i> Menu</a>
+                        <a class="nav-link" href="#menu"><i class="bi bi-book"></i> MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link" href="#about"><i class="bi bi-info-circle"></i> About</a>
+                        <a class="nav-link" href="#about"><i class="bi bi-info-circle"></i> ABOUT</a>
                     </li>
                 </ul>
-                <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle"></i> Login</a>
+                <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
             </div>
         </div>
     </nav>
@@ -70,8 +70,8 @@
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
                             <p>
-                                <i class="bi bi-telephone"></i> Telephone: <?php echo $tel;?> <br>
-                                <i class="bi bi-pin-map"></i> Address: <?php echo ucwords($address);?>
+                                <i class="bi bi-telephone"></i> TELEPHONE: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map"></i> ADDRESS: <?php echo ucwords($address);?>
                             </p>
                         </div>
                     </div>
@@ -83,8 +83,8 @@
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
                             <p>
-                                <i class="bi bi-telephone"></i> Telephone: <?php echo $tel;?> <br>
-                                <i class="bi bi-pin-map"></i> Address: <?php echo ucwords($address);?>
+                                <i class="bi bi-telephone"></i> TELEPHONE: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map"></i> ADDRESS: <?php echo ucwords($address);?>
                             </p>
                         </div>
                     </div>
@@ -96,8 +96,8 @@
                         <div class="card bg-dark border-secondary pt-2">
                             <h5><?php echo $name;?></h5>
                             <p>
-                                <i class="bi bi-telephone"></i> Telephone: <?php echo $tel;?> <br>
-                                <i class="bi bi-pin-map"></i> Address: <?php echo ucwords($address);?>
+                                <i class="bi bi-telephone"></i> TELEPHONE: <?php echo $tel;?> <br>
+                                <i class="bi bi-pin-map"></i> ADDRESS: <?php echo ucwords($address);?>
                             </p>
                         </div>
                     </div>

@@ -31,7 +31,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -105,16 +105,12 @@
                                     if($resultSet!= null)
                                     foreach($resultSet as $row){ ?>
                                 <tr>
-                                    <!-- username -->
                                     <td><?php echo $row['username']; ?></td>
-                                    <!-- name -->
                                     <td><?php echo ucwords($row['name']); ?></td>
-                                    <!-- email -->
                                     <td><?php echo $row['email']; ?></td>
-                                    <!-- account type -->
                                     <td><?php echo ucwords($row['accountType']);?></td>
+                                    <td><a class="btn btn-primary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
                                     <!-- options -->
-                                    <td><a class="btn btn-info" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
                                     <td>
                                         <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
                                     </td>
@@ -123,7 +119,7 @@
                                         <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'] ?>"><i class="bi bi-trash3"></i> Delete</a>
                                         <?php } 
                                             else
-                                                echo "<a class='text-danger'>You cannot delete this account</a>" ?>
+                                                echo "<a class='text-danger'>You cannot delete this account!</a>" ?>
                                     </td>
                                 </tr>
                                 <?php } ?>
@@ -133,7 +129,7 @@
                 </div>
             </div>
 
-            <!-- insert -->
+            <!-- add new account -->
             <div class="modal fade" role="dialog" id="loginModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -154,44 +150,16 @@
                 </div>
             </div>
 
-            <!-- update -->
-            <!-- <div class="modal fade" role="dialog" id="updateModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body ">
-                            <form method="post" class="form-group">
-                                <input type="text" class="form-control form-control-lg mb-3" name="username"
-                                    placeholder="ENTER NEW USERNAME" required>
-                                <input type="text" class="form-control form-control-lg mb-3" name="name"
-                                    placeholder="ENTER NEW NAME" required>
-                                <input type="email" class="form-control form-control-lg mb-3" name="email"
-                                    placeholder="ENTER NEW EMAIL" required>
-                                <input type="password" class="form-control form-control-lg mb-3" name="password"
-                                    placeholder="ENTER NEW PASSWORD" required>
-                                <select name="accountType" class="form-control form-control-lg col-12 mb-3">
-                                    <option value="manager">MANAGER</option>
-                                    <option value="cashier">CASHIER</option>
-                                </select>
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="updateNonAdmin">
-                                    <i class="bi bi-arrow-repeat me-1"></i>
-                                    UPDATE
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
             <!-- passAndEmail -->
             <div class="modal fade" role="dialog" id="passAndEmail">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body ">
                             <form method="post" class="form-group">
-                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="ENTER NEW USERNAME" required>
-                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="ENTER NEW EMAIL">
-                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="ENTER NEW PASSWORD" required>
-                                <button type="submit" class="btn btn-lg btn-warning col-12" name="updateAdmin"><i class="bi bi-arrow-repeat me-1"></i>UPDATE</button>
+                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter new username" required>
+                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter new email">
+                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter new password" required>
+                                <button type="submit" class="btn btn-lg btn-warning col-12" name="updateAdmin"><i class="bi bi-arrow-repeat"></i> Update</button>
                             </form>
                         </div>
                     </div>
@@ -243,7 +211,7 @@
                                         <?php } ?>
                                         <tr>
                                             <td><b>NAME</b></td>
-                                            <td><?php echo $name;?></td>
+                                            <td><?php echo ucwords($name);?></td>
                                         </tr>
                                         <tr>
                                             <td><b>USERNAME</b></td>
@@ -263,11 +231,11 @@
                                         </tr>
                                         <tr>
                                             <td><b>ADDRESS</b></td>
-                                            <td><?php echo $address;?></td>
+                                            <td><?php echo ucwords($address);?></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="bg-success text-white">
                                             <td><b>BALANCE</b></td>
-                                            <td><?php echo '₱'.$balance;?></td>
+                                            <td><b><?php echo '₱'. number_format($balance,2);?></b></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -310,11 +278,11 @@
         $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
         $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
         if(!Query($query1))
-          echo "FAIL TO SAVE TO DATABASE!";
+          echo "Failed to save to database!";
         elseif(!Query($query2))
-          echo "FAIL TO SAVE TO DATABASE!";
+          echo "Failed to save to database!";
         else
-          echo ("<script>window.location.replace('accountManagement.php'); alert('SUCCESS!');</script>");
+          echo ("<script>window.location.replace('accountManagement.php'); alert('Success!');</script>");
   
     }
     //update form
@@ -345,7 +313,7 @@
 
         $query = "update WEBOMS_user_tb as a inner join WEBOMS_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
         if(Query($query)){
-            echo "<script>alert('SUCCESS!');</script>";
+            echo "<script>alert('Success!');</script>";
             echo "<script>history.replaceState({},'','accountManagement.php');</script>";
             echo "<script>window.location.replace('accountManagement.php');</script>";
         }

@@ -10,7 +10,6 @@
     }
     $_SESSION['multiArr'] = array();
     $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
-
 ?>
 
 <!DOCTYPE html>
@@ -45,28 +44,29 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> Home</a>
+                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
+                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> PROFILE</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-book"></i> Menu</a>
+                        <a class="nav-link text-danger" href="#"><i class="bi bi-book"></i> MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> Top-Up</a>
+                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> TOP-UP</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
+                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> VIEW ORDERS</a>
                     </li>
                 </ul>
                 <form method="post">
-                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
+                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
                 </form>
             </div>
         </div>
     </nav>
 
+    <!-- content here -->
     <div class="container text-center" style="margin-top:175px;">    
         <div class="row g-5 content">
             <div class="container">
@@ -81,7 +81,7 @@
                                             <th scope="col">DISH</th>
                                             <th scope="col">PRICE</th>
                                             <th scope="col">STOCK</th>
-                                            <th scope="col"></th>
+                                            <th scope="col">ADD TO CART</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -98,7 +98,7 @@
                                             <td>
                                                 <!-- out of stock -->
                                                 <?php if($row['stock'] <= 0){ ?>
-                                                <a class="text-danger text-decoration-none fw-bold">Out of Stock</a>
+                                                <a class="text-danger text-decoration-none">Out of Stock</a>
                                                 <!-- not out of stock -->
                                                 <?php } else{ ?>
                                                     <form method="post">
@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-sm-2 sidenav px-4">
                         <button class="btn btn-lg btn-success col-12 p-4 mb-3 shadow" id="viewCart"><i class="bi bi-cart"></i> Cart</button>
-                        <button class="btn btn-lg btn-primary col-12 p-4 mb-5 shadow" id="customersFeedback"><i class="bi bi-chat-square-text"></i> Feedback</button>
+                        <button class="btn btn-lg btn-primary col-12 p-4 mb-5 shadow" id="customersFeedback"><i class="bi bi-chat-square-text"></i> View Feedback</button>
                     </div>
                 </div>
             </div>

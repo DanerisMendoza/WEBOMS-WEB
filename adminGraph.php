@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>View Graph</title>
+    <title>Sales Report - Graph</title>
         
   
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.css">
@@ -90,7 +90,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -143,15 +143,15 @@
                     <div class="table-responsive col-lg-12 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
-                                <td>Total Amount of Stock</td>
+                                <td><b>Total Amount of Stock:</b></td>
                                 <td><?php echo $countOfSold+$stockLeft?></td>
                             </tr>
                             <tr>
-                                <td>Total Count of Sold</td>
+                                <td><b>Total Count of Sold:</b></td>
                                 <td><?php echo $countOfSold?></td>
                             </tr>
                             <tr>
-                                <td>Total Count of Stock Left</td>
+                                <td><b>Total Count of Stock Left:</b></td>
                                 <td><?php echo $stockLeft?></td>
                             </tr>
                         </table>
@@ -159,10 +159,10 @@
                     <div class="row">
                         <div class="clearfix"></div>
                         <div class="col-md-6 mb-4">
-                            <div class="chart" id="piechart" style="border:1px solid #cccccc;"></div>
+                            <div class="chart" id="piechart"></div>
                         </div>
                         <div class="col-md-6 mb-4">
-                            <div class="chart" id="columnchart" style="border:1px solid #cccccc;"></div> 
+                            <div class="chart" id="columnchart"></div> 
                         </div>
                     </div>
                 </div>

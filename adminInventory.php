@@ -30,7 +30,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -91,9 +91,7 @@
                                     <th scope="col">STOCK</th>
                                     <th scope="col">LAST MODIFIED BY:</th>
                                     <th scope="col">
-                                        <button id="addButton" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                            <i class="bi bi-plus"></i> ADD NEW DISH
-                                        </button>
+                                        <button id="addButton" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-plus"></i> ADD NEW DISH</button>
                                     </th>
                                 </tr>
                             </thead>
@@ -104,17 +102,10 @@
                                     if($resultSet != null){
                                     foreach($resultSet as $row){?>
                                 <tr>
-                                    <!-- image -->
-                                    <td>
-                                        <?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px; height:150px>";?>
-                                    </td>
-                                    <!-- dish -->
+                                    <td><?php $pic = $row['picName']; echo "<img src='dishesPic/$pic' style=width:150px; height:150px>";?></td>
                                     <td><?php echo ucwords($row['dish']);?></td>
-                                    <!-- price -->
                                     <td><?php echo '₱'. number_format($row['price'],2); ?></td>
-                                    <!-- stock -->
                                     <td><?php echo $row['stock']; ?></td>
-                                    <!-- staff (in-charge) -->
                                     <td><?php echo ucwords($row['lastModifiedBy']); ?></td>
                                     <!-- options -->
                                     <td>
@@ -194,13 +185,13 @@
                 echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }
           else
-              echo "YOUR FILE IS TOO BIG!";
+              echo "Your file is too big!";
       }
       else
-          echo "THERE WAS AN ERROR UPLOADING YOUR FILE!";
+          echo "There was an error uploading your file!";
   }
   else
-      echo "YOU CANNOT UPLOAD FILES OF THIS TYPE!";     
+      echo "You cannot upload files of this type!";     
   }
 ?>
 

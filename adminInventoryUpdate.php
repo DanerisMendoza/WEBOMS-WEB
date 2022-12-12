@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Update</title>
+    <title>Inventory - Update</title>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.css">
     <link rel="stylesheet" href="css/admin.css">
@@ -23,7 +23,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -151,19 +151,19 @@
                     move_uploaded_file($fileTmpName,$fileDestination);         
                     $updateQuery = "UPDATE WEBOMS_menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";        
                     if(Query($updateQuery)){
-                        echo '<script>alert("SUCCESS UPDATING THE DATABASE!");</script>';       
+                        echo '<script>alert("Success updating database!");</script>';       
                         unlink("dishespic/".$picName);                                        
                     }
                     echo "<script>window.location.replace('adminInventory.php');</script>";                                
                 }
                 else
-                    echo "YOUR FILE IS TOO BIG!";
+                    echo "Your file is too big!";
             }
             else
-                echo "THERE WAS AN ERROR UPLOADING YOUR FILE!";
+                echo "There was an error uploading your file!";
         }
         else
-            echo "YOU CANNOT UPLOAD FILES OF THIS TYPE!";  
+            echo "You cannot upload files of this type!";  
     }
 ?>
 

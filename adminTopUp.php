@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Top Up</title>
 
     <link rel="stylesheet" href="css/bootstrap 5/bootstrap.min.css">
     <link rel="stylesheet" href="css/admin.css">
@@ -32,7 +32,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -77,6 +77,7 @@
                     <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
                 </div>
             </nav>
+
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
@@ -85,8 +86,8 @@
                         $resultSet =  getQuery($query);
                     ?>
                     <div class="table-responsive col-lg-12">
-                        <table class="table table-bordered mb-5 col-lg-12" id="tb1">
-                            <thead>
+                        <table class="table table-bordered table-hover col-lg-12" id="tb1">
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col">NAME</th>
                                     <th scope="col">AMOUNT</th>
@@ -101,15 +102,10 @@
                                     if($resultSet!= null)
                                     foreach($resultSet as $row){ ?>
                                 <tr>
-                                    <!-- name -->
                                     <td><?php echo ucwords($row['name']); ?></td>
-                                    <!-- amount -->
                                     <td><?php echo '₱'. number_format($row['amount'],2);?></td>
-                                    <!-- status -->
                                     <td><?php echo ucwords($row['status']);?></td>
-                                    <!-- date and time -->
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
-                                    <!-- proof of payment -->
                                     <td>
                                         <a class="btn btn-light" style="border:1px solid #cccccc;" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i> View</a>
                                     </td>
@@ -161,7 +157,7 @@
         if(Query($query)){
             $query = "UPDATE WEBOMS_userInfo_tb SET balance = (balance + '$amount') where user_id = '$user_id' ";     
             if(Query($query)){
-                echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('success!');</SCRIPT>";
+                echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('Success!');</SCRIPT>";
             }
         }
 
@@ -170,7 +166,7 @@
     if(isset($_GET['disapprove'])){
         $query = "UPDATE WEBOMS_topUp_tb SET status='disapproved' WHERE id = '$_GET[disapprove]' ";     
         if(Query($query))
-            echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('success!');</SCRIPT>";
+            echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('Success!');</SCRIPT>";
     }
 ?>
 

@@ -54,23 +54,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-house-door"></i> Home</a>
+                        <a class="nav-link text-danger" href="#"><i class="bi bi-house-door"></i> HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="customerProfile"><i class="bi bi-person-circle"></i> Profile</a>
+                        <a class="nav-link text-dark" href="#home" id="customerProfile"><i class="bi bi-person-circle"></i> PROFILE</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="menu"><i class="bi bi-book"></i> Menu</a>
+                        <a class="nav-link text-dark" href="#home" id="menu"><i class="bi bi-book"></i> MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="topUp"><i class="bi bi-cash-stack"></i> Top-Up</a>
+                        <a class="nav-link text-dark" href="#home" id="topUp"><i class="bi bi-cash-stack"></i> TOP-UP</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="customerOrder_details"><i class="bi bi-list"></i> View Orders</a>
+                        <a class="nav-link text-dark" href="#home" id="customerOrder_details"><i class="bi bi-list"></i> VIEW ORDERS</a>
                     </li>
                 </ul>
                 <form method="post">
-                    <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power"></i> Logout</button>
+                    <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
                 </form>
             </div>
         </div>

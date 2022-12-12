@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Log in</title>
-    <!-- modal script  -->
+
     <link rel="stylesheet" type="text/css" href="css/bootstrap 5/bootstrap.min.css">
     <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>  
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -27,10 +27,10 @@
                 <div class="modal-content container">
                     <div class="modal-body">
                         <form method="post" class="form-group">
-                            <h3 class="fw-normal mt-4 mb-4 ms-1">PPLEASE ENTER YOUR OTP</h3>
+                            <h3 class="fw-normal mt-4 mb-4 ms-1">PLEASE ENTER YOUR OTP</h3>
                             <input type="text" class="form-control form-control-lg mb-4" placeholder="OTP" name="otp">
                             <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12 mb-2">
-                            <input type="submit" value="Resend" name="Resend" class="btn btn-warning btn-lg col-12 mb-2">
+                            <input type="submit" value="Resend" name="Resend" class="btn btn-primary btn-lg col-12 mb-2">
                             <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-4">
                         </form>
                     </div>
@@ -96,17 +96,17 @@
                       }
                       //if customer password is wrong
                       else{
-                        echo "<script>alert('INCORRECT USERNAME OR PASSWORD!');</script>";
+                        echo "<script>alert('Incorrect username or password!');</script>";
                       }
                     break;
                   }
                 }
                 else{
-                    echo "<script>alert('INCORRECT USERNAME OR PASSWORD!');</script>";
+                    echo "<script>alert('Incorrect username or password!');</script>";
                 }
             }
             else{
-                echo "<script>alert('INCORRECT USERNAME OR PASSWORD!');</script>";
+                echo "<script>alert('Incorrect username or password!');</script>";
             }
         }
         // verifiy otp
@@ -126,7 +126,7 @@
                 }
             }
             else
-              echo  '<script>alert("INCORRECT OTP!"); </script>';
+              echo  '<script>alert("Incorrect OTP!"); </script>';
         }
         // resent otp
         if(isset($_POST['Resend'])){
@@ -156,7 +156,7 @@
             $updateOtp = "update WEBOMS_userInfo_tb as a inner join WEBOMS_user_tb as b on a.user_id = b.user_id set otp = '$otp' where b.username = '$_SESSION[username]' ";
             if(Query($updateOtp)){
                 echo "<script>
-                alert('OTP Resend Successfull!');
+                alert('OTP sent to your Gmail!');
                 window.location.replace('Login.php');
                 </script>";  
             }
@@ -176,7 +176,7 @@
                         <div class="row g-0">
                             <!-- image -->
                             <div class="col-md-6 col-lg-5">
-                                <img src="https://thumbs.dreamstime.com/b/dark-plate-italian-spaghetti-dark-tasty-appetizing-classic-italian-spaghetti-pasta-tomato-sauce-cheese-parmesan-119870253.jpg" alt="login form" class="img-fluid" style="border-radius: 1rem;" />
+                                <img src="https://thumbs.dreamstime.com/b/dark-plate-italian-spaghetti-dark-tasty-appetizing-classic-italian-spaghetti-pasta-tomato-sauce-cheese-parmesan-119870253.jpg" alt="login form" class="img-fluid" style="border-radius: 1rem; width:auto; height:auto;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">

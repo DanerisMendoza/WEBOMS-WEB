@@ -44,7 +44,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-            <h3 class="mt-3"><a href="admin.php"><?php echo $_SESSION['accountType']; ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
@@ -92,8 +92,7 @@
 
             <!-- content here -->
             <h1 class="h1Admin text-white fw-normal">
-                <!-- Welcome <br> <?php echo ucwords($_SESSION['name']).'('.ucwords($_SESSION['accountType']).')!';?> -->
-                Welcome <br> <?php echo ucwords($_SESSION['name']).'!';?>
+                Welcome <br> <?php echo ucwords($_SESSION['name']).'('.ucwords($_SESSION['accountType']).')!';?>
             </h1>
         </div>
     </div>
