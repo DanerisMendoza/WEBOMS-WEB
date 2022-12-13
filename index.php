@@ -119,7 +119,7 @@
         <p class="fs-1 text-center">OUR MENU</p>
         <div class="row g-3">
             <?php 
-                $query = "select * from WEBOMS_menu_tb limit 4";
+                $query = "select * from WEBOMS_menu_tb limit 6";
                 $resultSet =  getQuery($query);
                 if($resultSet != null){
                     foreach($resultSet as $row){

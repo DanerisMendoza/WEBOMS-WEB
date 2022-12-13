@@ -161,7 +161,7 @@
                                         foreach($resultSet as $row){ ?>
                                 <?php array_push($_SESSION['resultSet'], $row)?>
                                 <tr>
-                                    <td><?php echo ucwords($row['name']); ?></td>
+                                    <td><?php echo ucwords($row['name'] == '' ? '<a class="text-danger">Deleted Account</a>': $row['name']); ?></td>
                                     <td><?php echo $row['order_id'];?></td>
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                     <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>
