@@ -1,7 +1,7 @@
 <?php     
   $page = 'notLogin';
-  include_once('connection.php');
   include('method/checkIfAccountLoggedIn.php'); 
+  include_once('connection.php');
 ?>
 
 <!DOCTYPE html>
