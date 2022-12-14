@@ -13,13 +13,13 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 	else{
 		//user
 		$queryCreateUser_tb = "create table if not exists WEBOMS_user_tb(id int PRIMARY KEY AUTO_INCREMENT,
-		user_id varchar(255),
+		user_id int,
 		username varchar(255),
 		password varchar(255),
 		accountType varchar(255))";
 
 		$queryCreateUserInfo_tb = "create table if not exists WEBOMS_userInfo_tb(id int PRIMARY KEY AUTO_INCREMENT,
-		user_id varchar(255),
+		user_id int,
 		name varchar(255),
 		picName varchar(255),
 		gender varchar(255),
@@ -41,9 +41,9 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		
 		//orders
 		$queryCreateOrder_tb = "create table if not exists WEBOMS_order_tb(ID int PRIMARY KEY AUTO_INCREMENT, 
-		user_id varchar(255), 
-		order_id varchar(255),
-		or_number varchar(255),
+		user_id int, 
+		order_id int,
+		or_number int,
 		status varchar(255),
 		date datetime not null,
 		totalOrder int,
@@ -51,19 +51,19 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		staffInCharge varchar(255))";
 
 		$queryCreateOrdersDetail_tb = "create table if not exists WEBOMS_ordersDetail_tb(id int PRIMARY KEY AUTO_INCREMENT, 
-		order_id varchar(255), 
+		order_id int(255), 
 		quantity int,
 		orderType int)";
 
 		//feedback
 		$queryCreateFeedback_tb = "create table if not exists WEBOMS_feedback_tb(id int PRIMARY KEY AUTO_INCREMENT, 
-		user_id varchar(255), 
-		order_id varchar(255), 
+		user_id int, 
+		order_id int, 
 		feedback varchar(255))";
 
 		//topup
 		$queryTopUp_tb = "create table if not exists WEBOMS_topUp_tb(id int PRIMARY KEY AUTO_INCREMENT,
-		user_id varchar(255),
+		user_id int,
 		amount int,
 		status varchar(255),
 		proofOfPayment varchar(255),
@@ -82,7 +82,6 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 				if($resultSet->num_rows <= 0){
 					$hash = password_hash('password', PASSWORD_DEFAULT);
 
-					//increment user id
 					$query = "select user_id from WEBOMS_user_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_user_tb)";
 					$lastUserId = null;
 					if($resultSet = $conn->query($query)){  
@@ -95,15 +94,8 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 					else{
 						die ($conn -> error);
 					}
-					
-					if($lastUserId == null){
-						$lastUserId = 1;
-					}
-					else{
-						$lastUserId = $lastUserId + 1;
-					}
-					$user_id = $lastUserId;
-					
+
+					$user_id = 1;
 					$queryInsertAdmin = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('admin','$hash','admin','$user_id')";
 					$queryInsertAdminInfo = "insert into WEBOMS_userInfo_tb(name, user_id) values('admin', '$user_id')";
 					$queryInsertCompanyInfo = "insert into WEBOMS_company_tb(name, address, tel, description) values('companyName', 'address', '0000', 'description')";

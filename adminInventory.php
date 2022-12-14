@@ -109,8 +109,8 @@
                                     <td><?php echo ucwords($row['lastModifiedBy']); ?></td>
                                     <!-- options -->
                                     <td>
-                                        <a class="btn btn-danger" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>"><i class="bi bi-trash3"></i> Delete</a>
                                         <a class="btn btn-warning" href="adminInventoryUpdate.php?idAndPicnameUpdate=<?php echo $row['orderType'].",".$row['dish'].",".$row['price'].",".$row['picName'].",".$row['stock']; ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
+                                        <a class="btn btn-danger" href="?idAndPicnameDelete=<?php echo $row['orderType']." ".$row['picName']; ?>"><i class="bi bi-trash3"></i> Delete</a>
                                     </td>
                                 </tr>
                                 <?php } 

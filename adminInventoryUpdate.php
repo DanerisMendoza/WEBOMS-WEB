@@ -109,8 +109,8 @@
                             <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter new price">
                             <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter new number of stock">
                             <input type="file" class="form-control form-control-lg mb-4" name="fileInput">
-                            <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel"><i class="bi bi-x-circle"></i> Cancel</button>
                             <button type="submit" class="btn btn-lg btn-warning col-12" name="update"><i class="bi bi-arrow-repeat"></i> Update</button>
+                            <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel"><i class="bi bi-x-circle"></i> Cancel</button>
                         </form>
                     </div>
                 </div>
