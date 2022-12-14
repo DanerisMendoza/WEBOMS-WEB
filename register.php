@@ -1,5 +1,6 @@
 <?php     
   $page = 'notLogin';
+  include_once('connection.php');
   include('method/checkIfAccountLoggedIn.php'); 
 ?>
 
@@ -154,7 +155,16 @@
         $mail->Body    = "Good Day, ".$name." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
         $mail->send();
 
-        $user_id = uniqid('',true);
+        //increment user id
+        $lastUserId = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
+        if($lastUserId == null){
+            $lastUserId = 2;
+        }
+        else{
+            $lastUserId = $lastUserId + 1;
+        }
+        $user_id = $lastUserId;
+
         $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
         $query2 = "insert into WEBOMS_userInfo_tb(name, gender, age, phoneNumber, address, email, otp, user_id, balance) values('$name','$gender','$age','$phone','$address','$email','$otp','$user_id',0)";
         if(!Query($query1))

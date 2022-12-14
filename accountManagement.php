@@ -261,7 +261,17 @@
         $password =  $_POST['password'];
         $accountType = $_POST['accountType'];
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $user_id = uniqid('',true);
+
+        //increment user id
+        $lastUserId = getQueryOneVal("select user_id from WEBOMS_user_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_user_tb)","user_id");
+        if($lastUserId == null){
+            $lastUserId = 1;
+        }
+        else{
+            $lastUserId = $lastUserId + 1;
+        }
+        $user_id = $lastUserId;
+     
 
         //validation
         $query = "select * from WEBOMS_user_tb where username = '$username'";

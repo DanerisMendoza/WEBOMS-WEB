@@ -1,5 +1,6 @@
 <?php 
     $page = 'notLogin';
+    include_once('connection.php');
     include('method/query.php');
     include('method/checkIfAccountLoggedIn.php');
     $query = "select * from WEBOMS_company_tb";

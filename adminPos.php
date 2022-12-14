@@ -363,6 +363,8 @@ $(document).ready(function() {
                 $str_length = 4;
             $temp = substr("0000{$or_last}", -$str_length);
             $or_number = $temp;
+
+            // init sessions
             $_SESSION['or_number'] = $or_number;
             $_SESSION['customerName'] = $customerName;
             $_SESSION['staffInCharge'] = 'POS';
@@ -373,9 +375,27 @@ $(document).ready(function() {
             $_SESSION['priceArr'] = $priceArr;
             $_SESSION['dishesQuantity'] = $dishesQuantity;
             $staff = $_SESSION['name'];
-            // $user_id = $_SESSION['user_id'];
-            $user_id = uniqid('',true);
-            $order_id = uniqid();
+
+            //increment user id 
+            $lastUserId = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
+            if($lastUserId == null){
+                $lastUserId = 2;
+            }
+            else{
+                $lastUserId = $lastUserId + 1;
+            }
+            $user_id = $lastUserId;
+
+            //increment order id
+            $lastOrderId = getQueryOneVal("select order_id from WEBOMS_order_tb WHERE order_id = (SELECT MAX(order_id) from WEBOMS_order_tb)","order_id");
+            if($lastOrderId == null){
+                $lastOrderId = rand(1111,9999);
+            }
+            else{
+                $lastOrderId = $lastOrderId + 1;
+            }
+            $order_id = $lastOrderId;
+
             $_SESSION['order_id'] = $order_id;
             $query1 = "insert into WEBOMS_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
@@ -383,7 +403,8 @@ $(document).ready(function() {
                 Query($query2);
             }
             $query3 = "insert into WEBOMS_userInfo_tb(name,user_id) values('$customerName','$user_id')";
-            Query($query3);
+            if($customerName != '')
+                Query($query3);
             Query($query1);
             $_SESSION["dishes"] = array();
             $_SESSION["price"] = array();

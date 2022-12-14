@@ -144,8 +144,15 @@
                                     <?php foreach($resultSet as $row){?>
                                     <tr>
                                         <td><?php echo $row['ID']; ?></td>
-                                        <!-- <td ><?php echo ucwords($row['name'] == '' ? '<a class="text-danger"><i><b>Deleted Account</b></i></a>': $row['name']); ?></td> -->
-                                        <td ><?php echo ucwords($row['name'] == '' ? '<a class="text-danger">Deleted Account</a>': $row['name']); ?></td>
+                                        <!--if account is deleted block-->
+                                        <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
+                                                <td><a class="text-danger">Deleted Account</a></td>
+                                        <?php }elseif($row['name'] != ''){ ?>
+                                            <td ><?php echo $row['name']; ?></td>
+                                        <?php }else{ ?> 
+                                            <td >No Name</td>
+                                        <?php }?>
+                                        <!-- order id -->
                                         <td><?php echo $row['order_id'];?></td>
                                         <!-- order status -->
                                         <?php 

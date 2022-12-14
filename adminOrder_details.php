@@ -4,9 +4,22 @@
   include('method/query.php');
   $arr = explode(',',$_GET['order_id']);
   $id = $arr[0];
-  $query = "select a.*, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
+  $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
   $resultSet = getQuery($query); 
-
+  if($resultSet != null){
+    foreach($resultSet as $row){ 
+        //init
+        $_SESSION['order_id'] = $row['order_id'];
+        $_SESSION['or_number'] = $row['or_number'];
+        $_SESSION['customerName'] = $row['name'];
+        $_SESSION['date'] = $row['date'];
+        $_SESSION['cash'] = $row['payment'];
+        $_SESSION['total'] = $row['totalOrder'];
+        $_SESSION['name'] = $row['staffInCharge'];
+        $_SESSION['staffInCharge'] = $row['staffInCharge'];
+        $customerName = $row['name'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -87,32 +100,16 @@
                     <div class="col-lg-12 cont2">
                         <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
                             <button class="btn btn-lg btn-dark col-6 mb-3" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
-                            <?php if($resultSet != null){?>
+                            <?php if(!($customerName == '' && $_SESSION['staffInCharge'] == 'online order')){?>
                                 <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
                             <?php } ?>
                         </div>
-
                         <!-- table -->
                         <div class="table-responsive col-lg-12">
                             <?php 
                                 $_SESSION['dishesArr'] = array();
                                 $_SESSION['priceArr'] = array();
                                 $_SESSION['dishesQuantity'] = array();
-
-                                if($resultSet != null){
-                                    foreach($resultSet as $row){ 
-                                        //init
-                                        $_SESSION['order_id'] = $row['order_id'];
-                                        $_SESSION['or_number'] = $row['or_number'];
-                                        $_SESSION['customerName'] = $row['name'];
-                                        $_SESSION['date'] = $row['date'];
-                                        $_SESSION['cash'] = $row['payment'];
-                                        $_SESSION['total'] = $row['totalOrder'];
-                                        $_SESSION['name'] = $row['staffInCharge'];
-                                        $_SESSION['staffInCharge'] = $row['staffInCharge'];
-
-                                    }
-                                }
 
                                  //company variables init
                                 $query = "select * from WEBOMS_company_tb";

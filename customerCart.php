@@ -227,7 +227,6 @@ document.getElementById("back").onclick = function() { window.location.replace('
             $user_id = $_SESSION['user_id'];
             $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
-            $order_id = uniqid();
             $name = $_SESSION['name'];
             //company variables init
             $query = "select * from WEBOMS_company_tb";
@@ -254,6 +253,16 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $str_length = 4;
             $temp = substr("0000{$or_last}", -$str_length);
             $or_number = $temp;
+
+            //increment order id
+            $lastOrderId = getQueryOneVal("select order_id from WEBOMS_order_tb WHERE order_id = (SELECT MAX(order_id) from WEBOMS_order_tb)","order_id");
+            if($lastOrderId == null){
+                $lastOrderId = rand(1111,9999);
+            }
+            else{
+                $lastOrderId = $lastOrderId + 1;
+            }
+            $order_id = $lastOrderId;
 
 
             $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
