@@ -218,7 +218,7 @@
                                             <?php } ?>
                                         <!-- void -->
                                         <?php if($row['status'] != 'void' && $_SESSION['accountType'] != 'cashier'){?>
-                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'].','.$row['user_id'] ?>"><i class="bi bi-dash-circle"></i> Void</a></td>
+                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'].','.$row['user_id'].','.$row['totalOrder'] ?>"><i class="bi bi-dash-circle"></i> Void</a></td>
                                         <?php }else{ ?>
                                             <td><a class="text-danger">None</a></td>
                                         <?php }?>
@@ -350,10 +350,13 @@ $(document).ready(function() {
         $arr = explode(',',$_GET['void']);
         $order_id = $arr[0];
         $user_id = $arr[1];
-        
+        $totalOrder = $arr[2];
         $query = "UPDATE WEBOMS_order_tb SET status='void' WHERE order_id='$order_id' ";     
+        $query2 = "UPDATE WEBOMS_userInfo_tb SET balance = (balance + '$totalOrder') WHERE user_id= '$user_id' ";    
         if(Query($query)){
-            echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
+            if(Query($query2)){
+                echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
+            }
         }
 
 
