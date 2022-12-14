@@ -376,15 +376,28 @@ $(document).ready(function() {
             $_SESSION['dishesQuantity'] = $dishesQuantity;
             $staff = $_SESSION['name'];
 
-            //increment user id 
-            $lastUserId = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
-            if($lastUserId == null){
-                $lastUserId = 2;
+            //increment user id from order tb
+            $lastUserIdOrder = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
+            if($lastUserIdOrder == null){
+                $lastUserIdOrder = 2;
             }
             else{
-                $lastUserId = $lastUserId + 1;
+                $lastUserIdOrder = $lastUserIdOrder + 1;
             }
-            $user_id = $lastUserId;
+            //increment user id from userInfo tb
+            $lastUserIdUserInfo = getQueryOneVal("select user_id from WEBOMS_userInfo_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_userInfo_tb)","user_id");
+            if($lastUserIdUserInfo == null){
+                $lastUserIdUserInfo = 2;
+            }
+            else{
+                $lastUserIdUserInfo = $lastUserIdUserInfo + 1;
+            }
+
+            if($lastUserIdOrder > $lastUserIdUserInfo)
+                $user_id = $lastUserIdOrder;
+            else
+                $user_id = $lastUserIdUserInfo;
+                
 
             //increment order id
             $lastOrderId = getQueryOneVal("select order_id from WEBOMS_order_tb WHERE order_id = (SELECT MAX(order_id) from WEBOMS_order_tb)","order_id");

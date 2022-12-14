@@ -262,16 +262,27 @@
         $accountType = $_POST['accountType'];
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        //increment user id
-        $lastUserId = getQueryOneVal("select user_id from WEBOMS_user_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_user_tb)","user_id");
-        if($lastUserId == null){
-            $lastUserId = 1;
+        //increment user id from order tb
+        $lastUserIdOrder = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
+        if($lastUserIdOrder == null){
+            $lastUserIdOrder = 2;
         }
         else{
-            $lastUserId = $lastUserId + 1;
+            $lastUserIdOrder = $lastUserIdOrder + 1;
         }
-        $user_id = $lastUserId;
-     
+        //increment user id from userInfo tb
+        $lastUserIdUserInfo = getQueryOneVal("select user_id from WEBOMS_userInfo_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_userInfo_tb)","user_id");
+        if($lastUserIdUserInfo == null){
+            $lastUserIdUserInfo = 2;
+        }
+        else{
+            $lastUserIdUserInfo = $lastUserIdUserInfo + 1;
+        }
+
+        if($lastUserIdOrder > $lastUserIdUserInfo)
+            $user_id = $lastUserIdOrder;
+        else
+            $user_id = $lastUserIdUserInfo;     
 
         //validation
         $query = "select * from WEBOMS_user_tb where username = '$username'";
