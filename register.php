@@ -155,27 +155,16 @@
         $mail->Body    = "Good Day, ".$name." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
         $mail->send();
 
-        //increment user id from order tb
-        $lastUserIdOrder = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
-        if($lastUserIdOrder == null){
-            $lastUserIdOrder = 2;
-        }
-        else{
-            $lastUserIdOrder = $lastUserIdOrder + 1;
-        }
-        //increment user id from userInfo tb
-        $lastUserIdUserInfo = getQueryOneVal("select user_id from WEBOMS_userInfo_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_userInfo_tb)","user_id");
-        if($lastUserIdUserInfo == null){
-            $lastUserIdUserInfo = 2;
-        }
-        else{
-            $lastUserIdUserInfo = $lastUserIdUserInfo + 1;
-        }
-
+        //get two user id from different table
+        $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_order_tb","MAX(user_id)");
+        $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_userInfo_tb","MAX(user_id)");
+        //compare which user id is higher 
         if($lastUserIdOrder > $lastUserIdUserInfo)
             $user_id = $lastUserIdOrder;
         else
             $user_id = $lastUserIdUserInfo;   
+        // increment user id
+        $user_id++;
 
         $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
         $query2 = "insert into WEBOMS_userInfo_tb(name, gender, age, phoneNumber, address, email, otp, user_id, balance) values('$name','$gender','$age','$phone','$address','$email','$otp','$user_id',0)";

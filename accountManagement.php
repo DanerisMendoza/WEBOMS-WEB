@@ -143,7 +143,7 @@
                                     <option value="manager">Manager</option>
                                     <option value="cashier">Cashier</option>
                                 </select>
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus-circle"></i> Insert</button>
+                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus-circle"></i> Save</button>
                             </form>
                         </div>
                     </div>
@@ -262,27 +262,16 @@
         $accountType = $_POST['accountType'];
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        //increment user id from order tb
-        $lastUserIdOrder = getQueryOneVal("select user_id from WEBOMS_order_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_order_tb)","user_id");
-        if($lastUserIdOrder == null){
-            $lastUserIdOrder = 2;
-        }
-        else{
-            $lastUserIdOrder = $lastUserIdOrder + 1;
-        }
-        //increment user id from userInfo tb
-        $lastUserIdUserInfo = getQueryOneVal("select user_id from WEBOMS_userInfo_tb WHERE user_id = (SELECT MAX(user_id) from WEBOMS_userInfo_tb)","user_id");
-        if($lastUserIdUserInfo == null){
-            $lastUserIdUserInfo = 2;
-        }
-        else{
-            $lastUserIdUserInfo = $lastUserIdUserInfo + 1;
-        }
-
+        //get two user id from different table
+        $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_order_tb","MAX(user_id)");
+        $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_userInfo_tb","MAX(user_id)");
+        //compare which user id is higher 
         if($lastUserIdOrder > $lastUserIdUserInfo)
             $user_id = $lastUserIdOrder;
         else
-            $user_id = $lastUserIdUserInfo;     
+            $user_id = $lastUserIdUserInfo;   
+        // increment user id
+        $user_id++;
 
         //validation
         $query = "select * from WEBOMS_user_tb where username = '$username'";

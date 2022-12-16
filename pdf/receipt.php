@@ -6,6 +6,8 @@
         $_SESSION['refreshCount'] += 1;
         die ("<script>window.location.replace('receipt.php');</script>");
     }
+
+    // init
     $date = date('m/d/Y h:i:s a ', strtotime($_SESSION['date']));
     $cash = $_SESSION['cash'];
     $total = $_SESSION['total'];
@@ -19,7 +21,7 @@
     $priceArr = $_SESSION['priceArr'];
     $dishesQuantity = $_SESSION['dishesQuantity'];
  
-
+    // pdf proccess
     $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Receipt");  
@@ -28,8 +30,11 @@
     $pdf->setPrintHeader(false);  
     $pdf->setPrintFooter(false);  
     $pdf->SetAutoPageBreak(TRUE, 10);  
-    $pdf->SetFont('dejavusans', '', 11);  
     $pdf->AddPage('P','a6');
+    $pdf->SetFont('dejavusans', '', 28);  
+    $pdf -> Cell(183,10,"Order#$_SESSION[order_id]",'B','0','C');
+    $pdf->SetFont('dejavusans', '', 11);  
+    $pdf -> ln(15);
     $pdf -> Cell(183,10,"$_SESSION[companyName]",'','0','C');
     $pdf -> ln(8);
     $pdf -> Cell(183,10,"$_SESSION[companyAddress]",'','0','C');
@@ -58,9 +63,6 @@
     $pdf -> ln(10);
     $pdf -> Cell(122,10,"Change",'B','0','L');
     $pdf -> Cell(61,10,"₱$change",'B','0','C');
-    $pdf -> ln(10);
-    $pdf->SetFont('dejavusans', '', 18);  
-    $pdf -> Cell(183,10,"Order#$_SESSION[order_id]",'','0','C');
     $pdf -> ln(20);
     $pdf->SetFont('dejavusans', '', 11);  
     $pdf -> Cell(122,10,"Customer: $_SESSION[customerName]" ,'','0','L');

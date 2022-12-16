@@ -14,7 +14,7 @@
     $pdf->SetFont('dejavusans', '', 11);  
     $pdf->AddPage('P','A4');
     $pdf -> Cell(60,10,"Sales Report",'0','C');
-    !isset($_SESSION['date1']) || $_SESSION['date1'] == '' ? $pdf -> Cell(60,10,"All Sold Item",'0','C') : $pdf -> Cell(60,10,"Date: $_SESSION[date1] - $_SESSION[date2]",'0','C');
+    !isset($_SESSION['date1']) || $_SESSION['date1'] == '' ? $pdf -> Cell(60,10,"All Sold Item",'0','C') : $pdf -> Cell(60,10,"Date(Month/Day/Year): $_SESSION[date1] - $_SESSION[date2]",'0','C');
     $pdf -> ln(10);
     $pdf -> Cell(60,10,"Name",'B,R,L,T','0','C');
     $pdf -> Cell(45,10,"Transaction No",'B,R,L,T','0','C');
@@ -33,6 +33,22 @@
     }
     $pdf -> Cell(165,10,"Total",'B,R,L,T','0','C');
     $pdf -> Cell(20,10,"₱$total",'B,R,L,T','0','C');
-    
+    $pdf -> ln(20);
+    $pdf -> Cell(46,10,"",'','0','C');
+    $pdf -> Cell(46,10,"",'','0','C');
+    $pdf -> Cell(43,10,"Approved By: ",'','0','C');
+    $pdf -> Cell(34,10,"______________________",'','0','C');
+    $pdf -> ln(5);
+    $pdf -> Cell(46,10,"",'','0','C');
+    $pdf -> Cell(46,10,"",'','0','C');
+    $pdf -> Cell(43,10,"",'','0','C');
+    $pdf -> Cell(34,10,"$_SESSION[name]",'','0','C');
+    $pdf -> ln(5);
+    $pdf -> Cell(46,10,"",'','0','C');
+    $pdf -> Cell(46,10,"",'','0','C');
+    $pdf -> Cell(43,10,"",'','0','C');
+    $pdf -> Cell(34,10,"$_SESSION[accountType]",'','0','C');
+    $pdf -> ln(5);
+    $pdf -> ln(5);
     $pdf->Output();
 ?>

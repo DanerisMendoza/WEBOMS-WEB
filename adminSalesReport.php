@@ -108,7 +108,6 @@
             <div class="container-fluid text-center">
                 <div class="row justify-content-center g-3">
                     <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                        <button class="btn btn-lg btn-dark" id="viewGraph"><i class="bi bi-pie-chart"></i> Graph</button>
                         <button class="btn btn-lg btn-danger" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
                     </div>
 
@@ -149,7 +148,7 @@
                                 <tr>
                                     <th scope="col">NAME</th>
                                     <th scope="col">TRANSACTION NO.</th>
-                                    <th scope="col">DATE & TIME</th>
+                                    <th scope="col">DATE(Month/Day/Year) & TIME</th>
                                     <th scope="col">TOTAL ORDER</th>
                                     <th scope="col">ORDER DETAILS</th>
                                 </tr>
@@ -189,12 +188,6 @@
 
 </html>
 
-<script>
-// view graph
-document.getElementById("viewGraph").onclick = function() {
-    window.location.replace('adminGraph.php');
-};
-</script>
 
 <script>
 //order button (js)

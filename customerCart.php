@@ -286,10 +286,13 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $pdf->setPrintHeader(false);  
                 $pdf->setPrintFooter(false);  
                 $pdf->SetAutoPageBreak(TRUE, 10);  
-                $pdf->SetFont('dejavusans', '', 11);  
                 $pdf->AddPage('P','A4');
                 date_default_timezone_set('Asia/Manila');
                 $date = date("j-m-Y  h:i:s A"); 
+                $pdf->SetFont('dejavusans', '', 28);  
+                $pdf -> Cell(183,10,"Order#$order_id",'B','0','C');
+                $pdf->SetFont('dejavusans', '', 11);  
+                $pdf -> ln(15);
                 $pdf -> Cell(183,10,"$companyName",'','0','C');
                 $pdf -> ln(8);
                 $pdf -> Cell(183,10,"$companyAddress",'','0','C');
@@ -315,10 +318,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $pdf -> ln(10);
                 $pdf -> Cell(122,10,"Total",'','0','L');
                 $pdf -> Cell(61,10,"₱$total",'','0','C');
-                $pdf -> ln(10);
-                $pdf->SetFont('dejavusans', '', 18);  
-                $pdf -> Cell(183,10,"Order#$order_id",'','0','C');
-                $pdf -> ln(20);
+                $pdf -> ln(15);
                 $pdf->SetFont('dejavusans', '', 11);  
                 $pdf -> Cell(122,10,"Customer: $name",'','0','L');
                 $pdf -> ln(10);
