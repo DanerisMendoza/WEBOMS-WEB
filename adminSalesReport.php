@@ -160,7 +160,14 @@
                                         foreach($resultSet as $row){ ?>
                                 <?php array_push($_SESSION['resultSet'], $row)?>
                                 <tr>
-                                    <td ><?php echo ucwords($row['staffInCharge'] == 'online order' && $row['name'] == '' ? '<a class="text-danger">Deleted Account</a>': $row['name']); ?></td>
+                                    <!--if account is deleted block-->
+                                    <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
+                                        <td><a class="text-danger">Deleted Account</a></td>
+                                    <?php }elseif($row['name'] != ''){ ?>
+                                        <td ><?php echo $row['name']; ?></td>
+                                    <?php }else{ ?> 
+                                        <td >(No Name)</td>
+                                    <?php }?>
                                     <td><?php echo $row['order_id'];?></td>
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                     <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>

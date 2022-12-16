@@ -150,7 +150,7 @@
                                         <?php }elseif($row['name'] != ''){ ?>
                                             <td ><?php echo $row['name']; ?></td>
                                         <?php }else{ ?> 
-                                            <td >No Name</td>
+                                            <td >(No Name)</td>
                                         <?php }?>
                                         <!-- order id -->
                                         <td><?php echo $row['order_id'];?></td>
