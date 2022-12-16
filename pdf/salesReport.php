@@ -14,11 +14,11 @@
     $pdf->SetFont('dejavusans', '', 11);  
     $pdf->AddPage('P','A4');
     $pdf -> Cell(60,10,"Sales Report",'0','C');
-    !isset($_SESSION['date1']) || $_SESSION['date1'] == '' ? $pdf -> Cell(60,10,"All Sold Item",'0','C') : $pdf -> Cell(60,10,"Date(Month/Day/Year): $_SESSION[date1] - $_SESSION[date2]",'0','C');
+    !isset($_SESSION['date1']) || $_SESSION['date1'] == '' ? $pdf -> Cell(60,10,"All Sold Item",'0','C') : $pdf -> Cell(60,10,"Date(MM/dd/yyyy): $_SESSION[date1] - $_SESSION[date2]",'0','C');
     $pdf -> ln(10);
     $pdf -> Cell(60,10,"Name",'B,R,L,T','0','C');
     $pdf -> Cell(45,10,"Transaction No",'B,R,L,T','0','C');
-    $pdf -> Cell(60,10,"Date & Time",'B,R,L,T','0','C');
+    $pdf -> Cell(60,10,"Date & Time(MM/dd/yyyy)",'B,R,L,T','0','C');
     $pdf -> Cell(20,10,"Total",'B,R,L,T','0','C');
     $pdf -> ln(10);
     $total = 0;

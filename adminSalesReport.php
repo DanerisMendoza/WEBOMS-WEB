@@ -148,7 +148,7 @@
                                 <tr>
                                     <th scope="col">NAME</th>
                                     <th scope="col">TRANSACTION NO.</th>
-                                    <th scope="col">DATE(Month/Day/Year) & TIME</th>
+                                    <th scope="col">DATE(MM/dd/yyyy) & TIME</th>
                                     <th scope="col">TOTAL ORDER</th>
                                     <th scope="col">ORDER DETAILS</th>
                                 </tr>

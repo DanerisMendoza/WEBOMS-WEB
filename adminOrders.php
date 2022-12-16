@@ -133,7 +133,7 @@
                                         <th scope="col">CUSTOMER NAME</th>
                                         <th scope="col">ORDERS ID</th>
                                         <th scope="col">ORDER STATUS</th>
-                                        <th scope="col">DATE & TIME</th>
+                                        <th scope="col">DATE(MM/dd/yyyy) & TIME</th>
                                         <th scope="col">STAFF (IN-CHARGE)</th>
                                         <th scope="col">ORDER DETAILS</th>
                                         <th scope="col">CUSTOMER INFO</th>
