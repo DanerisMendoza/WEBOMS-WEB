@@ -10,7 +10,8 @@
     //default value
     $query = "select a.name, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
     $resultSet =  getQuery($query); 
-  
+    $_SESSION['name'] = getQueryOneVal("select name from WEBOMS_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
+    
     //fetch by date
     if(isset($_POST['fetch'])){
         if($_POST['dateFetch1'] != '' && $_POST['dateFetch2'] != ''){
@@ -100,7 +101,7 @@
         <div id="content">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Dashboard</button>
+                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> TOGGLE</button>
                 </div>
             </nav>
 
@@ -160,7 +161,14 @@
                                         foreach($resultSet as $row){ ?>
                                 <?php array_push($_SESSION['resultSet'], $row)?>
                                 <tr>
-                                    <td ><?php echo ucwords($row['staffInCharge'] == 'online order' && $row['name'] == '' ? '<a class="text-danger">Deleted Account</a>': $row['name']); ?></td>
+                                    <!--if account is deleted block-->
+                                    <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
+                                        <td><a class="text-danger">Deleted Account</a></td>
+                                    <?php }elseif($row['name'] != ''){ ?>
+                                        <td ><?php echo $row['name']; ?></td>
+                                    <?php }else{ ?> 
+                                        <td >(No Name)</td>
+                                    <?php }?>
                                     <td><?php echo $row['order_id'];?></td>
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
                                     <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>
