@@ -11,7 +11,7 @@
     $qantityArr = array();
     $sold = 0;
     $countOfSold = 0;
-    $stockLeft = 0;
+    $stockLeft = $stockInCustomer = 0;
     $query = "select * from WEBOMS_menu_tb;";
     $resultSet = getQuery($query);
     // get stock left
@@ -20,6 +20,9 @@
             $stockLeft += $row['stock'];
         }
     }
+
+ 
+
     //getting most ordered food 
     $query = "select dish,quantity from WEBOMS_ordersDetail_tb a inner join WEBOMS_menu_tb b on a.orderType = b.orderType inner join WEBOMS_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
     $resultSet = getQuery($query);
@@ -54,6 +57,15 @@
                     $multiArr[$j] = $tempArr;
                 }
             }                
+        }
+    }
+
+    //getting stock in customer
+    $query = "select dish,quantity from WEBOMS_ordersDetail_tb a inner join WEBOMS_menu_tb b on a.orderType = b.orderType inner join WEBOMS_order_tb c on a.order_id = c.order_id";
+    $resultSet = getQuery($query);
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $stockInCustomer += $row['quantity'];
         }
     }
 ?>
@@ -155,15 +167,15 @@
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Total Amount of Stock:</b></td>
-                                <td><?php echo $countOfSold+$stockLeft?></td>
-                            </tr>
-                            <tr>
-                                <td><b>Total Count of Sold:</b></td>
-                                <td><?php echo $countOfSold?></td>
+                                <td><?php echo $allStock = $stockLeft+$stockInCustomer?></td>
                             </tr>
                             <tr>
                                 <td><b>Total Count of Stock Left:</b></td>
                                 <td><?php echo $stockLeft?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Total Count of Sold:</b></td>
+                                <td><?php echo $countOfSold?></td>
                             </tr>
                         </table>
                     </div>
