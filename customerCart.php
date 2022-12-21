@@ -10,7 +10,7 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
     $_SESSION['multiArr'] = array();
-    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+    $companyName = getQueryOneVal('select name from weboms_company_tb','name');
 ?>  
 
 <!DOCTYPE html>
@@ -124,7 +124,7 @@
                         <td><?php echo $arr['quantity'];?></td>
                         <td>
                             <!-- check stock -->
-                            <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
+                            <?php if(getQueryOneVal("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
                             <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                             <?php }else{ ?>
                             <a class="btn text-danger">OUT OF STOCK</a>
@@ -164,14 +164,14 @@ document.getElementById("back").onclick = function() { window.location.replace('
 </script>
 
 <?php
-    $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
+    $query = "SELECT balance FROM `weboms_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
     $balance = getQueryOneVal($query,'balance');
     $balance = $balance == null ? 0 : $balance;
 
     //clear button
     if(isset($_POST['clear'])){
         for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
             Query($updateQuery);    
         }
         $_SESSION["dishes"] = array();
@@ -191,7 +191,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
         array_push($_SESSION['price'], $price);
         array_push($_SESSION['orderType'], $orderType);
 
-        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
         if(Query($updateQuery))
           echo "<script>window.location.replace('customerCart.php');</script>";    
     }
@@ -214,7 +214,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
         $_SESSION['price'] = array_values($_SESSION['price']);
         $_SESSION['orderType'] = array_values($_SESSION['orderType']);
 
-        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
+        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
         if(Query($updateQuery))
             echo "<script>window.location.replace('customerCart.php');</script>";    
     }
@@ -225,11 +225,11 @@ document.getElementById("back").onclick = function() { window.location.replace('
         if($total != 0 && $balance >= $total){
         
             $user_id = $_SESSION['user_id'];
-            $query = "SELECT email FROM `WEBOMS_userInfo_tb` WHERE user_id = '$user_id' ";
+            $query = "SELECT email FROM `weboms_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal($query,'email');
             $name = $_SESSION['name'];
             //company variables init
-            $query = "select * from WEBOMS_company_tb";
+            $query = "select * from weboms_company_tb";
             $resultSet = getQuery($query);
             if($resultSet!=null)
                 foreach($resultSet as $row){
@@ -239,7 +239,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
             }
 
             //or number process
-            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $or_last = getQueryOneVal("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
             if($or_last == null){
                 $or_last = 1;
             }
@@ -255,7 +255,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
             $or_number = $temp;
 
             //increment order id
-            $lastOrderId = getQueryOneVal("select order_id from WEBOMS_order_tb WHERE order_id = (SELECT MAX(order_id) from WEBOMS_order_tb)","order_id");
+            $lastOrderId = getQueryOneVal("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
             if($lastOrderId == null){
                 $lastOrderId = rand(1111,9999);
             }
@@ -265,15 +265,15 @@ document.getElementById("back").onclick = function() { window.location.replace('
             $order_id = $lastOrderId;
 
 
-            $query1 = "insert into WEBOMS_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
+            $query1 = "insert into weboms_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
-                $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
+                $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
             }
 
             if(Query($query1)){
                 //minus order amount to balance
-                $query = "UPDATE WEBOMS_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
+                $query = "UPDATE weboms_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
                 Query($query);
                 //send receipt to email
                 $total = number_format($total,2);
@@ -398,7 +398,7 @@ document.getElementById("customerOrder_details").onclick = function() { window.l
           array_push($dishesQuantity,$count);
         }
         for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
           Query($updateQuery);    
         }
     }

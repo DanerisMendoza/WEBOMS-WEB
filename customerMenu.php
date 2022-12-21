@@ -9,7 +9,7 @@
         $_SESSION["orderType"] = array(); 
     }
     $_SESSION['multiArr'] = array();
-    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+    $companyName = getQueryOneVal('select name from weboms_company_tb','name');
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +86,7 @@
                                     </thead>
                                     <tbody>
                                         <?php 
-                                        $query = "select * from WEBOMS_menu_tb";
+                                        $query = "select * from weboms_menu_tb";
                                         $resultSet =  getQuery($query);
                                         if($resultSet != null)
                                             foreach($resultSet as $row){ ?>
@@ -156,7 +156,7 @@
       array_push($_SESSION['price'], $price);
       array_push($_SESSION['orderType'], $orderType);
     }
-    $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
+    $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
     if(Query($updateQuery))
       echo "<script>window.location.replace('customerMenu.php');</script>";    
   }	
@@ -197,7 +197,7 @@ document.getElementById("customerOrder_details").onclick = function() { window.l
           array_push($dishesQuantity,$count);
         }
         for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
           Query($updateQuery);    
         }
     }

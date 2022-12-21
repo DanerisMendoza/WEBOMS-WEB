@@ -82,7 +82,7 @@
                 <div class="row justify-content-center">
                     <?php
                         include_once('method/query.php');
-                        $selectAllUser = "select * from WEBOMS_user_tb inner join WEBOMS_userInfo_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id";
+                        $selectAllUser = "select * from weboms_user_tb inner join weboms_userInfo_tb on weboms_user_tb.user_id = weboms_userInfo_tb.user_id";
                         $resultSet =  getQuery($selectAllUser);
                     ?>
                     <div class="table-responsive col-lg-12">
@@ -176,7 +176,7 @@
                                 <table class="table table-bordered col-lg-12 text-start">
                                     <tbody>
                                         <?php
-                                        $query = "select a.*,b.* from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
+                                        $query = "select a.*,b.* from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
                                         $resultSet =  getQuery($query);
                                         if($resultSet!= null)
                                         foreach($resultSet as $row){ 
@@ -263,8 +263,8 @@
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         //get two user id from different table
-        $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_order_tb","MAX(user_id)");
-        $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_userInfo_tb","MAX(user_id)");
+        $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
+        $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
         //compare which user id is higher 
         if($lastUserIdOrder > $lastUserIdUserInfo)
             $user_id = $lastUserIdOrder;
@@ -274,19 +274,19 @@
         $user_id++;
 
         //validation
-        $query = "select * from WEBOMS_user_tb where username = '$username'";
+        $query = "select * from weboms_user_tb where username = '$username'";
         if(getQuery($query) != null)
             die ("<script>alert('NAME ALREADY EXIST!');</script>");
-        $query = "select * from WEBOMS_userInfo_tb where name = '$name'";
+        $query = "select * from weboms_userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
             die ("<script>alert('NAME ALREADY EXIST!');</script>");
-        $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
+        $query = "select * from weboms_userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
             die ("<script>alert('EMAIL ALREADY EXIST!');</script>");
 
         //insert
-        $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
-        $query2 = "insert into WEBOMS_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
+        $query1 = "insert into weboms_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
+        $query2 = "insert into weboms_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
         if(!Query($query1))
           echo "Failed to save to database!";
         elseif(!Query($query2))
@@ -317,11 +317,11 @@
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         //validation
-        $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
+        $query = "select * from weboms_userInfo_tb where email = '$email'";
         if(getQuery($query) != null && $email != $oldEmail)
             die ("<script>alert('Email Already Exist!');</script>");
 
-        $query = "update WEBOMS_user_tb as a inner join WEBOMS_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
+        $query = "update weboms_user_tb as a inner join weboms_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
         if(Query($query)){
             echo "<script>alert('Success!');</script>";
             echo "<script>history.replaceState({},'','accountManagement.php');</script>";
@@ -332,8 +332,8 @@
     //delete
     if(isset($_GET['delete'])){
         $user_id = $_GET['delete'];
-        $query = "DELETE FROM WEBOMS_user_tb WHERE user_id='$user_id' ";
-        $query2 = "DELETE FROM WEBOMS_userInfo_tb WHERE user_id='$user_id' ";
+        $query = "DELETE FROM weboms_user_tb WHERE user_id='$user_id' ";
+        $query2 = "DELETE FROM weboms_userInfo_tb WHERE user_id='$user_id' ";
         if(Query($query))
             if(Query($query2))
                 echo "<script>window.location.replace('accountManagement.php');</script>";
@@ -384,7 +384,7 @@ document.getElementById("settings").onclick = function() { window.location.repla
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

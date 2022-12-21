@@ -4,7 +4,7 @@
   include('method/query.php');
   $arr = explode(',',$_GET['order_id']);
   $id = $arr[0];
-  $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
+  $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
   $resultSet = getQuery($query); 
   if($resultSet != null){
     foreach($resultSet as $row){ 
@@ -112,7 +112,7 @@
                                 $_SESSION['dishesQuantity'] = array();
 
                                  //company variables init
-                                $query = "select * from WEBOMS_company_tb";
+                                $query = "select * from weboms_company_tb";
                                 $resultSet = getQuery($query);
                                 if($resultSet!=null){
                                     foreach($resultSet as $row){
@@ -122,7 +122,7 @@
                                     }
                                 }
 
-                                $query = "select a.*, b.* from WEBOMS_menu_tb a inner join WEBOMS_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$id' ";
+                                $query = "select a.*, b.* from weboms_menu_tb a inner join weboms_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$id' ";
                                 $resultSet = getQuery($query); 
                             ?>
                             <table class="table table-bordered table-hover col-lg-12">
@@ -156,7 +156,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2"><b>Payment:</b></td>
-                                        <?php $payment = getQueryOneVal("SELECT a.payment FROM WEBOMS_order_tb a where a.order_id = '$id' ",'payment');?>
+                                        <?php $payment = getQueryOneVal("SELECT a.payment FROM weboms_order_tb a where a.order_id = '$id' ",'payment');?>
                                         <td><b>₱<?php echo number_format($payment,2); ?></b></td>
                                     </tr>
                                     <tr>
@@ -232,7 +232,7 @@ $(document).ready(function() {
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

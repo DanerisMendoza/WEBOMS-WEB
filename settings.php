@@ -2,7 +2,7 @@
   $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
-  $query = "select * from WEBOMS_company_tb";
+  $query = "select * from weboms_company_tb";
   $resultSet = getQuery($query);
   if($resultSet!=null)
     foreach($resultSet as $row){
@@ -109,7 +109,7 @@
         $address = $_POST['address'];
         $tel = $_POST['tel'];
         $description = $_POST['description'];
-        $query = "update WEBOMS_company_tb SET name = '$name', address = '$address', tel = '$tel', description = '$description' ";
+        $query = "update weboms_company_tb SET name = '$name', address = '$address', tel = '$tel', description = '$description' ";
         if(Query($query)){
             echo "<script>alert('Success!'); window.location.replace('settings.php');</script>";
         }
@@ -136,7 +136,7 @@
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

@@ -49,7 +49,7 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
             //user block
-            $query = "select * from WEBOMS_user_tb where username = '$username'";
+            $query = "select * from weboms_user_tb where username = '$username'";
             $resultSet = getQuery($query);
             if(($resultSet && $resultSet->num_rows)  > 0){
                 foreach($resultSet as $row){
@@ -59,7 +59,7 @@
                 }
                 if($valid){
                   //setting credential if valid
-                  $query = "select * from WEBOMS_userInfo_tb where user_id = '$user_id'";
+                  $query = "select * from weboms_userInfo_tb where user_id = '$user_id'";
                   $resultSet = getQuery($query);
                   foreach($resultSet as $row){
                     $_SESSION['name'] = $row['name'];
@@ -114,10 +114,10 @@
             $username = $_SESSION["username"];
             $otp = $_POST['otp'];
             $user_id = $_SESSION['user_id'];
-            $query = "select * from WEBOMS_userInfo_tb where user_id = '$user_id' && otp = '$otp' ";
+            $query = "select * from weboms_userInfo_tb where user_id = '$user_id' && otp = '$otp' ";
             $resultSet = getQuery($query);
             if($resultSet != null){
-                $updateQuery = "UPDATE WEBOMS_userInfo_tb SET otp='' WHERE otp='$otp'";
+                $updateQuery = "UPDATE weboms_userInfo_tb SET otp='' WHERE otp='$otp'";
                 if(Query($updateQuery)){
                     echo "<SCRIPT> window.location.replace('customer.php'); </SCRIPT>";
                     $_SESSION['username'] = $username;
@@ -153,7 +153,7 @@
             $mail->Body    = "Good Day, ".$_SESSION['name']." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
             $mail->send();
             // query
-            $updateOtp = "update WEBOMS_userInfo_tb as a inner join WEBOMS_user_tb as b on a.user_id = b.user_id set otp = '$otp' where b.username = '$_SESSION[username]' ";
+            $updateOtp = "update weboms_userInfo_tb as a inner join weboms_user_tb as b on a.user_id = b.user_id set otp = '$otp' where b.username = '$_SESSION[username]' ";
             if(Query($updateOtp)){
                 echo "<script>
                 alert('OTP sent to your Gmail!');

@@ -3,15 +3,15 @@
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT a.*,b.name FROM `WEBOMS_topUp_tb` a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by a.id desc";
+    $query = "SELECT a.*,b.name FROM `weboms_topUp_tb` a inner join weboms_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by a.id desc";
     $resultSet =  getQuery($query);
     //getting balance amount
-    $query = "SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
+    $query = "SELECT balance FROM `weboms_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
     $balance = getQueryOneVal($query,'balance');
     $balance = $balance == null ? 0 : $balance;
     // company name
     $_SESSION['multiArr'] = array();
-    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+    $companyName = getQueryOneVal('select name from weboms_company_tb','name');
 ?>
 
 <!DOCTYPE html>
@@ -183,7 +183,7 @@
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'payment/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);  
-                    $query = "insert into WEBOMS_topUp_tb(user_id, amount,status, proofOfPayment, date) values('$user_id','$amount','pending','$fileNameNew','$todayWithTime')";
+                    $query = "insert into weboms_topUp_tb(user_id, amount,status, proofOfPayment, date) values('$user_id','$amount','pending','$fileNameNew','$todayWithTime')";
                     if(Query($query)){
                         echo "<script>alert('Success place top-up!'); window.location.replace('customerTopUp.php'); </script>";
                     }
@@ -204,7 +204,7 @@
         $arr = explode(',',$_GET['cancel']);
         $id = $arr[0];
         $pic = $arr[1];
-        $query = "DELETE FROM WEBOMS_topUp_tb WHERE id='$id' ";
+        $query = "DELETE FROM weboms_topUp_tb WHERE id='$id' ";
         if(Query($query)){
           unlink("payment/"."$pic");
           echo "<script> window.location.replace('customerTopUp.php');</script>";
@@ -236,7 +236,7 @@ document.getElementById("customerOrder_details").onclick = function() { window.l
           array_push($dishesQuantity,$count);
         }
         for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
           Query($updateQuery);    
         }
     }

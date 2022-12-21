@@ -8,9 +8,9 @@
     $_SESSION['date1'] =  $_SESSION['date2'] = '';
 
     //default value
-    $query = "select a.name, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
+    $query = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
     $resultSet =  getQuery($query); 
-    $_SESSION['name'] = getQueryOneVal("select name from WEBOMS_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
+    $_SESSION['name'] = getQueryOneVal("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
     
     //fetch by date
     if(isset($_POST['fetch'])){
@@ -20,7 +20,7 @@
 
             $_SESSION['date1'] = date('m/d/Y h:i a ', strtotime($date1));
             $_SESSION['date2'] = date('m/d/Y h:i a ', strtotime($date2));
-            $query = "select a.name, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id where b.status = 'complete' and b.date between '$date1' and '$date2' ORDER BY b.id asc; ";
+            $query = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = 'complete' and b.date between '$date1' and '$date2' ORDER BY b.id asc; ";
             $resultSet =  getQuery($query); 
             $_SESSION['resultSet'] = array();
         }
@@ -28,7 +28,7 @@
  
     //show all
     if(isset($_POST['showAll'])){
-        $query = "select a.name, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
+        $query = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
         $resultSet =  getQuery($query); 
         unset($_POST['dateFetch1']);
         unset($_POST['dateFetch2']);
@@ -247,7 +247,7 @@ document.getElementById("settings").onclick = function() { window.location.repla
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

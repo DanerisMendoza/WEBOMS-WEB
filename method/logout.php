@@ -18,7 +18,7 @@ foreach(array_count_values($_SESSION['dishes']) as $count){
 }
 
 for($i=0; $i<count($dishesArr); $i++){ 
-    $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+    $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
     Query($updateQuery);    
 }
 

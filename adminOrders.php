@@ -111,15 +111,15 @@
                             $_SESSION['query'] = $_GET['sort'];
                         }
                         if($_SESSION['query'] == 'all')
-                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
+                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
                         elseif($_SESSION['query'] == 'prepairing')
-                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'prepairing' order by b.id asc " ;
+                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'prepairing' order by b.id asc " ;
                         elseif($_SESSION['query'] == 'serving')
-                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
+                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
                         elseif($_SESSION['query'] == 'order complete')
-                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
+                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
                         elseif($_SESSION['query'] == 'void')
-                            $query = "select a.*, b.* from WEBOMS_userInfo_tb a right join WEBOMS_order_tb b on a.user_id = b.user_id  where b.status = 'void' order by b.id asc " ;
+                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'void' order by b.id asc " ;
 
                         $resultSet =  getQuery($query);
                         if($resultSet != null){ ?>
@@ -239,7 +239,7 @@
                                         <table class="table table-bordered table-hover col-lg-12 text-start">
                                             <tbody>
                                                 <?php
-                                                    $query = "select a.*,b.* from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
+                                                    $query = "select a.*,b.* from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
                                                     $resultSet =  getQuery($query);
                                                     if($resultSet!= null)
                                                     foreach($resultSet as $row){ 
@@ -331,7 +331,7 @@ $(document).ready(function() {
     //button to serve order
     if(isset($_GET['serve'])){
         $order_id = $_GET['serve'];
-        $query = "UPDATE WEBOMS_order_tb SET status='serving' WHERE order_id='$order_id' ";     
+        $query = "UPDATE weboms_order_tb SET status='serving' WHERE order_id='$order_id' ";     
         if(Query($query)){
             echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
         }
@@ -340,7 +340,7 @@ $(document).ready(function() {
     //button to make order complete
     if(isset($_GET['orderComplete'])){
         $order_id = $_GET['orderComplete'];
-        $query = "UPDATE WEBOMS_order_tb SET status='complete' WHERE order_id='$order_id' ";     
+        $query = "UPDATE weboms_order_tb SET status='complete' WHERE order_id='$order_id' ";     
         if(Query($query))
             echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
     }
@@ -351,8 +351,8 @@ $(document).ready(function() {
         $order_id = $arr[0];
         $user_id = $arr[1];
         $totalOrder = $arr[2];
-        $query = "UPDATE WEBOMS_order_tb SET status='void' WHERE order_id='$order_id' ";     
-        $query2 = "UPDATE WEBOMS_userInfo_tb SET balance = (balance + '$totalOrder') WHERE user_id= '$user_id' ";    
+        $query = "UPDATE weboms_order_tb SET status='void' WHERE order_id='$order_id' ";     
+        $query2 = "UPDATE weboms_userInfo_tb SET balance = (balance + '$totalOrder') WHERE user_id= '$user_id' ";    
         if(Query($query)){
             if(Query($query2)){
                 echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
@@ -363,7 +363,7 @@ $(document).ready(function() {
         $dishesArr = array();
         $dishesQuantity = array();
 
-        $query = "select a.*, b.* from WEBOMS_menu_tb a inner join WEBOMS_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$order_id' ";
+        $query = "select a.*, b.* from weboms_menu_tb a inner join weboms_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$order_id' ";
         $resultSet = getQuery($query); 
 
         foreach($resultSet as $row){
@@ -372,7 +372,7 @@ $(document).ready(function() {
         }
             
         for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
             Query($updateQuery);    
         }
     }
@@ -412,7 +412,7 @@ $(document).ready(function() {
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

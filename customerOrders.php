@@ -4,7 +4,7 @@
   include('method/query.php');
   // company name
   $_SESSION['multiArr'] = array();
-  $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+  $companyName = getQueryOneVal('select name from weboms_company_tb','name');
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +77,7 @@
             <tbody>
               <?php
                 $user_id = $_SESSION["user_id"];  
-                $getCustomerOrders = "select a.name, a.email, b.* from WEBOMS_userInfo_tb a inner join WEBOMS_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
+                $getCustomerOrders = "select a.name, a.email, b.* from weboms_userInfo_tb a inner join weboms_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
                 $resultSet = getQuery($getCustomerOrders);
                 if($resultSet != null)
                 foreach($resultSet as $row){ ?>
@@ -90,7 +90,7 @@
                   <?php 
                   $order_id = $row['order_id'];
                   $user_id = $row['user_id'];
-                  $checkIfAlreadyFeedback = "SELECT * FROM WEBOMS_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
+                  $checkIfAlreadyFeedback = "SELECT * FROM weboms_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
                   $resultSet = getQuery($checkIfAlreadyFeedback);
                   if($row['status'] == 'complete' && $resultSet == null){
                     ?>  <a class="btn btn-primary" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>"><i class="bi bi-chat-square-text"></i></a>  <?php
@@ -142,7 +142,7 @@ document.getElementById("customerProfile").onclick = function() { window.locatio
           array_push($dishesQuantity,$count);
         }
         for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
           Query($updateQuery);    
         }
     }

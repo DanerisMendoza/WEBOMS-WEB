@@ -12,7 +12,7 @@
     $_SESSION['multiArr'] = array();
     $_SESSION['fromReceipt'] = 'pos';
     //company variables init
-    $query = "select * from WEBOMS_company_tb";
+    $query = "select * from weboms_company_tb";
     $resultSet = getQuery($query);
     if($resultSet!=null)
         foreach($resultSet as $row){
@@ -21,7 +21,7 @@
           $_SESSION['companyTel'] = $row['tel'];
         }
     // redefining name
-    $_SESSION['name'] = getQueryOneVal("select name from WEBOMS_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
+    $_SESSION['name'] = getQueryOneVal("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 ?>
 
 <!DOCTYPE html>
@@ -116,7 +116,7 @@
                     <!-- table container -->
                     <div class="table-responsive col-lg-7">
                         <?php 
-                            $query = "select * from WEBOMS_menu_tb";
+                            $query = "select * from weboms_menu_tb";
                             $resultSet =  getQuery($query)
                         ?>
                         <table class="table table-hover table-bordered col-lg-12" id="tbl">
@@ -209,7 +209,7 @@
                                 <td><?php echo $arr['quantity'];?></td>
                                 <td>
                                     <!-- check stock -->
-                                    <?php if(getQueryOneVal("select stock from WEBOMS_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
+                                    <?php if(getQueryOneVal("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
                                     <!-- quantity plus -->
                                     <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                                     <?php }else{ ?>
@@ -257,7 +257,7 @@ $(document).ready(function() {
     //clear button
     if(isset($_POST['clear'])){
         for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+            $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
             Query($updateQuery);    
         }
         $_SESSION["dishes"] = array();
@@ -294,7 +294,7 @@ $(document).ready(function() {
         array_push($_SESSION['price'], $price);
         array_push($_SESSION['orderType'], $orderType);
       }
-      $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
+      $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
       if(Query($updateQuery))
         echo "<script>window.location.replace('adminPos.php');</script>";    
     }
@@ -309,7 +309,7 @@ $(document).ready(function() {
         array_push($_SESSION['price'], $price);
         array_push($_SESSION['orderType'], $orderType);
 
-        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
+        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
         if(Query($updateQuery))
           echo "<script>window.location.replace('adminPos.php');</script>";    
     }
@@ -332,7 +332,7 @@ $(document).ready(function() {
         $_SESSION['price'] = array_values($_SESSION['price']);
         $_SESSION['orderType'] = array_values($_SESSION['orderType']);
 
-        $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
+        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
         if(Query($updateQuery))
             echo "<script>window.location.replace('adminPos.php');</script>";    
     }
@@ -349,7 +349,7 @@ $(document).ready(function() {
             $todayWithTime =  $date->format('Y-m-d H:i:s'); 
 
             //or number process
-            $or_last = getQueryOneVal("select or_number from WEBOMS_order_tb WHERE id = (SELECT MAX(ID) from WEBOMS_order_tb)","or_number");
+            $or_last = getQueryOneVal("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
             if($or_last == null){
                 $or_last = 1;
             }
@@ -377,8 +377,8 @@ $(document).ready(function() {
             $staff = $_SESSION['name'];
 
             //get two user id from different table
-            $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_order_tb","MAX(user_id)");
-            $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_userInfo_tb","MAX(user_id)");
+            $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
+            $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
             //compare which user id is higher 
             if($lastUserIdOrder > $lastUserIdUserInfo)
                 $user_id = $lastUserIdOrder;
@@ -389,7 +389,7 @@ $(document).ready(function() {
                 
 
             //increment order id
-            $lastOrderId = getQueryOneVal("select order_id from WEBOMS_order_tb WHERE order_id = (SELECT MAX(order_id) from WEBOMS_order_tb)","order_id");
+            $lastOrderId = getQueryOneVal("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
             if($lastOrderId == null){
                 $lastOrderId = rand(1111,9999);
             }
@@ -399,12 +399,12 @@ $(document).ready(function() {
             $order_id = $lastOrderId;
 
             $_SESSION['order_id'] = $order_id;
-            $query1 = "insert into WEBOMS_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
+            $query1 = "insert into weboms_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
-                $query2 = "insert into WEBOMS_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
+                $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query($query2);
             }
-            $query3 = "insert into WEBOMS_userInfo_tb(name,user_id) values('$customerName','$user_id')";
+            $query3 = "insert into weboms_userInfo_tb(name,user_id) values('$customerName','$user_id')";
             if($customerName != '')
                 Query($query3);
             Query($query1);
@@ -468,7 +468,7 @@ $(document).ready(function() {
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

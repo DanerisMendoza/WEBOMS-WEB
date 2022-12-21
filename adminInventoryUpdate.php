@@ -130,7 +130,7 @@
         $stock = $_POST['stock'] == '' ? $stockOriginal : $_POST['stock'];
         //if image didn't change 
         if($_FILES['fileInput']['name'] == ''){
-            $updateQuery = "UPDATE WEBOMS_menu_tb SET dish='$dish', price='$price', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";   
+            $updateQuery = "UPDATE weboms_menu_tb SET dish='$dish', price='$price', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";   
             if(Query($updateQuery)){
                 die ("<script>alert('SUCCESS UPDATING THE DATABASE!'); window.location.replace('adminInventory.php');</script>");       
             }
@@ -149,7 +149,7 @@
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
                     $fileDestination = 'dishesPic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
-                    $updateQuery = "UPDATE WEBOMS_menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";        
+                    $updateQuery = "UPDATE weboms_menu_tb SET dish='$dish', price='$price', picName = '$fileNameNew', stock =  '$stock', lastModifiedBy = '$name' WHERE orderType=$id ";        
                     if(Query($updateQuery)){
                         echo '<script>alert("Success updating database!");</script>';       
                         unlink("dishespic/".$picName);                                        
@@ -211,7 +211,7 @@ document.getElementById("settings").onclick = function() { window.location.repla
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

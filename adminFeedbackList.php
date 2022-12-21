@@ -2,7 +2,7 @@
   $page = 'admin';
   include('method/checkIfAccountLoggedIn.php');
   include_once('method/query.php');
-  $query = "select a.name, b.feedback, b.id from  WEBOMS_userInfo_tb a inner join WEBOMS_feedback_tb b on a.user_id = b.user_id";
+  $query = "select a.name, b.feedback, b.id from  weboms_userInfo_tb a inner join weboms_feedback_tb b on a.user_id = b.user_id";
   $resultSet =  getQuery($query);
 ?>
 
@@ -138,7 +138,7 @@ $(document).ready(function() {
 // delete feedback
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $query = "update WEBOMS_feedback_tb set feedback = 'Deleted due to inappropriate comment' WHERE id = '$id'";
+    $query = "update weboms_feedback_tb set feedback = 'Deleted due to inappropriate comment' WHERE id = '$id'";
     if(Query($query)){
         echo "<script>alert('Success!'); window.location.replace('adminFeedbackList.php');</script>";
     }
@@ -161,7 +161,7 @@ if(isset($_GET['delete'])){
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

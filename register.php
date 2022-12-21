@@ -122,13 +122,13 @@
         }
 
 
-        $query = "select * from WEBOMS_user_tb where username = '$username'";
+        $query = "select * from weboms_user_tb where username = '$username'";
         if(getQuery($query) != null)
           die ("<script>alert('Name already exist!');</script>");
-        $query = "select * from WEBOMS_userInfo_tb where name = '$name'";
+        $query = "select * from weboms_userInfo_tb where name = '$name'";
         if(getQuery($query) != null)
           die ("<script>alert('Name already exist!');</script>");
-        $query = "select * from WEBOMS_userInfo_tb where email = '$email'";
+        $query = "select * from weboms_userInfo_tb where email = '$email'";
         if(getQuery($query) != null)
           die ("<script>alert('Email already exist!');</script>");
         
@@ -156,8 +156,8 @@
         $mail->send();
 
         //get two user id from different table
-        $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_order_tb","MAX(user_id)");
-        $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from WEBOMS_userInfo_tb","MAX(user_id)");
+        $lastUserIdOrder = getQueryOneVal("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
+        $lastUserIdUserInfo = getQueryOneVal("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
         //compare which user id is higher 
         if($lastUserIdOrder > $lastUserIdUserInfo)
             $user_id = $lastUserIdOrder;
@@ -166,8 +166,8 @@
         // increment user id
         $user_id++;
 
-        $query1 = "insert into WEBOMS_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
-        $query2 = "insert into WEBOMS_userInfo_tb(name, gender, age, phoneNumber, address, email, otp, user_id, balance) values('$name','$gender','$age','$phone','$address','$email','$otp','$user_id',0)";
+        $query1 = "insert into weboms_user_tb(username, password, accountType, user_id) values('$username','$hash','customer','$user_id')";
+        $query2 = "insert into weboms_userInfo_tb(name, gender, age, phoneNumber, address, email, otp, user_id, balance) values('$name','$gender','$age','$phone','$address','$email','$otp','$user_id',0)";
         if(!Query($query1))
           echo "Failed to save to database!";
         elseif(!Query($query2))

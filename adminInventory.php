@@ -97,7 +97,7 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                    $query = "select * from WEBOMS_menu_tb";
+                                    $query = "select * from weboms_menu_tb";
                                     $resultSet = getQuery($query);
                                     if($resultSet != null){
                                     foreach($resultSet as $row){?>
@@ -151,7 +151,7 @@
     $arr = explode(' ',$_GET['idAndPicnameDelete']);
     $id = $arr[0];
     $pic = $arr[1];
-    $query = "DELETE FROM WEBOMS_menu_tb WHERE orderType='$id' ";
+    $query = "DELETE FROM weboms_menu_tb WHERE orderType='$id' ";
     if(Query($query)){
       unlink("dishespic/"."$pic");
       echo "<script> window.location.replace('adminInventory.php');</script>";
@@ -180,7 +180,7 @@
               $fileNameNew = uniqid('',true).".".$fileActualExt;
               $fileDestination = 'dishesPic/'.$fileNameNew;
               move_uploaded_file($fileTmpName,$fileDestination);         
-              $query = "insert into WEBOMS_menu_tb(dish, price, picName, stock, lastModifiedBy) values('$dishes','$price','$fileNameNew','$stock','$name')";
+              $query = "insert into weboms_menu_tb(dish, price, picName, stock, lastModifiedBy) values('$dishes','$price','$fileNameNew','$stock','$name')";
               if(Query($query));
                 echo "<script>window.location.replace('adminInventory.php')</script>";                                
           }
@@ -240,7 +240,7 @@ document.getElementById("settings").onclick = function() { window.location.repla
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

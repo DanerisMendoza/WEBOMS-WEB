@@ -73,7 +73,7 @@
 <?php 
     if(isset($_POST['submit'])){
         $_SESSION['email'] = $email = $_POST['email'];
-        $name = getQueryOneVal("select b.name from WEBOMS_user_tb a inner join WEBOMS_userInfo_tb b on a.user_id = b.user_id where email = '$email';",'name');
+        $name = getQueryOneVal("select b.name from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where email = '$email';",'name');
         if($name == null){
             echo "<script>
             alert('EMAIL DO NOT EXIST!');
@@ -84,7 +84,7 @@
         //email exist
         else{
             $forgetPasswordOtp = uniqid();
-            $queryInsertForgetPasswordOtp = "UPDATE WEBOMS_userInfo_tb SET forgetPasswordOtp = '$forgetPasswordOtp' WHERE email='$email' ";   
+            $queryInsertForgetPasswordOtp = "UPDATE weboms_userInfo_tb SET forgetPasswordOtp = '$forgetPasswordOtp' WHERE email='$email' ";   
             if(Query($queryInsertForgetPasswordOtp)){
                 echo "<script>$('#forgetPassModal').modal('show');</script>";
                 //Load Composer's autoloader
@@ -113,7 +113,7 @@
     //submit forget pass otp
     if(isset($_POST['forgetPasswordOtpSubmit'])){
         $forgetPasswordOtp = $_POST['forgetPasswordOtp'];
-        $selectForgetPassOtp = "select forgetPasswordOtp from WEBOMS_user_tb inner join WEBOMS_userInfo_tb on WEBOMS_user_tb.user_id = WEBOMS_userInfo_tb.user_id where forgetPasswordOtp = '$forgetPasswordOtp' ";
+        $selectForgetPassOtp = "select forgetPasswordOtp from weboms_user_tb inner join weboms_userInfo_tb on weboms_user_tb.user_id = weboms_userInfo_tb.user_id where forgetPasswordOtp = '$forgetPasswordOtp' ";
         //check if otp match
         if(getQuery($selectForgetPassOtp) == null){
             echo "<script>
@@ -133,7 +133,7 @@
         $email = $_SESSION['email'];
         $password = $_POST['newPass'];
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $queryNewPass = "update WEBOMS_user_tb as a inner join WEBOMS_userInfo_tb as b on a.user_id = b.user_id set password = '$hash' where email = '$email' ";
+        $queryNewPass = "update weboms_user_tb as a inner join weboms_userInfo_tb as b on a.user_id = b.user_id set password = '$hash' where email = '$email' ";
         if(Query($queryNewPass)){
             echo "<script>
             alert('Update Pass Sucess!');

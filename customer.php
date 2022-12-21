@@ -7,8 +7,8 @@
     $_SESSION["price"] = array(); 
     $_SESSION["orderType"] = array(); 
     }
-    $balance = getQueryOneVal("SELECT balance FROM `WEBOMS_userInfo_tb` where user_id = '$_SESSION[user_id]' ",'balance');
-    $companyName = getQueryOneVal('select name from WEBOMS_company_tb','name');
+    $balance = getQueryOneVal("SELECT balance FROM `weboms_userInfo_tb` where user_id = '$_SESSION[user_id]' ",'balance');
+    $companyName = getQueryOneVal('select name from weboms_company_tb','name');
     $balance = $balance == null ? 0 : $balance;
 ?>
 
@@ -111,7 +111,7 @@ document.getElementById("customerProfile").onclick = function() { window.locatio
           array_push($dishesQuantity,$count);
         }
         for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
           Query($updateQuery);    
         }
     }

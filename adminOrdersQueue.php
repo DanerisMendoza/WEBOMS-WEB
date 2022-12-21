@@ -83,7 +83,7 @@
 
                     <!-- serving table -->
                     <?php   
-                        $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb right join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  where status = 'serving' ORDER BY WEBOMS_order_tb.id asc; ";
+                        $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
                         $resultSet = getQuery($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12">
@@ -108,7 +108,7 @@
 
                     <!-- prepairing table -->
                     <?php   
-                        $getPrepairingOrder = "select WEBOMS_userInfo_tb.name, WEBOMS_order_tb.* from WEBOMS_userInfo_tb right join WEBOMS_order_tb on WEBOMS_userInfo_tb.user_id = WEBOMS_order_tb.user_id  where status = 'prepairing' ORDER BY WEBOMS_order_tb.id asc; ";
+                        $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
                         $resultSet = getQuery($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12">
@@ -177,7 +177,7 @@ document.getElementById("settings").onclick = function() { window.location.repla
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

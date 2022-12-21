@@ -4,7 +4,7 @@
     include('method/query.php');
     $_SESSION['query'] = 'all';
     // redefining name
-    $_SESSION['name'] = getQueryOneVal("select name from WEBOMS_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
+    $_SESSION['name'] = getQueryOneVal("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 
     // graph init
     $dishesArr = array();
@@ -12,7 +12,7 @@
     $sold = 0;
     $countOfSold = 0;
     $stockLeft = $stockInCustomer = 0;
-    $query = "select * from WEBOMS_menu_tb;";
+    $query = "select * from weboms_menu_tb;";
     $resultSet = getQuery($query);
     // get stock left
     if($resultSet!=null){
@@ -24,7 +24,7 @@
  
 
     //getting most ordered food 
-    $query = "select dish,quantity from WEBOMS_ordersDetail_tb a inner join WEBOMS_menu_tb b on a.orderType = b.orderType inner join WEBOMS_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
+    $query = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
     $resultSet = getQuery($query);
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -61,7 +61,7 @@
     }
 
     //getting stock in customer
-    $query = "select dish,quantity from WEBOMS_ordersDetail_tb a inner join WEBOMS_menu_tb b on a.orderType = b.orderType inner join WEBOMS_order_tb c on a.order_id = c.order_id";
+    $query = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id";
     $resultSet = getQuery($query);
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -298,7 +298,7 @@
                 array_push($dishesQuantity,$count);
             }
             for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE WEBOMS_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
+                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
                 Query($updateQuery);    
             }
         }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2022 at 01:39 AM
+-- Generation Time: Dec 21, 2022 at 11:15 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -50,8 +50,8 @@ INSERT INTO `weboms_company_tb` (`id`, `name`, `address`, `tel`, `description`) 
 
 CREATE TABLE `weboms_feedback_tb` (
   `id` int(11) NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  `order_id` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
   `feedback` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -78,7 +78,7 @@ CREATE TABLE `weboms_menu_tb` (
 
 CREATE TABLE `weboms_ordersdetail_tb` (
   `id` int(11) NOT NULL,
-  `order_id` varchar(255) DEFAULT NULL,
+  `order_id` int(255) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `orderType` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -91,9 +91,9 @@ CREATE TABLE `weboms_ordersdetail_tb` (
 
 CREATE TABLE `weboms_order_tb` (
   `ID` int(11) NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  `order_id` varchar(255) DEFAULT NULL,
-  `or_number` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `or_number` int(11) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `date` datetime NOT NULL,
   `totalOrder` int(11) DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `weboms_order_tb` (
 
 CREATE TABLE `weboms_topup_tb` (
   `id` int(11) NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `proofOfPayment` varchar(255) DEFAULT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE `weboms_topup_tb` (
 
 CREATE TABLE `weboms_userinfo_tb` (
   `id` int(11) NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `picName` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE `weboms_userinfo_tb` (
 --
 
 INSERT INTO `weboms_userinfo_tb` (`id`, `user_id`, `name`, `picName`, `gender`, `age`, `phoneNumber`, `address`, `email`, `otp`, `forgetPasswordOtp`, `balance`) VALUES
-(1, '6396765d1a9dc1.67512344', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 1, 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -152,18 +152,18 @@ INSERT INTO `weboms_userinfo_tb` (`id`, `user_id`, `name`, `picName`, `gender`, 
 
 CREATE TABLE `weboms_user_tb` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `accountType` varchar(255) DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL
+  `accountType` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `weboms_user_tb`
 --
 
-INSERT INTO `weboms_user_tb` (`id`, `username`, `password`, `accountType`, `user_id`) VALUES
-(1, 'admin', '$2y$10$gSskvsg2EKl8lW1kTeIm2uEeIP0MHNLKHW9iaEbdx6i8y2r3PPnRC', 'admin', '6396765d1a9dc1.67512344');
+INSERT INTO `weboms_user_tb` (`id`, `user_id`, `username`, `password`, `accountType`) VALUES
+(1, 1, 'admin', '$2y$10$jB/TAUwZ6kpI0FPZgukzA.gNKVxwf5WhbRlHs3X5AVzX.Gx/XWqi6', 'admin');
 
 --
 -- Indexes for dumped tables
