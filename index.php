@@ -2,7 +2,7 @@
     $page = 'notLogin';
     include('method/checkIfAccountLoggedIn.php');
     include('method/query.php');
-    include_once('connection.php');
+    include_once('general/connection.php');
     $query = "select * from weboms_company_tb";
     $resultSet = getQuery($query);
     if($resultSet!=null){
@@ -50,7 +50,7 @@
                         <a class="nav-link" href="#about"><i class="bi bi-info-circle"></i> ABOUT</a>
                     </li>
                 </ul>
-                <a class="btn btn-outline-light" type="button" href="Login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
+                <a class="btn btn-outline-light" type="button" href="general/login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
             </div>
         </div>
     </nav>

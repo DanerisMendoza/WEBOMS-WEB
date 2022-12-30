@@ -3,7 +3,8 @@ then import ordering_db.sql
 
 or 
 
-just login then type:
+create database name: ytoovumw_bscs3a 
+then just login type:
 username: "admin"
 password: "password"
 

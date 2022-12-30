@@ -1,5 +1,5 @@
 <?php 
-include('method/query.php');
+include('../method/query.php');
 session_start();
 $dishesArr = array();
 $dishesQuantity = array();
