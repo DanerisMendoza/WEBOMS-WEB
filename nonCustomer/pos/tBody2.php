@@ -1,6 +1,5 @@
 <?php 
-    session_start();
-    include('../../method/query.php');
+
     $dishesArr = array();
     $priceArr = array();
     $dishesQuantity = array();
@@ -36,26 +35,26 @@
         $total += $priceArr[$i];
     }
 
-    //create a table using the multi dimensional array
+    //populate table using the multi dimensional array
     foreach($_SESSION['multiArr'] as $arr){ ?>
-<tr>
-    <td><?php echo ucwords($arr['dish']);?></td>
-    <td><?php echo $arr['quantity'];?></td>
-    <td>
-        <!-- check stock -->
-        <?php if(getQueryOneVal3("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-        <!-- quantity plus -->
-        <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
-        <?php }else{ ?>
-        <a class="text-danger me-2">Out of Stock</a>
-        <?php } ?>
-        <!-- quantity minus -->
-        <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
-    </td>
-    <td><?php echo '₱'.number_format($arr['price'],2);?></td>
-</tr>
-<?php }?>
-<tr>
-    <td colspan="3"><b>Total Amount:</b></td>
-    <td><b>₱<?php echo number_format($total,2); ?></b></td>
-</tr>
+    <tr>
+        <td><?php echo ucwords($arr['dish']);?></td>
+        <td><?php echo $arr['quantity'];?></td>
+        <td>
+            <!-- check stock -->
+            <?php if(getQueryOneVal3("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
+            <!-- quantity plus -->
+            <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
+            <?php }else{ ?>
+            <a class="text-danger me-2">Out of Stock</a>
+            <?php } ?>
+            <!-- quantity minus -->
+            <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
+        </td>
+        <td><?php echo '₱'.number_format($arr['price'],2);?></td>
+    </tr>
+        <?php }?>
+    <tr>
+        <td colspan="3"><b>Total Amount:</b></td>
+        <td><b>₱<?php echo number_format($total,2); ?></b></td>
+    </tr>

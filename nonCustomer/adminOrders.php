@@ -31,37 +31,37 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+                <h3 class="mt-3"><a href="../admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="pos/adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
+                    <a href="../pos/adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2 active">
-                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
+                    <a href="../adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="ordersQueue/adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                    <a href="../ordersQueue/adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
                 <li class="mb-2">
-                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
+                    <a href="../adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
+                    <a href="../adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
+                    <a href="../accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
+                    <a href="../adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-2">
-                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
+                    <a href="../adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li class="mb-1">
-                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
+                    <a href="../settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
             <?php } ?>
                 <li>
@@ -138,8 +138,8 @@
                                         <th scope="col" colspan="2">OPTIONS</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php foreach($resultSet as $row){?>
+                                <tbody id="table1">
+                                <?php foreach($resultSet as $row){?>
                                     <tr>
                                         <td><?php echo $row['ID']; ?></td>
                                         <!--if account is deleted block-->
@@ -322,10 +322,16 @@ $(document).ready(function() {
         $('#sidebar').toggleClass('active');
     });
 });
+// auto refresh 
+function autoRefresh_Tables() {
+    $("#tb1").load("adminOrders.php #tb1", function() {
+        setTimeout(autoRefresh_Tables, 2000);
+    });
+}
+autoRefresh_Tables();
 </script>
 
 <?php 
-
     //button to serve order
     if(isset($_GET['serve'])){
         $order_id = $_GET['serve'];

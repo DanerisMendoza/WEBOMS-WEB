@@ -50,7 +50,7 @@
        <!-- Sidebar  -->
        <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+                <h3 class="mt-3"><a href="../admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2 active">
@@ -60,7 +60,7 @@
                     <a href="../adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href=""><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                    <a href="../ordersQueue/adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
@@ -113,10 +113,6 @@
 
                     <!-- table container -->
                     <div class="table-responsive col-lg-7">
-                        <?php 
-                            $query = "select * from weboms_menu_tb";
-                            $resultSet =  getQuery3($query)
-                        ?>
                         <table class="table table-hover table-bordered col-lg-12" id="tbl">
                             <thead class="table-dark">
                                 <tr>
@@ -126,30 +122,33 @@
                                     <th scope="col">ADD TO CART</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php 
-                                    if($resultSet != null)
-                                        foreach($resultSet as $row){ ?>
-                                <tr>
-                                    <td><?= ucwords($row['dish']);?></td>
-                                    <td><?php echo "₱".number_format($row['price'],2); ?></td>
-                                    <td><?php echo $row['stock']; ?></td>
-                                    <!-- add to cart -->
-                                    <td>
-                                        <!-- out of stock -->
-                                        <?php if($row['stock'] <= 0){ ?>
-                                            <a class="text-danger">Out of Stock</a>
-                                            <!-- not out of stock -->
-                                            <?php } else{ ?>
-                                                <form method="post">
-                                                    <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
-                                                    <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
-                                                    <button type="submit" name="addToCartSubmit" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
-                                                </form>
-                                        <?php } ?>
-                                    </td>
-                                </tr>
-                                <?php } ?>
+                            <tbody id="tBody1">
+                            <?php 
+                                $query = "select * from weboms_menu_tb";
+                                $resultSet =  getQuery3($query);
+                                if($resultSet != null)
+                                    foreach($resultSet as $row){ ?>
+                            <tr>
+                                <td><?= ucwords($row['dish']);?></td>
+                                <td><?php echo "₱".number_format($row['price'],2); ?></td>
+                                <td><?php echo $row['stock']; ?></td>
+                                <!-- add to cart -->
+                                <td>
+                                    <!-- out of stock -->
+                                    <?php if($row['stock'] <= 0){ ?>
+                                        <a class="text-danger">Out of Stock</a>
+                                        <!-- not out of stock -->
+                                        <?php } else{ ?>
+                                            <form method="post">
+                                                <input type="hidden" name="
+                                                " value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
+                                                <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
+                                                <button type="submit" name="addToCartSubmit" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
+                                            </form>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -164,12 +163,13 @@
                                     <th scope="col">PRICE</th>
                                 </tr>
                             </thead>
+                            <tbody id="tBody2">
                             <?php 
                                 $dishesArr = array();
                                 $priceArr = array();
                                 $dishesQuantity = array();
                                 $orderType = array();
-                
+
                                 //merge repeating order into 1 
                                 for($i=0; $i<count($_SESSION['dishes']); $i++){
                                     if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
@@ -187,7 +187,7 @@
                                 foreach(array_count_values($_SESSION['dishes']) as $count){
                                     array_push($dishesQuantity,$count);
                                 }
-                                
+
                                 //merge 3 array into 1 multi dimensional
                                 for($i=0; $i<count($dishesArr); $i++){ 
                                     $arr = array('dish'=> $dishesArr[$i], 'price' => $priceArr[$i], 'quantity' => $dishesQuantity[$i], 'orderType' => $orderType[$i]);
@@ -200,34 +200,35 @@
                                     $total += $priceArr[$i];
                                 }
 
-                                //create a table using the multi dimensional array
+                                //populate table using the multi dimensional array
                                 foreach($_SESSION['multiArr'] as $arr){ ?>
-                            <tr>
-                                <td><?php echo ucwords($arr['dish']);?></td>
-                                <td><?php echo $arr['quantity'];?></td>
-                                <td>
-                                    <!-- check stock -->
-                                    <?php if(getQueryOneVal3("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                                    <!-- quantity plus -->
-                                    <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
-                                    <?php }else{ ?>
-                                    <a class="text-danger me-2">Out of Stock</a>
-                                    <?php } ?>
-                                    <!-- quantity minus -->
-                                    <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
-                                </td>
-                                <td><?php echo '₱'.number_format($arr['price'],2);?></td>
-                            </tr>
-                            <?php }?>
-                            <tr>
-                                <td colspan="3"><b>Total Amount:</b></td>
-                                <td><b>₱<?php echo number_format($total,2); ?></b></td>
-                            </tr>
+                                <tr>
+                                    <td><?php echo ucwords($arr['dish']);?></td>
+                                    <td><?php echo $arr['quantity'];?></td>
+                                    <td>
+                                        <!-- check stock -->
+                                        <?php if(getQueryOneVal3("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
+                                        <!-- quantity plus -->
+                                        <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
+                                        <?php }else{ ?>
+                                        <a class="text-danger me-2">Out of Stock</a>
+                                        <?php } ?>
+                                        <!-- quantity minus -->
+                                        <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
+                                    </td>
+                                    <td><?php echo '₱'.number_format($arr['price'],2);?></td>
+                                </tr>
+                                    <?php }?>
+                                <tr>
+                                    <td colspan="3"><b>Total Amount:</b></td>
+                                    <td><b>₱<?php echo number_format($total,2); ?></b></td>
+                                </tr>
+                            </tbody>
                         </table>
                         <form method="post">
                             <input name="customerName" placeholder="Customer Name (Optional)" type="text" class="form-control form-control-lg mb-3">
                             <input id="cashNum" name="cash" min="<?php echo $total;?>" step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
-                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
+                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="orderBtn">Place Order</button>
                         </form>
                         <form method="post">
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
@@ -241,14 +242,40 @@
 </body>
 
 </html>
-
 <script>
-// sidebar(js)
-$(document).ready(function() {
-    $('#sidebarCollapse').on('click', function() {
-        $('#sidebar').toggleClass('active');
+    // sidebar(js)
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+        });
     });
-});
+
+    //order button (js)
+    var orderBtn = document.getElementById("orderBtn");
+    orderBtn.addEventListener("click", () => {
+        var num = document.getElementById("cashNum").value;
+        if (<?php echo $total == 0 ? 'true':'false';?>) {
+            alert('Please place your order!');
+            return;
+        }
+        if (num >= <?php echo $total;?>) {
+            alert("Success placing order!");
+            window.open("../../pdf/receipt.php");
+        }
+    });
+
+    // data table
+    $(document).ready(function() {
+        $('#tbl').DataTable();
+    });
+
+    function reloadTables() {
+        // pending to refresh table without refresh
+        // $("#tBody1").load("tBody1.php", function() {});
+        // $("#tBody2").load("tBody2.php", function() {});
+        // $("#tBody1").load(location.href+ " #tBody1");
+    }
+    // reloadTables();  
 </script>
 
 <?php 
@@ -273,7 +300,7 @@ $(document).ready(function() {
       $orderType = $order[2];
       $stock = $order[3];
       $qty = $_POST['qty'];
-      //validation
+    //   validation
       if($qty <= 0 && !str_contains($qty, '.')){
         die ("<script>
         alert('Quantity invalid');
@@ -293,8 +320,10 @@ $(document).ready(function() {
         array_push($_SESSION['orderType'], $orderType);
       }
       $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
-      if(Query3($updateQuery))
+      if(Query3($updateQuery)){
         echo "<script>window.location.replace('adminPos.php');</script>";    
+        // echo "<script>reloadTables();</script>";    
+      }
     }
 
     // add quantity
@@ -336,7 +365,7 @@ $(document).ready(function() {
     }
 
     //order button (php)
-    if(isset($_POST['order'])){
+    if(isset($_POST['orderBtn'])){
         $cash = $_POST['cash'];
         $customerName = $_POST['customerName'];
         if($cash >= $total && $total != 0){
@@ -411,31 +440,8 @@ $(document).ready(function() {
             echo "<script>window.location.replace('adminPos.php');</script>";
         }   
     }
-?>
 
-<script>
-//order button (js)
-var orderBtn = document.getElementById("orderBtn");
-orderBtn.addEventListener("click", () => {
-    var num = document.getElementById("cashNum").value;
-    if (<?php echo $total == 0 ? 'true':'false';?>) {
-        alert('Please place your order!');
-        return;
-    }
-    if (num >= <?php echo $total;?>) {
-        alert("Success placing order!");
-        window.open("../pdf/receipt.php");
-    }
-});
-// data table
-$(document).ready(function() {
-    $('#tbl').DataTable();
-});
-</script>
-
-
-
-<?php 
+    // logout button
     if(isset($_POST['logout'])){
         $dishesArr = array();
         $dishesQuantity = array();
