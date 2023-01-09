@@ -140,8 +140,7 @@
                                         <!-- not out of stock -->
                                         <?php } else{ ?>
                                             <form method="post">
-                                                <input type="hidden" name="
-                                                " value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
+                                                <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
                                                 <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
                                                 <button type="submit" name="addToCartSubmit" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
                                             </form>

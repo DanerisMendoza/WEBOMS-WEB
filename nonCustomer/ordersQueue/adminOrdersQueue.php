@@ -89,13 +89,26 @@
                         $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
                         $resultSet = getQuery3($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered table-hover col-lg-12">
+                        <table class="table table-bordered table-hover col-lg-12" id="tableServing">
                             <thead class="bg-success text-white">
                                 <tr>
                                     <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
                                 </tr>
                             </thead>
-                            <tbody id="tableServing"></tbody>
+                            <tbody>
+                                <!-- serving table -->
+                                    <?php   
+                                        $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
+                                        $resultSet = getQuery3($getPrepairingOrder);
+                                        if($resultSet != null)
+                                            foreach($resultSet as $row){ 
+                                    ?>
+                                                <tr>
+                                                    <!-- orders id -->
+                                                    <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
+                                                </tr>
+                                    <?php } ?>
+                            </tbody>
                         </table>
                     </div>
 
@@ -104,13 +117,25 @@
                         $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
                         $resultSet = getQuery3($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered table-hover col-lg-12">
+                        <table class="table table-bordered table-hover col-lg-12" id="prepairingTable">
                             <thead class="bg-danger text-white">
                                 <tr>
                                     <th scope="col"><h2><i class="bi bi-clock"></i> PREPARING</h2></th>
                                 </tr>
                             </thead>
-                            <tbody id="prepairingTable"></tbody>
+                            <tbody>
+                                <?php   
+                                    $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
+                                    $resultSet = getQuery3($getPrepairingOrder);
+                                    if($resultSet != null)
+                                        foreach($resultSet as $row){ 
+                                ?>
+                                            <tr>
+                                                <!-- orders id -->
+                                                <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
+                                            </tr>
+                                <?php } ?>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -123,12 +148,22 @@
 </html>
 
 <script>
+// // auto refresh 
+// function autoRefresh_Tables() {
+//     $("#tableServing").load("serving.php", function() {
+//         setTimeout(autoRefresh_Tables, 1000);
+//     });
+//     $("#prepairingTable").load("prepairing.php", function() {
+//         setTimeout(autoRefresh_Tables, 1000);
+//     });
+    
+// }
 // auto refresh 
 function autoRefresh_Tables() {
-    $("#tableServing").load("serving.php", function() {
+    $("#tableServing").load("adminOrdersQueue.php #tableServing", function() {
         setTimeout(autoRefresh_Tables, 2000);
     });
-    $("#prepairingTable").load("prepairing.php", function() {
+    $("#prepairingTable").load("adminOrdersQueue.php #prepairingTable", function() {
         setTimeout(autoRefresh_Tables, 2000);
     });
 }
@@ -164,6 +199,6 @@ $(document).ready(function() {
             }
         }
         session_destroy();
-        echo "<script>window.location.replace('../general/login.php');</script>";
+        echo "<script>window.location.replace('../../general/login.php');</script>";
     }
 ?>
