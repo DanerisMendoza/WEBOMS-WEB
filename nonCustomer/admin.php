@@ -109,8 +109,7 @@
     </style>
 </head>
 
-<body 
-
+<body> 
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
@@ -119,13 +118,13 @@
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="pos/adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
+                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
                     <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href=""><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
@@ -194,6 +193,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>

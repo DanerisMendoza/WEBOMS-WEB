@@ -35,13 +35,13 @@
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="pos/adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
+                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2 active">
                     <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="ordersQueue/adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
@@ -310,7 +310,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
@@ -323,12 +322,12 @@ $(document).ready(function() {
     });
 });
 // auto refresh 
-function autoRefresh_Tables() {
-    $("#tb1").load("adminOrders.php #tb1", function() {
-        setTimeout(autoRefresh_Tables, 2000);
-    });
-}
-autoRefresh_Tables();
+// function autoRefresh_Tables() {
+    // $("#tb1").load("adminOrders.php #tb1", function() {
+        // setTimeout(autoRefresh_Tables, 2000);
+//     });
+// }
+// autoRefresh_Tables();
 </script>
 
 <?php 
@@ -413,9 +412,6 @@ autoRefresh_Tables();
     }
 ?>
 <script>
-    $(document).ready(function() {
-        $('#tb1').DataTable();
-    });
     $('#tb1').dataTable({
     "columnDefs": [
         { "targets": [6,7,8,9], "orderable": false }

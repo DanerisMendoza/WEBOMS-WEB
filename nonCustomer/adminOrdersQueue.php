@@ -1,7 +1,7 @@
 <?php 
   $page = 'cashier';
-  include('../../method/checkIfAccountLoggedIn.php');
-  include('../../method/query.php');
+  include('../method/checkIfAccountLoggedIn.php');
+  include('../method/query.php');
 ?>
 
 <!DOCTYPE html>
@@ -13,10 +13,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders Queue</title>
 
-    <link rel="stylesheet" href="../../css/bootstrap 5/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/admin.css">
-    <script type="text/javascript" src="../../js/bootstrap 5/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap 5/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- ajax -->
@@ -30,14 +30,14 @@
         <!-- Sidebar  -->
         <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="../admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="../pos/adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
+                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
+                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2 active">
                     <a href=""><i class="bi bi-clock me-2"></i>Orders Queue</a>
@@ -45,22 +45,22 @@
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
                 <li class="mb-2">
-                    <a href="../adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
+                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
+                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
+                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
+                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
+                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li class="mb-1">
-                    <a href="../settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
+                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
             <?php } ?>
 
@@ -87,7 +87,7 @@
                     <!-- serving table -->
                     <?php   
                         $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
-                        $resultSet = getQuery3($getPrepairingOrder);?>
+                        $resultSet = getQuery2($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12" id="tableServing">
                             <thead class="bg-success text-white">
@@ -99,7 +99,7 @@
                                 <!-- serving table -->
                                     <?php   
                                         $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
-                                        $resultSet = getQuery3($getPrepairingOrder);
+                                        $resultSet = getQuery2($getPrepairingOrder);
                                         if($resultSet != null)
                                             foreach($resultSet as $row){ 
                                     ?>
@@ -115,7 +115,7 @@
                     <!-- prepairing table -->
                     <?php   
                         $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
-                        $resultSet = getQuery3($getPrepairingOrder);?>
+                        $resultSet = getQuery2($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12" id="prepairingTable">
                             <thead class="bg-danger text-white">
@@ -126,7 +126,7 @@
                             <tbody>
                                 <?php   
                                     $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
-                                    $resultSet = getQuery3($getPrepairingOrder);
+                                    $resultSet = getQuery2($getPrepairingOrder);
                                     if($resultSet != null)
                                         foreach($resultSet as $row){ 
                                 ?>
@@ -148,16 +148,6 @@
 </html>
 
 <script>
-// // auto refresh 
-// function autoRefresh_Tables() {
-//     $("#tableServing").load("serving.php", function() {
-//         setTimeout(autoRefresh_Tables, 1000);
-//     });
-//     $("#prepairingTable").load("prepairing.php", function() {
-//         setTimeout(autoRefresh_Tables, 1000);
-//     });
-    
-// }
 // auto refresh 
 function autoRefresh_Tables() {
     $("#tableServing").load("adminOrdersQueue.php #tableServing", function() {

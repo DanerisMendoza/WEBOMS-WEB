@@ -1,7 +1,7 @@
 <?php 
     $page = 'cashier';
-    include('../../method/checkIfAccountLoggedIn.php');
-    include('../../method/query.php');
+    include('../method/checkIfAccountLoggedIn.php');
+    include('../method/query.php');
     if(!isset($_SESSION["dishes"]) && !isset($_SESSION["price"])){
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array(); 
@@ -13,7 +13,7 @@
     $_SESSION['fromReceipt'] = 'pos';
     //company variables init
     $query = "select * from weboms_company_tb";
-    $resultSet = getQuery3($query);
+    $resultSet = getQuery2($query);
     if($resultSet!=null)
         foreach($resultSet as $row){
           $_SESSION['companyName'] = $row['name'];
@@ -21,7 +21,7 @@
           $_SESSION['companyTel'] = $row['tel'];
         }
     // redefining name
-    $_SESSION['name'] = getQueryOneVal3("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
+    $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 ?>
 
 <!DOCTYPE html>
@@ -33,15 +33,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Point of Sales</title>
 
-    <link rel="stylesheet" href="../../css/bootstrap 5/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/admin.css">
-    <script type="text/javascript" src="../../js/bootstrap 5/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap 5/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- data tables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+
 </head>
 
 <body>
@@ -50,37 +52,37 @@
        <!-- Sidebar  -->
        <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="../admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2 active">
-                    <a href="../adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
+                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
+                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../ordersQueue/adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
                 <li class="mb-2">
-                    <a href="../adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
+                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
+                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
+                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
+                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-2">
-                    <a href="../adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
+                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li class="mb-1">
-                    <a href="../settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
+                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
             <?php } ?>
                 <li>
@@ -113,7 +115,7 @@
 
                     <!-- table container -->
                     <div class="table-responsive col-lg-7">
-                        <table class="table table-hover table-bordered col-lg-12" id="tbl">
+                        <table class="table table-hover table-bordered col-lg-12" id="tBody1">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">DISH</th>
@@ -122,10 +124,10 @@
                                     <th scope="col">ADD TO CART</th>
                                 </tr>
                             </thead>
-                            <tbody id="tBody1">
+                            <tbody>
                             <?php 
                                 $query = "select * from weboms_menu_tb";
-                                $resultSet =  getQuery3($query);
+                                $resultSet =  getQuery2($query);
                                 if($resultSet != null)
                                     foreach($resultSet as $row){ ?>
                             <tr>
@@ -154,7 +156,7 @@
 
                     <!-- 2nd table container -->
                     <div class="table-responsive col-lg-5 mb-5">
-                        <table class="table table-bordered table-hover col-lg-12 mb-4">
+                        <table class="table table-bordered table-hover col-lg-12 mb-4" id="tBody2">
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
@@ -162,7 +164,7 @@
                                     <th scope="col">PRICE</th>
                                 </tr>
                             </thead>
-                            <tbody id="tBody2">
+                            <tbody>
                             <?php 
                                 $dishesArr = array();
                                 $priceArr = array();
@@ -206,7 +208,7 @@
                                     <td><?php echo $arr['quantity'];?></td>
                                     <td>
                                         <!-- check stock -->
-                                        <?php if(getQueryOneVal3("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
+                                        <?php if(getQueryOneVal2("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
                                         <!-- quantity plus -->
                                         <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
                                         <?php }else{ ?>
@@ -250,8 +252,7 @@
     });
 
     //order button (js)
-    var orderBtn = document.getElementById("orderBtn");
-    orderBtn.addEventListener("click", () => {
+    document.getElementById("orderBtn").addEventListener("click", () => {
         var num = document.getElementById("cashNum").value;
         if (<?php echo $total == 0 ? 'true':'false';?>) {
             alert('Please place your order!');
@@ -259,22 +260,23 @@
         }
         if (num >= <?php echo $total;?>) {
             alert("Success placing order!");
-            window.open("../../pdf/receipt.php");
+            window.open("../pdf/receipt.php");
         }
     });
 
     // data table
     $(document).ready(function() {
-        $('#tbl').DataTable();
+        $('#tBody1').DataTable();
     });
 
-    function reloadTables() {
-        // pending to refresh table without refresh
-        // $("#tBody1").load("tBody1.php", function() {});
-        // $("#tBody2").load("tBody2.php", function() {});
-        // $("#tBody1").load(location.href+ " #tBody1");
-    }
-    // reloadTables();  
+    function refreshTable() {
+    $("#tBody1").load("adminPos.php #tBody1", function() {
+        
+    });
+    $("#tBody2").load("adminPos.php #tBody2", function() {
+        
+    });
+}
 </script>
 
 <?php 
@@ -282,12 +284,12 @@
     if(isset($_POST['clear'])){
         for($i=0; $i<count($dishesArr); $i++){ 
             $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-            Query3($updateQuery);    
+            Query2($updateQuery);    
         }
         $_SESSION["dishes"] = array();
         $_SESSION["price"] = array();
-        $_SESSION["orderType"] = array(); 
-        echo "<script>window.location.replace('adminPos.php');</script>";
+        $_SESSION["orderType"] = array();
+        echo "<script>window.location.replace('adminPos.php');</script>";    
     }
     
     //add to cart
@@ -319,7 +321,7 @@
         array_push($_SESSION['orderType'], $orderType);
       }
       $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
-      if(Query3($updateQuery)){
+      if(Query2($updateQuery)){
         echo "<script>window.location.replace('adminPos.php');</script>";    
         // echo "<script>reloadTables();</script>";    
       }
@@ -336,7 +338,7 @@
         array_push($_SESSION['orderType'], $orderType);
 
         $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
-        if(Query3($updateQuery))
+        if(Query2($updateQuery))
           echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
@@ -359,7 +361,7 @@
         $_SESSION['orderType'] = array_values($_SESSION['orderType']);
 
         $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
-        if(Query3($updateQuery))
+        if(Query2($updateQuery))
             echo "<script>window.location.replace('adminPos.php');</script>";    
     }
 
@@ -375,7 +377,7 @@
             $todayWithTime =  $date->format('Y-m-d H:i:s'); 
 
             //or number process
-            $or_last = getQueryOneVal3("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
+            $or_last = getQueryOneVal2("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
             if($or_last == null){
                 $or_last = 1;
             }
@@ -403,8 +405,8 @@
             $staff = $_SESSION['name'];
 
             //get two user id from different table
-            $lastUserIdOrder = getQueryOneVal3("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
-            $lastUserIdUserInfo = getQueryOneVal3("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
+            $lastUserIdOrder = getQueryOneVal2("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
+            $lastUserIdUserInfo = getQueryOneVal2("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
             //compare which user id is higher 
             if($lastUserIdOrder > $lastUserIdUserInfo)
                 $user_id = $lastUserIdOrder;
@@ -414,7 +416,7 @@
             $user_id++;
 
             //increment order id
-            $lastOrderId = getQueryOneVal3("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
+            $lastOrderId = getQueryOneVal2("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
             if($lastOrderId == null){
                 $lastOrderId = rand(1111,9999);
             }
@@ -427,12 +429,12 @@
             $query1 = "insert into weboms_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
-                Query3($query2);
+                Query2($query2);
             }
             $query3 = "insert into weboms_userInfo_tb(name,user_id) values('$customerName','$user_id')";
             if($customerName != '')
-                Query3($query3);
-            Query3($query1);
+                Query2($query3);
+            Query2($query1);
             $_SESSION["dishes"] = array();
             $_SESSION["price"] = array();
             $_SESSION["orderType"] = array(); 
@@ -458,7 +460,7 @@
             }
             for($i=0; $i<count($dishesArr); $i++){ 
                 $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query3($updateQuery);    
+                Query2($updateQuery);    
             }   
         }
         session_destroy();
