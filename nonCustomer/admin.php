@@ -9,19 +9,19 @@
     // graph init
     $dishesArr = array();
     $qantityArr = array();
+    $multiArr = array();
     $sold = 0;
     $countOfSold = 0;
     $stockLeft = $stockInCustomer = 0;
     $query = "select * from weboms_menu_tb;";
     $resultSet = getQuery2($query);
+    
     // get stock left
     if($resultSet!=null){
         foreach($resultSet as $row){
             $stockLeft += $row['stock'];
         }
     }
-
- 
 
     //getting most ordered food 
     $query = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
@@ -41,8 +41,8 @@
                 array_push($qantityArr,$row['quantity']);
             }
         }
-        // merge multiple array into multi arr
-        $multiArr = array();
+
+        // merge multiple array into multi dimensional array
         for($i=0; $i<sizeof($dishesArr); $i++){
             $arr = array('dish' => $dishesArr[$i], 'quantity' => $qantityArr[$i]);
             array_push($multiArr,$arr);
@@ -200,14 +200,17 @@
 <script>
     //graphs
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChartPie);
+    google.charts.setOnLoadCallback(drawPieChart);
 
     //pie
-    function drawChartPie() {
+    function drawPieChart() {
     var data = google.visualization.arrayToDataTable([
         ['name', 'cost'],
-        ['Sold',<?php echo $countOfSold?>],
-        ['Stock Left',<?php echo $stockLeft?>]
+        <?php if($countOfSold != null){?>
+            ['Sold',<?php echo $countOfSold?>],
+        <?php }if($stockLeft != null){ ?>
+            ['Stock Left',<?php echo $stockLeft?>]
+        <?php } ?>
     ]);
 
     var options = {
@@ -219,44 +222,27 @@
     chart.draw(data, options);
 
     }
-
-    //graphs
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChartPie);
-
-    //pie
-    function drawChartPie() {
-    var data = google.visualization.arrayToDataTable([
-        ['name', 'cost'],
-        ['Sold',<?php echo $countOfSold?>],
-        ['Stock Left',<?php echo $stockLeft?>]
-    ]);
-
-    var options = {
-    title: '',
-    backgroundColor: '',
-    is3D: false,
-    };
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, options);
-
-    }
+    
     google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawStuff);
+    google.charts.setOnLoadCallback(drawCoLumnChart);
+
+    
     // column graph
-    function drawStuff() {
+    function drawCoLumnChart() {
     var data = new google.visualization.arrayToDataTable([
     ['Order Counts', 'Order Counts'],
 
         <?php
-            $i = 0;
-            foreach($multiArr as $arr){
-                if($i!=sizeof($multiArr))
-                    echo "['$arr[dish]','$arr[quantity]'],";
-                else
-                    echo "['$arr[dish]','$arr[quantity]']";
-                $i++;
-            }    
+            if($multiArr != null){
+                $i = 0;
+                foreach($multiArr as $arr){
+                    if($i!=sizeof($multiArr))
+                        echo "['$arr[dish]','$arr[quantity]'],";
+                    else
+                        echo "['$arr[dish]','$arr[quantity]']";
+                    $i++;
+                }    
+            }
         ?>
     ]);
 
