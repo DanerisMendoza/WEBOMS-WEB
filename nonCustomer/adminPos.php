@@ -195,14 +195,14 @@
         // init 
         var arr = button.value.split(","); // [dish][price][orderType][stock] 
 
-        var qty = $(button).closest("td").find('[name="qty"]').val();
-
+        var qty = parseInt($(button).closest("td").find('[name="qty"]').val());
+        
         //validation  
         if(qty <= 0){
             alert("quantity invalid");
             return;
         }
-        else if(qty > arr[3]){
+        if(qty > arr[3]){
             alert("quantity is greater than stocks");
             return;
         }
@@ -264,8 +264,16 @@
             return;
         }
         if (num >= total) {
+            $.ajax({
+            url: "ajax/insertOrder.php",
+            method: "post",
+            data: {'data':JSON.stringify(multiArrCart)},
+            success: function(res){
+                console.log(res);
+            }
+            })
             alert("Success placing order!");
-            window.open("../pdf/receipt.php");
+            // window.open("../pdf/receipt.php");
         }
         else{
             alert("Amount Less than total!");
