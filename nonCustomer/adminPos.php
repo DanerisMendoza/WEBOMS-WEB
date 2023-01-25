@@ -124,30 +124,13 @@
                                     <th scope="col">ADD TO CART</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            <?php 
-                                $query = "select * from weboms_menu_tb";
-                                $resultSet =  getQuery2($query);
-                                if($resultSet != null)
-                                    foreach($resultSet as $row){ ?>
-                            <tr>
-                                <td><?= ucwords($row['dish']);?></td>
-                                <td><?php echo "₱".number_format($row['price'],2); ?></td>
-                                <td><?php echo $row['stock']; ?></td>
-                                <!-- add to cart -->
-                                <td>
-                                    <!-- out of stock -->
-                                    <?php if($row['stock'] <= 0){ ?>
-                                        <a class="text-danger">Out of Stock</a>
-                                        <!-- not out of stock -->
-                                        <?php } else{ ?>
-                                                <?php $a = $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock'];?>
-                                                <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1" id="qty">
-                                                <button type="button" name="addToCartSubmit" onclick='AddToCart(this)' value="<?php echo $a; ?>" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <?php } ?>
+                            <tbody id="tbody1">
+                                <script>
+                                        tbody1 += "";                                 
+                                        $.get("ajax/tbody1_pos.php", function(data) {
+                                            $("#tbody1").append(data);
+                                        });
+                                </script>
                             </tbody>
                         </table>
                     </div>
@@ -173,9 +156,7 @@
                             <input id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="orderBtn">Place Order</button>
                         <!-- </form> -->
-                        <form method="post">
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -223,26 +204,30 @@
         }
 
         // get total
+        total = 0;
         for(let i=0; i<multiArrCart[1].length; i++){    
-            total += multiArrCart[1][i];
+            total = total + multiArrCart[1][i];
         }
+    
+       
 
-        var newTable = "";
+        // table 2
+        var tbody2 = "";
         for(let i = 0; i < multiArrCart[0].length; i++){
-            newTable +=
+            tbody2 +=
             "<tr>" +
                 "<td>" + multiArrCart[0][i] + "</td>" +
                 "<td colspan='2'>" + multiArrCart[2][i] + "</td>" +
                 "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
             "</tr>";
         }
-        newTable += 
+        tbody2 += 
         "<tr>"+
             "<td colspan='3'> <b>Total Amount:</b> </td>" +
             "<td><b>₱"+total+"</b></td>"
         "</tr>";
         document.getElementById("tbody2").innerHTML = "";
-        $("#tbody2").append(newTable);
+        $("#tbody2").append(tbody2);
     }
 
     // sidebar(js)
@@ -250,6 +235,13 @@
         $('#sidebarCollapse').on('click', function() {
             $('#sidebar').toggleClass('active');
         });
+    });
+
+    // clear
+    document.getElementById("clear").addEventListener("click", () => {
+        multiArrCart =  [[],[],[],[]];
+        total = 0;
+        document.getElementById("tbody2").innerHTML = "";
     });
 
     //order button (js)
