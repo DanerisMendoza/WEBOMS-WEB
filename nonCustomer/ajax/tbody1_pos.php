@@ -10,7 +10,7 @@
             $stock = $row['stock'];
             $tbody1 .= "<tr>";
             $tbody1 .= "<td>$dish</td>";
-            $tbody1 .= "<td>$price</td>";
+            $tbody1 .= "<td>₱$price</td>";
             $tbody1 .= "<td>$stock</td>";
             $tbody1 .= "<td>";
             if($stock <= 0)

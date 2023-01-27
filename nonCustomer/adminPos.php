@@ -125,12 +125,29 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody1">
-                                <script>
-                                        tbody1 += "";                                 
-                                        $.get("ajax/tbody1_pos.php", function(data) {
-                                            $("#tbody1").append(data);
-                                        });
-                                </script>
+                            <?php 
+                                $query = "select * from weboms_menu_tb";
+                                $resultSet =  getQuery2($query);
+                                if($resultSet != null)
+                                    foreach($resultSet as $row){ ?>
+                            <tr>
+                                <td><?= ucwords($row['dish']);?></td>
+                                <td><?php echo "₱".number_format($row['price'],2); ?></td>
+                                <td><?php echo $row['stock']; ?></td>
+                                <!-- add to cart -->
+                                <td>
+                                    <!-- out of stock -->
+                                    <?php if($row['stock'] <= 0){ ?>
+                                        <a class="text-danger">Out of Stock</a>
+                                        <!-- not out of stock -->
+                                        <?php } else{ ?>
+                                                <?php $a = $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock'];?>
+                                                <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1" id="qty">
+                                                <button type="button" name="addToCartSubmit" onclick='AddToCart(this)' value="<?php echo $a; ?>" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -151,11 +168,8 @@
                             ?>
                             </tbody>
                         </table>
-                        <!-- <form method="post"> -->
-                            <!-- <input name="customerName" placeholder="Customer Name (Optional)" type="text" class="form-control form-control-lg mb-3"> -->
                             <input id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="orderBtn">Place Order</button>
-                        <!-- </form> -->
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                     </div>
                 </div>
@@ -188,13 +202,34 @@
             return;
         }
 
+        // update stocks
+        var dishAndStock = [arr[0],qty];
+        $.ajax({
+            url: "ajax/subtractStock_pos.php",
+            method: "post",
+            data: {'data':JSON.stringify(dishAndStock)},
+            success: function(){  
+                //nested ajax call
+                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                    $("#tbody1").html(tbody1);
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }     
+        });
+
+
+
         // add and merge repeating order
         if(multiArrCart[0].includes(arr[0])){
             var index = multiArrCart[0].indexOf(arr[0]);
-            var newPrice = multiArrCart[1][index] + parseFloat(arr[1]);
+            var newPrice = multiArrCart[1][index] + parseFloat(arr[1]*qty);
             var newQuantity = multiArrCart[2][index] + parseFloat(qty);
             multiArrCart[2][index] = newQuantity;
             multiArrCart[1][index] = newPrice;
+            console.log(parseFloat(arr[1]*qty));
+
         }
         else{
             multiArrCart[0].push(arr[0]);
@@ -209,8 +244,6 @@
             total = total + multiArrCart[1][i];
         }
     
-       
-
         // table 2
         var tbody2 = "";
         for(let i = 0; i < multiArrCart[0].length; i++){
@@ -238,7 +271,19 @@
     });
 
     // clear
-    document.getElementById("clear").addEventListener("click", () => {
+    document.getElementById("clear").addEventListener("click", () => {  
+        $.ajax({
+            url: "ajax/addStocks_pos.php",
+            method: "post",
+            data: {'data':JSON.stringify(multiArrCart)},
+            success: function(){
+                // refresh tbody1
+                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                    $("#tbody1").html(tbody1);
+                });
+            }
+        });
+
         multiArrCart =  [[],[],[],[]];
         total = 0;
         document.getElementById("tbody2").innerHTML = "";
@@ -278,14 +323,12 @@
     });
 
     function refreshTable() {
-    $("#tBody1").load("adminPos.php #tBody1", function() {
-        
-    });
-    $("#tBody2").load("adminPos.php #tBody2", function() {
-        
-    });
-
-}
+        $("#tBody1").load("adminPos.php #tBody1", function() {
+            
+        });
+        // $("#tBody2").load("adminPos.php #tBody2", function() {
+        // });
+    }
 </script>
 
 <?php 
