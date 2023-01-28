@@ -158,16 +158,15 @@
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
-                                    <th scope="col" colspan="2">QUANTITY</th>
+                                    <th scope="col">QUANTITY</th>
                                     <th scope="col">PRICE</th>
+                                    <th scope="col" colspan="3">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody2">
-                            <?php 
-                                $total = 0;
-                            ?>
                             </tbody>
                         </table>
+                            <input id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
                             <input id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="orderBtn">Place Order</button>
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
@@ -202,14 +201,13 @@
             return;
         }
 
-        // update stocks
+        // update stocks and refresh tbody1
         var dishAndStock = [arr[0],qty];
         $.ajax({
             url: "ajax/subtractStock_pos.php",
             method: "post",
             data: {'data':JSON.stringify(dishAndStock)},
             success: function(){  
-                //nested ajax call
                 $.get("ajax/tbody1_pos.php", function(tbody1) {
                     $("#tbody1").html(tbody1);
                 });
@@ -219,8 +217,6 @@
             }     
         });
 
-
-
         // add and merge repeating order
         if(multiArrCart[0].includes(arr[0])){
             var index = multiArrCart[0].indexOf(arr[0]);
@@ -228,8 +224,6 @@
             var newQuantity = multiArrCart[2][index] + parseFloat(qty);
             multiArrCart[2][index] = newQuantity;
             multiArrCart[1][index] = newPrice;
-            console.log(parseFloat(arr[1]*qty));
-
         }
         else{
             multiArrCart[0].push(arr[0]);
@@ -244,19 +238,22 @@
             total = total + multiArrCart[1][i];
         }
     
-        // table 2
+        // update and refresh table body 2
         var tbody2 = "";
         for(let i = 0; i < multiArrCart[0].length; i++){
             tbody2 +=
             "<tr>" +
-                "<td>" + multiArrCart[0][i] + "</td>" +
-                "<td colspan='2'>" + multiArrCart[2][i] + "</td>" +
+                "<td name='dish'>" + multiArrCart[0][i] + "</td>" +
+                "<td name='quantity' >" + multiArrCart[2][i] + "</td>" +
                 "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
+                "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
+                "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
             "</tr>";
         }
         tbody2 += 
         "<tr>"+
-            "<td colspan='3'> <b>Total Amount:</b> </td>" +
+            "<td colspan='2'> <b>Total Amount:</b> </td>" +
             "<td><b>₱"+total+"</b></td>"
         "</tr>";
         document.getElementById("tbody2").innerHTML = "";
@@ -291,7 +288,10 @@
 
     //order button (js)
     document.getElementById("orderBtn").addEventListener("click", () => {
+        let otherAttributes = [];
+        otherAttributes.push();
         var num = document.getElementById("cashNum").value;
+        var customer =  document.getElementById("customerName").value;
         if(num == ""){
             alert('Please Enter Amount');
             return;
@@ -302,15 +302,21 @@
         }
         if (num >= total) {
             $.ajax({
-            url: "ajax/insertOrder.php",
+            url: "ajax/insertOrder_pos.php",
             method: "post",
             data: {'data':JSON.stringify(multiArrCart)},
-            success: function(res){
-                console.log(res);
+            success: function(){
+                $.ajax({
+                url: "ajax/setSessions_pos.php",
+                method: "post",
+                data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
+                success: function(){
+                    alert("Success placing order!");
+                    window.open("../pdf/receipt.php");
+                }
+                });
             }
-            })
-            alert("Success placing order!");
-            // window.open("../pdf/receipt.php");
+            });
         }
         else{
             alert("Amount Less than total!");
@@ -322,12 +328,125 @@
         $('#tBody1').DataTable();
     });
 
-    function refreshTable() {
-        $("#tBody1").load("adminPos.php #tBody1", function() {
-            
+
+    // increaseQuantity
+    function increaseQuantity(button){
+        let dish = $(button).closest("tr").find('[name="dish"]').text();
+        // update stocks and refresh table body 1
+        let dishAndStock = [dish,1];
+        $.ajax({
+            url: "ajax/subtractStock_pos.php",
+            method: "post",
+            data: {'data':JSON.stringify(dishAndStock)},
+            success: function(){  
+                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                    $("#tbody1").html(tbody1);
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }     
         });
-        // $("#tBody2").load("adminPos.php #tBody2", function() {
-        // });
+       
+        // add and merge repeating order multiArrCart[dishes][prices][quantity][order type]
+        var index = multiArrCart[0].indexOf(dish);
+        var newPrice = multiArrCart[1][index] + (multiArrCart[1][index]/multiArrCart[2][index]);
+        var newQuantity = multiArrCart[2][index] += 1;
+        multiArrCart[2][index] = newQuantity;
+        multiArrCart[1][index] = newPrice;
+        refreshTbody2();
+    }
+
+    // decreaseQuantity
+    function decreaseQuantity(button){
+        let dish = $(button).closest("tr").find('[name="dish"]').text();
+        // update stocks and refresh table body 1
+        let dishAndStock = [dish,1];
+        $.ajax({
+            url: "ajax/addStocks2value_pos.php",
+            method: "post",
+            data: {'data':JSON.stringify(dishAndStock)},
+            success: function(){  
+                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                    $("#tbody1").html(tbody1);
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }     
+        });
+       
+        // add and merge repeating order multiArrCart[dishes][prices][quantity][order type]
+        var index = multiArrCart[0].indexOf(dish);
+        var newQuantity = multiArrCart[2][index] - 1;
+        if(newQuantity == 0){
+            multiArrCart[0].splice(index,1);
+            multiArrCart[1].splice(index,1);
+            multiArrCart[2].splice(index,1);
+            multiArrCart[3].splice(index,1);
+            refreshTbody2();
+            return;
+        }
+        var newPrice = multiArrCart[1][index] - (multiArrCart[1][index]/multiArrCart[2][index]);
+        multiArrCart[2][index] = newQuantity;
+        multiArrCart[1][index] = newPrice;
+        refreshTbody2();
+
+    }
+
+    
+
+    // refresh table body 2
+    function refreshTbody2(){
+        var tbody2 = "", total = 0;
+        for(let i = 0; i < multiArrCart[0].length; i++){
+            tbody2 +=
+            "<tr>" +
+                "<td name='dish'>" + multiArrCart[0][i] + "</td>" +
+                "<td name='quantity'>" + multiArrCart[2][i] + "</td>" +
+                "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
+                "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
+                "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
+            "</tr>";
+            total += multiArrCart[1][i];
+        }
+        tbody2 += 
+        "<tr>"+
+            "<td colspan='2'> <b>Total Amount:</b> </td>" +
+            "<td><b>₱"+total+"</b></td>"
+        "</tr>";
+        document.getElementById("tbody2").innerHTML = "";
+        $("#tbody2").append(tbody2);
+    }
+
+    function removeRow(button){
+        let dish = $(button).closest("tr").find('[name="dish"]').text();
+        var index = multiArrCart[0].indexOf(dish);
+        let dishAndStock = [dish,multiArrCart[2][index]];
+
+        // update stocks and refresh table body 1
+        $.ajax({
+            url: "ajax/addStocks2value_pos.php",
+            method: "post",
+            data: {'data':JSON.stringify(dishAndStock)},
+            success: function(){  
+                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                    $("#tbody1").html(tbody1);
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }     
+        });
+   
+        // remove order in multiArrCart
+      
+        multiArrCart[0].splice(index,1);
+        multiArrCart[1].splice(index,1);
+        multiArrCart[2].splice(index,1);
+        multiArrCart[3].splice(index,1);
+        refreshTbody2();
     }
 </script>
 
