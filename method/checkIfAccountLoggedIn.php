@@ -12,11 +12,11 @@ session_start();
     // account is already login
     if($page == 'notLogin' && $_SESSION['account'] == 'valid'){
         if($_SESSION['accountType'] == 'customer')
-            die ("<script>window.location.replace('customer/customer.php'); alert('Already Loggedin!');</script>");
+            die ("<script>window.location.replace('../customer/customer.php'); alert('Already Loggedin!');</script>");
         else if($_SESSION['accountType'] == 'admin' || $_SESSION['accountType'] == 'manager')
-            die ("<script>window.location.replace('nonCustomer/admin.php'); alert('Already Loggedin!');</script>");
+            die ("<script>window.location.replace('../nonCustomer/admin.php'); alert('Already Loggedin!');</script>");
         else if($_SESSION['accountType'] == 'cashier')
-            die ("<script>window.location.replace('nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
+            die ("<script>window.location.replace('../nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
     }
 
     //account is not customer

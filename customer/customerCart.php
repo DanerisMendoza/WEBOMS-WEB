@@ -139,12 +139,12 @@
                         <td><b>₱<?php echo number_format($total,2); ?></b></td>
                     </tr>
                 </table>
-                <!-- place order -->
                 <form method="post">
+                    <!-- place order -->
                     <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
-                </form>
-                <!-- clear order -->
-                <form method="post"> 
+                <!-- </form>
+                <form method="post"> -->
+                    <!-- clear order -->
                     <button type="submit" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                 </form>
             </div>
@@ -237,7 +237,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $companyAddress = $row['address'];
                 $companyTel = $row['tel'];
             }
-            echo '<script>alert("ok here");</script>'; 
+
             //or number process
             $or_last = getQueryOneVal2("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
             if($or_last == null){
@@ -270,6 +270,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query2($query2);
             }
+
             if(Query2($query1)){
                 //minus order amount to balance
                 $query = "UPDATE weboms_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
@@ -324,14 +325,14 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $pdf -> Cell(122,10,"Order Type: Online Order",'','0','L');
                 $pdf -> ln(10);
                 $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
-                ob_end_clean();
+                // ob_end_clean();
                 $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
                 require '../vendor/autoload.php';
                 //Create an instance; passing `true` enables exceptions
                 $mail = new PHPMailer(true);
                 //Server settings
-                $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+                $mail->SMTPDebug  = SMTP::DEBUG_OFF; ;                        //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
                 $mail->Host = 'mail.ucc-csd-bscs.com';		                //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -344,9 +345,13 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $mail->addAddress("$email");                                //sent to
                 //Content
                 $mail->Subject = 'Receipt';
-                $mail->Body    = 'Thank you for ordering!.';
+                $mail->Body    = 'Thank you for ordering!';
                 $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
-                $mail->send();
+                $mail -> send();
+                if($mail->send())
+                    echo '<script>alert("Success placing order!");</script>';    
+                else
+                    echo '<script>alert("Error placing order!");</script>';    
                 $_SESSION["dishes"] = array();
                 $_SESSION["price"] = array();      
                 $_SESSION["orderType"] = array();                     
@@ -359,11 +364,11 @@ document.getElementById("back").onclick = function() { window.location.replace('
 <script>
 //order button (js)
 document.getElementById("orderBtn").addEventListener("click", () => {
-    if (<?php echo $total == 0 ? 'true':'false';?>) { 
+    if (<?php echo $total == 0 ? 'true':'false';?>) {
         alert('Please place your order!');
         return;
     }
-    if (<?php echo $balance < $total ? 'true':'false';?>) { //there is a bug here
+    if (<?php echo $balance < $total ? 'true':'false';?>) {
         alert('Your balance is less than your total order amount!');
         return;
     }
