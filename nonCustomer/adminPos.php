@@ -293,6 +293,12 @@
         otherAttributes.push('<?php echo $_SESSION['name']; ?>');
         otherAttributes.push(customer);
         otherAttributes.push(cash);
+        // get total
+            // get total
+        total = 0;
+        for(let i=0; i<multiArrCart[1].length; i++){    
+            total = total + multiArrCart[1][i];
+        }
         otherAttributes.push(total);
         if(cash == ""){
             alert('Please Enter Amount');
