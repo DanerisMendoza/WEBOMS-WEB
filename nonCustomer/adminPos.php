@@ -278,9 +278,7 @@
                 });
             }
         });
-
         multiArrCart =  [[],[],[],[]];
-        total = 0;
         document.getElementById("tbody2").innerHTML = "";
     });
 
@@ -288,8 +286,8 @@
     document.getElementById("orderBtn").addEventListener("click", () => {
         // staff, customer, cash, total
         let otherAttributes = [];
-        var cash = document.getElementById("cashNum").value;
         var customer =  document.getElementById("customerName").value;
+        var cash = document.getElementById("cashNum").value;
         otherAttributes.push('<?php echo $_SESSION['name']; ?>');
         otherAttributes.push(customer);
         otherAttributes.push(cash);
@@ -314,6 +312,12 @@
             method: "post",
             data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
             success: function(){
+                // clean this window variables
+                multiArrCart =  [[],[],[],[]];
+                document.getElementById("tbody2").innerHTML = "";
+                document.getElementById("customerName").value = "";
+                document.getElementById("cashNum").value = "";
+                // open receipt in new tab
                 alert("Success placing order!");
                 window.open("../pdf/receipt.php");
             }

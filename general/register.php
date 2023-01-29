@@ -121,6 +121,7 @@
           return;
         }
 
+     
 
         $query = "select * from weboms_user_tb where username = '$username'";
         if(getQuery2($query) != null)
@@ -131,11 +132,13 @@
         $query = "select * from weboms_userInfo_tb where email = '$email'";
         if(getQuery2($query) != null)
           die ("<script>alert('Email already exist!');</script>");
+
+       
         
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
         //Load Composer's autoloader
-        require 'vendor/autoload.php';
+        require '../vendor/autoload.php';
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
         //Server settings
@@ -154,6 +157,8 @@
         $mail->Subject = 'OTP';
         $mail->Body    = "Good Day, ".$name." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
         $mail->send();
+
+        
 
         //get two user id from different table
         $lastUserIdOrder = getQueryOneVal2("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");

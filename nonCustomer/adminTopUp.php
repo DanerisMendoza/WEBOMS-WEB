@@ -30,38 +30,41 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="bg-dark">
+     <nav id="sidebar" class="bg-dark">
             <div class="sidebar-header bg-dark">
                 <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
             </div>
             <ul class="list-unstyled components ms-3">
                 <li class="mb-2">
-                    <a href="#" id="pos"><i class="bi bi-tag me-2"></i>Point of Sales</a>
+                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="orders"><i class="bi bi-minecart me-2"></i>Orders</a>
+                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="ordersQueue"><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
+                </li>
+            
+            <?php if($_SESSION['accountType'] != 'cashier'){?>
+                <li class="mb-2">
+                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="inventory"><i class="bi bi-box-seam me-2"></i>Inventory</a>
+                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="salesReport"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
+                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" id="accountManagement"><i class="bi bi-person-circle me-2"></i>Account Management</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#" id="customerFeedback"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
+                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
                 </li>
                 <li class="mb-2 active">
-                    <a href="#"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
+                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
                 </li>
                 <li class="mb-1">
-                    <a href="#" id="settings"><i class="bi bi-gear me-2"></i>Settings</a>
+                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
                 </li>
+            <?php } ?>
                 <li>
                     <form method="post">
                         <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
@@ -179,17 +182,6 @@ $(document).ready(function() {
 });
 </script>
 
-<script>
-// for navbar click locations
-document.getElementById("pos").onclick = function() { window.location.replace('pos/adminPos.php'); };
-document.getElementById("orders").onclick = function() { window.location.replace('adminOrders.php'); };
-document.getElementById("ordersQueue").onclick = function() { window.location.replace('ordersQueue/adminOrdersQueue.php'); };
-document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
-document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
-document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
-document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
-document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
-</script>
 
 <?php 
     if(isset($_POST['logout'])){

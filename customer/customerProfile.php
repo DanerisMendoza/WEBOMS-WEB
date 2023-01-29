@@ -239,13 +239,13 @@ document.getElementById("updatePassword").onclick = function () {
             if($fileError === 0){
                 if($fileSize < 10000000){
                     $fileNameNew = uniqid('',true).".".$fileActualExt;
-                    $fileDestination = 'profilePic/'.$fileNameNew;
+                    $fileDestination = '../profilePic/'.$fileNameNew;
                     move_uploaded_file($fileTmpName,$fileDestination);         
                     $query = "update weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id SET name = '$name', username = '$username', picName = '$fileNameNew', email = '$email', gender = '$gender', address = '$address', phoneNumber = '$phoneNumber'  WHERE a.user_id = '$_SESSION[user_id]' ";
                     if(Query2($query)){
                         echo '<script>alert("Success updating the database!");</script>';
                         if($picName != null)       
-                            unlink("profilePic/".$picName);                                        
+                            unlink("../profilePic/".$picName);                                        
                     }
                     echo "<script>window.location.replace('customerProfile.php');</script>";                                
                 }

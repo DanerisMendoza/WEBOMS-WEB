@@ -133,7 +133,7 @@
             $otp = uniqid();
             // email proccess
             //Load Composer's autoloader
-            require 'vendor/autoload.php';
+            require '../vendor/autoload.php';
             //Create an instance; passing `true` enables exceptions
             $mail = new PHPMailer(true);
             //Server settings
@@ -150,7 +150,7 @@
             $mail->addAddress("$_SESSION[email]");                                //sent to
             //Content
             $mail->Subject = 'OTP';
-            $mail->Body    = "Good Day, ".$_SESSION['name']." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
+            $mail->Body    = "Good Day, ".$_SESSION['name']." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!.";
             $mail->send();
             // query
             $updateOtp = "update weboms_userInfo_tb as a inner join weboms_user_tb as b on a.user_id = b.user_id set otp = '$otp' where b.username = '$_SESSION[username]' ";
@@ -160,8 +160,6 @@
                 window.location.replace('../general/login.php');
                 </script>";  
             }
-
-
         }
     ?>
 
