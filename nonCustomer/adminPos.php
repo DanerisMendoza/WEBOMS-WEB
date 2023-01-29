@@ -42,8 +42,6 @@
     <!-- data tables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
-
 </head>
 
 <body>
@@ -288,11 +286,15 @@
 
     //order button (js)
     document.getElementById("orderBtn").addEventListener("click", () => {
+        // staff, customer, cash, total
         let otherAttributes = [];
-        otherAttributes.push();
-        var num = document.getElementById("cashNum").value;
+        var cash = document.getElementById("cashNum").value;
         var customer =  document.getElementById("customerName").value;
-        if(num == ""){
+        otherAttributes.push('<?php echo $_SESSION['name']; ?>');
+        otherAttributes.push(customer);
+        otherAttributes.push(cash);
+        otherAttributes.push(total);
+        if(cash == ""){
             alert('Please Enter Amount');
             return;
         }
@@ -300,21 +302,14 @@
             alert('Please place your order!');
             return;
         }
-        if (num >= total) {
+        if (cash >= total) {
             $.ajax({
             url: "ajax/insertOrder_pos.php",
             method: "post",
-            data: {'data':JSON.stringify(multiArrCart)},
+            data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
             success: function(){
-                $.ajax({
-                url: "ajax/setSessions_pos.php",
-                method: "post",
-                data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
-                success: function(){
-                    alert("Success placing order!");
-                    window.open("../pdf/receipt.php");
-                }
-                });
+                alert("Success placing order!");
+                window.open("../pdf/receipt.php");
             }
             });
         }
@@ -394,8 +389,6 @@
 
     }
 
-    
-
     // refresh table body 2
     function refreshTbody2(){
         var tbody2 = "", total = 0;
@@ -441,7 +434,6 @@
         });
    
         // remove order in multiArrCart
-      
         multiArrCart[0].splice(index,1);
         multiArrCart[1].splice(index,1);
         multiArrCart[2].splice(index,1);
@@ -451,156 +443,6 @@
 </script>
 
 <?php 
-    //add to cart
-    if(isset($_POST['addToCartSubmit'])){
-      $order = explode(',',$_POST['order']);  
-      //init
-      $dish = $order[0];
-      $price = $order[1];
-      $orderType = $order[2];
-      $stock = $order[3];
-      $qty = $_POST['qty'];
-    //   validation
-      if($qty <= 0 && !str_contains($qty, '.')){
-        die ("<script>
-        alert('Quantity invalid');
-        window.location.replace('adminPos.php');
-        </script>");    
-      }
-      if($qty > $stock){
-        die ("<script>
-        alert('Stock is less than Quantity');
-        window.location.replace('adminPos.php');
-        </script>");    
-      }
-      //process
-      for($i=0; $i<$qty; $i++){
-        array_push($_SESSION['dishes'], $dish);
-        array_push($_SESSION['price'], $price);
-        array_push($_SESSION['orderType'], $orderType);
-      }
-      $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
-      if(Query2($updateQuery)){
-        echo "<script>window.location.replace('adminPos.php');</script>";    
-        // echo "<script>reloadTables();</script>";    
-      }
-    }
-
-    // add quantity
-    if(isset($_GET['add'])){
-        $arr = explode(',',$_GET['add']);
-        $dish = $arr[0];
-        $price = $arr[1];
-		    $orderType = $arr[2];
-        array_push($_SESSION['dishes'], $dish);
-        array_push($_SESSION['price'], $price);
-        array_push($_SESSION['orderType'], $orderType);
-
-        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
-        if(Query2($updateQuery))
-          echo "<script>window.location.replace('adminPos.php');</script>";    
-    }
-
-    //minus quantity
-    if(isset($_GET['minus'])){
-        $arr = explode(',',$_GET['minus']);
-        $dish = $arr[0];
-        $price = $arr[1];
-        $orderType = $arr[2];
-       
-        //remove one order 
-        $key = array_search($dish, $_SESSION['dishes']);
-        unset($_SESSION['dishes'][$key]);
-        unset($_SESSION['price'][$key]);
-        unset($_SESSION['orderType'][$key]);
-
-        //refresh the array
-        $_SESSION['dishes'] = array_values($_SESSION['dishes']);
-        $_SESSION['price'] = array_values($_SESSION['price']);
-        $_SESSION['orderType'] = array_values($_SESSION['orderType']);
-
-        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
-        if(Query2($updateQuery))
-            echo "<script>window.location.replace('adminPos.php');</script>";    
-    }
-
-    //order button (php)
-    if(isset($_POST['orderBtn'])){
-        $cash = $_POST['cash'];
-        $customerName = $_POST['customerName'];
-        if($cash >= $total && $total != 0){
-            $_SESSION['continue'] = true;
-            date_default_timezone_set('Asia/Manila');
-            $date = new DateTime();
-            $today =  $date->format('Y-m-d'); 
-            $todayWithTime =  $date->format('Y-m-d H:i:s'); 
-
-            //or number process
-            $or_last = getQueryOneVal2("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
-            if($or_last == null){
-                $or_last = 1;
-            }
-            else{
-                $or_last = $or_last + 1;
-            }
-            $inputSize = strlen(strval($or_last));
-            if($inputSize > 4)
-                $str_length = $inputSize;
-            else
-                $str_length = 4;
-            $temp = substr("0000{$or_last}", -$str_length);
-            $or_number = $temp;
-
-            // init sessions
-            $_SESSION['or_number'] = $or_number;
-            $_SESSION['customerName'] = $customerName;
-            $_SESSION['staffInCharge'] = 'POS';
-            $_SESSION['date'] = $todayWithTime;
-            $_SESSION['cash'] = $cash;
-            $_SESSION['total'] = $total;
-            $_SESSION['dishesArr'] = $dishesArr;
-            $_SESSION['priceArr'] = $priceArr;
-            $_SESSION['dishesQuantity'] = $dishesQuantity;
-            $staff = $_SESSION['name'];
-
-            //get two user id from different table
-            $lastUserIdOrder = getQueryOneVal2("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
-            $lastUserIdUserInfo = getQueryOneVal2("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
-            //compare which user id is higher 
-            if($lastUserIdOrder > $lastUserIdUserInfo)
-                $user_id = $lastUserIdOrder;
-            else
-                $user_id = $lastUserIdUserInfo;   
-            // increment user id
-            $user_id++;
-
-            //increment order id
-            $lastOrderId = getQueryOneVal2("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
-            if($lastOrderId == null){
-                $lastOrderId = rand(1111,9999);
-            }
-            else{
-                $lastOrderId = $lastOrderId + 1;
-            }
-            $order_id = $lastOrderId;
-
-            $_SESSION['order_id'] = $order_id;
-            $query1 = "insert into weboms_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
-            for($i=0; $i<count($dishesArr); $i++){
-                $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
-                Query2($query2);
-            }
-            $query3 = "insert into weboms_userInfo_tb(name,user_id) values('$customerName','$user_id')";
-            if($customerName != '')
-                Query2($query3);
-            Query2($query1);
-            $_SESSION["dishes"] = array();
-            $_SESSION["price"] = array();
-            $_SESSION["orderType"] = array(); 
-            echo "<script>window.location.replace('adminPos.php');</script>";
-        }   
-    }
-
     // logout button
     if(isset($_POST['logout'])){
         $dishesArr = array();

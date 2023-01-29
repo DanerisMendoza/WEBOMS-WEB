@@ -10,7 +10,16 @@
     foreach($resultSet as $row){ 
         //init
         $_SESSION['order_id'] = $row['order_id'];
-        $_SESSION['or_number'] = $row['or_number'];
+    
+        $or_last = $row['or_number'];
+        $inputSize = strlen(strval($or_last));
+        if($inputSize > 4)
+            $str_length = $inputSize;
+        else
+            $str_length = 4;
+        $temp = substr("0000{$or_last}", -$str_length);
+        $_SESSION['or_number'] = $or_number = $temp;
+
         $_SESSION['customerName'] = $row['name'];
         $_SESSION['date'] = $row['date'];
         $_SESSION['cash'] = $row['payment'];
@@ -141,9 +150,10 @@
                                     <tr>
                                         <?php 
                                         array_push($_SESSION['dishesArr'],$row['dish']);
-                                        array_push($_SESSION['priceArr'],$row['price']);
+                                        $price = ($row['price']*$row['quantity']);  $total += $price;
+                                        array_push($_SESSION['priceArr'],$price);
                                         array_push($_SESSION['dishesQuantity'],$row['quantity']);
-                                        $price = ($row['price']*$row['quantity']);  $total += $price;?>
+                                        ?>
 
                                         <td><?php echo ucwords($row['dish']); ?></td>
                                         <td><?php echo $row['quantity']; ?></td>
