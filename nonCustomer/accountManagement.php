@@ -209,7 +209,7 @@
                                         ?>
                                         <?php if($picName != null){ ?>
                                             <tr class="text-center">
-                                                <th colspan="2"><img src="profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
+                                                <th colspan="2"><img src="../profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
                                             </tr>
                                         <?php } ?>
                                         <tr>

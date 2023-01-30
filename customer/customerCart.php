@@ -332,14 +332,14 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 //Create an instance; passing `true` enables exceptions
                 $mail = new PHPMailer(true);
                 //Server settings
-                $mail->SMTPDebug  = SMTP::DEBUG_OFF; ;                        //Enable verbose debug output
+                $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host = 'mail.ucc-csd-bscs.com';		                //Set the SMTP server to send through
+                $mail->Host = 'ssl://smtp.gmail.com';		                //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
-                $mail->Password   = '-Dxru8*6v]z4';                         //SMTP password
+                $mail->Username   = 'weboms098@gmail.com';                  //from //SMTP username
+                $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
                 $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-                $mail->Port       =  465;       
+                $mail->Port       =  465;    
                 //Recipients
                 $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
                 $mail->addAddress("$email");                                //sent to

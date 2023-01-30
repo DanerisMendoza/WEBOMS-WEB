@@ -17,6 +17,7 @@
     $_SESSION['priceArr'] = $multiArr[1];
     $_SESSION['dishesQuantity'] = $multiArr[2];
     $_SESSION['customerName'] = $otherAttributes[1];
+    $_SESSION['staffInCharge'] = 'pos';
 
     //or number process
     $or_last = getQueryOneVal3("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
