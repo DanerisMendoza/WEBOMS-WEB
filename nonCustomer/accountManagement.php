@@ -96,36 +96,48 @@
                                     <th scope="col">NAME</th>
                                     <th scope="col">EMAIL</th>
                                     <th scope="col">ACCOUNT TYPE</th>
+                                    <th scope="col">RFID</th>
                                     <th scope="col">CUSTOMER INFO</th>
                                     <th scope="col">
                                         <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
                                     </th>
-                                    <th scope="col">OPTIONS</th>
+                                    <th scope="col" colspan="2">OPTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                     if($resultSet!= null)
                                     foreach($resultSet as $row){ ?>
-                                <tr>
-                                    <td><?php echo $row['username']; ?></td>
-                                    <td><?php echo ucwords($row['name']); ?></td>
-                                    <td><?php echo $row['email']; ?></td>
-                                    <td><?php echo ucwords($row['accountType']);?></td>
-                                    <td><a class="btn btn-primary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
-                                    <!-- options -->
-                                    <td>
-                                        <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
-                                    </td>
-                                    <td>
-                                        <?php if($row['username'] != 'admin'){?>
-                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'] ?>"><i class="bi bi-trash3"></i> Delete</a>
-                                        <?php } 
-                                            else
-                                                echo "<a class='text-danger'>You cannot delete this account!</a>" ?>
-                                    </td>
-                                </tr>
-                                <?php } ?>
+                                        <tr>
+                                            <td><?php echo $row['username']; ?></td>
+                                            <td><?php echo ucwords($row['name']); ?></td>
+                                            <td><?php echo $row['email']; ?></td>
+                                            <td><?php echo ucwords($row['accountType']);?></td>
+                                            <td><?php echo $row['rfid'];?></td>
+                                            <td><a class="btn btn-primary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
+                                            <!-- options -->
+                                            <td>
+                                                <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
+                                            </td>
+                                                <!-- non admin -->
+                                                <?php if($row['username'] != 'admin'){ ?>
+                                                    <td>
+                                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'];?>"><i class="bi bi-trash3"></i> Delete</a>
+                                                    </td>   
+                                                        <!-- customer -->
+                                                        <?php  if($row['accountType'] == 'customer'){
+                                                        ?>
+                                                            <td>
+                                                            <button class='btn btn-success' type="button" name="rfidButton" onclick='rfid(this)' value="<?php echo $row['user_id']; ?>"  class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-credit-card-fill"></i>Bind RFID Card</button>
+                                                        </td>
+                                                        <?php
+                                                        }
+                                                    // admin
+                                                }else{
+                                                    echo "<td colspan='2'><a class='text-danger'>You cannot delete this account!</a></td>";
+                                                } ?>
+                                            </tr>
+                                    <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -153,7 +165,7 @@
                 </div>
             </div>
 
-            <!-- passAndEmail -->
+            <!-- passAndEmail (modal)-->
             <div class="modal fade" role="dialog" id="passAndEmail">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -168,7 +180,26 @@
                     </div>
                 </div>
             </div>
+   
+            <!-- RFID SCANNER (modal)-->
+            <div class="modal fade" role="dialog" id="rfid">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <input type="text" id="rfidInput">
+                            <div class="ocrloader">
+                                <em></em>
+                                <div>Binding RFID</div>
+                                <span></span>
+                            </div>
+                            <br></br>
+                            <br></br>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            
             <!-- customerProfileModal (Bootstrap MODAL) -->
             <div class="modal fade" id="customerProfileModal" role="dialog">
                 <div class="modal-dialog modal-lg">
@@ -355,6 +386,11 @@ $(document).ready(function() {
         $('#sidebar').toggleClass('active');
     });
 });
+$('table').dataTable({
+    "columnDefs": [
+        { "targets": [7], "orderable": false }
+    ]
+});
 </script>
 
 <?php 
@@ -385,7 +421,127 @@ $(document).ready(function() {
 ?>
 
 <script>
+var userId_Global = null;
 $(document).ready(function() {
     $('#tbl').DataTable();
 });
+
+$("#rfid").on('shown.bs.modal', function(){
+    $(this).find('input[type="text"]').val('');
+    $(this).find('input[type="text"]').focus();
+});
+
+$('#rfidInput').keyup(function(){
+    if($(this).val().length == 10){
+        let arr = [];
+        arr.push($(this).val());
+        arr.push(userId_Global);
+        $.ajax({
+            url: "ajax/accountManagement_updateRfid.php",
+            method: "post",
+            data: {'arr':JSON.stringify(arr)},
+            success: function(){  
+                $(this).val('');
+                $('#rfid').modal('hide');
+                
+                window.location.replace('accountManagement.php');
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+            }     
+        });
+    }
+});
+
+
+function rfid(button){
+    userId_Global = $(button).closest("tr").find('[name="rfidButton"]').val();
+    $('#rfid').modal('show');
+}
 </script>
+
+
+<style>
+    .ocrloader {
+        width: 94px;
+        height: 77px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        backface-visibility: hidden;
+    }
+    .ocrloader span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 20px;
+        background-color: rgba(45, 183, 183, 0.54);
+        z-index: 1;
+        transform: translateY(135%);
+        animation: move 0.7s cubic-bezier(0.15, 0.44, 0.76, 0.64);
+        animation-iteration-count: infinite;
+    }
+    .ocrloader > div {
+        z-index: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 48%;
+        backface-visibility: hidden;
+    }
+    .ocrloader:before,
+    .ocrloader:after,
+    .ocrloader em:after,
+    .ocrloader em:before {
+        border-color: #000;
+        content: "";
+        position: absolute;
+        width: 19px;
+        height: 16px;
+        border-style: solid;
+        border-width: 0px;
+    }
+    .ocrloader:before {
+        left: 0;
+        top: 0;
+        border-left-width: 1px;
+        border-top-width: 1px;
+    }
+    .ocrloader:after {
+        right: 0;
+        top: 0;
+        border-right-width: 1px;
+        border-top-width: 1px;
+    }
+    .ocrloader em:before {
+        left: 0;
+        bottom: 0;
+        border-left-width: 1px;
+        border-bottom-width: 1px;
+    }
+    .ocrloader em:after {
+        right: 0;
+        bottom: 0;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+    }
+    @keyframes move {
+    0%,
+    100% {
+        transform: translateY(135%);
+    }
+    50% {
+        transform: translateY(0%);
+    }
+    75% {
+        transform: translateY(272%);
+    }
+    }
+
+    #rfidInput{
+        opacity: 0;
+    }
+</style>

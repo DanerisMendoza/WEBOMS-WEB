@@ -202,11 +202,11 @@
         // update stocks and refresh tbody1
         var dishAndStock = [arr[0],qty];
         $.ajax({
-            url: "ajax/subtractStock_pos.php",
+            url: "ajax/pos_subtractStock.php",
             method: "post",
             data: {'data':JSON.stringify(dishAndStock)},
             success: function(){  
-                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                $.get("ajax/pos_tbody1.php", function(tbody1) {
                     $("#tbody1").html(tbody1);
                 });
             },
@@ -268,12 +268,12 @@
     // clear
     document.getElementById("clear").addEventListener("click", () => {  
         $.ajax({
-            url: "ajax/addStocks_pos.php",
+            url: "ajax/pos_addStocks.php",
             method: "post",
             data: {'data':JSON.stringify(multiArrCart)},
             success: function(){
                 // refresh tbody1
-                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                $.get("ajax/pos_tbody1.php", function(tbody1) {
                     $("#tbody1").html(tbody1);
                 });
             }
@@ -308,7 +308,7 @@
         }
         if (cash >= total) {
             $.ajax({
-            url: "ajax/insertOrder_pos.php",
+            url: "ajax/pos_insertOrder.php",
             method: "post",
             data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
             success: function(){
@@ -340,11 +340,11 @@
         // update stocks and refresh table body 1
         let dishAndStock = [dish,1];
         $.ajax({
-            url: "ajax/subtractStock_pos.php",
+            url: "ajax/pos_subtractStock.php",
             method: "post",
             data: {'data':JSON.stringify(dishAndStock)},
             success: function(){  
-                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                $.get("ajax/pos_tbody1.php", function(tbody1) {
                     $("#tbody1").html(tbody1);
                 });
             },
@@ -368,11 +368,11 @@
         // update stocks and refresh table body 1
         let dishAndStock = [dish,1];
         $.ajax({
-            url: "ajax/addStocks2value_pos.php",
+            url: "ajax/pos_addStocks2value.php",
             method: "post",
             data: {'data':JSON.stringify(dishAndStock)},
             success: function(){  
-                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                $.get("ajax/pos_tbody1.php", function(tbody1) {
                     $("#tbody1").html(tbody1);
                 });
             },
@@ -430,11 +430,11 @@
 
         // update stocks and refresh table body 1
         $.ajax({
-            url: "ajax/addStocks2value_pos.php",
+            url: "ajax/pos_addStocks2value.php",
             method: "post",
             data: {'data':JSON.stringify(dishAndStock)},
             success: function(){  
-                $.get("ajax/tbody1_pos.php", function(tbody1) {
+                $.get("ajax/pos_tbody1.php", function(tbody1) {
                     $("#tbody1").html(tbody1);
                 });
             },

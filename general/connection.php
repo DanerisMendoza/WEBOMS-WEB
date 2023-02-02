@@ -29,7 +29,8 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		email varchar(255),
 		otp varchar(255),
 		forgetPasswordOtp varchar(255),
-		balance int)";
+		balance int,
+		rfid varchar(255))";
 
 		//menu
 		$queryCreateMenu_tb = "create table if not exists weboms_menu_tb(orderType int PRIMARY KEY AUTO_INCREMENT, 
