@@ -12,28 +12,22 @@ session_start();
     // account is already login
     if($page == 'notLogin' && $_SESSION['account'] == 'valid'){
         if($_SESSION['accountType'] == 'customer'){
-            if($page != 'notLogin'){
-                die ("<script>window.location.replace('customer/customer.php'); alert('Already Loggedin!');</script>");
-            }
-            else{
+            if(isset($isFromLogin) == true)
                 die ("<script>window.location.replace('../customer/customer.php'); alert('Already Loggedin!');</script>");
-            }
+            else
+                die ("<script>window.location.replace('customer/customer.php'); alert('Already Loggedin!');</script>");
         }
         else if($_SESSION['accountType'] == 'admin' || $_SESSION['accountType'] == 'manager'){
-            if($page != 'notLogin'){
-                die ("<script>window.location.replace('nonCustomer/admin.php'); alert('Already Loggedin!');</script>");
-            }
-            else{
+            if(isset($isFromLogin) == true)
                 die ("<script>window.location.replace('../nonCustomer/admin.php'); alert('Already Loggedin!');</script>");
-            }
+            else
+                die ("<script>window.location.replace('nonCustomer/admin.php'); alert('Already Loggedin!');</script>");
         }
         else if($_SESSION['accountType'] == 'cashier')
-            if($page != 'notLogin'){
-                die ("<script>window.location.replace('nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
-            }
-            else{
+            if(isset($isFromLogin) == true)
                 die ("<script>window.location.replace('../nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
-            }
+            else
+                die ("<script>window.location.replace('../nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
     }
 
     //account is not customer

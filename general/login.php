@@ -1,5 +1,6 @@
 <?php     
   $page = 'notLogin';
+  $isFromLogin = true;
   include('../method/checkIfAccountLoggedIn.php');
 ?>
 
