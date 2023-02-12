@@ -439,15 +439,33 @@ $('#rfidInput').keyup(function(){
         let arr = [];
         arr.push($(this).val());
         arr.push(userId_Global);
+        // check if rfid is already used
         $.ajax({
-            url: "ajax/accountManagement_updateRfid.php",
+            url: "ajax/accountManagement_checkIfRfidExist.php",
             method: "post",
             data: {'arr':JSON.stringify(arr)},
-            success: function(){  
+            success: function(res){  
                 $(this).val('');
                 $('#rfid').modal('hide');
-                
-                window.location.replace('accountManagement.php');
+                if(res){
+                    alert("RFID already Exsit!");
+                    return;
+                }
+                // update rfid card
+                $.ajax({
+                    url: "ajax/accountManagement_updateRfid.php",
+                    method: "post",
+                    data: {'arr':JSON.stringify(arr)},
+                    success: function(){  
+                        $(this).val('');
+                        $('#rfid').modal('hide');
+                        
+                        window.location.replace('accountManagement.php');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                    }     
+                });
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) { 
                 alert("Status: " + textStatus); alert("Error: " + errorThrown); 
