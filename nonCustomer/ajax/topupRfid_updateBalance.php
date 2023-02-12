@@ -21,4 +21,4 @@
         }
     }
     echo implode(",",$attributes); 
-?>git
+?>

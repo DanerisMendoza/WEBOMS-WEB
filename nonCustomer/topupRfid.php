@@ -60,7 +60,7 @@
                 <li class="mb-2">
                     <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
-                <li class="mb-2">
+                <li class="mb-2 active">
                     <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
                 </li>
             
