@@ -126,6 +126,10 @@
                 <li class="mb-2">
                     <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
+
+                <li class="mb-2">
+                    <a href="topupRfid.php"><i class="bi bi-credit-card-fill"></i>Top-Up RFID</a>
+                </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
                 <li class="mb-2">
