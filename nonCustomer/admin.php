@@ -128,7 +128,7 @@
                 </li>
 
                 <li class="mb-2">
-                    <a href="topupRfid.php"><i class="bi bi-credit-card-fill"></i>Top-Up RFID</a>
+                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>

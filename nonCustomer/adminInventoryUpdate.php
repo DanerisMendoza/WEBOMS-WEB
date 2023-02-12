@@ -35,6 +35,9 @@
                 <li class="mb-2">
                     <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
+                <li class="mb-2">
+                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
+                </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
                 <li class="mb-2 active">
@@ -111,9 +114,11 @@
                             <input type="text" class="form-control form-control-lg mb-3" name="dish" placeholder="Enter new dish name">
                             <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter new price">
                             <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter new number of stock">
-                            <input type="file" class="form-control form-control-lg mb-4" name="fileInput">
-                            <button type="submit" class="btn btn-lg btn-warning col-12" name="update"><i class="bi bi-arrow-repeat"></i> Update</button>
-                            <button type="button" class="btn btn-lg btn-danger col-12 mb-3" id="cancel"><i class="bi bi-x-circle"></i> Cancel</button>
+                            <input type="file" class="form-control form-control-lg mb-3" name="fileInput">
+                            <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
+                                <button type="submit" class="btn btn-lg btn-warning col-12" name="update"><i class="bi bi-arrow-repeat"></i> Update</button>
+                                <button type="button" class="btn btn-lg btn-danger col-12" id="cancel"><i class="bi bi-x-circle"></i> Cancel</button>
+                            </div>
                         </form>
                     </div>
                 </div>

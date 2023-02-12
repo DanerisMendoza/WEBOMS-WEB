@@ -43,6 +43,9 @@
                     <li class="mb-2">
                         <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                     </li>
+                    <li class="mb-2">
+                        <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
+                    </li>
                 
                 <?php if($_SESSION['accountType'] != 'cashier'){?>
                     <li class="mb-2">
@@ -114,7 +117,7 @@
                                             <td><?php echo $row['email']; ?></td>
                                             <td><?php echo ucwords($row['accountType']);?></td>
                                             <td><?php echo $row['rfid'];?></td>
-                                            <td><a class="btn btn-primary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
+                                            <td><a class="btn btn-light" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>" style="border:1px solid #cccccc;"><i class="bi bi-list"></i> View</a></td>
                                             <!-- options -->
                                             <td>
                                                 <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
@@ -128,7 +131,7 @@
                                                         <?php  if($row['accountType'] == 'customer'){
                                                         ?>
                                                             <td>
-                                                            <button class='btn btn-success' type="button" name="rfidButton" onclick='rfid(this)' value="<?php echo $row['user_id']; ?>"  class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-credit-card-fill"></i>Bind RFID Card</button>
+                                                            <button class="btn btn-primary" type="button" name="rfidButton" onclick='rfid(this)' value="<?php echo $row['user_id']; ?>"><i class="bi bi-credit-card"></i> Bind</button>
                                                         </td>
                                                         <?php
                                                         }
@@ -158,7 +161,7 @@
                                     <option value="manager">Manager</option>
                                     <option value="cashier">Cashier</option>
                                 </select>
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-plus-circle"></i> Save</button>
+                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-save"></i> Save</button>
                             </form>
                         </div>
                     </div>
@@ -207,7 +210,7 @@
                         <div class="modal-body">
                             <!-- table -->
                             <div class="table-responsive col-lg-12">
-                                <table class="table table-bordered col-lg-12 text-start">
+                                <table class="table table-striped table-hover col-lg-12">
                                     <tbody>
                                         <?php
                                         $query = "select a.*,b.* from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
@@ -240,36 +243,36 @@
                                         ?>
                                         <?php if($picName != null){ ?>
                                             <tr class="text-center">
-                                                <th colspan="2"><img src="../profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
+                                                <th colspan="2"><img src="../profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border-radius:100px"></th>
                                             </tr>
                                         <?php } ?>
                                         <tr>
-                                            <td><b>NAME</b></td>
+                                            <td><b>Name</b></td>
                                             <td><?php echo ucwords($name);?></td>
                                         </tr>
                                         <tr>
-                                            <td><b>USERNAME</b></td>
+                                            <td><b>Username</b></td>
                                             <td><?php echo $username;?></td>
                                         </tr>
                                         <tr>
-                                            <td><b>EMAIL</b></td>
+                                            <td><b>Email</b></td>
                                             <td><?php echo $email;?></td>
                                         </tr>
                                         <tr>
-                                            <td><b>GENDER</b></td>
+                                            <td><b>Gender</b></td>
                                             <td><?php echo ucfirst($gender);?></td>
                                         </tr>
                                         <tr>
-                                            <td><b>PHONE NUMBER</b></td>
+                                            <td><b>Phone Number</b></td>
                                             <td><?php echo $phoneNumber;?></td>
                                         </tr>
                                         <tr>
-                                            <td><b>ADDRESS</b></td>
+                                            <td><b>Address</b></td>
                                             <td><?php echo ucwords($address);?></td>
                                         </tr>
-                                        <tr class="bg-success text-white">
-                                            <td><b>BALANCE</b></td>
-                                            <td><b><?php echo '₱'. number_format($balance,2);?></b></td>
+                                        <tr class="bg-success">
+                                            <td class="text-white"><b>BALANCE</b></td>
+                                            <td class="text-white"><b><?php echo '₱'. number_format($balance,2);?></b></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>

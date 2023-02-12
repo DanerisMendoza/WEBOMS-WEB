@@ -65,6 +65,9 @@
                 <li class="mb-2">
                     <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
+                <li class="mb-2">
+                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
+                </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
                 <li class="mb-2">
@@ -110,7 +113,7 @@
                         <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
                             <button class="btn btn-lg btn-dark col-6 mb-3" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
                             <?php if(!($customerName == '' && $_SESSION['staffInCharge'] == 'online order')){?>
-                                <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
+                            <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
                             <?php } ?>
                         </div>
                         <!-- table -->
@@ -211,18 +214,6 @@ $(document).ready(function() {
         $('#sidebar').toggleClass('active');
     });
 });
-</script>
-
-<script>
-    // for navbar click locations
-    document.getElementById("pos").onclick = function() { window.location.replace('pos/adminPos.php'); };
-    document.getElementById("ordersQueue").onclick = function() { window.location.replace('ordersQueue/adminOrdersQueue.php'); };
-    document.getElementById("inventory").onclick = function() { window.location.replace('adminInventory.php'); };
-    document.getElementById("salesReport").onclick = function() { window.location.replace('adminSalesReport.php'); };
-    document.getElementById("accountManagement").onclick = function() { window.location.replace('accountManagement.php'); };
-    document.getElementById("customerFeedback").onclick = function() { window.location.replace('adminFeedbackList.php'); };
-    document.getElementById("adminTopUp").onclick = function() { window.location.replace('adminTopUp.php'); };
-    document.getElementById("settings").onclick = function() { window.location.replace('settings.php'); };
 </script>
 
 <?php 

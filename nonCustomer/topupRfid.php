@@ -60,9 +60,8 @@
                 <li class="mb-2">
                     <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
                 </li>
-
-                <li class="mb-2 active">
-                    <a href="topupRfid.php"><i class="bi bi-credit-card-fill"></i>Top-Up RFID</a>
+                <li class="mb-2">
+                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
                 </li>
             
             <?php if($_SESSION['accountType'] != 'cashier'){?>
@@ -116,14 +115,14 @@
             <div class="table-responsive col-lg-3">
                 <table class="table table-bordered table-hover col-lg-12" id="tableProfile">
                     <tbody>
-                        <img  id="profilePic" src="../pic/unknown.png" style="width:200px; height:200px; border-radius:10rem;" class="mb-3"> 
+                        <img id="profilePic" src="../pic/unknown.png" style="width:200px;height:200px;border-radius:10rem;" class="mb-3"> 
                     </tbody>
                 </table>
             </div>
 
             <div class="table-responsive col-lg-9">
                 <table class="table table-bordered table-hover col-lg-12" id="tableInformation">
-                    <thead class="bg-success text-white">
+                    <thead class="table-dark text-white">
                         <th>Name</th>
                         <th>Username</th>
                         <th>Email</th>
@@ -148,10 +147,8 @@
 
                 </div>
             </div>
-
-
-            <div class="row">
-                <button class="btn btn-lg btn-warning col-6 mb-3" id="scanRfid"><i class="bi bi-credit-card-fill"></i> SCAN RFID</button>
+            <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
+                <button class="btn btn-lg btn-primary col-6 mb-3" id="scanRfid"><i class="bi bi-credit-card"></i> RFID Scan</button>
                 <button class="btn btn-lg btn-success col-6 mb-3" id="topupButton"><i class="bi bi-cash-stack"></i> Top-Up</button>
             </div>
         </div>
