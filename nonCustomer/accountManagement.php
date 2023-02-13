@@ -452,7 +452,7 @@ $('#rfidInput').keyup(function(){
                 $(this).val('');
                 $('#rfid').modal('hide');
                 if(res){
-                    alert("RFID already Exsit!");
+                    alert("RFID already Exist!");
                     return;
                 }
                 // update rfid card

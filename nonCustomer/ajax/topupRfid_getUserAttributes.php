@@ -15,6 +15,10 @@
             array_push($attributes,$row['balance']);
             array_push($attributes,$row['picName']);
         }
+        echo implode(",",$attributes); 
     }
-    echo implode(",",$attributes); 
+    else{
+        echo false;
+    }
+   
 ?>

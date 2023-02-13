@@ -158,11 +158,16 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <input type="text" id="rfidInput">
+                    <input type="text" id="rfidInput">                            
                         <div class="ocrloader">
                             <em></em>
-                            <div>Binding RFID</div>
+                            <div>Binding RFID</div>                                                               
                             <span></span>
+                        </div>
+                        <div class="loading">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                         </div>
                         <br></br>
                         <br></br>
@@ -185,6 +190,10 @@
             $('#rfid').modal('show');
         });
         $("#topupButton").click(function(){
+            if(rfidGlobal == null){
+                alert("Please Scan your Rfid Card");
+                return;
+            }
             let arr = [];
             let amount = parseInt($('#amount').find(":selected").text().substr(1));
             arr.push(amount);
@@ -227,6 +236,10 @@
             success: function(attributes){  
                 $(this).val('');
                 $('#rfid').modal('hide');
+                if(attributes == false){
+                    alert("RFID Do not exist!");
+                    return;
+                }
                 let arr = attributes.split(",") , i = 0; 
                 $("#tableInformation td").each(function() {
                     if(i == 6)
@@ -279,41 +292,117 @@
 ?>
 
 <style>
-    .ocrloader {
-        width: 94px;
-        height: 77px;
+   .modal-content{
+        width: 800px;
+        height: 500px;
         position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        backface-visibility: hidden;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #fff;
+        font-family: Sans-Serif;
+        font-size: 30px;  
+        top: 120px;           
+    }
+    .ocrloader { 
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background: url(rfid01.png);
+        background-size: 300px;    
+    }
+    .ocrloader:before {
+        content:'';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; 
+        background: url(rfid02.png);
+        background-size: 300px;
+        filter: drop-shadow(0 0 3px #00FFFF) drop-shadow(0 0 7px #00FFFF);
+        overflow: hidden;
+        animation: animate 2s linear infinite;
+    }
+    @keyframes animate
+    {
+        0%, 50%, 100%
+        {
+            height: 0%;
+        }
+        50%
+        {
+            height: 70%;
+        }
+        75%
+        {
+            height: 100%;
+        }
     }
     .ocrloader span {
+        content:'';
         position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 20px;
-        background-color: rgba(45, 183, 183, 0.54);
-        z-index: 1;
-        transform: translateY(135%);
-        animation: move 0.7s cubic-bezier(0.15, 0.44, 0.76, 0.64);
+        inset: 1px;
+        width: calc(100% - 2px);
+        height: 3px;
+        background-color: #fff;
+        animation: animateLine 2s linear infinite;
+    }
+    @keyframes animateLine{
+        0%
+        {
+            top: 1px;
+        }
+        50%
+        {
+            top: 225px;
+        }
+        75%
+        {
+            top: 300px;
+        }
+    }
+    *{margin: 0; padding: 0;}
+    .loading span {
+        position: relative;
+        left: 220px;
+        top: 35px;       
+        width: 10px;
+        height: 10px;       
+        background-color: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        animation-name: dots;
+        animation-duration: 2s;
         animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #fff);
+    }
+
+    .loading span:nth-child(2){
+        animation-delay: 0.4s;
+    }
+    .loading span:nth-child(3){
+        animation-delay: 0.8s;
+    }
+
+    @keyframes dots{
+        50%{
+            opacity: 0;
+            transform: scale(0.7) translateY(10px);
+        }
     }
     .ocrloader > div {
         z-index: 1;
         position: absolute;
-        left: 50%;
-        top: 50%;
+        left: 62%;
+        top: 120%;
         transform: translate(-50%, -50%);
-        width: 48%;
+        width: 100%;
         backface-visibility: hidden;
+        filter: drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px #fff);
     }
-    .ocrloader:before,
-    .ocrloader:after,
     .ocrloader em:after,
     .ocrloader em:before {
-        border-color: #000;
+        border-color: #fff;
         content: "";
         position: absolute;
         width: 19px;
@@ -345,20 +434,9 @@
         border-right-width: 1px;
         border-bottom-width: 1px;
     }
-    @keyframes move {
-    0%,
-    100% {
-        transform: translateY(135%);
-    }
-    50% {
-        transform: translateY(0%);
-    }
-    75% {
-        transform: translateY(272%);
-    }
-    }
-
+    
     #rfidInput{
         opacity: 0;
     }
 </style>
+
