@@ -77,7 +77,13 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		tel varchar(255),
 		description TEXT)";
 
-		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb) && $conn->query($queryCreateCompany_tb)) {
+		//cart
+		$queryCreateCart_tb = "create table if not exists weboms_cart_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		user_id int,
+		orderType int,
+		qty int)";
+
+		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb) && $conn->query($queryCreateCompany_tb) && $conn->query($queryCreateCart_tb)) {
 			$checkQuery = "select * from weboms_user_tb";
 			if($resultSet = $conn->query($checkQuery)){  
 				if($resultSet->num_rows <= 0){

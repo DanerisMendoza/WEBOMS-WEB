@@ -132,9 +132,9 @@
                                 if($resultSet != null)
                                     foreach($resultSet as $row){ ?>
                             <tr>
-                                <td><?= ucwords($row['dish']);?></td>
+                                <td class="dishes"><?= $row['dish'];?></td>
                                 <td><?php echo "₱".number_format($row['price'],2); ?></td>
-                                <td><?php echo $row['stock']; ?></td>
+                                <td class="stocks"><?php echo $row['stock']; ?></td>
                                 <!-- add to cart -->
                                 <td>
                                     <!-- out of stock -->
@@ -167,8 +167,8 @@
                             <tbody id="tbody2">
                             </tbody>
                         </table>
-                            <input id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
-                            <input id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
+                            <input  id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
+                            <input  id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="orderBtn">Place Order</button>
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                     </div>
@@ -181,6 +181,68 @@
 
 </html>
 <script>
+    function refreshTable2(mode){
+    //get cart attributes
+    $.getJSON({
+        url: "ajax/pos_getCartAttributes.php",
+        method: "post",
+        data: {'user_id':<?php echo $_SESSION['user_id'];?>},
+        success: function(multiArrCart){
+            if(multiArrCart != null){
+                // [dish][price][orderType][stock] 
+                // update and refresh table body 2
+                let tbody2 = "", total = 0;
+                for(let i = 0; i < multiArrCart[0].length; i++){
+                total += parseFloat(multiArrCart[1][i]);
+                tbody2 +=
+                "<tr>" +
+                    "<td name='dish'>" + multiArrCart[0][i] + "</td>" +
+                    "<td name='quantity' >" + multiArrCart[2][i] + "</td>" +
+                    "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                    "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
+                    "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
+                    "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
+                "</tr>";
+                }
+                tbody2 += 
+                "<tr>"+
+                    "<td colspan='2'> <b>Total Amount:</b> </td>" +
+                    "<td><b>₱"+total+"</b></td>"
+                "</tr>";
+                document.getElementById("tbody2").innerHTML = "";
+                $("#tbody2").append(tbody2);
+                }
+
+                if(mode == 'firstLoad'){
+                    // subtract cart products quantity to db stock
+                    $("#tbody1 tr .dishes").each (function() {
+                        let stock = parseInt($(this).closest("tr").find(".stocks").text());
+                        if(multiArrCart[0].includes(this.innerHTML)){ 
+                            let index = multiArrCart[0].indexOf(this.innerHTML.toString().toLowerCase());
+                            stock -= multiArrCart[2][index];
+                        }
+                        if(stock <= 0){
+                            $(this).closest("tr").find(".stocks").text("Out of Stock");
+                            return;
+                        }
+                        $(this).closest("tr").find(".stocks").text(stock);
+                    });       
+                }else{
+                    // subtract 
+                    let qty = parseInt($(mode).closest("td").find('[name="qty"]').val());
+                    let stocks = $(mode).closest("tr").find('.stocks').text();
+                    if(stocks <= 0){
+                        $(mode).closest("tr").find('.stocks').text("Out Of Stocks");
+                        return;
+                    }
+                    $(mode).closest("tr").find('.stocks').text(stocks-qty);
+                }
+        }
+        });
+    }
+    refreshTable2('firstLoad');
+
+
     // global arrays    [dishes][prices][quantity][order type]
     var multiArrCart =  [[],[],[],[]];
     var total = 0;
@@ -189,10 +251,18 @@
     function AddToCart(button){
         // init 
         var arr = button.value.split(","); // [dish][price][orderType][stock] 
+        var qty = $(button).closest("td").find('[name="qty"]').val();
+        let arrayCart = []; //user_id, orderType, qty
+        let stock = $(button).closest("tr").find('.stocks').text();
+        arrayCart.push(<?php echo $_SESSION['user_id']; ?>);
+        arrayCart.push(arr[2]);
+        arrayCart.push(qty);
 
-        var qty = parseInt($(button).closest("td").find('[name="qty"]').val());
-        
         //validation  
+        if(isNaN(stock)){
+            alert('Out Of Stock');
+            return;
+        }
         if(qty <= 0){
             alert("quantity invalid");
             return;
@@ -202,63 +272,17 @@
             return;
         }
 
-        // update stocks and refresh tbody1
-        var dishAndStock = [arr[0],qty];
+        // add value in cart table in db
         $.ajax({
-            url: "ajax/pos_subtractStock.php",
+            url: "ajax/pos_addToCartTable.php",
             method: "post",
-            data: {'data':JSON.stringify(dishAndStock)},
-            success: function(){  
-                $.get("ajax/pos_tbody1.php", function(tbody1) {
-                    $("#tbody1").html(tbody1);
-                });
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-            }     
+            data: {'data':JSON.stringify(arrayCart)},
+            success: function(res){
+                refreshTable2(button);
+            }
         });
 
-        // add and merge repeating order
-        if(multiArrCart[0].includes(arr[0])){
-            var index = multiArrCart[0].indexOf(arr[0]);
-            var newPrice = multiArrCart[1][index] + parseFloat(arr[1]*qty);
-            var newQuantity = multiArrCart[2][index] + parseFloat(qty);
-            multiArrCart[2][index] = newQuantity;
-            multiArrCart[1][index] = newPrice;
-        }
-        else{
-            multiArrCart[0].push(arr[0]);
-            multiArrCart[1].push(parseFloat(arr[1]*qty));
-            multiArrCart[2].push(parseFloat(qty));
-            multiArrCart[3].push(parseFloat(arr[2]));
-        }
-
-        // get total
-        total = 0;
-        for(let i=0; i<multiArrCart[1].length; i++){    
-            total = total + multiArrCart[1][i];
-        }
-    
-        // update and refresh table body 2
-        var tbody2 = "";
-        for(let i = 0; i < multiArrCart[0].length; i++){
-            tbody2 +=
-            "<tr>" +
-                "<td name='dish'>" + multiArrCart[0][i] + "</td>" +
-                "<td name='quantity' >" + multiArrCart[2][i] + "</td>" +
-                "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
-                "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
-                "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
-                "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='$a' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
-            "</tr>";
-        }
-        tbody2 += 
-        "<tr>"+
-            "<td colspan='2'> <b>Total Amount:</b> </td>" +
-            "<td><b>₱"+total+"</b></td>"
-        "</tr>";
-        document.getElementById("tbody2").innerHTML = "";
-        $("#tbody2").append(tbody2);
+      
     }
 
     // sidebar(js)
@@ -285,8 +309,8 @@
         document.getElementById("tbody2").innerHTML = "";
     });
 
-    //order button (js)
-    document.getElementById("orderBtn").addEventListener("click", () => {
+        //order button (js)
+        document.getElementById("orderBtn").addEventListener("click", () => {
         // staff, customer, cash, total
         let otherAttributes = [];
         var customer =  document.getElementById("customerName").value;
@@ -339,30 +363,45 @@
 
     // increaseQuantity
     function increaseQuantity(button){
+        // user_id, orderType, qty
+        var arrayCart = [];
+        arrayCart.push(<?php echo $_SESSION['user_id'];?>);
+        arrayCart.push(button.value);
+        arrayCart.push(1);
         let dish = $(button).closest("tr").find('[name="dish"]').text();
-        // update stocks and refresh table body 1
-        let dishAndStock = [dish,1];
-        $.ajax({
-            url: "ajax/pos_subtractStock.php",
-            method: "post",
-            data: {'data':JSON.stringify(dishAndStock)},
-            success: function(){  
-                $.get("ajax/pos_tbody1.php", function(tbody1) {
-                    $("#tbody1").html(tbody1);
+        $("#tbody1 tr .dishes").each (function() {
+            if(this.innerHTML == dish){ 
+                let stock = $(this).closest("tr").find(".stocks").text();
+                if(isNaN(stock)){
+                    alert("Our of Stocks");
+                    return;
+                }
+
+                // add value in cart table in db
+                $.ajax({
+                    url: "ajax/pos_addToCartTable.php",
+                    method: "post",
+                    data: {'data':JSON.stringify(arrayCart)},
+                    success: function(res){
+                        refreshTable2(button);
+                    }
                 });
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-            }     
-        });
-       
-        // add and merge repeating order multiArrCart[dishes][prices][quantity][order type]
-        var index = multiArrCart[0].indexOf(dish);
-        var newPrice = multiArrCart[1][index] + (multiArrCart[1][index]/multiArrCart[2][index]);
-        var newQuantity = multiArrCart[2][index] += 1;
-        multiArrCart[2][index] = newQuantity;
-        multiArrCart[1][index] = newPrice;
-        refreshTbody2();
+                
+                stock = parseInt(stock);
+                stock--;
+                if(stock <= 0){
+                    $(this).closest("tr").find(".stocks").text("Out Of Stock");
+                    return;
+                }
+                $(this).closest("tr").find(".stocks").text(stock);
+                let qty = $(button).closest("tr").find('[name="quantity"]');
+                let qtyInt = parseInt(qty.text()) + 1; 
+                qty.text(qtyInt);
+
+           
+            }
+        });       
+        
     }
 
     // decreaseQuantity
