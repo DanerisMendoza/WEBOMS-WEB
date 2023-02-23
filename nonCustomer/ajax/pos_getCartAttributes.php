@@ -15,7 +15,7 @@
         echo json_encode($multiArr);
     }
     else{
-        echo null;
+        echo json_encode("null");
     }
 
 ?>
