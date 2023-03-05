@@ -109,7 +109,7 @@
                     <h1 class="text-center bg-dark text-white"><?php echo strtoupper($_SESSION['accountType']); ?></h1>
 
                     <!-- cashier -->
-                    <?php }else{?>
+                    <?php } else{?>
                     <h1 class="text-center bg-danger text-white">CASHIER</h1>
                     <?php }?>
 
@@ -124,31 +124,7 @@
                                     <th scope="col">ADD TO CART</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody1">
-                            <?php 
-                                $query = "select * from weboms_menu_tb";
-                                $resultSet =  getQuery2($query);
-                                if($resultSet != null)
-                                    foreach($resultSet as $row){ ?>
-                            <tr>
-                                <td class="dishes" ><?= $row['dish'];?></td>
-                                <td><?php echo "₱".number_format($row['price'],2); ?></td>
-                                <td class="stocks"><?php echo $row['stock']; ?></td>
-                                <!-- add to cart -->
-                                <td>
-                                    <!-- out of stock -->
-                                    <?php if($row['stock'] <= 0){ ?>
-                                        <a class="text-danger">Out of Stock</a>
-                                        <!-- not out of stock -->
-                                        <?php } else{ ?>
-                                                <?php $a = $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock'];?>
-                                                <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1" id="qty">
-                                                <button type="button" name="addToCartSubmit" onclick='AddToCart(this)' value="<?php echo $a; ?>" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
-                                    <?php } ?>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                            </tbody>
+                            <tbody id="tbody1"></tbody>
                         </table>
                     </div>
 
@@ -163,8 +139,7 @@
                                     <th scope="col" colspan="3">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody2">
-                            </tbody>
+                            <tbody id="tbody2"></tbody>
                         </table>
                             <input  id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
                             <input  id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
@@ -180,7 +155,40 @@
 
 </html>
 <script>
-    function refreshTable2(mode){
+    function createTable1(){
+         //get cart attributes
+         $.getJSON({
+            url: "ajax/pos_getMenuAttribute.php",
+            method: "post",
+            success: function(multiArrCart){
+                if(multiArrCart != "null"){
+                    // [dish][price][orderType][stock] 
+                    // update and refresh table body 2
+                    let tbody1 = "", total = 0;
+                    for(let i = 0; i < multiArrCart[0].length; i++){
+                    total += parseFloat(multiArrCart[1][i]) * parseInt(multiArrCart[2][i]);
+
+                    tbody1 +=
+                    "<tr>" +
+                        "<td class='dishes' >" + multiArrCart[0][i] + "</td>" +
+                        "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                        "<td class ='stocks'>" + multiArrCart[2][i] + "</td>" +
+                        "<td><input type='number' placeholder='Quantity' name='qty' class='form-control' value='1' id='qty' >" + 
+                        "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-light col-12'  style='border:1px solid #cccccc;' >" + "<i class='bi bi-cart-plus'></i>" + "</button></td>" +
+                    "</tr>";
+                    }
+
+                    $("#tbody1 tr").remove();
+                    $("#tbody1").append(tbody1);
+                }
+
+            },error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });
+    }
+
+    function refreshTable2(){
         //get cart attributes
         $.getJSON({
             url: "ajax/pos_getCartAttributes.php",
@@ -198,7 +206,7 @@
                     "<tr>" +
                         "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
                         "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
-                        "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                        "<td class='price'>" +'₱'+ multiArrCart[1][i] + "</td>" +
                         "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
                         "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
                         "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
@@ -218,63 +226,75 @@
                 else{
                     $("#tbody2 tr").find("#total").closest("tr").remove();
                 }
-
-                if(mode == 'firstLoad'){
-                    // subtract cart products quantity to db stock
-                    $("#tbody1 tr .dishes").each (function() {
-                        let stock = parseInt($(this).closest("tr").find(".stocks").text());
-                        if(multiArrCart[0].includes(this.innerHTML)){ 
-                            let index = multiArrCart[0].indexOf(this.innerHTML.toString().toLowerCase());
-                            stock -= multiArrCart[2][index];
-                        }
-                        if(stock == 0){
-                            $(this).closest("tr").find(".stocks").text("Out of Stock");
-                            return;
-                        }
-                        else if(stock < 0){
-                            // $("#tbody2 tr:contains('"+this.innerHTML+"')").remove();
-                            $("#tbody2 tr:contains('"+this.innerHTML+"')").css("background-color", "#808080");
-                            $(this).closest("tr").find(".stocks").closest('tr').css("background-color", "#808080");
-                            $(this).closest("tr").find(".stocks").text("Out of Stock");
-                            return;
-                        }
-                        $(this).closest("tr").find(".stocks").text(stock);
-                    });       
-                }
-                else{
-                    // subtract 
-                    let dish = $(mode).closest("tr").find('.dishes').text();
-                    let qty = parseInt($(mode).closest("td").find('[name="qty"]').val());
-                    let stocks = $(mode).closest("tr").find('.stocks').text();
-                    $.ajax({
-                        url: "ajax/pos_checkStockOriginalValue.php",
-                        method: "post",
-                        data: {'data':dish},
-                        success: function(originalStock){
-                            let quantity = parseInt($("#tbody2 tr:contains('"+dish+"')").find('.quantity').text());
-                            if(quantity > parseInt(originalStock)){
-                                $("#tbody2 tr:contains('"+dish+"')").css("background-color", "#808080");
-                            }
-                            else{
-                                $("#tbody2 tr:contains('"+dish+"')").css("background-color", "#FFFFFF");
-                            }
-                        }
-                    });
-
-                    if(stocks == 0){
-                        $(mode).closest("tr").find('.stocks').text("Out Of Stocks");
-                        return;
-                    }
-                    $(mode).closest("tr").find('.stocks').text(stocks-qty);
-                }
+            checkStock();
+            subtractTb2OnTb1();
 
             },error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("Status: " + textStatus); alert("Error: " + errorThrown);
             }
         });
     }
+
+    function subtractTb2OnTb1(){
+        $("#tbody2 tr .dishes").closest('tr').each (function() {
+            //tb2    
+            let tb2Tr = $(this);
+            let dish = tb2Tr.find('.dishes').text();
+            let quantity = parseInt(tb2Tr.find('.quantity').text());
+
+            //tb1
+            let tb1Tr = $("#tbody1 tr:contains('"+dish+"')");
+            let stockTd = tb1Tr.find('.stocks');
+            let stock = parseInt(stockTd.text());
+            
+            // original stock
+            $.ajax({
+                url: "ajax/pos_checkStockOriginalValue.php",
+                method: "post",
+                data: {'data':dish},
+                success: function(originalStock){
+                    if((originalStock-quantity) <= 0){
+                        stockTd.text("Out Of Stock");
+                        tb1Tr.css("background-color", "#808080");    
+                    }
+                    if((originalStock-quantity) < 0){
+                        tb2Tr.css("background-color", "#808080");    
+                    }
+                    else{
+                        tb2Tr.css("background-color", "#FFFFFF");
+                    }
+                }
+            });
+
+        }); 
+    }
     
-    refreshTable2('firstLoad');
+    function checkStock(){
+        $("#tbody1 tr .dishes").closest('tr').each (function() {
+            let tb1Tr = $(this);
+            let stockTd = tb1Tr.find('.stocks');
+            let stock = parseInt(stockTd.text());
+            if(stock <= 0){
+                stockTd.text("Out Of Stock");
+                tb1Tr.css("background-color", "#808080");    
+            }
+        }); 
+    }
+
+    createTable1();
+
+    // put out of stock and make background gray 
+    $("#tbody1 tr .dishes").each (function() {
+        let stock = parseInt($(this).closest("tr").find(".stocks").text());
+        if(stock <= 0){
+            $(this).closest("tr").find(".stocks").closest('tr').css("background-color", "#808080");
+            $(this).closest("tr").find(".stocks").text("Out of Stock");
+            return;
+        }
+    });
+
+    //call refreshTable to create table2 
+    refreshTable2();
 
     // global arrays    [dishes][prices][quantity][order type]
     var multiArrCart =  [[],[],[],[]];
@@ -305,14 +325,26 @@
             return;
         }
 
+        // decrease the stock in tb1
+        stock = stock - qty;
+        if(stock<=0){
+            $(button).closest("tr").find('.stocks').text("Out Of Stock");
+            $(button).closest("tr").css("background-color", "#808080");
+        }
+        else{
+            $(button).closest("tr").find('.stocks').text(stock);
+        }
+
+        subtractTb2OnTb1();
+
         // add value in cart table in db
         $.ajax({
             url: "ajax/pos_addToCartTable.php",
             method: "post",
-            data: {'data':JSON.stringify(arrayCart)}//,
-            // success: function(res){
-            //     refreshTable2(button);
-            // }
+            data: {'data':JSON.stringify(arrayCart)},
+            success: function(res){
+                refreshTable2();
+            }   
         });
       
     }
@@ -401,35 +433,38 @@
         arrayCart.push(button.value);
         arrayCart.push(1);
         let dish = $(button).closest("tr").find('[name="dish"]').text();
-        $("#tbody1 tr .dishes").each (function() {
-            if(this.innerHTML == dish){ 
-                let stock = $(this).closest("tr").find(".stocks").text();
-                let qty = $(button).closest("tr").find('[name="quantity"]');
-                let qtyInt = parseInt(qty.text()) + 1; 
-                if(isNaN(stock)){
-                    alert("Out of Stocks");
-                    return;
-                }
 
-                // add value in cart table in db
-                $.ajax({
-                    url: "ajax/pos_addToCartTable.php",
-                    method: "post",
-                    data: {'data':JSON.stringify(arrayCart)}
-                });
-                
-                stock = parseInt(stock);
-                stock--;
+        // validation
+        let stockTd = $("#tbody1 tr:contains('"+dish+"')").find('.stocks');
+        if(isNaN(stockTd.text())){
+            alert("Out of Stock!");
+        }
+        else{
+            // add value in cart table in db
+            $.ajax({
+                url: "ajax/pos_addToCartTable.php",
+                method: "post",
+                data: {'data':JSON.stringify(arrayCart)}
+            });
 
-                if(stock <= 0){
-                    $(this).closest("tr").find(".stocks").text("Out Of Stocks");
-                }
-                else{
-                    $(this).closest("tr").find(".stocks").text(stock);
-                }
-                qty.text(qtyInt);
+            // update tb1 stock
+            let stock = parseInt(stockTd.text()) - 1;
+            if(stock<=0){
+                stockTd.text("Out Of Stocks");
+                stockTd.closest("tr").css("background-color", "#808080");
             }
-        });       
+            else{
+                stockTd.text(stock);
+            }
+
+            // update tb2 quantity
+            let quantityTd = $("#tbody2 tr:contains('"+dish+"')").find('.quantity');
+            let quantity = parseInt(quantityTd.text()) + 1;
+            quantityTd.text(quantity);
+        }
+        computeTotal();
+        subtractTb2OnTb1();
+       
     }
 
     // decreaseQuantity
@@ -445,54 +480,50 @@
         $.ajax({
             url: "ajax/pos_subtractToCartTable.php",
             method: "post",
-            data: {'data':JSON.stringify(arrayCart)}
+            data: {'data':JSON.stringify(arrayCart)},
         });
-        $("#tbody1 tr .dishes").each (function() {
-            if(this.innerHTML == dish){ 
-                // init
-                var originalStock;
-                // tb2
-                let qty = $(button).closest("tr").find('[name="quantity"]');
-                let qtyInt = parseInt(qty.text()) - 1; 
-                let this0 = this;
-                // check original value
-                $.ajax({
-                    url: "ajax/pos_checkStockOriginalValue.php",
-                    method: "post",
-                    data: {'data':dish},
-                    success: function(originalStock){
-                        let stock = $(this0).closest("tr").find(".stocks").text();
-                        // tb 1
-                        if(isNaN(stock)){
-                            if(qtyInt < parseInt(originalStock)){
-                                $(this0).closest("tr").find(".stocks").text("1");
-                                qty.text(qtyInt);
-                                return;
-                            }
-                        }
-                        // tb 1
-                        if(qtyInt < parseInt(originalStock)){
-                            stock = parseInt(stock);
-                            stock++;
-                            $(this0).closest("tr").find(".stocks").text(stock);
-                        }
 
-                        if(qtyInt == parseInt(originalStock)){
-                            $(this0).closest("tr").css("background-color", "#FFFFFF");
-                            $(button).closest("tr").find('[name="dish"]').closest('tr').css("background-color", "#FFFFFF");
-                        }
-                        // remove tbody row 2 and the row of current button
-                        if(qtyInt == 0){
-                            $(button).closest("tr").find('[name="dish"]').closest('tr').remove();
-                            $("#tbody2 tr").eq(1).remove();
-                        }
-                        qty.text(qtyInt);
-                    }
-                });
-            }
-        });       
+        // update tb1 stock
+        let stockTd = $("#tbody1 tr:contains('"+dish+"')").find('.stocks');
+        if(isNaN(stockTd.text())){
+            stockTd.text("1");
+            stockTd.closest("tr").css("background-color", "#FFFFFF");
+        }
+        else{
+            let stock = parseInt(stockTd.text()) + 1;
+            stockTd.text(stock);
+        }
+
+        // update tb2 quantity
+        let quantityTd = $("#tbody2 tr:contains('"+dish+"')").find('.quantity');
+        let quantity = parseInt(quantityTd.text()) - 1;
+        if(quantity <= 0){
+            quantityTd.closest('tr').remove();
+        }
+        else{
+            quantityTd.text(quantity);
+        }
+
+        computeTotal();
+        subtractTb2OnTb1();
     }
 
+    function computeTotal(){
+        let totalTr = $("#tbody2 tr").find("#total"); 
+        let total = 0;
+        $("#tbody2 tr .dishes").closest('tr').each (function() {
+            //tb2    
+            let tb2Tr = $(this);
+            let dish = tb2Tr.find('.dishes').text();
+            let quantity = parseInt(tb2Tr.find('.quantity').text());
+            let price = parseInt(tb2Tr.find('.price').text().slice(1));
+            total += (price*quantity);
+        }); 
+        totalTr.text("₱"+total);
+        if(total <= 0){
+            $("#tbody2 tr").find("#total").closest("tr").remove();
+        }
+    }
 
     function removeRow(button){
         // user_id, orderType
@@ -523,9 +554,10 @@
                         button.closest("tr").remove();
                     }
                 });    
-           
+                computeTotal();
             }
         });
+        
     }
     
 </script>
