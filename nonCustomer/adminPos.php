@@ -185,6 +185,7 @@
                             { "targets": [3], "orderable": false }
                         ]});
                     }
+                    checkStock();
                 }
 
             },error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -300,7 +301,6 @@
 
     // global arrays    [dishes][prices][quantity][order type]
     var multiArrCart =  [[],[],[],[]];
-    var total = 0;
 
     // add to cart
     function AddToCart(button){
@@ -382,41 +382,89 @@
         otherAttributes.push('<?php echo $_SESSION['name']; ?>');
         otherAttributes.push(customer);
         otherAttributes.push(cash);
-        // get total
-            // get total
-        total = 0;
-        for(let i=0; i<multiArrCart[1].length; i++){    
-            total = total + multiArrCart[1][i];
+        
+        let cont = true;
+
+        $("#tbody2 tr ").each (function() {
+            let bg = $(this).find('.dishes').closest('tr').css('background-color');
+            if(bg == 'rgb(128, 128, 128)'){
+                cont = false;
+            }
+        });
+
+        if(cont == false){
+            alert('Please decrease some order in your cart!');
+            return;
         }
-        otherAttributes.push(total);
+       
         if(cash == ""){
             alert('Please Enter Amount');
             return;
         }
-        if (total == 0) {
+        if ($('#tbody2 tr').length == 0) {
             alert('Please place your order!');
             return;
         }
-        if (cash >= total) {
-            $.ajax({
-            url: "ajax/pos_insertOrder.php",
-            method: "post",
-            data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
-            success: function(){
-                // clean this window variables
-                multiArrCart =  [[],[],[],[]];
-                document.getElementById("tbody2").innerHTML = "";
-                document.getElementById("customerName").value = "";
-                document.getElementById("cashNum").value = "";
-                // open receipt in new tab
-                alert("Success placing order!");
-                window.open("../pdf/receipt.php");
-            }
-            });
-        }
-        else{
+
+       
+        let total = parseInt($("#tbody2 tr").find("#total").text().slice(1));
+
+        if (cash < total) {
             alert("Amount Less than total!");
+            return;
         }
+
+        
+
+        otherAttributes.push(total);
+
+        //get cart attributes
+        $.getJSON({
+            url: "ajax/pos_getCartAttributes.php",
+            method: "post",
+            data: {'user_id':<?php echo $_SESSION['user_id'];?>},
+            success: function(multiArrCart){
+                if(multiArrCart != "null"){
+                    // insert the order
+                    $.ajax({
+                    url: "ajax/pos_insertOrder.php",
+                    method: "post",
+                    data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
+                    success: function(){
+                        // subtract cart qty to menu stock
+                        $.ajax({
+                        url: "ajax/pos_subtractCartOnMenuTb.php",
+                        method: "post",
+                        data: {'multiArrCart':JSON.stringify(multiArrCart)},
+                        success: function(res){
+                            // clear the cart
+                            $.ajax({
+                            url: "ajax/pos_clearCart.php",
+                            method: "post",
+                            data: {'data':JSON.stringify(<?php echo $_SESSION['user_id'];?>)},
+                            success: function(res){
+                                createTable1("clear");
+                                $("#tbody2 tr").each (function() {
+                                    this.remove();
+                                });
+                                document.getElementById("tbody2").innerHTML = "";
+                                document.getElementById("customerName").value = "";
+                                document.getElementById("cashNum").value = "";
+                                // open receipt in new tab
+                                alert("Success placing order!");
+                                window.open("../pdf/receipt.php");
+                            }
+                            });
+                        }
+                        });
+                    }
+                    });
+                }
+            },error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });
+
     });
 
 
@@ -556,3 +604,11 @@
     }
     
 </script>
+
+<?php 
+    // logout button
+    if(isset($_POST['logout'])){
+        session_destroy();
+        echo "<script>window.location.replace('../general/login.php');</script>";
+    }
+?>
