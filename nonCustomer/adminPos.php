@@ -261,6 +261,12 @@
                         tb2Tr.css("background-color", "#808080");    
                     }
                     else{
+                        if(originalStock-quantity == 0){
+                            stockTd.text("Out of Stock");
+                        }
+                        else{
+                            stockTd.text(originalStock-quantity);
+                        }
                         tb2Tr.css("background-color", "#FFFFFF");
                     }
                 }
