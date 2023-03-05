@@ -155,7 +155,7 @@
 
 </html>
 <script>
-    function createTable1(){
+    function createTable1(callIsFrom){
          //get cart attributes
          $.getJSON({
             url: "ajax/pos_getMenuAttribute.php",
@@ -177,9 +177,14 @@
                         "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-light col-12'  style='border:1px solid #cccccc;' >" + "<i class='bi bi-cart-plus'></i>" + "</button></td>" +
                     "</tr>";
                     }
-
                     $("#tbody1 tr").remove();
                     $("#tbody1").append(tbody1);
+                    if(callIsFrom != 'clear'){
+                        $('#tBody1').dataTable({
+                        "columnDefs": [
+                            { "targets": [3], "orderable": false }
+                        ]});
+                    }
                 }
 
             },error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -276,6 +281,7 @@
     }
     
     function checkStock(){
+        // put out of stock and make background gray 
         $("#tbody1 tr .dishes").closest('tr').each (function() {
             let tb1Tr = $(this);
             let stockTd = tb1Tr.find('.stocks');
@@ -288,16 +294,6 @@
     }
 
     createTable1();
-
-    // put out of stock and make background gray 
-    $("#tbody1 tr .dishes").each (function() {
-        let stock = parseInt($(this).closest("tr").find(".stocks").text());
-        if(stock <= 0){
-            $(this).closest("tr").find(".stocks").closest('tr').css("background-color", "#808080");
-            $(this).closest("tr").find(".stocks").text("Out of Stock");
-            return;
-        }
-    });
 
     //call refreshTable to create table2 
     refreshTable2();
@@ -365,18 +361,16 @@
     // clear
     document.getElementById("clear").addEventListener("click", () => {  
         $.ajax({
-            url: "ajax/pos_addStocks.php",
+            url: "ajax/pos_clearCart.php",
             method: "post",
-            data: {'data':JSON.stringify(multiArrCart)},
-            success: function(){
-                // refresh tbody1
-                $.get("ajax/pos_tbody1.php", function(tbody1) {
-                    $("#tbody1").html(tbody1);
+            data: {'data':JSON.stringify(<?php echo $_SESSION['user_id'];?>)},
+            success: function(res){
+                createTable1("clear");
+                $("#tbody2 tr").each (function() {
+                    this.remove();
                 });
             }
         });
-        multiArrCart =  [[],[],[],[]];
-        document.getElementById("tbody2").innerHTML = "";
     });
 
     //order button (js)
@@ -423,11 +417,6 @@
         else{
             alert("Amount Less than total!");
         }
-    });
-
-    // data table
-    $(document).ready(function() {
-        $('#tBody1').DataTable();
     });
 
 
