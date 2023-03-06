@@ -143,10 +143,81 @@
                         </table>
                             <input  id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
                             <input  id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
-                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-3" name="orderBtn">Place Order</button>
+                            <button id="payThruRfid" type="submit" class="btn btn-lg btn-secondary col-12 mb-1" name="orderBtn">PAY THROUGH RFID</button>
+                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-1" name="orderBtn">Place Order</button>
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                     </div>
                 </div>
+
+                <!-- RFID SCANNER (modal)-->
+                <div class="modal fade" role="dialog" id="rfid">
+                    <div class="modal-dialog">
+                        <div class="modal-content modal-content-scanner">
+                            <div class="modal-body">
+                            <input type="text" id="rfidInput">                            
+                                <div class="ocrloader">
+                                    <em></em>
+                                    <div>Binding RFID</div>                                                               
+                                    <span></span>
+                                </div>
+                                <div class="loading">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                </div>
+                                <br></br>
+                                <br></br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Crendential (modal)-->
+                <div class="modal fade" role="dialog" id="credentialTable">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                             <!-- profile pic -->
+                             <div class="table-responsive col-lg-12">
+                                    <table class="table table-bordered table-hover col-lg-12" id="tableProfile">
+                                        <tbody>
+                                            <img id="profilePic" src="../pic/unknown.png" style="width:200px;height:200px;border-radius:10rem;" class="mb-3"> 
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- customer credential table-->
+                                <div class="table-responsive col-lg-12">
+                                    <table class="table table-bordered table-hover col-lg-12" id="tableInformation">
+                                        <thead class="table-dark text-white">
+                                            <th>Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Gender</th>
+                                            <th>Phone Number</th>
+                                            <th>Address</th>
+                                            <th>Balance</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button type='button' id="confirm" class="btn btn-lg btn-success col-12 mb-1">Confirm</button>
+                                <button type='button' id="cancel" class="btn btn-lg btn-danger col-12">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -155,6 +226,169 @@
 
 </html>
 <script>
+    var customer,cash,otherAttributes = [];
+    var userIdAndTotal = [];
+
+    $(document).ready(function(){
+        // modal trigger
+        $("#payThruRfid").click(function(){
+            $('#rfid').modal('show');
+        });
+
+        $("#confirm").click(function(){
+            // trigger order
+            otherAttributes = [];     // staff, customer, cash, total
+            otherAttributes.push('<?php echo $_SESSION['name']; ?>');
+            otherAttributes.push(customer);
+         
+            
+            let cont = true;
+
+            $("#tbody2 tr ").each (function() {
+                let bg = $(this).find('.dishes').closest('tr').css('background-color');
+                if(bg == 'rgb(128, 128, 128)'){
+                    cont = false;
+                }
+            });
+
+            if(cont == false){
+                alert('Please decrease some order in your cart!');
+                return;
+            }
+        
+            if ($('#tbody2 tr').length == 0) {
+                alert('Please place your order!');
+                return;
+            }
+
+        
+            let total = parseInt($("#tbody2 tr").find("#total").text().slice(1));
+
+            if (cash < total) {
+                alert("Amount Less than total!");
+                return;
+            }
+            cash = total;
+            userIdAndTotal.push(total);
+            otherAttributes.push(cash);
+            otherAttributes.push(total);
+
+            //get cart attributes
+            $.getJSON({
+                url: "ajax/pos_getCartAttributes.php",
+                method: "post",
+                data: {'user_id':<?php echo $_SESSION['user_id'];?>},
+                success: function(multiArrCart){
+                    if(multiArrCart != "null"){
+                        // compute price
+                        for(let i=0; i<multiArrCart[0].length; i++){
+                            multiArrCart[1][i] = multiArrCart[1][i]*multiArrCart[2][i]; 
+                        }
+                        // insert the order
+                        $.ajax({
+                        url: "ajax/pos_insertOrder.php",
+                        method: "post",
+                        data: {'multiArrCart':JSON.stringify(multiArrCart),'otherAttributes':JSON.stringify(otherAttributes)},
+                        success: function(){
+                            // subtract cart qty to menu stock
+                            $.ajax({
+                            url: "ajax/pos_subtractCartOnMenuTb.php",
+                            method: "post",
+                            data: {'multiArrCart':JSON.stringify(multiArrCart)},
+                            success: function(){
+                                // subtract cart total to customer balance
+                                $.ajax({
+                                url: "ajax/pos_subtractOrderToCustomerBalance.php",
+                                method: "post",
+                                data: {'userIdAndTotal':JSON.stringify(userIdAndTotal)},
+                                success: function(res){
+                                    console.log(res);
+                                    // clear the cart
+                                    $.ajax({
+                                    url: "ajax/pos_clearCart.php",
+                                    method: "post",
+                                    data: {'data':JSON.stringify(<?php echo $_SESSION['user_id'];?>)},
+                                    success: function(){
+                                        createTable1("clear");
+                                        $("#tbody2 tr").each (function() {
+                                            this.remove();
+                                        });
+                                        document.getElementById("tbody2").innerHTML = "";
+                                        document.getElementById("customerName").value = "";
+                                        document.getElementById("cashNum").value = "";
+                                        $('#credentialTable').modal('hide');
+                                        // open receipt in new tab
+                                        alert("Success placing order!");
+                                        window.open("../pdf/receipt.php");
+                                    }
+                                    });
+                                }
+                                });
+                            }
+                            });
+                        }
+                        });
+                    }
+                },error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+            });
+        });
+
+        $("#cancel").click(function(){
+            $('#credentialTable').modal('hide');
+        });
+
+        // focus on textbox
+        $("#rfid").on('shown.bs.modal', function(){
+            $(this).find('input[type="text"]').val('');
+            $(this).find('input[type="text"]').focus();
+        });
+
+        // show credential table
+        $('#rfidInput').keyup(function(){
+            if($(this).val().length == 10){
+                let rfid = rfidGlobal= $(this).val();
+                $.ajax({
+                    url: "ajax/topupRfid_getUserAttributes.php",
+                    type: "POST",
+                    data: {'data':rfid},
+                    success: function(attributes){  
+                        $(this).val('');
+                        $('#rfid').modal('hide');
+                        if(attributes == false){
+                            alert("RFID Do not exist!");
+                            return;
+                        }
+                        $('#rfid').modal('hide');
+                        $('#credentialTable').modal('show');
+                     
+                        let arr = attributes.split(",") , i = 0; 
+                        $("#tableInformation td").each(function() {
+                            if(i == 6)
+                                $(this).html('₱'+arr[i]);
+                            else
+                                $(this).html(arr[i]);
+                            i++;
+                        });
+                        customer = arr[0];
+                        cash = arr[6];
+                        userIdAndTotal.push(arr[8]);
+                        let src;
+                        if(arr[7] != '')
+                            src = '../profilePic/'+arr[7];
+                        else
+                            src = '../pic/unknown.png';
+                        $("#profilePic").attr("src",src);
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                    }     
+                });
+            }
+        });
+    });
+
     function createTable1(callIsFrom){
          //get cart attributes
          $.getJSON({
@@ -377,9 +611,9 @@
     //order button (js)
     document.getElementById("orderBtn").addEventListener("click", () => {
         // staff, customer, cash, total
-        let otherAttributes = [];
-        var customer =  document.getElementById("customerName").value;
-        var cash = document.getElementById("cashNum").value;
+        otherAttributes = [];
+        customer =  document.getElementById("customerName").value;
+        cash = document.getElementById("cashNum").value;
         otherAttributes.push('<?php echo $_SESSION['name']; ?>');
         otherAttributes.push(customer);
         otherAttributes.push(cash);
@@ -642,3 +876,152 @@
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
+<style>
+   .modal-content-scanner{
+        width: 800px;
+        height: 500px;
+        position: absolute;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #fff;
+        font-family: Sans-Serif;
+        font-size: 30px;  
+        top: 120px;           
+    }
+
+    .ocrloader { 
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background: url(rfid01.png);
+        background-size: 300px;    
+    }
+    .ocrloader:before {
+        content:'';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; 
+        background: url(rfid02.png);
+        background-size: 300px;
+        filter: drop-shadow(0 0 3px #00FFFF) drop-shadow(0 0 7px #00FFFF);
+        overflow: hidden;
+        animation: animate 2s linear infinite;
+    }
+    @keyframes animate
+    {
+        0%, 50%, 100%
+        {
+            height: 0%;
+        }
+        50%
+        {
+            height: 70%;
+        }
+        75%
+        {
+            height: 100%;
+        }
+    }
+    .ocrloader span {
+        content:'';
+        position: absolute;
+        inset: 1px;
+        width: calc(100% - 2px);
+        height: 3px;
+        background-color: #fff;
+        animation: animateLine 2s linear infinite;
+    }
+    @keyframes animateLine{
+        0%
+        {
+            top: 1px;
+        }
+        50%
+        {
+            top: 225px;
+        }
+        75%
+        {
+            top: 300px;
+        }
+    }
+    *{margin: 0; padding: 0;}
+    .loading span {
+        position: relative;
+        left: 220px;
+        top: 35px;       
+        width: 10px;
+        height: 10px;       
+        background-color: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        animation-name: dots;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #fff);
+    }
+
+    .loading span:nth-child(2){
+        animation-delay: 0.4s;
+    }
+    .loading span:nth-child(3){
+        animation-delay: 0.8s;
+    }
+
+    @keyframes dots{
+        50%{
+            opacity: 0;
+            transform: scale(0.7) translateY(10px);
+        }
+    }
+    .ocrloader > div {
+        z-index: 1;
+        position: absolute;
+        left: 62%;
+        top: 120%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        backface-visibility: hidden;
+        filter: drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px #fff);
+    }
+    .ocrloader em:after,
+    .ocrloader em:before {
+        border-color: #fff;
+        content: "";
+        position: absolute;
+        width: 19px;
+        height: 16px;
+        border-style: solid;
+        border-width: 0px;
+    }
+    .ocrloader:before {
+        left: 0;
+        top: 0;
+        border-left-width: 1px;
+        border-top-width: 1px;
+    }
+    .ocrloader:after {
+        right: 0;
+        top: 0;
+        border-right-width: 1px;
+        border-top-width: 1px;
+    }
+    .ocrloader em:before {
+        left: 0;
+        bottom: 0;
+        border-left-width: 1px;
+        border-bottom-width: 1px;
+    }
+    .ocrloader em:after {
+        right: 0;
+        bottom: 0;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+    }
+    
+    #rfidInput{
+        opacity: 0;
+    }
+</style>

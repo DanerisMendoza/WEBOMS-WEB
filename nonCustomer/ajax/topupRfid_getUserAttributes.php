@@ -14,6 +14,7 @@
             array_push($attributes,$row['address']);
             array_push($attributes,$row['balance']);
             array_push($attributes,$row['picName']);
+            array_push($attributes,$row['user_id']);
         }
         echo implode(",",$attributes); 
     }

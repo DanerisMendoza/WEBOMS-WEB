@@ -224,6 +224,7 @@
         $(this).find('input[type="text"]').val('');
         $(this).find('input[type="text"]').focus();
     });
+    
     // trigger this block when card is scanned
     var move = true;
     $('#rfidInput').keyup(function(){
@@ -260,7 +261,7 @@
             }     
         });
         }
-});
+    });
 
 </script>
 
