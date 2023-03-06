@@ -187,7 +187,7 @@
             <!-- RFID SCANNER (modal)-->
             <div class="modal fade" role="dialog" id="rfid">
                 <div class="modal-dialog">
-                    <div class="modal-content">                     
+                    <div class="modal-content scanner">                     
                         <div class="modal-body">                                                    
                             <input type="text" id="rfidInput">                            
                             <div class="ocrloader">
@@ -488,7 +488,7 @@ function rfid(button){
 
 <style>
     
-    .modal-content{
+    .scanner{
         width: 800px;
         height: 500px;
         position: absolute;
