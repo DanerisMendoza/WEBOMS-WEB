@@ -174,7 +174,7 @@
                 
                 <!-- Crendential (modal)-->
                 <div class="modal fade" role="dialog" id="credentialTable">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-body">
                              <!-- profile pic -->

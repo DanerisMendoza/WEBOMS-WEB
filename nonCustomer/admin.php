@@ -6,6 +6,78 @@
     // redefining name
     $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 
+    $todaySold = 0; 
+    $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearSoldMultiArr = [[],[]]; 
+    // current week total sold
+    $resultSet = getQuery2("SELECT totalOrder FROM `weboms_order_tb`WHERE DAY(date) = DAY(NOW()) AND status = 'complete' ");
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $todaySold += $row['totalOrder'];
+        }
+    }
+
+
+    $currentWeekSold = $i = 0;
+    // current week total sold
+    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE WEEK(date) = WEEK(NOW()) AND status = 'complete' ");
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $currentWeekSold += $row['totalOrder'];
+            $day = date('l', strtotime($row['date']));
+            if(in_array($day, $dailySoldMultiArr[0])){
+                $index = array_search($day, $dailySoldMultiArr[0]);
+                $dailySoldMultiArr[1][$index] += 1;
+            }
+            else{
+                $dailySoldMultiArr[0][$i] = $day;
+                $dailySoldMultiArr[1][$i] = 1;
+            }
+            $i++;
+        }
+    }
+
+
+    $currentMonthSold = $i = 0;
+    // current month total sold
+    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE MONTH(date) = MONTH(NOW()) AND status = 'complete' ");
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $currentMonthSold += $row['totalOrder'];
+            $week = 'Week no.'.date('w', strtotime($row['date']));
+            if(in_array($week, $weeklySoldMultiArr[0])){
+                $index = array_search($week, $weeklySoldMultiArr[0]);
+                $weeklySoldMultiArr[1][$index] += 1;
+            }
+            else{
+                $weeklySoldMultiArr[0][$i] = $week;
+                $weeklySoldMultiArr[1][$i] = 1;
+            }
+            $i++;
+        }
+    }
+
+    $currentYearSold = $i = 0;
+    // current month total sold
+    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE Year(date) = Year(NOW()) AND status = 'complete' ");
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $currentMonthSold += $row['totalOrder'];
+            $week = date('M', strtotime($row['date']));
+            if(in_array($week, $monthlySoldMultiArr[0])){
+                $index = array_search($week, $monthlySoldMultiArr[0]);
+                $monthlySoldMultiArr[1][$index] += 1;
+            }
+            else{
+                array_push($monthlySoldMultiArr[0],$week);
+                array_push($monthlySoldMultiArr[1],1);
+            }
+            $i++;
+        }
+    }
+    
+    print_r($monthlySoldMultiArr);
+
+
     // graph init
     $dishesArr = array();
     $qantityArr = array();
@@ -169,7 +241,7 @@
             <!-- content here -->
             <div class="container-fluid text-center ">
                 <div class="row justify-content-center">
-                    <div class="table-responsive col-lg-12 mb-4">
+                    <div class="table-responsive col-lg-6 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Total Amount of Stock:</b></td>
@@ -185,13 +257,40 @@
                             </tr>
                         </table>
                     </div>
+                    <div class="table-responsive col-lg-6 mb-4">
+                        <table class="table table-bordered table-hover col-lg-12">
+                            <tr>
+                                <td><b>Today Sale:</b></td>
+                                <td><?php echo "₱".$todaySold?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Current Week Sale:</b></td>
+                                <td><?php echo "₱".$currentWeekSold?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Current Month Sale:</b></td>
+                                <td><?php echo "₱".$currentMonthSold?></td>
+                            </tr>
+                        </table>
+                    </div>
                     <div class="row">
-                        <div class="clearfix"></div>
                         <div class="col-md-6 mb-4">
                             <div class="chart" id="piechart"></div>
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="chart" id="columnchart"></div> 
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="chart" id="columnchart2"></div> 
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="chart" id="columnchart3"></div> 
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="chart" id="columnchart4"></div> 
                         </div>
                     </div>
                 </div>
@@ -211,9 +310,9 @@
     var data = google.visualization.arrayToDataTable([
         ['name', 'cost'],
         <?php if($countOfSold != null){?>
-            ['Sold',<?php echo $countOfSold?>],
+        ['Sold',<?php echo $countOfSold?>],
         <?php }if($stockLeft != null){ ?>
-            ['Stock Left',<?php echo $stockLeft?>]
+        ['Stock Left',<?php echo $stockLeft?>]
         <?php } ?>
     ]);
 
@@ -235,7 +334,6 @@
     function drawCoLumnChart() {
     var data = new google.visualization.arrayToDataTable([
     ['Order Counts', 'Order Counts'],
-
         <?php
             if($multiArr != null){
                 $i = 0;
@@ -249,6 +347,47 @@
             }
         ?>
     ]);
+  
+    var data2 = new google.visualization.arrayToDataTable([
+    ['Daily Sold Counts', 'Daily Sold Counts'],
+        <?php
+            if($dailySoldMultiArr != null){
+                for($i=0; $i<sizeof($dailySoldMultiArr[0]); $i++){
+                    $day = $dailySoldMultiArr[0][$i];
+                    $count = $dailySoldMultiArr[1][$i];
+                    echo "['$day','$count'],";
+                }
+            }
+        ?>
+    ]);
+
+    var data3 = new google.visualization.arrayToDataTable([
+    ['Weekly Sold Counts', 'Weekly Sold Counts'],
+        <?php
+            if($weeklySoldMultiArr != null){
+                for($i=0; $i<sizeof($weeklySoldMultiArr[0]); $i++){
+                    $week = $weeklySoldMultiArr[0][$i];
+                    $count = $weeklySoldMultiArr[1][$i];
+                    echo "['$week','$count'],";
+                }
+            }
+        ?>
+    ]);
+
+    var data4 = new google.visualization.arrayToDataTable([
+    ['Monthly Sold Counts', 'Monthly Sold Counts'],
+        <?php
+            if($monthlySoldMultiArr != null){
+                for($i=0; $i<sizeof($monthlySoldMultiArr[0]); $i++){
+                    $month = $monthlySoldMultiArr[0][$i];
+                    $count = $monthlySoldMultiArr[1][$i];
+                    echo "['$month','$count'],";
+                }
+            }
+        ?>
+    ]);
+
+ 
 
     var options = {
         backgroundColor: '',
@@ -260,10 +399,49 @@
         },
         bar: { groupWidth: "90%" }
     };
+  
+    var options2 = {
+        backgroundColor: '',
+        legend: { position: 'none' },
+        chart: {
+        title: 'Current Week',
+        subtitle: '' },
+        axes: {
+        },
+        bar: { groupWidth: "90%" }
+    };
+
+    var options3 = {
+        backgroundColor: '',
+        legend: { position: 'none' },
+        chart: {
+        title: 'Current Month',
+        subtitle: '' },
+        axes: {
+        },
+        bar: { groupWidth: "90%" }
+    };
+
+    var options4 = {
+        backgroundColor: '',
+        legend: { position: 'none' },
+        chart: {
+        title: 'Current Year',
+        subtitle: '' },
+        axes: {
+        },
+        bar: { groupWidth: "90%" }
+    };
 
     var chart = new google.charts.Bar(document.getElementById('columnchart'));
+    var chart2 = new google.charts.Bar(document.getElementById('columnchart2'));
+    var chart3 = new google.charts.Bar(document.getElementById('columnchart3'));
+    var chart4 = new google.charts.Bar(document.getElementById('columnchart4'));
     // Convert the Classic options to Material options.
     chart.draw(data, google.charts.Bar.convertOptions(options));
+    chart2.draw(data2, google.charts.Bar.convertOptions(options2));
+    chart3.draw(data3, google.charts.Bar.convertOptions(options3));
+    chart4.draw(data4, google.charts.Bar.convertOptions(options4));
     };
 
     // sidebar toggler
