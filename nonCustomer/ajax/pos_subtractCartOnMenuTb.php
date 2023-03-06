@@ -8,5 +8,4 @@
         $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
         Query3($updateQuery);
       }
-      // print_r($arr);
 ?>

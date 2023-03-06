@@ -171,7 +171,7 @@
                     tbody1 +=
                     "<tr>" +
                         "<td class='dishes' >" + multiArrCart[0][i] + "</td>" +
-                        "<td>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                        "<td class='price' >" +'₱'+ multiArrCart[1][i] + "</td>" +
                         "<td class ='stocks'>" + multiArrCart[2][i] + "</td>" +
                         "<td><input type='number' placeholder='Quantity' name='qty' class='form-control' value='1' id='qty' >" + 
                         "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-light col-12'  style='border:1px solid #cccccc;' >" + "<i class='bi bi-cart-plus'></i>" + "</button></td>" +
@@ -212,7 +212,7 @@
                     "<tr>" +
                         "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
                         "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
-                        "<td class='price'>" +'₱'+ multiArrCart[1][i] + "</td>" +
+                        "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>" +
                         "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
                         "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
                         "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
@@ -255,7 +255,7 @@
             
             // original stock
             $.ajax({
-                url: "ajax/pos_checkStockOriginalValue.php",
+                url: "ajax/pos_getStockOriginalValue.php",
                 method: "post",
                 data: {'data':dish},
                 success: function(originalStock){
@@ -329,6 +329,7 @@
 
         // decrease the stock in tb1
         stock = stock - qty;
+        
         if(stock<=0){
             $(button).closest("tr").find('.stocks').text("Out Of Stock");
             $(button).closest("tr").css("background-color", "#808080");
@@ -414,8 +415,6 @@
             return;
         }
 
-        
-
         otherAttributes.push(total);
 
         //get cart attributes
@@ -425,6 +424,10 @@
             data: {'user_id':<?php echo $_SESSION['user_id'];?>},
             success: function(multiArrCart){
                 if(multiArrCart != "null"){
+                    // compute price
+                    for(let i=0; i<multiArrCart[0].length; i++){
+                        multiArrCart[1][i] = multiArrCart[1][i]*multiArrCart[2][i]; 
+                    }
                     // insert the order
                     $.ajax({
                     url: "ajax/pos_insertOrder.php",
@@ -436,13 +439,13 @@
                         url: "ajax/pos_subtractCartOnMenuTb.php",
                         method: "post",
                         data: {'multiArrCart':JSON.stringify(multiArrCart)},
-                        success: function(res){
+                        success: function(){
                             // clear the cart
                             $.ajax({
                             url: "ajax/pos_clearCart.php",
                             method: "post",
                             data: {'data':JSON.stringify(<?php echo $_SESSION['user_id'];?>)},
-                            success: function(res){
+                            success: function(){
                                 createTable1("clear");
                                 $("#tbody2 tr").each (function() {
                                     this.remove();
@@ -504,6 +507,14 @@
             let quantityTd = $("#tbody2 tr:contains('"+dish+"')").find('.quantity');
             let quantity = parseInt(quantityTd.text()) + 1;
             quantityTd.text(quantity);
+   
+            // update tb2 price
+            let priceTd1 = $("#tbody1 tr:contains('"+dish+"')").find('.price');
+            let priceTd2 = $("#tbody2 tr:contains('"+dish+"')").find('.price');
+            let price = parseInt(priceTd1.text().slice(1));
+            let price2 = parseInt(priceTd2.text().slice(1));
+            let p = price2+price;
+            priceTd2.text("₱"+p);
         }
         computeTotal();
         subtractTb2OnTb1();
@@ -547,6 +558,14 @@
             quantityTd.text(quantity);
         }
 
+        // update tb2 price
+        let priceTd1 = $("#tbody1 tr:contains('"+dish+"')").find('.price');
+        let priceTd2 = $("#tbody2 tr:contains('"+dish+"')").find('.price');
+        let price = parseInt(priceTd1.text().slice(1));
+        let price2 = parseInt(priceTd2.text().slice(1));
+        let p = price2-price;
+        priceTd2.text("₱"+p);
+
         computeTotal();
         subtractTb2OnTb1();
     }
@@ -585,9 +604,20 @@
                 $("#tbody1 tr .dishes").each (function() {
                     if(this.innerHTML == dish){ 
                         let stock = $(this).closest("tr").find(".stocks").text();
+                        let this0 = this;
                         if(isNaN(stock)){
-                            $(this).closest("tr").find(".stocks").text(quantity);
+
+                            $.ajax({
+                                url: "ajax/pos_getStockOriginalValue.php",
+                                method: "post",
+                                data: {'data':dish},
+                                success: function(originalStock){
+                                    $(this0).closest("tr").find(".stocks").text(originalStock);
+                                }
+                            });
+
                         }
+
                         else{
                             stock = parseInt(stock);
                             stock+=parseInt(quantity);
