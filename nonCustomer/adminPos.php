@@ -458,6 +458,7 @@
                         "<td colspan='2'> <b>Total Amount:</b> </td>" +
                         "<td id='total'><b>₱"+total+"</b></td>"+
                         "<td></td>"+
+                        "<td></td>"+
                         "<td></td>"
                     "</tr>";
                     $("#tbody2 tr").remove();
