@@ -84,7 +84,7 @@
                             </div>
                             <!-- login here -->
                             <div class="text-center text-muted">
-                                Have already an account? <a href="../general/login.php" class="login_link text-muted text-decoration-none">Log in here</a>
+                                Have already an account? <a href="../general/login.php" class="login_link text-muted text-decoration-none"><b><u>Log in here</a></b></u>
                             </div>
                         </form>
                     </div>
