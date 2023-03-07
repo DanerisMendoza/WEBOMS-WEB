@@ -7,7 +7,7 @@
     $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 
     $todaySold = 0; 
-    $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearSoldMultiArr = [[],[]]; 
+    $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearlySoldMultiArr = [[],[]]; 
     // current week total sold
     $resultSet = getQuery2("SELECT totalOrder FROM `weboms_order_tb`WHERE DAY(date) = DAY(NOW()) AND status = 'complete' ");
     if($resultSet!=null){
@@ -49,6 +49,7 @@
                 $weeklySoldMultiArr[1][$index] += 1;
             }
             else{
+                
                 $weeklySoldMultiArr[0][$i] = $week;
                 $weeklySoldMultiArr[1][$i] = 1;
             }
@@ -57,27 +58,43 @@
     }
 
     $currentYearSold = $i = 0;
-    // current month total sold
+    // current year total sold
     $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE Year(date) = Year(NOW()) AND status = 'complete' ");
     if($resultSet!=null){
         foreach($resultSet as $row){
-            $currentMonthSold += $row['totalOrder'];
-            $week = date('M', strtotime($row['date']));
-            if(in_array($week, $monthlySoldMultiArr[0])){
-                $index = array_search($week, $monthlySoldMultiArr[0]);
+            $currentYearSold += $row['totalOrder'];
+            $month = date('M', strtotime($row['date']));
+            if(in_array($month, $monthlySoldMultiArr[0])){
+                $index = array_search($month, $monthlySoldMultiArr[0]);
                 $monthlySoldMultiArr[1][$index] += 1;
             }
             else{
-                array_push($monthlySoldMultiArr[0],$week);
+                array_push($monthlySoldMultiArr[0],$month);
                 array_push($monthlySoldMultiArr[1],1);
             }
             $i++;
         }
     }
+
+    $totalSold = $i = 0;
+    // total sold
+    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE status = 'complete' ");
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $totalSold += $row['totalOrder'];
+            $year = date('Y', strtotime($row['date']));
+            if(in_array($year, $yearlySoldMultiArr[0])){
+                $index = array_search($year, $yearlySoldMultiArr[0]);
+                $yearlySoldMultiArr[1][$index] += 1;
+            }
+            else{
+                array_push($yearlySoldMultiArr[0],$year);
+                array_push($yearlySoldMultiArr[1],1);
+            }
+            $i++;
+        }
+    }
     
-    print_r($monthlySoldMultiArr);
-
-
     // graph init
     $dishesArr = array();
     $qantityArr = array();
@@ -255,6 +272,10 @@
                                 <td><b>Total Count of Sold:</b></td>
                                 <td><?php echo $countOfSold?></td>
                             </tr>
+                            <tr>
+                                <td><b>Total Sold:</b></td>
+                                <td><?php echo "₱".$totalSold?></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="table-responsive col-lg-6 mb-4">
@@ -271,6 +292,10 @@
                                 <td><b>Current Month Sale:</b></td>
                                 <td><?php echo "₱".$currentMonthSold?></td>
                             </tr>
+                            <tr>
+                                <td><b>Current Year Sale:</b></td>
+                                <td><?php echo "₱".$currentYearSold?></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="row">
@@ -283,16 +308,24 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 mb-4">
+                        <div class="col-md-6 mb-4">
                             <div class="chart" id="columnchart2"></div> 
                         </div>
-                        <div class="col-md-4 mb-4">
+                        <div class="col-md-6 mb-4">
                             <div class="chart" id="columnchart3"></div> 
                         </div>
-                        <div class="col-md-4 mb-4">
+                        
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
                             <div class="chart" id="columnchart4"></div> 
                         </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="chart" id="columnchart5"></div> 
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -333,7 +366,7 @@
     // column graph
     function drawCoLumnChart() {
     var data = new google.visualization.arrayToDataTable([
-    ['Order Counts', 'Order Counts'],
+    ['Order Counts', ''],
         <?php
             if($multiArr != null){
                 $i = 0;
@@ -349,7 +382,7 @@
     ]);
   
     var data2 = new google.visualization.arrayToDataTable([
-    ['Daily Sold Counts', 'Daily Sold Counts'],
+    ['Daily Sold Counts', ''],
         <?php
             if($dailySoldMultiArr != null){
                 for($i=0; $i<sizeof($dailySoldMultiArr[0]); $i++){
@@ -362,7 +395,7 @@
     ]);
 
     var data3 = new google.visualization.arrayToDataTable([
-    ['Weekly Sold Counts', 'Weekly Sold Counts'],
+    ['Weekly Sold Counts', ''],
         <?php
             if($weeklySoldMultiArr != null){
                 for($i=0; $i<sizeof($weeklySoldMultiArr[0]); $i++){
@@ -375,13 +408,26 @@
     ]);
 
     var data4 = new google.visualization.arrayToDataTable([
-    ['Monthly Sold Counts', 'Monthly Sold Counts'],
+    ['Monthly Sold Counts', ''],
         <?php
             if($monthlySoldMultiArr != null){
                 for($i=0; $i<sizeof($monthlySoldMultiArr[0]); $i++){
                     $month = $monthlySoldMultiArr[0][$i];
                     $count = $monthlySoldMultiArr[1][$i];
                     echo "['$month','$count'],";
+                }
+            }
+        ?>
+    ]);
+
+    var data5 = new google.visualization.arrayToDataTable([
+    ['Yearly Sold Counts', ''],
+        <?php
+            if($yearlySoldMultiArr != null){
+                for($i=0; $i<sizeof($yearlySoldMultiArr[0]); $i++){
+                    $year = $yearlySoldMultiArr[0][$i];
+                    $count = $yearlySoldMultiArr[1][$i];
+                    echo "['$year','$count'],";
                 }
             }
         ?>
@@ -433,15 +479,28 @@
         bar: { groupWidth: "90%" }
     };
 
+    var options5 = {
+        backgroundColor: '',
+        legend: { position: 'none' },
+        chart: {
+        title: 'ALL',
+        subtitle: '' },
+        axes: {
+        },
+        bar: { groupWidth: "90%" }
+    };
+
     var chart = new google.charts.Bar(document.getElementById('columnchart'));
     var chart2 = new google.charts.Bar(document.getElementById('columnchart2'));
     var chart3 = new google.charts.Bar(document.getElementById('columnchart3'));
     var chart4 = new google.charts.Bar(document.getElementById('columnchart4'));
+    var chart5 = new google.charts.Bar(document.getElementById('columnchart5'));
     // Convert the Classic options to Material options.
     chart.draw(data, google.charts.Bar.convertOptions(options));
     chart2.draw(data2, google.charts.Bar.convertOptions(options2));
     chart3.draw(data3, google.charts.Bar.convertOptions(options3));
     chart4.draw(data4, google.charts.Bar.convertOptions(options4));
+    chart5.draw(data5, google.charts.Bar.convertOptions(options5));
     };
 
     // sidebar toggler

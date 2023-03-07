@@ -138,6 +138,7 @@
                         unlink($file); 
                     }
                 }
+                $myfile = fopen("$str/ignore.txt", "w");
             }
             session_destroy();
             echo "<script>alert('SUCCESS!'); window.location.replace('../index.php');</script>";
