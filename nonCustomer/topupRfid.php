@@ -1,5 +1,5 @@
 <?php 
-    $page = 'admin';
+    $page = 'cashier';
     include('../method/checkIfAccountLoggedIn.php');
     include('../method/query.php');
 ?>

@@ -25,9 +25,9 @@ session_start();
         }
         else if($_SESSION['accountType'] == 'cashier')
             if(isset($isFromLogin) == true)
-                die ("<script>window.location.replace('../nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
+                die ("<script>window.location.replace('../nonCustomer/adminPos.php'); alert('Already Loggedin!');</script>");
             else
-                die ("<script>window.location.replace('../nonCustomer/pos/adminPos.php'); alert('Already Loggedin!');</script>");
+                die ("<script>window.location.replace('nonCustomer/adminPos.php'); alert('Already Loggedin!');</script>");
     }
 
     //account is not customer

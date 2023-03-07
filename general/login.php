@@ -82,7 +82,7 @@
                     break;
 
                     case 'cashier';
-                      echo "<script> window.location.replace('../nonCustomer/pos/pos/adminPos.php');</script>";
+                      echo "<script> window.location.replace('../nonCustomer/adminPos.php');</script>";
                     break;
 
                     case 'customer':
