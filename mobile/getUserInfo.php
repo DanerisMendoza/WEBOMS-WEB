@@ -8,11 +8,9 @@
 <?php
 	if(isset($_POST['post']) == 'webomsMobile') {
 		$user_id = $_POST['user_id'];
-
-        $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userinfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and a.user_id = '$user_id' ;";
+        $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userInfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and a.user_id = '$user_id' ;";
         $resultSet = getQuery2($query);
         $valid = false;
-
         if(($resultSet && $resultSet->num_rows)  > 0){
             foreach($resultSet as $row){
                 $result = array('name' => $row['name'], 

@@ -2,7 +2,7 @@
     include('../../method/query.php');
     //update balance   
     $arr = json_decode($_POST['data']);
-    $updateQuery = "UPDATE weboms_userinfo_tb SET balance = (balance + '$arr[0]') WHERE rfid= '$arr[1]' ";    
+    $updateQuery = "UPDATE weboms_userInfo_tb SET balance = (balance + '$arr[0]') WHERE rfid= '$arr[1]' ";    
     Query3($updateQuery);
     // get attribute
     $query = "select a.*,b.* from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where b.rfid = '$arr[1]' ";

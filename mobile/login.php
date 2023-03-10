@@ -1,6 +1,5 @@
 <?php     
   $page = 'notLogin';
-  include_once('../method/checkIfAccountLoggedIn.php'); 
   include_once('../general/connection.php');
   include_once('../method/query.php');
 ?>
@@ -10,7 +9,7 @@
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 
-        $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userinfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and username = '$username' ;";
+        $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userInfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and username = '$username' ;";
         $resultSet = getQuery2($query);
         $valid = false;
 

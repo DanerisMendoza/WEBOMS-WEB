@@ -43,7 +43,7 @@
     if($resultSet!=null){
         foreach($resultSet as $row){
             $currentMonthSold += $row['totalOrder'];
-            $week = 'Week no.'.date('w', strtotime($row['date']));
+            $week = 'Week no.'.date('W', strtotime($row['date']));
             if(in_array($week, $weeklySoldMultiArr[0])){
                 $index = array_search($week, $weeklySoldMultiArr[0]);
                 $weeklySoldMultiArr[1][$index] += 1;
