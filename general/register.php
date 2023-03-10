@@ -142,12 +142,12 @@
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
         //Server settings
-        $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
+        $mail->SMTPDebug  = true;                        //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host = 'ssl://smtp.gmail.com';		                //Set the SMTP server to send through
+        $mail->Host = 'mail.ucc-csd-bscs.com';		            //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'weboms098@gmail.com';                  //from //SMTP username
-        $mail->Password   = 'pcqezwnqunxuvzth';                     //SMTP password
+        $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
+        $mail->Password   = 'MVn?Y==HWC=%';    			    //SMTP password                    //SMTP password
         $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
         $mail->Port       =  465;          
         //Recipients
