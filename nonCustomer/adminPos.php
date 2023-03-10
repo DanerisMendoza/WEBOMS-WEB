@@ -143,7 +143,7 @@
                         </table>
                             <input  id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
                             <input  id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
-                            <button id="payThruRfid" type="submit" class="btn btn-lg btn-secondary col-12 mb-1" name="orderBtn">PAY THROUGH RFID</button>
+                            <button id="payThruRfid" type="submit" class="btn btn-lg btn-secondary col-12 mb-1" name="orderBtn">RFID Payment</button>
                             <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-1" name="orderBtn">Place Order</button>
                             <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
                     </div>
@@ -447,8 +447,8 @@
                         "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
                         "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
                         "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>" +
-                        "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-plus'></i></button> </td>" +
-                        "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi bi-dash'></i></button> </td>" +
+                        "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi-plus'></i></button> </td>" +
+                        "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi bi-dash'></i></button> </td>" +
                         "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
                     "</tr>";
                     }

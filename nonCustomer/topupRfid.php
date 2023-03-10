@@ -123,13 +123,13 @@
             <div class="table-responsive col-lg-9">
                 <table class="table table-bordered table-hover col-lg-12" id="tableInformation">
                     <thead class="table-dark text-white">
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Gender</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
-                        <th>Balance</th>
+                        <th>NAME</th>
+                        <th>USERNAME</th>
+                        <th>EMAIL</th>
+                        <th>GENDER</th>
+                        <th>PHONE NO.</th>
+                        <th>ADDRESS</th>
+                        <th>BALANCE</th>
                     </thead>
                     <tbody>
                         <tr>

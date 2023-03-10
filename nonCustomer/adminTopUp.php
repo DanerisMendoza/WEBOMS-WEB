@@ -98,7 +98,7 @@
                                     <th scope="col">NAME</th>
                                     <th scope="col">AMOUNT</th>
                                     <th scope="col">STATUS</th>
-                                    <th scope="col">DATE & TIME</th>
+                                    <th scope="col">DATE & TIME (MM/DD/YYYY)</th>
                                     <th scope="col">PAYMENT</th>
                                     <th scope="col">ACTION</th>
                                 </tr>

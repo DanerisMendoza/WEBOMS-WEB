@@ -98,9 +98,9 @@
                                     <th scope="col">USERNAME</th>
                                     <th scope="col">NAME</th>
                                     <th scope="col">EMAIL</th>
-                                    <th scope="col">ACCOUNT TYPE</th>
-                                    <th scope="col">RFID</th>
-                                    <th scope="col">CUSTOMER INFO</th>
+                                    <th scope="col">ACCOUNT<br>TYPE</th>
+                                    <th scope="col">RFID<br>NO.</th>
+                                    <th scope="col">CUSTOMER<br>INFO</th>
                                     <th scope="col">
                                         <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
                                     </th>

@@ -22,65 +22,71 @@
     $dishesQuantity = $_SESSION['dishesQuantity'];
  
     // pdf proccess
-    $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Receipt");  
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
-    $pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
-    $pdf->setPrintHeader(false);  
-    $pdf->setPrintFooter(false);  
-    $pdf->SetAutoPageBreak(TRUE, 10);  
+    // $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
+    $pdf->SetMargins(1, 1, 1);  
+    // $pdf->setPrintHeader(false);  
+    // $pdf->setPrintFooter(false);  
+    $pdf->SetAutoPageBreak(FALSE, 1);  
+
     $pdf->AddPage('P','A6');
-    $pdf->SetFont('dejavusans', '', 8);  
-    $pdf -> Cell(72,10,"Order#$_SESSION[order_id]",'B','0','C');
-    $pdf->SetFont('dejavusans', '', 8);  
-    $pdf -> ln(10);
-    $pdf -> Cell(72,10,"$_SESSION[companyName]",'','0','C');
+    $pdf->SetFont('dejavusans', 'B', 18);  
+    $pdf -> Cell(0,15,"Order#$_SESSION[order_id]", 0, 1,'C');
+
+    $pdf->SetFont('dejavusans', '', 13);  
+    $pdf -> Cell(0,5,"$_SESSION[companyName]", 0, 1,'C');
+    $pdf -> Cell(0,5,"$_SESSION[companyAddress]", 0, 1,'C');
+    $pdf -> Cell(0,5,"$_SESSION[companyTel]", 0, 1,'C');
+    $pdf -> ln(3);
+    $pdf -> Cell(0,5,"$date", 0, 1,'C');
     $pdf -> ln(5);
-    $pdf -> Cell(72,10,"$_SESSION[companyAddress]",'','0','C');
-    $pdf -> ln(5);
-    $pdf -> Cell(72,10,"$_SESSION[companyTel]",'','0','C');
-    $pdf -> ln(5);
-    $pdf -> Cell(72,10,"$date",'','0','C');
-    $pdf -> ln(10);
-    $pdf -> Cell(25,10,"Dish",'B,T','0','C');
-    $pdf -> Cell(25,10,"Quantity",'B,T','0','C');
-    $pdf -> Cell(25,10,"Price",'B,T','0','C');
-    $pdf -> ln(10);
+
+    $pdf -> Cell(20,10,"QTY.",'B,T', 0,'C');
+    $pdf -> Cell(40,10,"Dish",'B,T', 0,'L');
+    $pdf -> Cell(0,10,"Price",'B,T', 0,'R');
+    $pdf -> ln(10); 
     for($i=0; $i<count($dishesArr); $i++){ 
         $price = number_format($priceArr[$i],2);
-        $pdf -> Cell(25,10,"$dishesArr[$i]",'','0','C');
-        $pdf -> Cell(25,10,"$dishesQuantity[$i]",'','0','C');
-        $pdf -> Cell(25,10,"₱$price",'','0','C');
+        $pdf -> Cell(20,10,"$dishesQuantity[$i]",'',0,'C');
+        $pdf -> Cell(40,10,"$dishesArr[$i]",'', 0,'L');
+        $pdf -> Cell(0,10,"₱$price",'',0,'R');
         $pdf -> ln(5);
     }
-    $pdf -> ln(5);
-    $pdf -> Cell(25,10,"Payment",'T','0','L');
-    $pdf -> Cell(25,10,"",'T','0','C');
-    $pdf -> Cell(25,10,"₱$cash",'T','0','C');
-    $pdf -> ln(5);
-    $pdf -> Cell(25,10,"Total",'','0','L');
-    $pdf -> Cell(25,10,"",'','0','C');
-    $pdf -> Cell(25,10,"₱$total",'','0','C');
-    $pdf -> ln(5);
-    $pdf -> Cell(25,10,"Change",'B','0','L');
-    $pdf -> Cell(25,10,"",'B','0','C');
-    $pdf -> Cell(25,10,"₱$change",'B','0','C');
-    $pdf -> ln(10);
-    $pdf -> Cell(25,10,"Customer: $_SESSION[customerName]" ,'','0','L');
+    $pdf -> ln(8);
+
+    $pdf->SetFont('dejavusans', 'B', 18);  
+    $pdf -> Cell(70,10,"Total",'T','0','L');
+    $pdf -> Cell(33,10,"₱$total",'T','0','R');
+    $pdf -> ln(7);
+    $pdf->SetFont('dejavusans', '', 13);  
+    $pdf -> Cell(70,10,"Payment",'','0','L');
+    $pdf -> Cell(33,10,"₱$cash",'','0','R');
+    $pdf -> ln(6);
+    $pdf -> Cell(70,10,"Change",'','0','L');
+    $pdf -> Cell(33,10,"₱$change",'','0','R');
+    $pdf -> ln(13);
+    
+    $pdf -> Cell(0,10,"Customer: $_SESSION[customerName]" ,'T','0','L');
     $pdf -> ln(5);
     if($_SESSION['staffInCharge'] == 'online order'){
-        $pdf -> Cell(25,10,"Order Type: ONLINE ORDER",'','0','L');
+        $pdf -> Cell(0,10,"Order Type: ONLINE ORDER",'','0','L');
     }
     else{
-        $pdf -> Cell(25,10,"Order Type: POS",'','0','L');
+        $pdf -> Cell(0,10,"Order Type: POS",'','0','L');
     }
     $pdf -> ln(5);
-    $pdf -> Cell(25,10,"Order Number: $_SESSION[or_number] ",'','0','L');
+    $pdf -> Cell(0,10,"Order Number: $_SESSION[or_number] ",'','0','L');
     $pdf -> ln(5);
     if($_SESSION['staffInCharge'] != 'online order'){
-        $pdf -> Cell(25,10,"Cashier: $_SESSION[name]",'','0','L');
+        $pdf -> Cell(0,10,"Cashier: $_SESSION[name]",'','0','L');
     }
+    $pdf -> ln(15);
+
+    // $pdf->SetFont('dejavusans', '', 13);  
+    $pdf -> Cell(0,5,"THANK YOU FOR YOUR PURCHASE!", 0, 1,'C');
+
     ob_end_clean();
     $pdf->Output('file.pdf', 'I');
 

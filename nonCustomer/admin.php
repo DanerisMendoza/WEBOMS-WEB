@@ -277,7 +277,7 @@
                                 <td><?php echo "₱".$totalSold?></td>
                             </tr>
                         </table>
-                    </div>
+                    </div> 
                     <div class="table-responsive col-lg-6 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>

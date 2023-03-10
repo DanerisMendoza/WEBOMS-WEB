@@ -98,12 +98,12 @@
                             <h2 class="mt-3 mb-4 bg-success text-white">Your balance is ₱<?php echo number_format($balance,2);?></h2>
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered col-lg-12" id="tb1">
-                                    <thead >
+                                    <thead class="table-dark">
                                         <tr>
                                             <th scope="col">NAME</th>
                                             <th scope="col">AMOUNT</th>
                                             <th scope="col">STATUS</th>
-                                            <th scope="col">DATE & TIME</th>
+                                            <th scope="col">DATE & TIME<br>(MM/DD/YYYY)</th>
                                             <th scope="col">PAYMENT</th>
                                             <th scope="col">ACTION</th>
                                         </tr>

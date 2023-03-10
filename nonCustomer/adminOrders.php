@@ -131,13 +131,13 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">NO.</th>
-                                        <th scope="col">CUSTOMER NAME</th>
-                                        <th scope="col">ORDERS ID</th>
-                                        <th scope="col">ORDER STATUS</th>
-                                        <th scope="col">DATE(MM/dd/yyyy) & TIME</th>
-                                        <th scope="col">STAFF (IN-CHARGE)</th>
-                                        <th scope="col">ORDER DETAILS</th>
-                                        <th scope="col">CUSTOMER INFO</th>
+                                        <th scope="col">CUSTOMER<br>NAME</th>
+                                        <th scope="col">ORDERS<br>ID</th>
+                                        <th scope="col">ORDER<br>STATUS</th>
+                                        <th scope="col">DATE & TIME<br>(MM/DD/YYYY)</th>
+                                        <th scope="col">STAFF<br>(IN-CHARGE)</th>
+                                        <th scope="col">ORDER<br>DETAILS</th>
+                                        <th scope="col">CUSTOMER<br>INFO</th>
                                         <th scope="col" colspan="2">OPTIONS</th>
                                     </tr>
                                 </thead>
@@ -149,7 +149,7 @@
                                         <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
                                                 <td><a class="text-danger">Deleted Account</a></td>
                                         <?php }elseif($row['name'] != ''){ ?>
-                                            <td ><?php echo $row['name']; ?></td>
+                                            <td ><?php echo ucfirst($row['name']); ?></td>
                                         <?php }else{ ?> 
                                             <td >(No Name)</td>
                                         <?php }?>

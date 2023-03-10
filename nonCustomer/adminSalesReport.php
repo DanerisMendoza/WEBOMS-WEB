@@ -155,7 +155,7 @@
                                 <tr>
                                     <th scope="col">NAME</th>
                                     <th scope="col">TRANSACTION NO.</th>
-                                    <th scope="col">DATE(MM/dd/yyyy) & TIME</th>
+                                    <th scope="col">DATE & TIME (MM/DD/YYYY)</th>
                                     <th scope="col">TOTAL ORDER</th>
                                     <th scope="col">ORDER DETAILS</th>
                                 </tr>
@@ -177,7 +177,7 @@
                                     <?php }?>
                                     <td><?php echo $row['order_id'];?></td>
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
-                                    <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>
+                                    <td><?php echo '₱'. $row['totalOrder']; ?></td>
                                     <?php $total += $row['totalOrder'];?>
                                     <!-- order detail -->
                                     <td>
@@ -187,7 +187,7 @@
                                 <?php } ?>
                                 <tr>
                                     <td colspan="3"><strong>Total Amount:</strong></td>
-                                    <td><strong><?php echo '₱'. number_format($total,2);?></strong></td>
+                                    <td><strong><?php echo '₱'. $total;?></strong></td>
                                     <td></td>
                                 </tr>
                             </tbody>

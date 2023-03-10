@@ -69,7 +69,7 @@
                 <th scope="col">NAME</th>
                 <th scope="col">ORDER NO.</th>
                 <th scope="col">STATUS</th>
-                <th scope="col">DATE & TIME(MM/dd/yyyy)</th>
+                <th scope="col">DATE & TIME (MM/DD/YYYY)</th>
                 <th scope="col">FEEDBACK</th>
                 <th scope="col">ORDER DETAILS</th>
               </tr>
