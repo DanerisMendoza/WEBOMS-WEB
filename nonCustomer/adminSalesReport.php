@@ -171,13 +171,13 @@
                                     <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
                                         <td><a class="text-danger">Deleted Account</a></td>
                                     <?php }elseif($row['name'] != ''){ ?>
-                                        <td ><?php echo $row['name']; ?></td>
+                                        <td ><?php echo ucfirst($row['name']); ?></td>
                                     <?php }else{ ?> 
                                         <td >(No Name)</td>
                                     <?php }?>
                                     <td><?php echo $row['order_id'];?></td>
                                     <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
-                                    <td><?php echo '₱'. $row['totalOrder']; ?></td>
+                                    <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>
                                     <?php $total += $row['totalOrder'];?>
                                     <!-- order detail -->
                                     <td>

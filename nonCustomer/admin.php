@@ -274,7 +274,7 @@
                             </tr>
                             <tr>
                                 <td><b>Total Sold:</b></td>
-                                <td><?php echo "₱".$totalSold?></td>
+                                <td><?php echo "₱". number_format($totalSold,2)?></td>
                             </tr>
                         </table>
                     </div> 
@@ -282,19 +282,19 @@
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Today Sale:</b></td>
-                                <td><?php echo "₱".$todaySold?></td>
+                                <td><?php echo "₱".number_format($todaySold,2)?></td>
                             </tr>
                             <tr>
                                 <td><b>Current Week Sale:</b></td>
-                                <td><?php echo "₱".$currentWeekSold?></td>
+                                <td><?php echo "₱".number_format($currentWeekSold,2)?></td>
                             </tr>
                             <tr>
                                 <td><b>Current Month Sale:</b></td>
-                                <td><?php echo "₱".$currentMonthSold?></td>
+                                <td><?php echo "₱".number_format($currentMonthSold,2)?></td>
                             </tr>
                             <tr>
                                 <td><b>Current Year Sale:</b></td>
-                                <td><?php echo "₱".$currentYearSold?></td>
+                                <td><?php echo "₱". number_format($currentYearSold,2)?></td>
                             </tr>
                         </table>
                     </div>

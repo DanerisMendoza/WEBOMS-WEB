@@ -134,9 +134,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">DISH</th>
-                                    <th scope="col">QUANTITY</th>
+                                    <th scope="col" colspan="3">QUANTITY</th>
                                     <th scope="col">PRICE</th>
-                                    <th scope="col" colspan="3">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody2"></tbody>
@@ -446,20 +445,17 @@
                     "<tr>" +
                         "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
                         "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
-                        "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>" +
-                        "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi-plus'></i></button> </td>" +
-                        "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi bi-dash'></i></button> </td>" +
-                        "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>"
+                        "<td> <button class='btn btn-success mx-1' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi-plus'></i></button>" +
+                        "       <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi bi-dash'></i></button> </td>" +
+                        "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>" +
+                        "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>"
                     "</tr>";
                     }
 
                     tbody2 += 
                     "<tr>"+
-                        "<td colspan='2'> <b>Total Amount:</b> </td>" +
-                        "<td id='total'><b>₱"+total+"</b></td>"+
-                        "<td></td>"+
-                        "<td></td>"+
-                        "<td></td>"
+                        "<td colspan='4'> <b>Total Amount:</b> </td>" +
+                        "<td id='total'><b>₱"+total+"</b></td>"
                     "</tr>";
                     $("#tbody2 tr").remove();
                     $("#tbody2").append(tbody2);

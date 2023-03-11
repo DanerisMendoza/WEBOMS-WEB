@@ -93,7 +93,7 @@
                                         <tr>
                                             <td><?php $pic = $row['picName']; echo "<img src='../dishesPic/$pic' style=width:150px;height:150px>";?></td>
                                             <td><?= ucwords($row['dish']);?></td>
-                                            <td><?php echo '₱'. $row['price']; ?></td>
+                                            <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                             <td><?php echo $row['stock']; ?></td>
                                             <td>
                                                 <!-- out of stock -->

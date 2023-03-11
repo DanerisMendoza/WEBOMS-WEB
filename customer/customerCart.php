@@ -131,12 +131,12 @@
                             <?php } ?>
                             <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
                         </td>
-                        <td><?php echo '₱'.$arr['price'];?></td>
+                        <td><?php echo '₱'. number_format($arr['price'],2);?></td>
                     </tr>
                     <?php }?>
                     <tr>
                         <td colspan="3"><b>Total Amount:</b></td>
-                        <td><b>₱<?php echo $total; ?></b></td>
+                        <td><b>₱<?php echo number_format($total,2); ?></b></td>
                     </tr>
                 </table>
                 <form method="post">
