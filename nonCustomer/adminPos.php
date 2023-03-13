@@ -419,6 +419,7 @@
                             { "targets": [3], "orderable": false }
                         ]});
                     }
+                    subtractTb2OnTb1();
                     checkStock();
                 }
 
@@ -464,8 +465,8 @@
                 else{
                     $("#tbody2 tr").find("#total").closest("tr").remove();
                 }
-            checkStock();
             subtractTb2OnTb1();
+            checkStock();
 
             },error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("Status: " + textStatus); alert("Error: " + errorThrown);
@@ -716,6 +717,7 @@
         let stockTd = $("#tbody1 tr:contains('"+dish+"')").find('.stocks');
         if(isNaN(stockTd.text())){
             alert("Out of Stock!");
+            return;
         }
         else{
             // add value in cart table in db
@@ -797,9 +799,8 @@
         let price2 = parseInt(priceTd2.text().slice(1));
         let p = price2-price;
         priceTd2.text("₱"+p);
-
-        computeTotal();
         subtractTb2OnTb1();
+        computeTotal();
     }
 
     function computeTotal(){
@@ -809,9 +810,8 @@
             //tb2    
             let tb2Tr = $(this);
             let dish = tb2Tr.find('.dishes').text();
-            let quantity = parseInt(tb2Tr.find('.quantity').text());
             let price = parseInt(tb2Tr.find('.price').text().slice(1));
-            total += (price*quantity);
+            total += (price);
         }); 
         totalTr.text("₱"+total);
         if(total <= 0){
