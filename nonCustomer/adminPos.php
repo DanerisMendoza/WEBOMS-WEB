@@ -347,6 +347,7 @@
         // show credential table
         $('#rfidInput').keyup(function(){
             if($(this).val().length == 10){
+                userIdAndTotal = [];
                 let rfid = rfidGlobal= $(this).val();
                 $.ajax({
                     url: "ajax/topupRfid_getUserAttributes.php",
