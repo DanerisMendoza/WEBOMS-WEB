@@ -1,11 +1,7 @@
-<?php     
-  $page = 'notLogin';
-  include_once('../method/checkIfAccountLoggedIn.php'); 
+<?php      
   include_once('../general/connection.php');
   include_once('../method/query.php');
-?>
 
-<?php
 	if(isset($_POST['post']) == 'webomsMobile') {
 		$user_id = $_POST['user_id'];
         $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userInfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and a.user_id = '$user_id' ;";
@@ -26,7 +22,8 @@
         }
         echo json_encode($result);
 
-	} else {
+	} 
+    else {
 		echo "unauthorized access.";
 	}
 ?>
