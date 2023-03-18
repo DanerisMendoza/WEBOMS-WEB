@@ -108,26 +108,25 @@
                         <!-- sorted table -->
                         <?php
                         // sort query
-                        if(isset($_GET['sort'])){
-                            $_SESSION['query'] = $_GET['sort'];
-                        }
-                        if($_SESSION['query'] == 'all')
-                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
-                        elseif($_SESSION['query'] == 'prepairing')
-                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'prepairing' order by b.id asc " ;
-                        elseif($_SESSION['query'] == 'serving')
-                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
-                        elseif($_SESSION['query'] == 'order complete')
-                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
-                        elseif($_SESSION['query'] == 'void')
-                            $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'void' order by b.id asc " ;
+                        // if(isset($_GET['sort'])){
+                        //     $_SESSION['query'] = $_GET['sort'];
+                        // }
+                        // if($_SESSION['query'] == 'all')
+                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
+                        // elseif($_SESSION['query'] == 'prepairing')
+                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'prepairing' order by b.id asc " ;
+                        // elseif($_SESSION['query'] == 'serving')
+                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
+                        // elseif($_SESSION['query'] == 'order complete')
+                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
+                        // elseif($_SESSION['query'] == 'void')
+                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'void' order by b.id asc " ;
 
-                        $resultSet =  getQuery2($query);
-                        if($resultSet != null){ ?>
+                         ?>
                         
                         <!-- table container -->
                         <div class="table-responsive col-lg-12">
-                            <table class="table table-bordered table-hover col-lg-12" id="tb1">
+                            <table class="table table-bordered table-hover col-lg-12" id="tbl1">
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">NO.</th>
@@ -142,93 +141,25 @@
                                     </tr>
                                 </thead>
                                 <tbody id="table1">
-                                <?php foreach($resultSet as $row){?>
-                                    <tr>
-                                        <td><?php echo $row['ID']; ?></td>
-                                        <!--if account is deleted block-->
-                                        <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
-                                                <td><a class="text-danger">Deleted Account</a></td>
-                                        <?php }elseif($row['name'] != ''){ ?>
-                                            <td ><?php echo ucfirst($row['name']); ?></td>
-                                        <?php }else{ ?> 
-                                            <td >(No Name)</td>
-                                        <?php }?>
-                                        <!-- order id -->
-                                        <td><?php echo $row['order_id'];?></td>
-                                        <!-- order status -->
-                                        <?php 
-                                            if($row['status'] == 'approved'){
-                                            ?>
-                                        <td>Approved</td>
-                                        <?php
+                                    <script>
+                                            $.ajax({
+                                            url: "ajax/orders_getOrders.php",
+                                            method: "post",
+                                            success: function(res){
+                                                $('#table1').append(res);
+                                                $(document).ready(function(){
+                                                $('#tbl1').dataTable({
+                                                "columnDefs": [
+                                                    { "targets": [6,7,8,9], "orderable": false }
+                                                ]
+                                                });
+                                            });
                                             }
-                                            elseif($row['status'] == 'prepairing'){
-                                            ?>
-                                        <td>Preparing</td>
-                                        <?php
-                                            }
-                                            elseif($row['status'] == 'serving'){
-                                            ?>
-                                        <td>Serving</td>
-                                        <?php
-                                            }
-                                            elseif($row['status'] == 'complete'){
-                                            ?>
-                                        <td>Order Complete</td>
-                                        <?php
-                                            }
-                                            elseif($row['status'] == 'void'){
-                                            ?>
-                                        <td class="text-danger">Void</td>
-                                        <?php
-                                            }
-                                        ?>
-                                        <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
-                                        <td><?php echo ucwords($row['staffInCharge'] == 'online order' ? '('. ucwords($row['staffInCharge']).')' : ucwords($row['staffInCharge']) .' via POS');?></td>
-                                        <!-- order details -->
-                                        <td>
-                                            <a class="btn btn-light" style="border:1px solid #cccccc;" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"> <i class="bi bi-list"></i> View</a>
-                                        </td>
-                                        <!-- options -->
-
-                                            <!-- online -->
-                                            <?php if($row['staffInCharge'] == 'online order') {?>
-                                                <!-- customer info -->
-                                                <td><a class="btn btn-primary" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>"><i class="bi bi-list"></i> View</a></td>
-                                                <!-- status -->
-                                                <?php  if($row['status'] == 'prepairing'){ ?>
-                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-arrow-bar-left"></i> Serve</a></td>
-                                                <?php }elseif($row['status'] == 'serving'){ ?>
-                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check"></i> Order Complete</a></td><?php }
-                                                    elseif($row['status'] == 'complete' || $row['status'] == 'void'){?>
-                                                        <td><a class="text-danger">None</a></td><?php } ?>
-
-                                            <!-- pos -->
-                                            <?php } else{ ?>
-                                                <!-- customer info -->
-                                                <td></td>
-                                                <!-- status -->
-                                                <?php  if($row['status'] == 'prepairing'){ ?>
-                                                        <td><a class="btn btn-success" href="?serve=<?php echo $row['order_id'] ?>"><i class="bi bi-arrow-bar-left"></i> Serve</a></td>
-                                                <?php }elseif($row['status'] == 'serving'){ ?>
-                                                        <td><a class="btn btn-success" href="?orderComplete=<?php echo $row['order_id'] ?>"><i class="bi bi-check"></i> Order Complete</a></td>
-                                                <?php }elseif($row['status'] == 'complete' || $row['status'] == 'void'){?>
-                                                        <td><a class="text-danger">None</a></td>
-                                                        
-                                                <?php } ?>
-                                            <?php } ?>
-                                        <!-- void -->
-                                        <?php if($row['status'] != 'void' && $_SESSION['accountType'] != 'cashier'){?>
-                                            <td><a class="btn btn-danger" href="?void=<?php echo $row['order_id'].','.$row['user_id'].','.$row['totalOrder'] ?>"><i class="bi bi-dash-circle"></i> Void</a></td>
-                                        <?php }else{ ?>
-                                            <td><a class="text-danger">None</a></td>
-                                        <?php }?>
-                                    </tr>
-                                    <?php } ?>
+                                            });
+                                    </script>
                                 </tbody>
                             </table>
-                        <?php } ?>
-                    </div>
+                        </div>
 
                     <!-- customerProfileModal (Bootstrap MODAL) -->
                     <div class="modal fade" id="customerProfileModal" role="dialog">
@@ -324,13 +255,6 @@ $(document).ready(function() {
         $('#sidebar').toggleClass('active');
     });
 });
-// auto refresh 
-// function autoRefresh_Tables() {
-    // $("#tb1").load("adminOrders.php #tb1", function() {
-        // setTimeout(autoRefresh_Tables, 2000);
-//     });
-// }
-// autoRefresh_Tables();
 </script>
 
 <?php 
@@ -415,9 +339,5 @@ $(document).ready(function() {
     }
 ?>
 <script>
-    $('#tb1').dataTable({
-    "columnDefs": [
-        { "targets": [6,7,8,9], "orderable": false }
-    ]
-    });
+   
 </script>

@@ -115,7 +115,7 @@
 
                     <!-- table container -->
                     <div class="table-responsive col-lg-7">
-                        <table class="table table-hover table-bordered col-lg-12" id="tBody1">
+                        <table class="table table-hover table-bordered col-lg-12" id="tbl1">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">DISH</th>
@@ -414,7 +414,7 @@
                     $("#tbody1 tr").remove();
                     $("#tbody1").append(tbody1);
                     if(callIsFrom != 'clear'){
-                        $('#tBody1').dataTable({
+                        $('#tbl1').dataTable({
                         "columnDefs": [
                             { "targets": [3], "orderable": false }
                         ]});
