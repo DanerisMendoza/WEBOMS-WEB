@@ -136,8 +136,14 @@
                                                 method: "post",
                                                 data: {'status':JSON.stringify(status)},
                                                 success: function(res){
-                                                    $('#tbody1 tr').remove();
+                                                    $('#tbl1').DataTable().clear().destroy();
                                                     $('#tbody1').append(res);
+                                                    $('#tbl1').dataTable({
+                                                    "columnDefs": [
+                                                        { "targets": [6,7,8,9], 
+                                                            "orderable": false }
+                                                    ]
+                                                    });
                                                 }
                                                 });
                                             });
