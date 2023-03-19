@@ -109,10 +109,11 @@
                                         <th scope="col">STAFF<br>(IN-CHARGE)</th>
                                         <th scope="col">ORDER<br>DETAILS</th>
                                         <th scope="col">CUSTOMER<br>INFO</th>
-                                        <th scope="col" colspan="2">OPTIONS</th>
+                                        <th scope="col">OPTIONS</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id="table1">
+                                <tbody id="tbody1">
                                     <script>
                                             let status = $('#status').find(":selected").text();
                                             $.ajax({
@@ -120,7 +121,7 @@
                                             method: "post",
                                             data: {'status':JSON.stringify(status)},
                                             success: function(res){
-                                                $('#table1').append(res);
+                                                $('#tbody1').append(res);
                                                 $('#tbl1').dataTable({
                                                 "columnDefs": [
                                                     { "targets": [6,7,8,9], "orderable": false }
@@ -135,8 +136,8 @@
                                                 method: "post",
                                                 data: {'status':JSON.stringify(status)},
                                                 success: function(res){
-                                                    $('#table1 tr').remove();
-                                                    $('#table1').append(res);
+                                                    $('#tbody1 tr').remove();
+                                                    $('#tbody1').append(res);
                                                 }
                                                 });
                                             });
