@@ -56,7 +56,7 @@
     }
     $_SESSION['order_id']  = $order_id = $lastOrderId;
 
-    $query1 = "insert into weboms_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$cash', '$staff')";
+    $query1 = "insert into weboms_order_tb(user_id, order_id, or_number, status, date, totalOrder, payment,  staffInCharge) values('$user_id', '$order_id', '$or_number', 'preparing', '$todayWithTime','$total','$cash', '$staff')";
     for($i=0; $i<count($multiArr[0]); $i++){
         $qty = $multiArr[2][$i];
         $ordType = $multiArr[3][$i];

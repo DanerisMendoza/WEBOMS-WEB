@@ -1,7 +1,11 @@
 <?php 
     include('../../method/query.php');
     session_start();
-    $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
+    $status = json_decode($_POST['status']);
+    if($status != 'all')
+        $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = '$status'  order by b.id asc " ;
+    else
+        $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id order by b.id asc " ;
     $resultSet = getQuery3($query); 
     if($resultSet != null){
         $tBody = "";
@@ -31,7 +35,7 @@
             //show customer info button when it is online order
             if($row['staffInCharge'] == 'online order'){
                 $tBody .= "<td><a class='btn btn-primary' href='?viewCustomerInfo = $row[user_id] '><i class='bi bi-list'></i> View</a></td>";
-                if($row['status'] == 'prepairing'){
+                if($row['status'] == 'preparing'){
                     $tBody .= " <td><a class='btn btn-success' href='?serve=$row[order_id]><i class='bi bi-arrow-bar-left'></i> Serve</a></td>";
                 }
                 else if($row['status'] == 'serving'){
@@ -44,7 +48,7 @@
             //pos
             else{
                 $tBody .= "<td></td>";
-                if($row['status'] == 'prepairing'){
+                if($row['status'] == 'preparing'){
                     $tBody .= "<td><a class='btn btn-success' href='?serve= $row[order_id]'><i class='bi bi-arrow-bar-left'></i> Serve </a></td>";
                 }
                 elseif($row['status'] == 'serving'){
@@ -66,11 +70,4 @@
         }
         echo $tBody;
     }
-    else{
-        echo "null";
-    }
-
 ?>
-
-tr
-

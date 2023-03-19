@@ -86,43 +86,15 @@
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row g-3 justify-content-center">
-                    <form method="get" class="col-lg-12">
+            
                         <!-- select sort -->
-                        <select name="sort" class="form-control form-control-lg col-12 mb-3" method="get">
-                            <?php 
-                                if(isset($_GET['sort'])){ ?>
-                            <option value="<?php echo $_GET['sort'];?>" selected>Sort <?php echo ucwords($_GET['sort']);?></option>
-                            <?php
-                                }else{ ?>
-                            <option value="all" selected>Select Option</option>
-                            <?php } ?>
-                            <option value="all">All</option>
-                            <option value="prepairing">Preparing</option>
-                            <option value="serving">Serving</option>
-                            <option value="order complete">Order Complete</option>
-                            <option value="void">Void</option>
+                        <select id="status" class="form-control form-control-lg col-12 mb-3" >
+                            <option value="all">all</option>
+                            <option value="prepairing">preparing</option>
+                            <option value="serving">serving</option>
+                            <option value="order complete">complete</option>
+                            <option value="void">void</option>
                         </select>
-                        <!-- button sort -->
-                        <input type="submit" value="Sort" class="btn btn-lg btn-success col-12 mb-4">
-                    </form>
-                        <!-- sorted table -->
-                        <?php
-                        // sort query
-                        // if(isset($_GET['sort'])){
-                        //     $_SESSION['query'] = $_GET['sort'];
-                        // }
-                        // if($_SESSION['query'] == 'all')
-                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  order by b.id asc " ;
-                        // elseif($_SESSION['query'] == 'prepairing')
-                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'prepairing' order by b.id asc " ;
-                        // elseif($_SESSION['query'] == 'serving')
-                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'serving' order by b.id asc " ;
-                        // elseif($_SESSION['query'] == 'order complete')
-                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'complete' order by b.id asc " ;
-                        // elseif($_SESSION['query'] == 'void')
-                        //     $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.status = 'void' order by b.id asc " ;
-
-                         ?>
                         
                         <!-- table container -->
                         <div class="table-responsive col-lg-12">
@@ -142,19 +114,31 @@
                                 </thead>
                                 <tbody id="table1">
                                     <script>
+                                            let status = $('#status').find(":selected").text();
                                             $.ajax({
                                             url: "ajax/orders_getOrders.php",
                                             method: "post",
+                                            data: {'status':JSON.stringify(status)},
                                             success: function(res){
                                                 $('#table1').append(res);
-                                                $(document).ready(function(){
                                                 $('#tbl1').dataTable({
                                                 "columnDefs": [
                                                     { "targets": [6,7,8,9], "orderable": false }
                                                 ]
                                                 });
-                                            });
                                             }
+                                            });
+                                            $('#status').on('change', function () {
+                                                let status = $('#status').find(":selected").text();
+                                                $.ajax({
+                                                url: "ajax/orders_getOrders.php",
+                                                method: "post",
+                                                data: {'status':JSON.stringify(status)},
+                                                success: function(res){
+                                                    $('#table1 tr').remove();
+                                                    $('#table1').append(res);
+                                                }
+                                                });
                                             });
                                     </script>
                                 </tbody>
