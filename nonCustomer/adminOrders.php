@@ -103,7 +103,7 @@
                                     <tr>
                                         <th scope="col">NO.</th>
                                         <th scope="col">CUSTOMER<br>NAME</th>
-                                        <th scope="col">ORDERS<br>ID</th>
+                                        <th scope="col">ORDER#</th>
                                         <th scope="col">ORDER<br>STATUS</th>
                                         <th scope="col">DATE & TIME<br>(MM/DD/YYYY)</th>
                                         <th scope="col">STAFF<br>(IN-CHARGE)</th>
@@ -116,6 +116,35 @@
                                 <tbody id="tbody1">
                                     <script>
                                             let status = $('#status').find(":selected").text();
+                                            var latestId;
+                                            //get id of latest order then after 2 seconds get the id of latest order again then compare
+                                            $.getJSON({
+                                            url: "ajax/orders_getNewestOrder.php",
+                                            method: "post",
+                                            data: {'status':JSON.stringify(status)},
+                                            success: function(res){
+                                                latestId = res;
+                                            }
+                                            });
+                                            function checkIfDbChange(){
+                                                $.getJSON({
+                                                url: "ajax/orders_getNewestOrder.php",
+                                                method: "post",
+                                                data: {'status':JSON.stringify(status)},
+                                                success: function(res){
+                                                    let result = parseInt(res) > parseInt(latestId);
+                                                    if(result){
+                                                        updateTb();
+                                                        latestId = res;
+                                                    }
+                                                },
+                                                complete: function(){
+                                                    setTimeout(checkIfDbChange, 2000);
+                                                }
+                                                });
+                                            }
+                                            checkIfDbChange();
+                                     
                                             $.ajax({
                                             url: "ajax/orders_getOrders.php",
                                             method: "post",
@@ -129,7 +158,12 @@
                                                 });
                                             }
                                             });
+
                                             $('#status').on('change', function () {
+                                                updateTb();
+                                            });
+
+                                            function updateTb(){
                                                 let status = $('#status').find(":selected").text();
                                                 $.ajax({
                                                 url: "ajax/orders_getOrders.php",
@@ -146,7 +180,8 @@
                                                     });
                                                 }
                                                 });
-                                            });
+                                            }
+
                                     </script>
                                 </tbody>
                             </table>
