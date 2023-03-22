@@ -128,7 +128,7 @@
                             </thead>
                             <tbody>
                                 <?php   
-                                    $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
+                                    $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'preparing' ORDER BY weboms_order_tb.id asc; ";
                                     $resultSet = getQuery2($getPrepairingOrder);
                                     if($resultSet != null)
                                         foreach($resultSet as $row){ 

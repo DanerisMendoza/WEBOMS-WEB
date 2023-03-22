@@ -123,7 +123,13 @@
                                             method: "post",
                                             data: {'status':JSON.stringify(status)},
                                             success: function(res){
-                                                latestId = res;
+                                                if(res == "null"){
+                                                    latestId = 0;
+                                                }
+                                                else{
+                                                    latestId = res;
+                                                }
+                                                console.log(latestId);
                                             }
                                             });
                                             function checkIfDbChange(){
