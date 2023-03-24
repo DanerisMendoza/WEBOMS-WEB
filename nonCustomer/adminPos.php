@@ -571,7 +571,7 @@
             $(button).closest("tr").find('.stocks').text(stock);
         }
 
-        subtractTb2OnTb1();
+        // subtractTb2OnTb1();
 
         // add value in cart table in db
         $.ajax({
@@ -751,7 +751,7 @@
             priceTd2.text("₱"+p);
         }
         computeTotal();
-        subtractTb2OnTb1();
+        // subtractTb2OnTb1();
        
     }
 
