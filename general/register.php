@@ -132,34 +132,10 @@
         $query = "select * from weboms_userInfo_tb where email = '$email'";
         if(getQuery2($query) != null)
           die ("<script>alert('Email already exist!');</script>");
-
-       
         
         $otp = uniqid();
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        //Load Composer's autoloader
-        require '../vendor/autoload.php';
-        //Create an instance; passing `true` enables exceptions
-        $mail = new PHPMailer(true);
-        //Server settings
-        $mail->SMTPDebug  = true;                        //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host = 'mail.ucc-csd-bscs.com';		            //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
-        $mail->Password   = 'MVn?Y==HWC=%';    			    //SMTP password                    //SMTP password
-        $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-        $mail->Port       =  465;          
-        //Recipients
-        $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
-        $mail->addAddress("$email");                                //sent to
-        //Content
-        $mail->Subject = 'OTP';
-        $mail->Body    = "Good Day, ".$name." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
-        $mail->send();
-
         
-
         //get two user id from different table
         $lastUserIdOrder = getQueryOneVal2("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
         $lastUserIdUserInfo = getQueryOneVal2("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
@@ -177,8 +153,30 @@
           echo "Failed to save to database!";
         elseif(!Query2($query2))
           echo "Failed to save to database!";
-        else
-          echo "<script>window.location.replace('../general/login.php'); alert('OTP sent! Please verify your account first!');</script>";
+        else{
+            echo "<script>window.location.replace('../general/login.php'); alert('OTP sent! Please verify your account first!');</script>";
+            //Load Composer's autoloader
+            require '../vendor/autoload.php';
+            //Create an instance; passing `true` enables exceptions
+            $mail = new PHPMailer(true);
+            //Server settings
+            $mail->SMTPDebug  = true;                        //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host = 'mail.ucc-csd-bscs.com';		            //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
+            $mail->Password   = 'MVn?Y==HWC=%';    			    //SMTP password                    //SMTP password
+            $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
+            $mail->Port       =  465;          
+            //Recipients
+            $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
+            $mail->addAddress("$email");                                //sent to
+            //Content
+            $mail->Subject = 'OTP';
+            $mail->Body    = "Good Day, ".$name." \n \nWe would like to inform you that you have created an account and you need to verify your account first using this OTP: ". $otp ."\n \nThank You!";
+            $mail->send();
+            
+        }
         
     }
 ?>
