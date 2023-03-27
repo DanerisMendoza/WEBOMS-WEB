@@ -69,7 +69,8 @@
     <div class="container text-center bg-white shadow p-5" style="margin-top:130px;">
         <div class="row justify-content-center">
             <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
-            <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4 bg-light text-center" name="date" min="<?php echo $todayWithTime;?>" value="<?php echo $todayWithTime;?>" />
+            <!-- <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4 bg-light text-center" name="date" min="<?php //echo $todayWithTime;?>" value="<?php //echo $todayWithTime;?>" /> -->
+            <h1 class="form-control form-control-lg mb-4 bg-light text-center"><?php echo $todayWithTime; ?></h1>
 
             <!-- table -->
             <div class="table-responsive col-lg-12">
@@ -334,10 +335,8 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 //Server settings
                 $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
                 $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host = 'mail.ucc-csd-bscs.com';		            //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
-                $mail->Password   = 'MVn?Y==HWC=%';    			    //SMTP password                 //SMTP password
+                include_once('../general/mailerConfig.php');
                 $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
                 $mail->Port       =  465;    
                 //Recipients
