@@ -24,7 +24,7 @@
         $email = getQueryOneVal2($query,'email');
         $query = "SELECT name FROM `weboms_userInfo_tb` WHERE user_id = '$user_id' ";
         $name = getQueryOneVal2($query,'name');
-
+        date_default_timezone_set('Asia/Manila');
         $date = new DateTime();
         $today =  $date->format('Y-m-d'); 
         $todayWithTime =  $date->format('Y-m-d H:i:s'); 
