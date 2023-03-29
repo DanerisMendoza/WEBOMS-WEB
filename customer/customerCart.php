@@ -224,7 +224,6 @@ document.getElementById("back").onclick = function() { window.location.replace('
     //order button
     if(isset($_POST['order'])){
         if($total != 0 && $balance >= $total){
-        
             $user_id = $_SESSION['user_id'];
             $query = "SELECT email FROM `weboms_userInfo_tb` WHERE user_id = '$user_id' ";
             $email = getQueryOneVal2($query,'email');
@@ -266,7 +265,7 @@ document.getElementById("back").onclick = function() { window.location.replace('
             $order_id = $lastOrderId;
 
 
-            $query1 = "insert into weboms_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'prepairing', '$todayWithTime','$total','$total', 'online order')";
+            $query1 = "insert into weboms_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'preparing', '$todayWithTime','$total','$total', 'online order')";
             for($i=0; $i<count($dishesArr); $i++){
                 $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
                 Query2($query2);
