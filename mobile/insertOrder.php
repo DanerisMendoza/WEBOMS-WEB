@@ -73,8 +73,13 @@
             $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
             Query2($query2);
         }
+        //update stock
+        for($i=0; $i<count($dishesArr); $i++){
+            $query3 = "UPDATE weboms_menu_tb SET stock = (stock - $dishesQuantity[$i]) WHERE dish= '$dishesArr[$i]' ";    
+            Query2($query3);
+        }
         // update balance
-        $query3 = "UPDATE weboms_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
-        Query2($query3);
+        $query4 = "UPDATE weboms_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
+        Query2($query4);
     }
 ?>
