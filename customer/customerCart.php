@@ -278,53 +278,63 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 //send receipt to email
                 $total = number_format($total,2);
                 require_once('../TCPDF-main/tcpdf.php'); 
-                $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
+
+                // pdf process 
+                $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
                 $pdf->SetCreator(PDF_CREATOR);  
                 $pdf->SetTitle("Receipt");  
-                $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
-                $pdf->SetMargins(PDF_MARGIN_LEFT, '10', PDF_MARGIN_RIGHT);  
+                // $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
+                $pdf->SetMargins(1,1,1);  
                 $pdf->setPrintHeader(false);  
                 $pdf->setPrintFooter(false);  
-                $pdf->SetAutoPageBreak(TRUE, 10);  
-                $pdf->AddPage('P','A4');
+                $pdf->SetAutoPageBreak(TRUE, 1);  
+
+                $pdf->AddPage('P','A6');
                 date_default_timezone_set('Asia/Manila');
                 $date = date("j-m-Y  h:i:s A"); 
-                $pdf->SetFont('dejavusans', '', 28);  
-                $pdf -> Cell(183,10,"Order#$order_id",'B','0','C');
-                $pdf->SetFont('dejavusans', '', 11);  
-                $pdf -> ln(15);
-                $pdf -> Cell(183,10,"$companyName",'','0','C');
-                $pdf -> ln(8);
-                $pdf -> Cell(183,10,"$companyAddress",'','0','C');
-                $pdf -> ln(8);
-                $pdf -> Cell(183,10,"$companyTel",'','0','C');
-                $pdf -> ln(8);
-                $pdf -> Cell(183,10,"$date",'','0','C');
-                $pdf -> ln(15);
-                $pdf -> Cell(61,10,"Dish",'B,T','0','C');
-                $pdf -> Cell(61,10,"Quantity",'B,T','0','C');
-                $pdf -> Cell(61,10,"Price",'B,T','0','C');
-                $pdf -> ln(20);
+                $pdf->SetFont('freemono', 'B', 25);  
+                $pdf -> Cell(0,15,"Order#$order_id",0,1,'C');
+
+                $pdf->SetFont('freemono', '', 13);  
+                $pdf -> Cell(0,5,"$companyName",0,1,'C');
+                $pdf -> Cell(0,5,"$companyAddress",0,1,'C');
+                $pdf -> Cell(0,5,"$companyTel",0,1,'C');
+                $pdf -> ln(3);
+                $pdf -> Cell(0,5,"$date",0,1,'C');
+                $pdf -> ln(5);
+
+                $pdf -> Cell(20,10,"QTY",'B,T',0,'C');
+                $pdf -> Cell(40,10,"DISH",'B,T',0,'L');
+                $pdf -> Cell(0,10,"PRICE",'B,T',0,'R');
+                $pdf -> ln(10);
                 for($i=0; $i<count($dishesArr); $i++){ 
                     $price = number_format($priceArr[$i],2);
-                    $pdf -> Cell(61,10,"$dishesArr[$i]",'','0','C');
-                    $pdf -> Cell(61,10,"$dishesQuantity[$i]",'','0','C');
-                    $pdf -> Cell(61,10,"₱$price",'','0','C');
-                    $pdf -> ln(10);
+                    $pdf -> Cell(20,10,"$dishesQuantity[$i]",'',0,'C');
+                    $pdf -> Cell(40,10,"$dishesArr[$i]",'',0,'L');
+                    $pdf -> Cell(0,10,"$price",'',0,'R');
+                    $pdf -> ln(5);
                 }
-                $pdf -> ln(10);
-                $pdf -> Cell(122,10,"Payment",'T','0','L');
-                $pdf -> Cell(61,10,"₱$total",'T','0','C');
-                $pdf -> ln(10);
-                $pdf -> Cell(122,10,"Total",'','0','L');
-                $pdf -> Cell(61,10,"₱$total",'','0','C');
-                $pdf -> ln(15);
-                $pdf->SetFont('dejavusans', '', 11);  
-                $pdf -> Cell(122,10,"Customer: $name",'','0','L');
-                $pdf -> ln(10);
-                $pdf -> Cell(122,10,"Order Type: Online Order",'','0','L');
-                $pdf -> ln(10);
-                $pdf -> Cell(122,10,"Order Number: $or_number",'','0','L');
+                $pdf -> ln(8);
+
+                $pdf->SetFont('freemono', 'B', 18);
+                $pdf -> Cell(70,10,"TOTAL",'T','0','L');
+                $pdf -> Cell(33,10,"₱$total",'T','0','R');
+                $pdf -> ln(7);
+                $pdf->SetFont('freemono', '', 13);
+                $pdf -> Cell(70,10,"PAYMENT",'','0','L');
+                $pdf -> Cell(33,10,"₱$total",'','0','R');
+                $pdf -> ln(13);
+
+                $pdf -> Cell(0,10,"CUSTOMER: $name",'T','0','L');
+                $pdf -> ln(5);
+                $pdf -> Cell(0,10,"ORDER TYPE: ONLINE ORDER",'','0','L');
+                $pdf -> ln(5);
+                $pdf -> Cell(122,10,"ORDER NO.: $or_number",'','0','L');
+                $pdf -> ln(12);
+
+                // $pdf->SetFont('dejavusans', '', 13);
+                $pdf -> Cell(0,10,"Thank you. Please come again.", 'B,T', 1,'C');
+
                 // ob_end_clean();
                 $attachment = $pdf->Output('receipt.pdf', 'S');
                 //Load Composer's autoloader
