@@ -355,7 +355,6 @@ document.getElementById("back").onclick = function() { window.location.replace('
                 $mail->Subject = 'Receipt';
                 $mail->Body    = 'Thank you for ordering!';
                 $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
-                $mail -> send();
                 if($mail->send())
                     echo '<script>alert("Success placing order!");</script>';    
                 else
