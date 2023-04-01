@@ -34,34 +34,33 @@
             $tBody .= "<td><a class='btn btn-light' style='border:1px solid #cccccc;' href='adminOrder_details.php?order_id=$row[order_id]'> <i class='bi bi-list'></i> View</a></td>";
             //show customer info button when it is online order
             if($row['staffInCharge'] == 'online order'){
-                // $tBody .= "<td><a class='btn btn-primary' href='?viewCustomerInfo = $row[user_id] '><i class='bi bi-list'></i> View</a></td>";
                 $tBody .= "<td> <button type='button' class='btn btn-primary' onclick='profileModal($row[user_id])' > View <i class='bi bi-list'></i> </button></td>";                
                 if($row['status'] == 'preparing'){
-                    $tBody .= " <td><a class='btn btn-success' href='?serve=$row[order_id]><i class='bi bi-arrow-bar-left'></i> Serve</a></td>";
+                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='serve($row[order_id])' > Serve <i class='bi bi-arrow-bar-left'></i> </button></td>";                
                 }
                 else if($row['status'] == 'serving'){
-                    $tBody .= "<td><a class='btn btn-success' href='?orderComplete=$row[order_id]'><i class='bi bi-check'></i> Order Complete</a></td>";
+                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='complete($row[order_id])' ><i class='bi bi-check'></i>Order Complete</button></td>";                
                 }
-                else if($row['status'] == 'complete'){
+                else if($row['status'] == 'complete' || $row['status'] == 'void'){
                     $tBody .= " <td><a class='text-danger'>None</a></td>";
                 }
             }
             //pos
             else{
-                $tBody .= "<td></td>";
+                $tBody .= "<td><a class=text-danger>None</a></td>";
                 if($row['status'] == 'preparing'){
-                    $tBody .= "<td><a class='btn btn-success' href='?serve= $row[order_id]'><i class='bi bi-arrow-bar-left'></i> Serve </a></td>";
+                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='serve($row[order_id])' > Serve <i class='bi bi-arrow-bar-left'></i> </button></td>";                
                 }
-                elseif($row['status'] == 'serving'){
-                    $tBody .= "<td><a class='btn btn-success' href='?orderComplete=$row[order_id]'><i class='bi bi-check'></i> Order Complete</a></td>";
+                else if($row['status'] == 'serving'){
+                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='complete($row[order_id])' ><i class='bi bi-check'></i>Order Complete</button></td>";                
                 }
-                elseif($row['status'] == 'complete' || $row['status'] == 'void'){
+                else if($row['status'] == 'complete' || $row['status'] == 'void'){
                     $tBody .= "<td><a class='text-danger'>None</a></td>";
                 }
             }
             //void
             if($row['status'] != 'void' && $_SESSION['accountType'] != 'cashier'){
-                $tBody .= " <td><a class='btn btn-danger' href='?void=$row[order_id].','.$row[user_id].','.$row[totalOrder]'><i class='bi bi-dash-circle'></i> Void</a></td>";
+                $tBody .= "<td> <button type='button' class='btn btn-danger' onclick='voidOrder($row[order_id], $row[user_id], $row[totalOrder])' ><i class='bi bi-circle'></i>Void</button></td>";                
             }
             else{
                 $tBody .= "<td><a class=text-danger>None</a></td>";

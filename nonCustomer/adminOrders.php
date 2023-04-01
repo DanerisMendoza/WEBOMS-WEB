@@ -200,9 +200,7 @@
                                     <!-- table -->
                                     <div class="table-responsive col-lg-12">
                                         <table class="table table-bordered table-hover col-lg-12 text-start">
-                                            <tbody id="customerProfileTable">
-                                                
-                                              
+                                            <tbody id="customerProfileTable">                                                             
                                             </tbody>
                                         </table>
                                     </div>
@@ -227,7 +225,6 @@ $(document).ready(function() {
 });
 
 function profileModal(user_id){
-  
   $.getJSON({
       url: "ajax/orders_getCustomerInfo.php",
       method: "post",
@@ -235,7 +232,7 @@ function profileModal(user_id){
       success: function(res){
           // id, name, picName, username, phone number, address, balance, email, gender
           let data ="";
-          if(res[2] != ""){
+          if(res[2] != null){
             data += "<tr align='center'><th><img src='../profilePic/"+res[2]+"' style='width:200px;height:200px;border:1px solid black;'> </th></tr>";
           }
             data+= "<tr align='center'><td>Name: "+res[1]+"</td></tr>";
@@ -249,87 +246,46 @@ function profileModal(user_id){
           $('#customerProfileModal').modal('show');
       }
   });
-
 }
+
+function serve(order_id){
+    $.post({
+      url: "ajax/orders_serve.php",
+      method: "post",
+      data: {'order_id':JSON.stringify(order_id)},
+      success: function(res){
+        updateTb();
+      }
+  });
+}
+
+function complete(order_id){
+    $.post({
+      url: "ajax/orders_complete.php",
+      method: "post",
+      data: {'order_id':JSON.stringify(order_id)},
+      success: function(res){
+        updateTb();
+      }
+  });
+}
+
+function voidOrder(order_id, user_id, totalOrder){
+    $.post({
+      url: "ajax/orders_void.php",
+      method: "post",
+      data: {'order_id':JSON.stringify(order_id), 'user_id':JSON.stringify(user_id), 'totalOrder':JSON.stringify(totalOrder)},
+      success: function(res){
+        updateTb();
+        console.log(res);
+      }
+  });
+}
+
 </script>
 
 <?php 
-    //button to serve order
-    if(isset($_GET['serve'])){
-        $order_id = $_GET['serve'];
-        $query = "UPDATE weboms_order_tb SET status='serving' WHERE order_id='$order_id' ";     
-        if(Query2($query)){
-            echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
-        }
-    }
-
-    //button to make order complete
-    if(isset($_GET['orderComplete'])){
-        $order_id = $_GET['orderComplete'];
-        $query = "UPDATE weboms_order_tb SET status='complete' WHERE order_id='$order_id' ";     
-        if(Query2($query))
-            echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
-    }
-
-    //void button
-    if(isset($_GET['void'])){
-        $arr = explode(',',$_GET['void']);
-        $order_id = $arr[0];
-        $user_id = $arr[1];
-        $totalOrder = $arr[2];
-        $query = "UPDATE weboms_order_tb SET status='void' WHERE order_id='$order_id' ";     
-        $query2 = "UPDATE weboms_userInfo_tb SET balance = (balance + '$totalOrder') WHERE user_id= '$user_id' ";    
-        if(Query2($query)){
-            if(Query2($query2)){
-                echo "<SCRIPT>  window.location.replace('adminOrders.php'); alert('SUCCESS!');</SCRIPT>";
-            }
-        }
-
-
-        $dishesArr = array();
-        $dishesQuantity = array();
-
-        $query = "select a.*, b.* from weboms_menu_tb a inner join weboms_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$order_id' ";
-        $resultSet = getQuery2($query); 
-
-        foreach($resultSet as $row){
-            array_push($dishesArr,$row['dish']);
-            array_push($dishesQuantity,$row['quantity']);
-        }
-            
-        for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-            Query2($updateQuery);    
-        }
-    }
-
-    //view customer info
-    if(isset($_GET['viewCustomerInfo'])){
-        echo "<script>$('#customerProfileModal').modal('show');</script>";
-    }
-?>
-
-<?php 
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
         session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
