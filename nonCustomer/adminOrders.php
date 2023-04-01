@@ -129,7 +129,6 @@
                                                 else{
                                                     latestId = res;
                                                 }
-                                                console.log(latestId);
                                             }
                                             });
                                             function checkIfDbChange(){
@@ -201,70 +200,9 @@
                                     <!-- table -->
                                     <div class="table-responsive col-lg-12">
                                         <table class="table table-bordered table-hover col-lg-12 text-start">
-                                            <tbody>
-                                                <?php
-                                                    $query = "select a.*,b.* from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
-                                                    $resultSet =  getQuery2($query);
-                                                    if($resultSet!= null)
-                                                    foreach($resultSet as $row){ 
-                                                    // init
-                                                    $id = $row['id'];
-                                                    $name = $row['name'];
-                                                    $picName = $row['picName'];
-                                                    $username = $row['username'];
-                                                    $g = $row['gender'];
-                                                    $phoneNumber = $row['phoneNumber'];
-                                                    $address = $row['address'];
-                                                    $balance = $row['balance'];
-                                                    $email = $row['email'];
-                                                    //gender process
-                                                    $g = $row['gender'];
-                                                    if($g == 'm'){
-                                                        $gender = 'male';
-                                                        $genderIndex = 0;
-                                                    }
-                                                    elseif($g == 'f'){
-                                                        $gender = 'female';
-                                                        $genderIndex = 1;
-                                                    }else{
-                                                        $gender = 'NA';
-                                                        $genderIndex = 2;
-                                                    }
-                                                    ?>
-                                                    <?php if($picName != null){ ?>
-                                                        <tr class="text-center">
-                                                            <th colspan="2"><img src="../profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border:1px solid black;"></th>
-                                                        </tr>
-                                                    <?php } ?>
-                                                    <tr>
-                                                        <td><b>NAME</b></td>
-                                                        <td><?php echo ucwords($name);?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>USERNAME</b></td>
-                                                        <td><?php echo $username;?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>EMAIL</b></td>
-                                                        <td><?php echo $email;?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>GENDER</b></td>
-                                                        <td><?php echo ucwords($gender);?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>PHONE NUMBER</b></td>
-                                                        <td><?php echo $phoneNumber;?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>ADDRESS</b></td>
-                                                        <td><?php echo ucwords($address);?></td>
-                                                    </tr>
-                                                    <tr class="bg-success text-white">
-                                                        <td><b>BALANCE</b></td>
-                                                        <td><b><?php echo '₱'. number_format($balance,2);?></b></td>
-                                                    </tr>
-                                                    <?php } ?>
+                                            <tbody id="customerProfileTable">
+                                                
+                                              
                                             </tbody>
                                         </table>
                                     </div>
@@ -287,6 +225,32 @@ $(document).ready(function() {
         $('#sidebar').toggleClass('active');
     });
 });
+
+function profileModal(user_id){
+  
+  $.getJSON({
+      url: "ajax/orders_getCustomerInfo.php",
+      method: "post",
+      data: {'user_id':JSON.stringify(user_id)},
+      success: function(res){
+          // id, name, picName, username, phone number, address, balance, email, gender
+          let data ="";
+          if(res[2] != ""){
+            data += "<tr align='center'><th><img src='../profilePic/"+res[2]+"' style='width:200px;height:200px;border:1px solid black;'> </th></tr>";
+          }
+            data+= "<tr align='center'><td>Name: "+res[1]+"</td></tr>";
+            data+= "<tr align='center'><td>Username: "+res[3]+"</td></tr>";
+            data+= "<tr align='center'><td>Gender: "+res[4]+"</td></tr>";
+            data+= "<tr align='center'><td>Phone: "+res[5]+"</td></tr>";
+            data+= "<tr align='center'><td>Address: "+res[6]+"</td></tr>";
+            data+= "<tr align='center'><td>Balance: ₱"+res[7]+"</td></tr>";
+          $('#customerProfileModal').find('.modal-body .table tbody tr').remove();
+          $('#customerProfileModal').find('.modal-body .table tbody').append(data);
+          $('#customerProfileModal').modal('show');
+      }
+  });
+
+}
 </script>
 
 <?php 
