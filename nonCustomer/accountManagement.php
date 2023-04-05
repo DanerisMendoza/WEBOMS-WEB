@@ -86,13 +86,9 @@
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
-                    <?php
-                        include_once('../method/query.php');
-                        $selectAllUser = "select * from weboms_user_tb inner join weboms_userInfo_tb on weboms_user_tb.user_id = weboms_userInfo_tb.user_id";
-                        $resultSet =  getQuery2($selectAllUser);
-                    ?>
+                    
                     <div class="table-responsive col-lg-12">
-                        <table id="tbl" class="table table-bordered table-hover col-lg-12">
+                        <table  class="table table-bordered table-hover col-lg-12" id="tbl1">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">USERNAME</th>
@@ -104,43 +100,11 @@
                                     <th scope="col">
                                         <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
                                     </th>
-                                    <th scope="col" colspan="2">OPTIONS</th>
+                                    <th scope="col" >OPTIONS</th>
+                                    <th scope="col" ></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                    if($resultSet!= null)
-                                    foreach($resultSet as $row){ ?>
-                                        <tr>
-                                            <td><?php echo $row['username']; ?></td>
-                                            <td><?php echo ucwords($row['name']); ?></td>
-                                            <td><?php echo $row['email']; ?></td>
-                                            <td><?php echo ucwords($row['accountType']);?></td>
-                                            <td><?php echo $row['rfid'];?></td>
-                                            <td><a class="btn btn-light" href="?viewCustomerInfo=<?php echo $row['user_id'] ?>" style="border:1px solid #cccccc;"><i class="bi bi-list"></i> View</a></td>
-                                            <!-- options -->
-                                            <td>
-                                                <a class="btn btn-warning" href="?update=<?php echo $row['username'].','.$row['email'] ?>"><i class="bi bi-arrow-repeat"></i> Update</a>
-                                            </td>
-                                                <!-- non admin -->
-                                                <?php if($row['username'] != 'admin'){ ?>
-                                                    <td>
-                                                        <a class="btn btn-danger" href="?delete=<?php echo $row['user_id'];?>"><i class="bi bi-trash3"></i> Delete</a>
-                                                    </td>   
-                                                        <!-- customer -->
-                                                        <?php  if($row['accountType'] == 'customer'){
-                                                        ?>
-                                                            <td>
-                                                            <button class="btn btn-primary" type="button" name="rfidButton" onclick='rfid(this)' value="<?php echo $row['user_id']; ?>"><i class="bi bi-credit-card"></i> Bind</button>
-                                                        </td>
-                                                        <?php
-                                                        }
-                                                    // admin
-                                                }else{
-                                                    echo "<td colspan='2'><a class='text-danger'>You cannot delete this account!</a></td>";
-                                                } ?>
-                                            </tr>
-                                    <?php } ?>
+                            <tbody id="tbody1">
                             </tbody>
                         </table>
                     </div>
@@ -173,12 +137,10 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body ">
-                            <form method="post" class="form-group">
-                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter new username" required>
-                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter new email">
-                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter new password" required>
-                                <button type="submit" class="btn btn-lg btn-warning col-12" name="updateAdmin"><i class="bi bi-arrow-repeat"></i> Update</button>
-                            </form>
+                            <input type="text" class="form-control form-control-lg mb-3" id="updateUsername" placeholder="Enter new username" required>
+                            <input type="email" class="form-control form-control-lg mb-3" id="updateEmail" placeholder="Enter new email">
+                            <input type="password" class="form-control form-control-lg mb-3" id="updatePassword" placeholder="Enter new password" required>
+                            <button type="submit" class="btn btn-lg btn-warning col-12" onclick="updateDetails()"><i class="bi bi-arrow-repeat"></i> Update</button>
                         </div>
                     </div>
                 </div>
@@ -216,69 +178,7 @@
                             <div class="table-responsive col-lg-12">
                                 <table class="table table-striped table-hover col-lg-12">
                                     <tbody>
-                                        <?php
-                                        $query = "select a.*,b.* from weboms_user_tb a inner join weboms_userInfo_tb b on a.user_id = b.user_id where a.user_id = '$_GET[viewCustomerInfo]' ";
-                                        $resultSet =  getQuery2($query);
-                                        if($resultSet!= null)
-                                        foreach($resultSet as $row){ 
-                                        // init
-                                        $id = $row['id'];
-                                        $name = $row['name'];
-                                        $picName = $row['picName'];
-                                        $username = $row['username'];
-                                        $g = $row['gender'];
-                                        $phoneNumber = $row['phoneNumber'];
-                                        $address = $row['address'];
-                                        $balance = $row['balance'];
-                                        $email = $row['email'];
-                                        //gender process
-                                        $g = $row['gender'];
-                                        if($g == 'm'){
-                                            $gender = 'male';
-                                            $genderIndex = 0;
-                                        }
-                                        elseif($g == 'f'){
-                                            $gender = 'female';
-                                            $genderIndex = 1;
-                                        }else{
-                                            $gender = 'NA';
-                                            $genderIndex = 2;
-                                        }
-                                        ?>
-                                        <?php if($picName != null){ ?>
-                                            <tr class="text-center">
-                                                <th colspan="2"><img src="../profilePic/<?php echo $picName; ?>" style="width:200px;height:200px;border-radius:100px"></th>
-                                            </tr>
-                                        <?php } ?>
-                                        <tr>
-                                            <td><b>Name</b></td>
-                                            <td><?php echo ucwords($name);?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Username</b></td>
-                                            <td><?php echo $username;?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Email</b></td>
-                                            <td><?php echo $email;?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Gender</b></td>
-                                            <td><?php echo ucfirst($gender);?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Phone Number</b></td>
-                                            <td><?php echo $phoneNumber;?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Address</b></td>
-                                            <td><?php echo ucwords($address);?></td>
-                                        </tr>
-                                        <tr class="bg-success">
-                                            <td class="text-white"><b>BALANCE</b></td>
-                                            <td class="text-white"><b><?php echo '₱'. number_format($balance,2);?></b></td>
-                                        </tr>
-                                        <?php } ?>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -336,40 +236,8 @@
           echo ("<script>window.location.replace('accountManagement.php'); alert('Success!');</script>");
   
     }
-    //update form
-    if(isset($_GET['update'])){
-        $arr = explode(',',$_GET['update']);
-        $username = $arr[0];
-        $email = $arr[1];
-        $_SESSION['oldEmail'] = $email;
-        echo "<script>$('#passAndEmail').modal('show');</script>";
-        echo "<script>
-        document.forms[2].username.value = '$username';
-        document.forms[2].email.value = '$email';
-        document.forms[2].username.disabled = true;
-        </script>";
-    }
 
-    //update button
-    if(isset($_POST['updateAdmin'])){
-        $password = $_POST['password'];
-        $email = $_POST['email'];
-        $oldEmail = $_SESSION['oldEmail'];
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        //validation
-        $query = "select * from weboms_userInfo_tb where email = '$email'";
-        if(getQuery2($query) != null && $email != $oldEmail)
-            die ("<script>alert('Email Already Exist!');</script>");
-
-        $query = "update weboms_user_tb as a inner join weboms_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
-        if(Query2($query)){
-            echo "<script>alert('Success!');</script>";
-            echo "<script>history.replaceState({},'','accountManagement.php');</script>";
-            echo "<script>window.location.replace('accountManagement.php');</script>";
-        }
-    }
-
+    
     //delete
     if(isset($_GET['delete'])){
         $user_id = $_GET['delete'];
@@ -379,25 +247,129 @@
             if(Query2($query2))
                 echo "<script>window.location.replace('accountManagement.php');</script>";
     }
-
-    //view customer info
-    if(isset($_GET['viewCustomerInfo'])){
-        echo "<script>$('#customerProfileModal').modal('show');</script>";
-    }
 ?>
 
 <script>
+
+function updateTbody(){
+  $.getJSON({
+      url: "ajax/accountManagement_getUsers.php",
+      method: "post",
+      success: function(result){
+        //username, name, email, accountType, rfid, user_id
+        let data = "";
+        for(let i=0; i<result['username'].length; i++){
+            data += "<tr>";
+            data +=     "<td>"+result['username'][i]+"</td>";
+            data +=     "<td>"+result['name'][i]+"</td>";
+            data +=     "<td>"+result['email'][i]+"</td>";
+            data +=     "<td>"+result['accountType'][i]+"</td>";
+            data +=     "<td>"+result['rfid'][i]+"</td>";
+            data +=     "<td><button class='btn btn-light' style='border:1px solid #cccccc;' onclick='viewCustomerInfo("+result['user_id'][i]+")'><i class='bi bi-list'>View</button></td>";
+            data +=     "<td><button class='btn btn-warning' style='border:1px solid #cccccc;' onclick=updateUser('"+result['username'][i]+"','"+result['email'][i]+"')> <i class='bi bi-arrow-repeat'></i>Update</button></td>";
+            //add delete button if not admin
+            if(result['accountType'][i] == 'admin'){
+                data += "<td><a class='text-danger'>You Cannot Delete This Account!</a></td>";
+                data += "<td></td>";
+            }
+            else{
+                data += "<td><button class='btn btn-trash3' style='border:1px solid #cccccc;' onclick='deleteUser("+result['user_id'][i]+")'>Delete</button></td>";
+            }
+            // add bind button if customer
+            if(result['accountType'][i] == 'customer'){
+                data += "<td><button class='btn btn-primary' style='border:1px solid #cccccc;' onclick='rfid("+result['user_id'][i]+")'><i class='bi bi-credit-card'></i>Bind</button></td>";
+            }
+            data += "</tr>";
+        }
+   
+        $('#tbody1').append(data);
+        $('#tbl1').dataTable({
+        "columnDefs": [
+            { "targets": [5,6,7], "orderable": false }
+        ]
+        });
+      
+      
+      }
+  });
+}
+updateTbody();
+
+
+function viewCustomerInfo(user_id){
+    $.getJSON({
+      url: "ajax/accountManagement_getUserInfo.php",
+      method: "post",
+      data: {'user_id':JSON.stringify(user_id)},
+      success: function(res){
+        //   // id, name, picName, username, phone number, address, balance, email, gender
+          let data ="";
+          if(res[2] != null){
+            data += "<tr align='center'><th><img src='../profilePic/"+res[2]+"' style='width:200px;height:200px;border:1px solid black;'> </th></tr>";
+          }
+            data+= "<tr align='center'><td>Name: "+res[1]+"</td></tr>";
+            data+= "<tr align='center'><td>Username: "+res[3]+"</td></tr>";
+            data+= "<tr align='center'><td>Gender: "+res[4]+"</td></tr>";
+            data+= "<tr align='center'><td>Phone: "+res[5]+"</td></tr>";
+            data+= "<tr align='center'><td>Address: "+res[6]+"</td></tr>";
+            data+= "<tr align='center'><td>Balance: ₱"+res[7]+"</td></tr>";
+          $('#customerProfileModal').find('.modal-body .table tbody tr').remove();
+          $('#customerProfileModal').find('.modal-body .table tbody').append(data);
+          $('#customerProfileModal').modal('show');
+      }
+  });
+}
+
+
+
+function updateUser(username,email){
+    $('#passAndEmail').modal('show');
+    $('#updateUsername').val(username);
+    $('#updateEmail').val(email);
+    $('#updatePassword').val('');
+    $('#updateUsername').prop('disabled', true);
+}
+
+function updateDetails(){
+    //validation 
+    if($('#updateEmail').val() == ''){
+        alert('Please enter your new email!');
+        return;
+    }
+    if($('#updatePassword').val() == ''){
+        alert('Please enter your new Password!');
+        return;
+    }
+    $.ajax({
+      url: "ajax/accountManagement_updateEmailAndPass.php",
+      method: "post",
+      data: {
+        'username':JSON.stringify($('#updateUsername').val()), 
+        'email':JSON.stringify($('#updateEmail').val()),
+        'password':JSON.stringify($('#updatePassword').val()), },
+      success: function(res){
+        if(res == 'email already exist'){
+            alert('email already exist');
+            return;
+        }
+        $('#tbl1').DataTable().clear().destroy();
+        $('#passAndEmail').modal('hide');
+        updateTbody();
+    }
+  });
+}
+
+function deleteUser(){
+    alert('delete');
+}
+
 // sidebar toggler
 $(document).ready(function() {
     $('#sidebarCollapse').on('click', function() {
         $('#sidebar').toggleClass('active');
     });
 });
-$('table').dataTable({
-    "columnDefs": [
-        { "targets": [7], "orderable": false }
-    ]
-});
+
 </script>
 
 <?php 
@@ -429,9 +401,6 @@ $('table').dataTable({
 
 <script>
 var userId_Global = null;
-$(document).ready(function() {
-    $('#tbl').DataTable();
-});
 
 $("#rfid").on('shown.bs.modal', function(){
     $(this).find('input[type="text"]').val('');

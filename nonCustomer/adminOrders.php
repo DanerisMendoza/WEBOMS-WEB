@@ -149,7 +149,7 @@
                                                 });
                                             }
                                             checkIfDbChange();
-                                     
+                                            // add data in tbl1
                                             $.ajax({
                                             url: "ajax/orders_getOrders.php",
                                             method: "post",
@@ -200,7 +200,7 @@
                                     <!-- table -->
                                     <div class="table-responsive col-lg-12">
                                         <table class="table table-bordered table-hover col-lg-12 text-start">
-                                            <tbody id="customerProfileTable">                                                             
+                                            <tbody>                                                             
                                             </tbody>
                                         </table>
                                     </div>
@@ -277,9 +277,8 @@ function voidOrder(order_id, user_id, totalOrder){
       data: {'order_id':JSON.stringify(order_id), 'user_id':JSON.stringify(user_id), 'totalOrder':JSON.stringify(totalOrder)},
       success: function(res){
         updateTb();
-        console.log(res);
       }
-  });
+    });
 }
 
 </script>
