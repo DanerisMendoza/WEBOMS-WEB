@@ -98,7 +98,7 @@
                                     <th scope="col">RFID<br>NO.</th>
                                     <th scope="col">CUSTOMER<br>INFO</th>
                                     <th scope="col">
-                                        <button id="addButton" type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
+                                        <button id="addButton" type="button" onclick="clearField()" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#addNewAccountModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
                                     </th>
                                     <th scope="col" >OPTIONS</th>
                                     <th scope="col" ></th>
@@ -112,7 +112,7 @@
             </div>
 
             <!-- add new account -->
-            <div class="modal fade" role="dialog" id="loginModal">
+            <div class="modal fade" role="dialog" id="addNewAccountModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -190,60 +190,41 @@
 
 </html>
 
-<?php 
-    //insert
-    if(isset($_POST['insert'])){
-        //initialization
-        $name =  $_POST['name'];
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password =  $_POST['password'];
-        $accountType = $_POST['accountType'];
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        //get two user id from different table
-        $lastUserIdOrder = getQueryOneVal2("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
-        $lastUserIdUserInfo = getQueryOneVal2("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
-        //compare which user id is higher 
-        if($lastUserIdOrder > $lastUserIdUserInfo)
-            $user_id = $lastUserIdOrder;
-        else
-            $user_id = $lastUserIdUserInfo;   
-        // increment user id
-        $user_id++;
-
-        //validation
-        $query = "select * from weboms_user_tb where username = '$username'";
-        if(getQuery2($query) != null)
-            die ("<script>alert('NAME ALREADY EXIST!');</script>");
-        $query = "select * from weboms_userInfo_tb where name = '$name'";
-        if(getQuery2($query) != null)
-            die ("<script>alert('NAME ALREADY EXIST!');</script>");
-        $query = "select * from weboms_userInfo_tb where email = '$email'";
-        if(getQuery2($query) != null)
-            die ("<script>alert('EMAIL ALREADY EXIST!');</script>");
-
-        //insert
-        $query1 = "insert into weboms_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
-        $query2 = "insert into weboms_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
-        if(!Query2($query1))
-          echo "Failed to save to database!";
-        elseif(!Query2($query2))
-          echo "Failed to save to database!";
-        else
-          echo ("<script>window.location.replace('accountManagement.php'); alert('Success!');</script>");
-  
-    }
-
-?>
-
 <script>
+function clearField(){
+    $("#addUsername").val('');
+    $("#addName").val('');
+    $("#addEmail").val('');
+    $("#addPassword").val('');
+}
+    
 function insertAccount(){
     let username = $("#addUsername").val();
     let name = $("#addName").val();
     let email = $("#addEmail").val();
     let password = $("#addPassword").val();
     let accountType = $("#addAccountType").val();
+
+    $.ajax({
+        url: "ajax/accountManagement_insert.php",
+        method: "post",
+        data: {
+            'name':JSON.stringify(name),
+            'username':JSON.stringify(username),
+            'email':JSON.stringify(email),
+            'password':JSON.stringify(password),
+            'accountType':JSON.stringify(accountType)
+        },
+        success: function(res){
+            if(res == 'Sucess!'){
+                updateTbody();
+            }
+            else{
+                alert(res);
+                return;
+            }
+        }
+    });
 }
 
 function updateTbody(){
@@ -265,7 +246,6 @@ function updateTbody(){
             //add delete button if not admin
             if(result['accountType'][i] == 'admin'){
                 data += "<td><a class='text-danger'>You Cannot Delete This Account!</a></td>";
-                data += "<td></td>";
             }
             else{
                 data += "<td><button class='btn btn-danger' style='border:1px solid #cccccc;' onclick='deleteUser("+result['user_id'][i]+")'><i class='bi bi-trash3'></i>Delete</button></td>";
@@ -273,6 +253,9 @@ function updateTbody(){
             // add bind button if customer
             if(result['accountType'][i] == 'customer'){
                 data += "<td><button class='btn btn-primary' style='border:1px solid #cccccc;' onclick='rfid("+result['user_id'][i]+")'><i class='bi bi-credit-card'></i>Bind</button></td>";
+            }
+            else{
+                data += "<td></td>";
             }
             data += "</tr>";
         }
@@ -314,8 +297,6 @@ function viewCustomerInfo(user_id){
       }
   });
 }
-
-
 
 function updateUser(username,email){
     $('#passAndEmail').modal('show');
@@ -361,7 +342,7 @@ function deleteUser(user_id){
         success: function(res){
             updateTbody();
         }
-  });
+    });
 }
 
 // sidebar toggler
@@ -376,26 +357,6 @@ $(document).ready(function() {
 <?php 
 // logout
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
-        session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
@@ -433,8 +394,7 @@ $('#rfidInput').keyup(function(){
                     success: function(){  
                         $(this).val('');
                         $('#rfid').modal('hide');
-                        
-                        window.location.replace('accountManagement.php');
+                        updateTbody();  
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
                         alert("Status: " + textStatus); alert("Error: " + errorThrown); 
@@ -449,8 +409,8 @@ $('#rfidInput').keyup(function(){
 });
 
 
-function rfid(button){
-    userId_Global = $(button).closest("tr").find('[name="rfidButton"]').val();
+function rfid(user_id){
+    userId_Global = user_id;
     $('#rfid').modal('show');
 }
 </script>

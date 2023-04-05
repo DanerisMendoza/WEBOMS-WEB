@@ -1,19 +1,44 @@
 <?php 
     include('../../method/query.php');
-    //update button
+    //initialization
+    $name =  json_decode($_POST['name']);
     $username = json_decode($_POST['username']);
     $email = json_decode($_POST['email']);
-    $password = json_decode($_POST['password']);
+    $password =  json_decode($_POST['password']);
+    $accountType = json_decode($_POST['accountType']);
 
-    // hash first
+    if($name == '' || $username = '' || $email = '' || $password = ''){
+        die("Please complete Details!");
+    }
+
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
+    //get two user id from different table
+    $lastUserIdOrder = getQueryOneVal3("SELECT MAX(user_id) from weboms_order_tb","MAX(user_id)");
+    $lastUserIdUserInfo = getQueryOneVal3("SELECT MAX(user_id) from weboms_userInfo_tb","MAX(user_id)");
+    //compare which user id is higher 
+    if($lastUserIdOrder > $lastUserIdUserInfo)
+        $user_id = $lastUserIdOrder;
+    else
+        $user_id = $lastUserIdUserInfo;   
+    // increment user id
+    $user_id++;
+
     //validation
-    $query = "select name from weboms_userInfo_tb a INNER join weboms_user_tb b on a.user_id = b.user_id where email = '$email' and username != '$username';";
-    if(getQuery3($query) != null )
+    $query = "select * from weboms_user_tb where username = '$username'";
+    if(getQuery3($query) != null)
+        die ("username already exist");
+    $query = "select * from weboms_userInfo_tb where name = '$name'";
+    if(getQuery3($query) != null)
+        die ("name already exist");
+    $query = "select * from weboms_userInfo_tb where email = '$email'";
+    if(getQuery3($query) != null)
         die ("email already exist");
 
-    // // update db
-    $query = "update weboms_user_tb as a inner join weboms_userInfo_tb as b on a.user_id = b.user_id SET password = '$hash', email = '$email' WHERE username='$username' ";
-    Query3($query);
+    //insert
+    $query1 = "insert into weboms_user_tb(username, password, accountType, user_id) values('$username','$hash','$accountType','$user_id')";
+    $query2 = "insert into weboms_userInfo_tb(name, email, otp, user_id) values('$name','$email','','$user_id')";
+    Query3($query1);
+    Query3($query2);
+    echo "Sucess!";
 ?>
