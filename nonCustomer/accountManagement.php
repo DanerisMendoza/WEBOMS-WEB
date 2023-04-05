@@ -116,17 +116,15 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <form method="post" class="form-group">
-                                <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter username" required>
-                                <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter name" required>
-                                <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter email" required>
-                                <input type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter password" required>
-                                <select name="accountType" class="form-control form-control-lg col-12 mb-3">
-                                    <option value="manager">Manager</option>
-                                    <option value="cashier">Cashier</option>
-                                </select>
-                                <button type="submit" class="btn btn-lg btn-success col-12" name="insert"><i class="bi bi-save"></i> Save</button>
-                            </form>
+                            <input type="text" class="form-control form-control-lg mb-3" id="addUsername" placeholder="Enter username" required>
+                            <input type="text" class="form-control form-control-lg mb-3" id="addName" placeholder="Enter name" required>
+                            <input type="email" class="form-control form-control-lg mb-3" id="addEmail" placeholder="Enter email" required>
+                            <input type="password" class="form-control form-control-lg mb-3" id="addPassword" placeholder="Enter password" required>
+                            <select id="addAccountType" class="form-control form-control-lg col-12 mb-3">
+                                <option value="manager">Manager</option>
+                                <option value="cashier">Cashier</option>
+                            </select>
+                            <button type="submit" class="btn btn-lg btn-success col-12" onclick="insertAccount()"><i class="bi bi-save"></i> Save</button>
                         </div>
                     </div>
                 </div>
@@ -237,19 +235,16 @@
   
     }
 
-    
-    //delete
-    if(isset($_GET['delete'])){
-        $user_id = $_GET['delete'];
-        $query = "DELETE FROM weboms_user_tb WHERE user_id='$user_id' ";
-        $query2 = "DELETE FROM weboms_userInfo_tb WHERE user_id='$user_id' ";
-        if(Query2($query))
-            if(Query2($query2))
-                echo "<script>window.location.replace('accountManagement.php');</script>";
-    }
 ?>
 
 <script>
+function insertAccount(){
+    let username = $("#addUsername").val();
+    let name = $("#addName").val();
+    let email = $("#addEmail").val();
+    let password = $("#addPassword").val();
+    let accountType = $("#addAccountType").val();
+}
 
 function updateTbody(){
   $.getJSON({
@@ -273,7 +268,7 @@ function updateTbody(){
                 data += "<td></td>";
             }
             else{
-                data += "<td><button class='btn btn-trash3' style='border:1px solid #cccccc;' onclick='deleteUser("+result['user_id'][i]+")'>Delete</button></td>";
+                data += "<td><button class='btn btn-danger' style='border:1px solid #cccccc;' onclick='deleteUser("+result['user_id'][i]+")'><i class='bi bi-trash3'></i>Delete</button></td>";
             }
             // add bind button if customer
             if(result['accountType'][i] == 'customer'){
@@ -281,7 +276,7 @@ function updateTbody(){
             }
             data += "</tr>";
         }
-   
+        $('#tbl1').DataTable().clear().destroy();
         $('#tbody1').append(data);
         $('#tbl1').dataTable({
         "columnDefs": [
@@ -352,15 +347,21 @@ function updateDetails(){
             alert('email already exist');
             return;
         }
-        $('#tbl1').DataTable().clear().destroy();
         $('#passAndEmail').modal('hide');
         updateTbody();
     }
   });
 }
 
-function deleteUser(){
-    alert('delete');
+function deleteUser(user_id){
+    $.ajax({
+        url: "ajax/accountManagement_deleteUser.php",
+        method: "post",
+        data: {'user_id':JSON.stringify(user_id)},
+        success: function(res){
+            updateTbody();
+        }
+  });
 }
 
 // sidebar toggler
