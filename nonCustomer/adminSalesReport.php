@@ -151,6 +151,10 @@ function updateTable1(mode){
         alert('Please Complete Selecting Date!');
         return;
     }
+    if(mode == 'showAll'){
+        $('#dateFetch1').val('');
+        $('#dateFetch2').val('');
+    }
 
     let dateArr = new Array(2);
     dateArr[0] = date1;
