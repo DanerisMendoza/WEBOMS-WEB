@@ -4,36 +4,12 @@
     include('../method/query.php');
     //init
     $_SESSION['from'] = 'adminSalesReport';
-    $_SESSION['resultSet'] = array();
-    $_SESSION['date1'] =  $_SESSION['date2'] = '';
 
     //default value
     $query = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
     $resultSet =  getQuery2($query); 
     $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
     
-    //fetch by date
-    if(isset($_POST['fetch'])){
-        if($_POST['dateFetch1'] != '' && $_POST['dateFetch2'] != ''){
-            $date1 = $_POST['dateFetch1'];
-            $date2 = $_POST['dateFetch2'];
-
-            $_SESSION['date1'] = date('m/d/Y h:i a ', strtotime($date1));
-            $_SESSION['date2'] = date('m/d/Y h:i a ', strtotime($date2));
-            $query = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = 'complete' and b.date between '$date1' and '$date2' ORDER BY b.id asc; ";
-            $resultSet =  getQuery2($query); 
-            $_SESSION['resultSet'] = array();
-        }
-    }
- 
-    //show all
-    if(isset($_POST['showAll'])){
-        $query = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id where b.status = 'complete' ORDER BY b.id asc; ";
-        $resultSet =  getQuery2($query); 
-        unset($_POST['dateFetch1']);
-        unset($_POST['dateFetch2']);
-        $_SESSION['resultSet'] = array();
-    }
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +27,12 @@
     <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <!-- modal script  -->
+    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>  
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <!-- data table -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -119,39 +101,25 @@
                     </div>
 
                     <!-- table -->
-                    <form method="post" class="col-lg-12">
                         <div class="table-responsive col-lg-12">
                             <table class="table table-bordered border-white col-lg-12">
                                 <tr>
-                                    <td>
-                                        <h1 class="fw-normal h3 form-control form-control-lg">FROM:</h1>
-                                    </td>
-                                    <td>
-                                        <input type="datetime-local" name="dateFetch1" class="form-control form-control-lg" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch1']: " ") ?>">
-                                    </td>
-                                    <td>
-                                        <button type="submit" name="fetch" class="btn btn-lg btn-primary col-12"><i class="bi bi-arrow-bar-left"></i> Fetch (between)</button>
-                                    </td>
+                                    <td><h1 class="fw-normal h3 form-control form-control-lg">FROM:</h1></td>
+                                    <td><input type="datetime-local" id="dateFetch1" class="form-control form-control-lg"></td>
+                                    <td><button type="button" onclick="updateTable1('showByTwoDate')" class="btn btn-lg btn-primary col-12"><i class="bi bi-arrow-bar-left"></i> Fetch (between)</button></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <h1 class="fw-normal h3 form-control form-control-lg">TO:</h1>
-                                    </td>
-                                    <td>
-                                        <input type="datetime-local" name="dateFetch2" class="form-control form-control-lg" value="<?php echo(isset($_POST['dateFetch1'])?  $_POST['dateFetch2']: " ") ?>">
-                                    </td>
-                                    <td>
-                                        <button type="submit" name="showAll" class="btn btn-lg btn-primary col-12"><i class="bi bi-list"></i> Show All</button>
-                                    </td>
+                                    <td><h1 class="fw-normal h3 form-control form-control-lg">TO:</h1></td>
+                                    <td><input type="datetime-local" id="dateFetch2" class="form-control form-control-lg"></td>
+                                    <td><button type="button" onclick="updateTable1('showAll')" class="btn btn-lg btn-primary col-12"><i class="bi bi-list"></i> Show All</button></td>
                                 </tr>
                             </table>
                         </div>
-                    </form>
 
                     <!-- table 2 -->
                     <div class="table-responsive col-lg-12">
-                        <table class="table table-bordered table-hover col-lg-12">
-                            <thead>
+                        <table id="tbl1" class="table table-bordered table-hover col-lg-12">
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col">NAME</th>
                                     <th scope="col">TRANSACTION NO.</th>
@@ -160,36 +128,8 @@
                                     <th scope="col">ORDER DETAILS</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php 
-                                    $total = 0;
-                                    if($resultSet != null)
-                                        foreach($resultSet as $row){ ?>
-                                <?php array_push($_SESSION['resultSet'], $row)?>
-                                <tr>
-                                    <!--if account is deleted block-->
-                                    <?php if($row['staffInCharge'] == 'online order' && $row['name'] == '' ){ ?>
-                                        <td><a class="text-danger">Deleted Account</a></td>
-                                    <?php }elseif($row['name'] != ''){ ?>
-                                        <td ><?php echo ucfirst($row['name']); ?></td>
-                                    <?php }else{ ?> 
-                                        <td >(No Name)</td>
-                                    <?php }?>
-                                    <td><?php echo $row['order_id'];?></td>
-                                    <td><?php echo date('m/d/Y h:i a ', strtotime($row['date'])); ?></td>
-                                    <td><?php echo '₱'. number_format($row['totalOrder'],2); ?></td>
-                                    <?php $total += $row['totalOrder'];?>
-                                    <!-- order detail -->
-                                    <td>
-                                        <a class="btn btn-light" style="border:1px solid #cccccc;" href="adminOrder_details.php?order_id=<?php echo $row['order_id']?>"><i class="bi bi-list"></i> View</a>
-                                    </td>
-                                </tr>
-                                <?php } ?>
-                                <tr>
-                                    <td colspan="3"><strong>Total Amount:</strong></td>
-                                    <td><strong><?php echo '₱'. $total;?></strong></td>
-                                    <td></td>
-                                </tr>
+                            <tbody id="tbody1">
+                    
                             </tbody>
                         </table>
                     </div>
@@ -204,9 +144,63 @@
 
 
 <script>
+function updateTable1(mode){
+    let date1 = $("#dateFetch1").val();
+    let date2 = $("#dateFetch2").val();
+    if(mode == 'showByTwoDate' && (date1 == '' || date2 == '')){
+        alert('Please Complete Selecting Date!');
+        return;
+    }
+
+    let dateArr = new Array(2);
+    dateArr[0] = date1;
+    dateArr[1] = date2;
+
+    $.getJSON({
+      url: "ajax/salesReport_getSales.php",
+      method: "post",
+      data: {
+            'mode':JSON.stringify(mode),
+            'dateArr':JSON.stringify(dateArr),
+        },
+      success: function(sales){
+        //username, name, email, accountType, rfid, user_id
+        let data = "";
+        if(sales != "null"){
+            for(let i=0; i<sales['name'].length; i++){
+                data += "<tr>";
+                    if(sales['staffInCharge'][i] == 'online order' && sales['name'][i] == null){
+                        data += "<td><a class='text-danger'>Deleted Account</a></td>";
+                    }
+                    else if(sales['name'][i] != null){
+                        data += "<td>"+sales['name'][i]+"</td>";
+                    }
+                    else{
+                        data += "<td>(No Name)</td>";
+                    }
+                    data += "<td>"+sales['order_id'][i]+"</td>";
+                    data += "<td>"+sales['date'][i]+"</td>";
+                    data += "<td>₱"+sales['totalOrder'][i]+"</td>";
+                    data += "<td> <a class='btn btn-light' style='border:1px solid #cccccc;' href='adminOrder_details.php?order_id="+sales['order_id'][i]+"'><i class='bi bi-list'></i> View</a></td>";
+                data += "</tr>";
+            }
+        }
+        console.log(sales);
+        $('#tbl1').DataTable().clear().destroy();
+        $('#tbody1').append(data);
+        $('#tbl1').dataTable({
+        "columnDefs": [
+            { "targets": [4], "orderable": false }
+        ]
+        });
+      }
+  });
+}
+updateTable1('showAll');
+
 //order button (js)
 document.getElementById("viewInPdf").addEventListener("click", () => {
-    if (<?php echo $resultSet == null ? 'true':'false';?>) {
+    if ($('#tbl1').DataTable().data().length === 0) {
         alert('PDF is empty!');
         return;
     } else {
@@ -226,26 +220,6 @@ $(document).ready(function() {
 
 <?php 
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
-        session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>

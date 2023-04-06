@@ -2,7 +2,8 @@
     $page = 'admin';
     include('../method/checkIfAccountLoggedIn.php');
     require('../TCPDF-main/tcpdf.php'); 
-    $resultSet = $_SESSION['resultSet'];
+    include('../method/query.php');
+    $resultSet = getQuery2($_SESSION['query']); 
     $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
     $pdf->SetCreator(PDF_CREATOR);  
     $pdf->SetTitle("Sales Report");  
@@ -24,7 +25,12 @@
     $total = 0;
     foreach($resultSet as $row){
         $d = date('m/d/Y h:i a ', strtotime($row['date']));
-        $pdf -> Cell(60,10,"$row[name]",'B,R,L,T','0','C');
+        if($row['name'] != ''){
+            $pdf -> Cell(60,10,"$row[name]",'B,R,L,T','0','C');
+        }
+        else{
+            $pdf -> Cell(60,10,"(No Name)",'B,R,L,T','0','C');
+        }
         $pdf -> Cell(45,10,"$row[order_id]",'B,R,L,T','0','C');
         $pdf -> Cell(60,10,"$d",'B,R,L,T','0','C');
         $pdf -> Cell(20,10,"₱$row[totalOrder]",'B,R,L,T','0','C');

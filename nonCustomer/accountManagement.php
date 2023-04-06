@@ -266,8 +266,6 @@ function updateTbody(){
             { "targets": [5,6,7], "orderable": false }
         ]
         });
-      
-      
       }
   });
 }
