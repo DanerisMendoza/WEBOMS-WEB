@@ -6,9 +6,10 @@
     // redefining name
     $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 
+//  current week total sold
     $todaySold = 0; 
     $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearlySoldMultiArr = [[],[]]; 
-    // current week total sold
+    
     $resultSet = getQuery2("SELECT totalOrder FROM `weboms_order_tb`WHERE DAY(date) = DAY(NOW()) AND status = 'complete' ");
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -16,9 +17,8 @@
         }
     }
 
-
+//  current week total sold
     $currentWeekSold = $i = 0;
-    // current week total sold
     $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE WEEK(date) = WEEK(NOW()) AND status = 'complete' ");
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -36,9 +36,8 @@
         }
     }
 
-
+//  current month total sold
     $currentMonthSold = $i = 0;
-    // current month total sold
     $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE MONTH(date) = MONTH(NOW()) AND status = 'complete' ");
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -57,8 +56,8 @@
         }
     }
 
+//  current year total sold
     $currentYearSold = $i = 0;
-    // current year total sold
     $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE Year(date) = Year(NOW()) AND status = 'complete' ");
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -76,8 +75,8 @@
         }
     }
 
+//  total sold
     $totalSold = $i = 0;
-    // total sold
     $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE status = 'complete' ");
     if($resultSet!=null){
         foreach($resultSet as $row){
@@ -95,24 +94,24 @@
         }
     }
     
-    // graph init
+//  graph init
     $dishesArr = array();
     $qantityArr = array();
     $multiArr = array();
     $sold = 0;
     $countOfSold = 0;
-    $stockLeft = $stockInCustomer = 0;
+    $stockLeft = $stockInCustomer = $preparing = $serving = 0 ;
     $query = "select * from weboms_menu_tb;";
     $resultSet = getQuery2($query);
     
-    // get stock left
+//  get stock left
     if($resultSet!=null){
         foreach($resultSet as $row){
             $stockLeft += $row['stock'];
         }
     }
 
-    //getting most ordered food 
+//  getting most ordered food 
     $query = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
     $resultSet = getQuery2($query);
     if($resultSet!=null){
@@ -157,6 +156,25 @@
             $stockInCustomer += $row['quantity'];
         }
     }
+  
+    //getting preparing stock
+    $query = "select dish,quantity,status from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id and status = 'preparing' ";
+    $resultSet = getQuery2($query);
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $preparing += $row['quantity'];
+        }
+    }
+
+    //getting serving stock
+    $query = "select dish,quantity,status from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id and status = 'serving' ";
+    $resultSet = getQuery2($query);
+    if($resultSet!=null){
+        foreach($resultSet as $row){
+            $serving += $row['quantity'];
+        }
+    }
+
 ?>
 
 
@@ -258,7 +276,7 @@
             <!-- content here -->
             <div class="container-fluid text-center ">
                 <div class="row justify-content-center">
-                    <div class="table-responsive col-lg-6 mb-4">
+                    <div class="table-responsive col-lg-4 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Total Amount of Stock:</b></td>
@@ -278,7 +296,19 @@
                             </tr>
                         </table>
                     </div> 
-                    <div class="table-responsive col-lg-6 mb-4">
+                    <div class="table-responsive col-lg-4 mb-4">
+                        <table class="table table-bordered table-hover col-lg-12">
+                            <tr>
+                                <td><b>Total Count of Preparing:</b></td>
+                                <td><?php echo $preparing?></td>
+                            </tr>
+                            <tr>
+                                <td><b>Total Count of Serving:</b></td>
+                                <td><?php echo $serving?></td>
+                            </tr>
+                        </table>
+                    </div> 
+                    <div class="table-responsive col-lg-4 mb-4">
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Today Sale:</b></td>
@@ -334,36 +364,49 @@
 
 </html>
 <script>
-    //graphs
+    $(document).ready(function() {
+    // Load the Visualization API and the corechart package
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawPieChart);
 
-    //pie
-    function drawPieChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['name', 'cost'],
-        <?php if($countOfSold != null){?>
-        ['Sold',<?php echo $countOfSold?>],
-        <?php }if($stockLeft != null){ ?>
-        ['Stock Left',<?php echo $stockLeft?>]
-        <?php } ?>
-    ]);
+    // Set a callback to run when the Visualization API is loaded
+    google.charts.setOnLoadCallback(updatePie);
+    });
 
-    var options = {
-        title: '',
-        backgroundColor: '',
-        is3D: false,
-    };
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, options);
 
+    function updatePie(){
+    $.getJSON({
+        url: "ajax/accountManagement_getUsers.php",
+        method: "post",
+        success: function(data){
+        
+            // Convert the data to a DataTable object
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn('string', 'name');
+            dataTable.addColumn('number', 'total');
+            dataTable.addRow(['a',1]);
+            dataTable.addRow(['b',2]);
+            dataTable.addRow(['b',2]);
+        
+            // Set the options for the pie chart
+            var options = {
+                title: 'Overall Stock Graph'
+            };
+
+            // Create the pie chart and bind it to the chart_div element
+            var chart = new google.visualization.PieChart($('#piechart').get(0));
+            chart.draw(dataTable, options);
+        }
+    });
     }
+
+
+   
     
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawCoLumnChart);
 
     
-    // column graph
+//  column graph
     function drawCoLumnChart() {
     var data = new google.visualization.arrayToDataTable([
     ['Order Counts', ''],
@@ -510,6 +553,7 @@
         });
     });
 </script>
+
 <?php 
     // logout
     if(isset($_POST['logout'])){
