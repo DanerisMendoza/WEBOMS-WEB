@@ -224,6 +224,7 @@ $(document).ready(function() {
 
 <?php 
     if(isset($_POST['logout'])){
+        session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
