@@ -118,8 +118,8 @@
                 $dailySoldMultiArr[1][$index] += 1;
             }
             else{
-                $dailySoldMultiArr[0][$i] = $day;
-                $dailySoldMultiArr[1][$i] = 1;
+                array_push($dailySoldMultiArr[0],$day);
+                array_push($dailySoldMultiArr[1],1);
             }
             $i++;
         }
@@ -134,8 +134,8 @@
     if($resultSet!=null){
         foreach($resultSet as $row){
             $currentMonthSold += $row['totalOrder'];
-            // $week = 'Week no.'.date('W', strtotime($row['date']));
-            $week = 'Week no.'.$weekNo;
+            $week = 'Week no.'.date('W', strtotime($row['date']));
+            // $week = 'Week no.'.$weekNo;
             if(in_array($week, $weeklySoldMultiArr[0])){
                 $index = array_search($week, $weeklySoldMultiArr[0]);
                 $weeklySoldMultiArr[1][$index] += 1;
