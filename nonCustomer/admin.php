@@ -6,175 +6,20 @@
     // redefining name
     $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 
-//  current week total sold
+    //  current week total sold
     $todaySold = 0; 
     $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearlySoldMultiArr = [[],[]]; 
     
-    $resultSet = getQuery2("SELECT totalOrder FROM `weboms_order_tb`WHERE DAY(date) = DAY(NOW()) AND status = 'complete' ");
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $todaySold += $row['totalOrder'];
-        }
-    }
-
-//  current week total sold
-    $currentWeekSold = $i = 0;
-    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE WEEK(date) = WEEK(NOW()) AND status = 'complete' ");
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $currentWeekSold += $row['totalOrder'];
-            $day = date('l', strtotime($row['date']));
-            if(in_array($day, $dailySoldMultiArr[0])){
-                $index = array_search($day, $dailySoldMultiArr[0]);
-                $dailySoldMultiArr[1][$index] += 1;
-            }
-            else{
-                $dailySoldMultiArr[0][$i] = $day;
-                $dailySoldMultiArr[1][$i] = 1;
-            }
-            $i++;
-        }
-    }
-
-//  current month total sold
-    $currentMonthSold = $i = 0;
-    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE MONTH(date) = MONTH(NOW()) AND status = 'complete' ");
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $currentMonthSold += $row['totalOrder'];
-            $week = 'Week no.'.date('W', strtotime($row['date']));
-            if(in_array($week, $weeklySoldMultiArr[0])){
-                $index = array_search($week, $weeklySoldMultiArr[0]);
-                $weeklySoldMultiArr[1][$index] += 1;
-            }
-            else{
-                
-                $weeklySoldMultiArr[0][$i] = $week;
-                $weeklySoldMultiArr[1][$i] = 1;
-            }
-            $i++;
-        }
-    }
-
-//  current year total sold
-    $currentYearSold = $i = 0;
-    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE Year(date) = Year(NOW()) AND status = 'complete' ");
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $currentYearSold += $row['totalOrder'];
-            $month = date('M', strtotime($row['date']));
-            if(in_array($month, $monthlySoldMultiArr[0])){
-                $index = array_search($month, $monthlySoldMultiArr[0]);
-                $monthlySoldMultiArr[1][$index] += 1;
-            }
-            else{
-                array_push($monthlySoldMultiArr[0],$month);
-                array_push($monthlySoldMultiArr[1],1);
-            }
-            $i++;
-        }
-    }
-
-//  total sold
-    $totalSold = $i = 0;
-    $resultSet = getQuery2("SELECT totalOrder,date FROM `weboms_order_tb`WHERE status = 'complete' ");
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $totalSold += $row['totalOrder'];
-            $year = date('Y', strtotime($row['date']));
-            if(in_array($year, $yearlySoldMultiArr[0])){
-                $index = array_search($year, $yearlySoldMultiArr[0]);
-                $yearlySoldMultiArr[1][$index] += 1;
-            }
-            else{
-                array_push($yearlySoldMultiArr[0],$year);
-                array_push($yearlySoldMultiArr[1],1);
-            }
-            $i++;
-        }
-    }
-    
 //  graph init
-    $dishesArr = array();
-    $qantityArr = array();
-    $multiArr = array();
-    $sold = 0;
-    $countOfSold = 0;
-    $stockLeft = $stockInCustomer = $preparing = $serving = 0 ;
-    $query = "select * from weboms_menu_tb;";
-    $resultSet = getQuery2($query);
+    // $dishesArr = array();
+    // $qantityArr = array();
+    // $multiArr = array();
+    // $sold = 0;
+    // $countOfSold = 0;
+    // $stockLeft = $stockInCustomer = $preparing = $serving = 0 ;
+    // $query = "select * from weboms_menu_tb;";
+    // $resultSet = getQuery2($query);
     
-//  get stock left
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $stockLeft += $row['stock'];
-        }
-    }
-
-//  getting most ordered food 
-    $query = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
-    $resultSet = getQuery2($query);
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            // get sold stock
-            $countOfSold += $row['quantity'];
-            //merge dish quantity into 1 
-            if(in_array($row['dish'], $dishesArr)){
-                $index = array_search($row['dish'], $dishesArr);
-                $newQuantity = $qantityArr[$index] + $row['quantity'];
-                $qantityArr[$index] = $newQuantity;
-            }
-            else{
-                array_push($dishesArr,$row['dish']);
-                array_push($qantityArr,$row['quantity']);
-            }
-        }
-
-        // merge multiple array into multi dimensional array
-        for($i=0; $i<sizeof($dishesArr); $i++){
-            $arr = array('dish' => $dishesArr[$i], 'quantity' => $qantityArr[$i]);
-            array_push($multiArr,$arr);
-        }
-
-        // manual sort
-        for($i=0; $i<sizeof($multiArr); $i++){
-            for($j=$i+1; $j<sizeof($multiArr); $j++){
-                if($multiArr[$i]['quantity'] > $multiArr[$j]['quantity']){
-                    $tempArr = $multiArr[$i];
-                    $multiArr[$i] = $multiArr[$j];
-                    $multiArr[$j] = $tempArr;
-                }
-            }                
-        }
-    }
-
-    //getting stock in customer
-    $query = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id";
-    $resultSet = getQuery2($query);
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $stockInCustomer += $row['quantity'];
-        }
-    }
-  
-    //getting preparing stock
-    $query = "select dish,quantity,status from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id and status = 'preparing' ";
-    $resultSet = getQuery2($query);
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $preparing += $row['quantity'];
-        }
-    }
-
-    //getting serving stock
-    $query = "select dish,quantity,status from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id and status = 'serving' ";
-    $resultSet = getQuery2($query);
-    if($resultSet!=null){
-        foreach($resultSet as $row){
-            $serving += $row['quantity'];
-        }
-    }
-
 ?>
 
 
@@ -312,19 +157,19 @@
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Today Sale:</b></td>
-                                <td><?php echo "₱".number_format($todaySold,2)?></td>
+                                <td id="todaySaleTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Current Week Sale:</b></td>
-                                <td><?php echo "₱".number_format($currentWeekSold,2)?></td>
+                                <td id="currentWeekSoldTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Current Month Sale:</b></td>
-                                <td><?php echo "₱".number_format($currentMonthSold,2)?></td>
+                                <td id="currentMonthSoldTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Current Year Sale:</b></td>
-                                <td><?php echo "₱". number_format($currentYearSold,2)?></td>
+                                <td id="currentYearSoldTd"></td>
                             </tr>
                         </table>
                     </div>
@@ -372,17 +217,17 @@
     // Set a callback to run when the Visualization API is loaded
 
     setInterval(function() {
-        google.charts.setOnLoadCallback(updatePie);
+        google.charts.setOnLoadCallback(updateStats);
     }, 2000);
     });
 
 
-    function updatePie(){
+    function updateStats(){
         $.getJSON({
             url: "ajax/graphs_Query.php",
             method: "post",
             success: function(data){
-                // Convert the data to a DataTable object
+                // Pie Graph | Convert the data to a DataTable object
                 var dataTable = new google.visualization.DataTable();
                 dataTable.addColumn('string', 'name');
                 dataTable.addColumn('number', 'count');
@@ -400,12 +245,51 @@
                 var chart = new google.visualization.PieChart($('#piechart').get(0));
                 chart.draw(dataTable, options);
 
-                //bar
+                //column graph
                 var dataTable = new google.visualization.DataTable();
                 dataTable.addColumn('string', 'name');
                 dataTable.addColumn('number', 'count');
                 for(let i=0; i<data['multiArr'].length; i++){
                     dataTable.addRow([data['multiArr'][i]['dish'],Number(data['multiArr'][i]['quantity'])]);
+                }
+                
+                //column graph 2
+                var dataTable2 = new google.visualization.DataTable();
+                dataTable2.addColumn('string', 'name');
+                dataTable2.addColumn('number', 'count');
+                for(let i=0; i<data['dailySoldMultiArr'][0].length; i++){
+                    dataTable2.addRow([data['dailySoldMultiArr'][0][i],Number(data['dailySoldMultiArr'][1][i])]);
+                }
+          
+                //column graph 3
+                var dataTable3 = new google.visualization.DataTable();
+                dataTable3.addColumn('string', 'name');
+                dataTable3.addColumn('number', 'count');
+                for(let i=0; i<data['weeklySoldMultiArr'][0].length; i++){
+                    dataTable3.addRow([data['weeklySoldMultiArr'][0][i],Number(data['weeklySoldMultiArr'][1][i])]);
+                }
+
+                console.log(data['dailySoldMultiArr'][0]);
+                console.log(data['dailySoldMultiArr'][1]);
+
+                console.log(data['weeklySoldMultiArr'][0]);
+                console.log(data['weeklySoldMultiArr'][1]);
+             
+           
+                //column graph 4
+                var dataTable4 = new google.visualization.DataTable();
+                dataTable4.addColumn('string', 'name');
+                dataTable4.addColumn('number', 'count');
+                for(let i=0; i<data['monthlySoldMultiArr'][0].length; i++){
+                    dataTable4.addRow([data['monthlySoldMultiArr'][0][i],Number(data['monthlySoldMultiArr'][1][i])]);
+                }
+          
+                //column graph 5
+                var dataTable5 = new google.visualization.DataTable();
+                dataTable5.addColumn('string', 'name');
+                dataTable5.addColumn('number', 'count');
+                for(let i=0; i<data['yearlySoldMultiArr'][0].length; i++){
+                    dataTable5.addRow([data['yearlySoldMultiArr'][0][i],Number(data['yearlySoldMultiArr'][1][i])]);
                 }
 
                 var options = {
@@ -416,8 +300,53 @@
                 colors: ['#3366CC']
                 };
 
+                var options2 = {
+                legend: { position: 'none' },
+                title: 'Daily Orders Count (Current Weak)',
+                height: 400,
+                width: 600,
+                colors: ['#3366CC']
+                };
+        
+                var options3 = {
+                legend: { position: 'none' },
+                title: 'Weekly Orders Count (Current Month)',
+                height: 400,
+                width: 600,
+                colors: ['#3366CC']
+                };
+             
+                var options4 = {
+                legend: { position: 'none' },
+                title: 'Monthly Orders Count (Current Year)',
+                height: 400,
+                width: 600,
+                colors: ['#3366CC']
+                };
+          
+                var options5 = {
+                legend: { position: 'none' },
+                title: 'Yearly Orders Count',
+                height: 400,
+                width: 600,
+                colors: ['#3366CC']
+                };
+
                 var chart = new google.visualization.ColumnChart($('#columnchart')[0]);
                 chart.draw(dataTable, options);
+
+                var chart2 = new google.visualization.ColumnChart($('#columnchart2')[0]);
+                chart2.draw(dataTable2, options2);
+          
+                var chart3 = new google.visualization.ColumnChart($('#columnchart3')[0]);
+                chart3.draw(dataTable3, options3);
+            
+                var chart4 = new google.visualization.ColumnChart($('#columnchart4')[0]);
+                chart4.draw(dataTable4, options4);
+
+                var chart5 = new google.visualization.ColumnChart($('#columnchart5')[0]);
+                chart5.draw(dataTable5, options5);
+
                 //td
                 $("#totalStockTd").html(data['countOfSold']+data['stockLeft']+data['preparing']+data['serving']);
                 $("#stockLeftTd").html(data['stockLeft']);
@@ -425,6 +354,10 @@
                 $("#soldTd").html("₱"+data['totalSold']);
                 $("#preparingTd").html(data['preparing']);
                 $("#servingTd").html(data['serving']);
+                $("#todaySaleTd").html("₱"+data['todaySold']);
+                $("#currentWeekSoldTd").html("₱"+data['currentWeekSold']);
+                $("#currentMonthSoldTd").html("₱"+data['currentMonthSold']);
+                $("#currentYearSoldTd").html("₱"+data['currentYearSold']);
             }
         });
     }
@@ -432,152 +365,6 @@
    
 
     
-//  column graph
-    function drawCoLumnChart() {
-    var data = new google.visualization.arrayToDataTable([
-    ['Order Counts', ''],
-        <?php
-            if($multiArr != null){
-                $i = 0;
-                foreach($multiArr as $arr){
-                    if($i!=sizeof($multiArr))
-                        echo "['$arr[dish]','$arr[quantity]'],";
-                    else
-                        echo "['$arr[dish]','$arr[quantity]']";
-                    $i++;
-                }    
-            }
-        ?>
-    ]);
-  
-    var data2 = new google.visualization.arrayToDataTable([
-    ['Current Week', ''],
-        <?php
-            if($dailySoldMultiArr != null){
-                for($i=0; $i<sizeof($dailySoldMultiArr[0]); $i++){
-                    $day = $dailySoldMultiArr[0][$i];
-                    $count = $dailySoldMultiArr[1][$i];
-                    echo "['$day','$count'],";
-                }
-            }
-        ?>
-    ]);
-
-    var data3 = new google.visualization.arrayToDataTable([
-    ['Current Month', ''],
-        <?php
-            if($weeklySoldMultiArr != null){
-                for($i=0; $i<sizeof($weeklySoldMultiArr[0]); $i++){
-                    $week = $weeklySoldMultiArr[0][$i];
-                    $count = $weeklySoldMultiArr[1][$i];
-                    echo "['$week','$count'],";
-                }
-            }
-        ?>
-    ]);
-
-    var data4 = new google.visualization.arrayToDataTable([
-    ['Current Year', ''],
-        <?php
-            if($monthlySoldMultiArr != null){
-                for($i=0; $i<sizeof($monthlySoldMultiArr[0]); $i++){
-                    $month = $monthlySoldMultiArr[0][$i];
-                    $count = $monthlySoldMultiArr[1][$i];
-                    echo "['$month','$count'],";
-                }
-            }
-        ?>
-    ]);
-
-    var data5 = new google.visualization.arrayToDataTable([
-    ['ALL', ''],
-        <?php
-            if($yearlySoldMultiArr != null){
-                for($i=0; $i<sizeof($yearlySoldMultiArr[0]); $i++){
-                    $year = $yearlySoldMultiArr[0][$i];
-                    $count = $yearlySoldMultiArr[1][$i];
-                    echo "['$year','$count'],";
-                }
-            }
-        ?>
-    ]);
-
- 
-
-    var options = {
-        backgroundColor: '',
-        legend: { position: 'none' },
-        chart: {
-        title: 'Most Ordered Food',
-        subtitle: '' },
-        axes: {
-        },
-        bar: { groupWidth: "90%" }
-    };
-  
-    var options2 = {
-        backgroundColor: '',
-        legend: { position: 'none' },
-        chart: {
-        title: 'Daily Sold Counts',
-        subtitle: '' },
-        axes: {
-        },
-        bar: { groupWidth: "90%" }
-    };
-
-    var options3 = {
-        backgroundColor: '',
-        legend: { position: 'none' },
-        chart: {
-        title: 'Weekly Sold Counts',
-        subtitle: '' },
-        axes: {
-        },
-        bar: { groupWidth: "90%" }
-    };
-
-    var options4 = {
-        backgroundColor: '',
-        legend: { position: 'none' },
-        chart: {
-        title: 'Monthly Sold Counts',
-        subtitle: '' },
-        axes: {
-        },
-        bar: { groupWidth: "90%" }
-    };
-
-    var options5 = {
-        backgroundColor: '',
-        legend: { position: 'none' },
-        chart: {
-        title: 'Yearly Sold Counts',
-        subtitle: '' },
-        axes: {
-        },
-        bar: { groupWidth: "90%" }
-    };
-
-    var chart = new google.charts.Bar(document.getElementById('columnchart'));
-    var chart2 = new google.charts.Bar(document.getElementById('columnchart2'));
-    var chart3 = new google.charts.Bar(document.getElementById('columnchart3'));
-    var chart4 = new google.charts.Bar(document.getElementById('columnchart4'));
-    var chart5 = new google.charts.Bar(document.getElementById('columnchart5'));
-    // Convert the Classic options to Material options.
-    // chart.draw(data, google.charts.Bar.convertOptions(options));
-    chart2.draw(data2, google.charts.Bar.convertOptions(options2));
-    chart3.draw(data3, google.charts.Bar.convertOptions(options3));
-    chart4.draw(data4, google.charts.Bar.convertOptions(options4));
-    chart5.draw(data5, google.charts.Bar.convertOptions(options5));
-    };
-
-    // sidebar toggler
-    $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
-            $('#sidebar').toggleClass('active');
-        });
-    });
 </script>
 
 <?php 
