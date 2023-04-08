@@ -280,19 +280,19 @@
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Total Amount of Stock:</b></td>
-                                <td><?php echo $allStock = $stockLeft+$stockInCustomer?></td>
+                                <td id="totalStockTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Total Count of Stock Left:</b></td>
-                                <td><?php echo $stockLeft?></td>
+                                <td id="stockLeftTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Total Count of Sold:</b></td>
-                                <td><?php echo $countOfSold?></td>
+                                <td id="soldCountTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Total Sold:</b></td>
-                                <td><?php echo "₱". number_format($totalSold,2)?></td>
+                                <td id="soldTd"></td>
                             </tr>
                         </table>
                     </div> 
@@ -304,7 +304,7 @@
                             </tr>
                             <tr>
                                 <td><b>Total Count of Serving:</b></td>
-                                <td id="servingTd"><</td>
+                                <td id="servingTd"></td>
                             </tr>
                         </table>
                     </div> 
@@ -367,6 +367,7 @@
     $(document).ready(function() {
     // Load the Visualization API and the corechart package
     google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', {'packages':['bar']});
 
     // Set a callback to run when the Visualization API is loaded
 
@@ -377,34 +378,58 @@
 
 
     function updatePie(){
-    $.getJSON({
-        url: "ajax/graphs_Query.php",
-        method: "post",
-        success: function(data){
-            // Convert the data to a DataTable object
-            var dataTable = new google.visualization.DataTable();
-            dataTable.addColumn('string', 'name');
-            dataTable.addColumn('number', 'count');
-            dataTable.addRow(['Count Of Sold',data['countOfSold']]);
-            dataTable.addRow(['Count Of Stock Left',data['stockLeft']]);
-            dataTable.addRow(['Count Of Preparing',data['preparing']]);
-            dataTable.addRow(['Count Of Serving',data['serving']]);
-            $("#preparingTd").html(data['preparing']);
-            $("#servingTd").html(data['serving']);
-            // Set the options for the pie chart
-            var options = {
-                title: 'Overall Stock Graph'
-            };
+        $.getJSON({
+            url: "ajax/graphs_Query.php",
+            method: "post",
+            success: function(data){
+                // Convert the data to a DataTable object
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('string', 'name');
+                dataTable.addColumn('number', 'count');
+                dataTable.addRow(['Count Of Sold',data['countOfSold']]);
+                dataTable.addRow(['Count Of Stock Left',data['stockLeft']]);
+                dataTable.addRow(['Count Of Preparing',data['preparing']]);
+                dataTable.addRow(['Count Of Serving',data['serving']]);
 
-            // Create the pie chart and bind it to the chart_div element
-            var chart = new google.visualization.PieChart($('#piechart').get(0));
-            chart.draw(dataTable, options);
-        }
-    });
+                // Set the options for the pie chart
+                var options = {
+                    title: 'Overall Stock Graph'
+                };
+
+                // Create the pie chart and bind it to the chart_div element
+                var chart = new google.visualization.PieChart($('#piechart').get(0));
+                chart.draw(dataTable, options);
+
+                //bar
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn('string', 'name');
+                dataTable.addColumn('number', 'count');
+                for(let i=0; i<data['multiArr'].length; i++){
+                    dataTable.addRow([data['multiArr'][i]['dish'],Number(data['multiArr'][i]['quantity'])]);
+                }
+
+                var options = {
+                legend: { position: 'none' },
+                title: 'Most Ordered Food',
+                height: 400,
+                width: 600,
+                colors: ['#3366CC']
+                };
+
+                var chart = new google.visualization.ColumnChart($('#columnchart')[0]);
+                chart.draw(dataTable, options);
+                //td
+                $("#totalStockTd").html(data['countOfSold']+data['stockLeft']+data['preparing']+data['serving']);
+                $("#stockLeftTd").html(data['stockLeft']);
+                $("#soldCountTd").html(data['countOfSold']);
+                $("#soldTd").html("₱"+data['totalSold']);
+                $("#preparingTd").html(data['preparing']);
+                $("#servingTd").html(data['serving']);
+            }
+        });
     }
     
-    google.charts.load('current', {'packages':['bar']});
-    google.charts.setOnLoadCallback(drawCoLumnChart);
+   
 
     
 //  column graph
@@ -426,7 +451,7 @@
     ]);
   
     var data2 = new google.visualization.arrayToDataTable([
-    ['Daily Sold Counts', ''],
+    ['Current Week', ''],
         <?php
             if($dailySoldMultiArr != null){
                 for($i=0; $i<sizeof($dailySoldMultiArr[0]); $i++){
@@ -439,7 +464,7 @@
     ]);
 
     var data3 = new google.visualization.arrayToDataTable([
-    ['Weekly Sold Counts', ''],
+    ['Current Month', ''],
         <?php
             if($weeklySoldMultiArr != null){
                 for($i=0; $i<sizeof($weeklySoldMultiArr[0]); $i++){
@@ -452,7 +477,7 @@
     ]);
 
     var data4 = new google.visualization.arrayToDataTable([
-    ['Monthly Sold Counts', ''],
+    ['Current Year', ''],
         <?php
             if($monthlySoldMultiArr != null){
                 for($i=0; $i<sizeof($monthlySoldMultiArr[0]); $i++){
@@ -465,7 +490,7 @@
     ]);
 
     var data5 = new google.visualization.arrayToDataTable([
-    ['Yearly Sold Counts', ''],
+    ['ALL', ''],
         <?php
             if($yearlySoldMultiArr != null){
                 for($i=0; $i<sizeof($yearlySoldMultiArr[0]); $i++){
@@ -494,7 +519,7 @@
         backgroundColor: '',
         legend: { position: 'none' },
         chart: {
-        title: 'Current Week',
+        title: 'Daily Sold Counts',
         subtitle: '' },
         axes: {
         },
@@ -505,7 +530,7 @@
         backgroundColor: '',
         legend: { position: 'none' },
         chart: {
-        title: 'Current Month',
+        title: 'Weekly Sold Counts',
         subtitle: '' },
         axes: {
         },
@@ -516,7 +541,7 @@
         backgroundColor: '',
         legend: { position: 'none' },
         chart: {
-        title: 'Current Year',
+        title: 'Monthly Sold Counts',
         subtitle: '' },
         axes: {
         },
@@ -527,7 +552,7 @@
         backgroundColor: '',
         legend: { position: 'none' },
         chart: {
-        title: 'ALL',
+        title: 'Yearly Sold Counts',
         subtitle: '' },
         axes: {
         },
@@ -540,7 +565,7 @@
     var chart4 = new google.charts.Bar(document.getElementById('columnchart4'));
     var chart5 = new google.charts.Bar(document.getElementById('columnchart5'));
     // Convert the Classic options to Material options.
-    chart.draw(data, google.charts.Bar.convertOptions(options));
+    // chart.draw(data, google.charts.Bar.convertOptions(options));
     chart2.draw(data2, google.charts.Bar.convertOptions(options2));
     chart3.draw(data3, google.charts.Bar.convertOptions(options3));
     chart4.draw(data4, google.charts.Bar.convertOptions(options4));
