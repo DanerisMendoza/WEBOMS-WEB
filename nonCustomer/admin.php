@@ -300,11 +300,11 @@
                         <table class="table table-bordered table-hover col-lg-12">
                             <tr>
                                 <td><b>Total Count of Preparing:</b></td>
-                                <td><?php echo $preparing?></td>
+                                <td id="preparingTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Total Count of Serving:</b></td>
-                                <td><?php echo $serving?></td>
+                                <td id="servingTd"><</td>
                             </tr>
                         </table>
                     </div> 
@@ -369,24 +369,28 @@
     google.charts.load('current', {'packages':['corechart']});
 
     // Set a callback to run when the Visualization API is loaded
-    google.charts.setOnLoadCallback(updatePie);
+
+    setInterval(function() {
+        google.charts.setOnLoadCallback(updatePie);
+    }, 2000);
     });
 
 
     function updatePie(){
     $.getJSON({
-        url: "ajax/accountManagement_getUsers.php",
+        url: "ajax/graphs_Query.php",
         method: "post",
         success: function(data){
-        
             // Convert the data to a DataTable object
             var dataTable = new google.visualization.DataTable();
             dataTable.addColumn('string', 'name');
-            dataTable.addColumn('number', 'total');
-            dataTable.addRow(['a',1]);
-            dataTable.addRow(['b',2]);
-            dataTable.addRow(['b',2]);
-        
+            dataTable.addColumn('number', 'count');
+            dataTable.addRow(['Count Of Sold',data['countOfSold']]);
+            dataTable.addRow(['Count Of Stock Left',data['stockLeft']]);
+            dataTable.addRow(['Count Of Preparing',data['preparing']]);
+            dataTable.addRow(['Count Of Serving',data['serving']]);
+            $("#preparingTd").html(data['preparing']);
+            $("#servingTd").html(data['serving']);
             // Set the options for the pie chart
             var options = {
                 title: 'Overall Stock Graph'
@@ -398,9 +402,6 @@
         }
     });
     }
-
-
-   
     
     google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(drawCoLumnChart);
