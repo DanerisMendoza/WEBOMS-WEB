@@ -4,7 +4,8 @@
     $multiArr = $dishesArr = $qantityArr = array();
     $data = [['countOfSold'],['stockLeft'],['preparing'],['serving'],['totalSold'],['todaySold'],['currentWeekSold'],['currentMonthSold'],['currentYearSold'],['multiArr'],['dailySoldMultiArr'],['weeklySoldMultiArr'],['monthlySoldMultiArr'],['yearlySoldMultiArr']];
     $countOfSold = $stockLeft = $preparing = $serving = $todaySold = 0; 
-    $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearlySoldMultiArr = [[],[]]; 
+    $dailySoldMultiArr = $monthlySoldMultiArr =  $yearlySoldMultiArr = [[],[]]; 
+    $weeklySoldMultiArr = [[],[],[]];
 
     //getting count of sold
     $countOfSoldQuery = "select dish,quantity from weboms_ordersDetail_tb a inner join weboms_menu_tb b on a.orderType = b.orderType inner join weboms_order_tb c on a.order_id = c.order_id where c.status = 'complete'";
@@ -135,17 +136,17 @@
         foreach($resultSet as $row){
             $currentMonthSold += $row['totalOrder'];
             $week = 'Week no.'.date('W', strtotime($row['date']));
-            // $week = 'Week no.'.$weekNo;
             if(in_array($week, $weeklySoldMultiArr[0])){
                 $index = array_search($week, $weeklySoldMultiArr[0]);
                 $weeklySoldMultiArr[1][$index] += 1;
             }
             else{
+                $w = 'Week no.'.$weekNo;
                 array_push($weeklySoldMultiArr[0],$week);
                 array_push($weeklySoldMultiArr[1],1);
+                array_push($weeklySoldMultiArr[2],$w);
                 $weekNo++;
             }
-            $i++;
         }
     }
     $data['currentMonthSold'] = number_format($currentMonthSold,2);

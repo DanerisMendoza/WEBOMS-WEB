@@ -266,16 +266,9 @@
                 dataTable3.addColumn('string', 'name');
                 dataTable3.addColumn('number', 'count');
                 for(let i=0; i<data['weeklySoldMultiArr'][0].length; i++){
-                    dataTable3.addRow([data['weeklySoldMultiArr'][0][i],Number(data['weeklySoldMultiArr'][1][i])]);
+                    dataTable3.addRow([data['weeklySoldMultiArr'][2][i],Number(data['weeklySoldMultiArr'][1][i])]);
                 }
 
-                console.log(data['dailySoldMultiArr'][0]);
-                console.log(data['dailySoldMultiArr'][1]);
-
-                console.log(data['weeklySoldMultiArr'][0]);
-                console.log(data['weeklySoldMultiArr'][1]);
-             
-           
                 //column graph 4
                 var dataTable4 = new google.visualization.DataTable();
                 dataTable4.addColumn('string', 'name');
