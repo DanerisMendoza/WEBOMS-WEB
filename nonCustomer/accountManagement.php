@@ -217,6 +217,7 @@ function insertAccount(){
         },
         success: function(res){
             if(res == 'Sucess!'){
+                $('#addNewAccountModal').modal('hide');
                 updateTbody();
             }
             else{

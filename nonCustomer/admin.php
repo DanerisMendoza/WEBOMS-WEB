@@ -10,15 +10,7 @@
     $todaySold = 0; 
     $dailySoldMultiArr = $weeklySoldMultiArr = $monthlySoldMultiArr =  $yearlySoldMultiArr = [[],[]]; 
     
-//  graph init
-    // $dishesArr = array();
-    // $qantityArr = array();
-    // $multiArr = array();
-    // $sold = 0;
-    // $countOfSold = 0;
-    // $stockLeft = $stockInCustomer = $preparing = $serving = 0 ;
-    // $query = "select * from weboms_menu_tb;";
-    // $resultSet = getQuery2($query);
+
     
 ?>
 
@@ -218,7 +210,7 @@
 
     setInterval(function() {
         google.charts.setOnLoadCallback(updateStats);
-    }, 2000);
+    }, 1000);
     });
 
 
