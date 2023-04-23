@@ -23,14 +23,15 @@
     
     <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/customer.css">
-    <script type="text/javascript" src="js/bootstrap 5/bootstrap.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.js"></script>
     <!-- data tables -->
     <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+
+
 </head>
 
 <body style="background:#e0e0e0">
@@ -86,6 +87,17 @@
                                     </thead>
                                     <tbody>
                                         <?php 
+                                        //orderType, qty
+                                        $cartArr =[[],[]];
+                                        $getCartQuery = "SELECT * FROM `weboms_cart_tb` where user_id = '$_SESSION[user_id]' ";
+                                        $resultSet =  getQuery2($getCartQuery);
+                                        if($resultSet != null){
+                                            foreach($resultSet as $row){
+                                                array_push($cartArr[0],$row['orderType']);
+                                                array_push($cartArr[1],$row['qty']);
+                                            }
+                                        }
+
                                         $query = "select * from weboms_menu_tb";
                                         $resultSet =  getQuery2($query);
                                         if($resultSet != null)
@@ -94,18 +106,31 @@
                                             <td><?php $pic = $row['picName']; echo "<img src='../dishesPic/$pic' style=width:150px;height:150px>";?></td>
                                             <td><?= ucwords($row['dish']);?></td>
                                             <td><?php echo '₱'. number_format($row['price'],2); ?></td>
-                                            <td><?php echo $row['stock']; ?></td>
+                                            <td class="stocks"><?php 
+                                                if(in_array($row['orderType'],$cartArr[0])){
+                                                    $index = array_search($row['orderType'], $cartArr[0]);
+                                                    $result = $row['stock']-$cartArr[1][$index];
+                                                    if($result <= 0){
+                                                        echo "Out of Stock!";
+                                                    }
+                                                    else{
+                                                        echo $result;
+                                                    }
+                                                }
+                                                else{
+                                                    echo $row['stock'];
+                                                }
+                                            ?></td>
                                             <td>
                                                 <!-- out of stock -->
                                                 <?php if($row['stock'] <= 0){ ?>
                                                 <a class="text-danger text-decoration-none">Out of Stock</a>
                                                 <!-- not out of stock -->
                                                 <?php } else{ ?>
-                                                    <form method="post">
                                                         <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
                                                         <input type="number" placeholder="Quantity" name="qty" class="form-control" value="1">
-                                                        <button type="submit" name="addToCartSubmit" class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
-                                                    </form>
+                                                        <?php $value = $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock'];?>
+                                                        <button type="button" onclick="AddToCart(this)" value='<?php echo $value;?>'; class="btn btn-light col-12" style="border:1px solid #cccccc;"><i class="bi bi-cart-plus"></i></button>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -127,57 +152,66 @@
 </body>
 
 </html>
-<?php 
-    //add to cart
-    if(isset($_POST['addToCartSubmit'])){
-        $order = explode(',',$_POST['order']);  
-        //init
-        $dish = $order[0];
-        $price = $order[1];
-        $orderType = $order[2];
-        $stock = $order[3];
-        $qty = $_POST['qty'];
-    //validation
-    if($qty <= 0 && !str_contains($qty, '.')){
-      die ("<script>
-      alert('Quantity Invalid');
-      window.location.replace('customerMenu.php');
-      </script>");    
-    }
-    if($qty > $stock){
-      die ("<script>
-      alert('Stock is less than Quantity');
-      window.location.replace('customerMenu.php');
-      </script>");    
-    }
-    //process
-    for($i=0; $i<$qty; $i++){
-      array_push($_SESSION['dishes'], $dish);
-      array_push($_SESSION['price'], $price);
-      array_push($_SESSION['orderType'], $orderType);
-    }
-    $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - $qty) WHERE dish= '$dish' ";    
-    if(Query2($updateQuery))
-      echo "<script>window.location.replace('customerMenu.php');</script>";    
-  }	
-?>
+
 
 <script>
-document.getElementById("viewCart").onclick = function() { window.location.replace('customerCart.php'); };
-document.getElementById("customersFeedback").onclick = function() { window.location.replace('customerFeedbackList.php'); };
-</script>
+    document.getElementById("viewCart").onclick = function() { window.location.replace('customerCart.php'); };
+    document.getElementById("customersFeedback").onclick = function() { window.location.replace('customerFeedbackList.php'); };
 
-<script>
+    function AddToCart(button){
+        // init 
+        var arr = button.value.split(","); // [dish][price][orderType][stock] 
+        var qty = parseInt($(button).closest("td").find('[name="qty"]').val());
+        let arrayCart = []; //user_id, orderType, qty
+        let stock = parseInt($(button).closest("tr").find('.stocks').text());
+        arrayCart.push(<?php echo $_SESSION['user_id']; ?>);
+        arrayCart.push(arr[2]);
+        arrayCart.push(qty);
+
+        //validation  
+        if(isNaN(stock)){
+            alert('Out Of Stock');
+            return;
+        }
+        if(qty <= 0){
+            alert("quantity invalid");
+            return;
+        }
+        if(qty > stock){
+            alert("quantity is greater than stocks");
+            return;
+        }
+
+        // decrease the stock in tb1
+        stock = stock - qty;
+        
+        if(stock<=0){
+            $(button).closest("tr").find('.stocks').text("Out Of Stock");
+            $(button).closest("tr").css("background-color", "#808080");
+        }
+        else{
+            $(button).closest("tr").find('.stocks').text(stock);
+        }
+
+        // add value in cart table in db
+        $.ajax({
+            url: "ajax/customer_addToCartTable.php",
+            method: "post",
+            data: {'data':JSON.stringify(arrayCart)},
+            success: function(res){
+                // refreshTable2();
+            }   
+        });
+    }
+
     $(document).ready(function() {
         $('#tbl').DataTable();
     });
-</script>
 
-<script>
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
+    document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
+    document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
+    document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
+    document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
 </script>
 
 <?php 
@@ -202,6 +236,6 @@ document.getElementById("customerOrder_details").onclick = function() { window.l
         }
     }
     session_destroy();
-    echo "<script>window.location.replace('../general/login.php');</script>";
+        echo "<script>window.location.replace('../general/login.php');</script>";
   }
 ?>

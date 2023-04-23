@@ -11,6 +11,10 @@
     use PHPMailer\PHPMailer\Exception;
     $_SESSION['multiArr'] = array();
     $companyName = getQueryOneVal2('select name from weboms_company_tb','name');
+    $total = 0;
+    $query = "SELECT balance FROM `weboms_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
+    $balance = getQueryOneVal2($query,'balance');
+    $balance = $balance == null ? 0 : $balance;
 ?>  
 
 <!DOCTYPE html>
@@ -69,8 +73,8 @@
     <div class="container text-center bg-white shadow p-5" style="margin-top:130px;">
         <div class="row justify-content-center">
             <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
-            <!-- <input id="dateTime" type="datetime-local" class="form-control form-control-lg mb-4 bg-light text-center" name="date" min="<?php //echo $todayWithTime;?>" value="<?php //echo $todayWithTime;?>" /> -->
-            <h1 class="form-control form-control-lg mb-4 bg-light text-center"><?php echo $todayWithTime; ?></h1>
+            <h1 class="form-control form-control-lg bg-light text-center "><?php echo $todayWithTime; ?></h1>
+            <h1 class="form-control form-control-lg mb-4 bg-light text-center">Balance:<?php echo ' ₱'.$balance; ?></h1>
 
             <!-- table -->
             <div class="table-responsive col-lg-12">
@@ -78,76 +82,18 @@
                     <thead>
                         <tr>
                             <th scope="col">DISH</th>
-                            <th scope="col" colspan="2">QUANTITY</th>
+                            <th scope="col">QUANTITY</th>
+                            <th scope="col">Options</th>
+                            <th></th>
                             <th scope="col">PRICE</th>
                         </tr>
                     </thead>
-                    <?php 
-                    $dishesArr = array();
-                    $priceArr = array();
-                    $dishesQuantity = array();
-                    $orderType = array();
-      
-                    //merge repeating order into 1 
-                    for($i=0; $i<count($_SESSION['dishes']); $i++){
-                        if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                            $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                            $newCost = $priceArr[$index] + $_SESSION['price'][$i];
-						    $priceArr[$index] = $newCost;
-                        }
-                        else{
-                            array_push($dishesArr,$_SESSION['dishes'][$i]);
-                            array_push($priceArr,$_SESSION['price'][$i]);
-                            array_push($orderType,$_SESSION['orderType'][$i]);
-                        }
-                    }
-                    //push order quantity into arrray
-                    foreach(array_count_values($_SESSION['dishes']) as $count){
-                        array_push($dishesQuantity,$count);
-                    }
-                    
-                    //merge 3 array into 1 multi dimensional
-                    for($i=0; $i<count($dishesArr); $i++){ 
-                        $arr = array('dish'=> $dishesArr[$i], 'price' => $priceArr[$i], 'quantity' => $dishesQuantity[$i], 'orderType' => $orderType[$i]);
-                        array_push($_SESSION['multiArr'],$arr);
-                    }
-                    //sort multi dimensional
-                    sort($_SESSION['multiArr']);
-                    $total = 0;
-                    for($i=0; $i<count($priceArr); $i++){
-                        $total += $priceArr[$i];
-                    }
+                    <tbody id="tbody2">
 
-                    //create a table using the multi dimensional array
-                    foreach($_SESSION['multiArr'] as $arr){ ?>
-                    <tr>
-                        <td><?php echo ucwords($arr['dish']);?></td>
-                        <td><?php echo $arr['quantity'];?></td>
-                        <td>
-                            <!-- check stock -->
-                            <?php if(getQueryOneVal2("select stock from weboms_menu_tb where dish = '$arr[dish]' ",'stock') > 0) { ?>
-                            <a class="btn btn-success" href="?add=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-plus"></i></a>
-                            <?php }else{ ?>
-                            <a class="btn text-danger">OUT OF STOCK</a>
-                            <?php } ?>
-                            <a class="btn btn-danger" href="?minus=<?php echo $arr['dish'].','.($arr['price']/$arr['quantity']).','.$arr['orderType']; ?>"><i class="bi bi-dash"></i></a>
-                        </td>
-                        <td><?php echo '₱'. number_format($arr['price'],2);?></td>
-                    </tr>
-                    <?php }?>
-                    <tr>
-                        <td colspan="3"><b>Total Amount:</b></td>
-                        <td><b>₱<?php echo number_format($total,2); ?></b></td>
-                    </tr>
+                    </tbody>
                 </table>
-                <form method="post">
-                    <!-- place order -->
-                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3" name="order">Place Order</button>
-                <!-- </form>
-                <form method="post"> -->
-                    <!-- clear order -->
-                    <button type="submit" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
-                </form>
+                    <button id="orderBtn" class="btn btn-lg btn-success col-12 mb-3">Place Order</button>
+                    <button type="button" class="btn btn-lg btn-danger col-12" id="clear" >Clear Order</button>
             </div>
         </div>
     </div>
@@ -157,259 +103,281 @@
 </html>
 
 <script>
-    document.getElementById("dateTime").disabled = true;
-</script>
-
-<script>
-document.getElementById("back").onclick = function() { window.location.replace('customerMenu.php'); };
-</script>
-
-<?php
-    $query = "SELECT balance FROM `weboms_userInfo_tb` where user_id = '$_SESSION[user_id]' ";
-    $balance = getQueryOneVal2($query,'balance');
-    $balance = $balance == null ? 0 : $balance;
-
-    //clear button
-    if(isset($_POST['clear'])){
-        for($i=0; $i<count($dishesArr); $i++){ 
-            $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-            Query2($updateQuery);    
-        }
-        $_SESSION["dishes"] = array();
-        $_SESSION["price"] = array();
-        $_SESSION["orderType"] = array(); 
-        $_SESSION['multiArr'] = array();
-        echo "<script>window.location.replace('customerCart.php');</script>";
-    }
-
-    //add
-    if(isset($_GET['add'])){
-        $arr = explode(',',$_GET['add']);
-        $dish = $arr[0];
-        $price = $arr[1];
-		$orderType = $arr[2];
-        array_push($_SESSION['dishes'], $dish);
-        array_push($_SESSION['price'], $price);
-        array_push($_SESSION['orderType'], $orderType);
-
-        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock - 1) WHERE dish= '$dish' ";    
-        if(Query2($updateQuery))
-          echo "<script>window.location.replace('customerCart.php');</script>";    
-    }
-
-    //minus
-    if(isset($_GET['minus'])){
-        $arr = explode(',',$_GET['minus']);
-        $dish = $arr[0];
-        $price = $arr[1];
-        $orderType = $arr[2];
-       
-        //remove one order 
-        $key = array_search($dish, $_SESSION['dishes']);
-        unset($_SESSION['dishes'][$key]);
-        unset($_SESSION['price'][$key]);
-        unset($_SESSION['orderType'][$key]);
-
-        //refresh the array
-        $_SESSION['dishes'] = array_values($_SESSION['dishes']);
-        $_SESSION['price'] = array_values($_SESSION['price']);
-        $_SESSION['orderType'] = array_values($_SESSION['orderType']);
-
-        $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + 1) WHERE dish= '$dish' ";    
-        if(Query2($updateQuery))
-            echo "<script>window.location.replace('customerCart.php');</script>";    
-    }
-
-    
-    //order button
-    if(isset($_POST['order'])){
-        if($total != 0 && $balance >= $total){
-            $user_id = $_SESSION['user_id'];
-            $query = "SELECT email FROM `weboms_userInfo_tb` WHERE user_id = '$user_id' ";
-            $email = getQueryOneVal2($query,'email');
-            $name = $_SESSION['name'];
-            //company variables init
-            $query = "select * from weboms_company_tb";
-            $resultSet = getQuery2($query);
-            if($resultSet!=null)
-                foreach($resultSet as $row){
-                $companyName = $row['name'];
-                $companyAddress = $row['address'];
-                $companyTel = $row['tel'];
-            }
-
-            //or number process
-            $or_last = getQueryOneVal2("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
-            if($or_last == null){
-                $or_last = 1;
-            }
-            else{
-                $or_last = $or_last + 1;
-            }
-            $inputSize = strlen(strval($or_last));
-            if($inputSize > 4)
-                $str_length = $inputSize;
-            else
-                $str_length = 4;
-            $temp = substr("0000{$or_last}", -$str_length);
-            $or_number = $temp;
-
-            //increment order id
-            $lastOrderId = getQueryOneVal2("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
-            if($lastOrderId == null){
-                $lastOrderId = rand(1111,9999);
-            }
-            else{
-                $lastOrderId = $lastOrderId + 1;
-            }
-            $order_id = $lastOrderId;
+    var dishesArr = [];
+    var priceArr  = [];
+    var orderType = [];
+    var dishesQuantity = [];
 
 
-            $query1 = "insert into weboms_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'preparing', '$todayWithTime','$total','$total', 'online order')";
-            for($i=0; $i<count($dishesArr); $i++){
-                $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
-                Query2($query2);
-            }
+    document.getElementById("back").onclick = function() { window.location.replace('customerMenu.php'); };
+    refreshTable2();
 
-            if(Query2($query1)){
-                //minus order amount to balance
-                $query = "UPDATE weboms_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
-                Query2($query);
-                //send receipt to email
-                $total = number_format($total,2);
-                require_once('../TCPDF-main/tcpdf.php'); 
-
-                // pdf process 
-                $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
-                $pdf->SetCreator(PDF_CREATOR);  
-                $pdf->SetTitle("Receipt");  
-                // $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);  
-                $pdf->SetMargins(1,1,1);  
-                $pdf->setPrintHeader(false);  
-                $pdf->setPrintFooter(false);  
-                $pdf->SetAutoPageBreak(TRUE, 1);  
-
-                $pdf->AddPage('P','A6');
-                date_default_timezone_set('Asia/Manila');
-                $date = date("j-m-Y  h:i:s A"); 
-                $pdf->SetFont('freemono', 'B', 25);  
-                $pdf -> Cell(0,15,"Order#$order_id",0,1,'C');
-
-                $pdf->SetFont('freemono', '', 13);  
-                $pdf -> Cell(0,5,"$companyName",0,1,'C');
-                $pdf -> Cell(0,5,"$companyAddress",0,1,'C');
-                $pdf -> Cell(0,5,"$companyTel",0,1,'C');
-                $pdf -> ln(3);
-                $pdf -> Cell(0,5,"$date",0,1,'C');
-                $pdf -> ln(5);
-
-                $pdf -> Cell(20,10,"QTY",'B,T',0,'C');
-                $pdf -> Cell(40,10,"DISH",'B,T',0,'L');
-                $pdf -> Cell(0,10,"PRICE",'B,T',0,'R');
-                $pdf -> ln(10);
-                for($i=0; $i<count($dishesArr); $i++){ 
-                    $price = number_format($priceArr[$i],2);
-                    $pdf -> Cell(20,10,"$dishesQuantity[$i]",'',0,'C');
-                    $pdf -> Cell(40,10,"$dishesArr[$i]",'',0,'L');
-                    $pdf -> Cell(0,10,"$price",'',0,'R');
-                    $pdf -> ln(5);
+    function refreshTable2(){
+        //get cart attributes
+        $.getJSON({
+            url: "ajax/customer_getCartAttributes.php",
+            method: "post",
+            data: {'user_id':<?php echo $_SESSION['user_id'];?>},
+            success: function(multiArrCart){
+                if(multiArrCart != "null"){
+                    // [dish][price][orderType][stock] 
+                    // update and refresh table body 2
+                    let tbody2 = "", total = 0;
+                    for(let i = 0; i < multiArrCart[0].length; i++){
+                        total += parseFloat(multiArrCart[1][i]) * parseInt(multiArrCart[2][i]);
+                        tbody2 +=
+                        "<tr>" +
+                            "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
+                            "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
+                            "<td> <button class='btn btn-success mx-1 ' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi-plus'></i></button> </td>" +
+                            "<td> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi bi-dash'></i></button> </td>" +
+                            "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>"
+                        "</tr>";
+                    }
+                    tbody2 +=   
+                            "<tr>"+
+                                "<td></td>"+
+                                "<td></td>"+
+                                "<td></td>"+
+                                "<td> <b>Total Amount:</b> </td>" +
+                                "<td id='total'><b>₱"+total+"</b></td>"
+                            "</tr>";
+                    $("#tbody2 tr").remove();
+                    $("#tbody2").append(tbody2);
                 }
-                $pdf -> ln(8);
-
-                $pdf->SetFont('freemono', 'B', 18);
-                $pdf -> Cell(70,10,"TOTAL",'T','0','L');
-                $pdf -> Cell(33,10,"₱$total",'T','0','R');
-                $pdf -> ln(7);
-                $pdf->SetFont('freemono', '', 13);
-                $pdf -> Cell(70,10,"PAYMENT",'','0','L');
-                $pdf -> Cell(33,10,"₱$total",'','0','R');
-                $pdf -> ln(13);
-
-                $pdf -> Cell(0,10,"CUSTOMER: $name",'T','0','L');
-                $pdf -> ln(5);
-                $pdf -> Cell(0,10,"ORDER TYPE: ONLINE ORDER",'','0','L');
-                $pdf -> ln(5);
-                $pdf -> Cell(122,10,"ORDER NO.: $or_number",'','0','L');
-                $pdf -> ln(12);
-
-                // $pdf->SetFont('dejavusans', '', 13);
-                $pdf -> Cell(0,10,"Thank you. Please come again.", 'B,T', 1,'C');
-
-                // ob_end_clean();
-                $attachment = $pdf->Output('receipt.pdf', 'S');
-                //Load Composer's autoloader
-                require '../vendor/autoload.php';
-                //Create an instance; passing `true` enables exceptions
-                $mail = new PHPMailer(true);
-                //Server settings
-                $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
-                $mail->isSMTP();                                            //Send using SMTP
-                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                include_once('../general/mailerConfig.php');
-                $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-                $mail->Port       =  465;    
-                //Recipients
-                $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
-                $mail->addAddress("$email");                                //sent to
-                //Content
-                $mail->Subject = 'Receipt';
-                $mail->Body    = 'Thank you for ordering!';
-                $mail->AddStringAttachment($attachment, 'receipt.pdf', 'base64', 'application/pdf');
-                if($mail->send())
-                    echo '<script>alert("Success placing order!");</script>';    
-                else
-                    echo '<script>alert("Error placing order!");</script>';    
-                $_SESSION["dishes"] = array();
-                $_SESSION["price"] = array();      
-                $_SESSION["orderType"] = array();                     
-                echo "<script>window.location.replace('customerCart.php')</script>";          
+                else{
+                    $("#tbody2 tr").find("#total").closest("tr").remove();
+                }
+                subtractTb2OnTb1();
+            },error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
             }
-        }  
+        });   
     }
-?>
+    document.getElementById("clear").onclick = function() { 
+        $.ajax({
+            url: "ajax/customer_clearCart.php",
+            method: "post",
+            data: {'data':JSON.stringify(<?php echo $_SESSION['user_id'];?>)},
+            success: function(res){
+                $("#tbody2 tr").each (function() {
+                    this.remove();
+                });
+            }
+        });
+    };
 
-<script>
-//order button (js)
-document.getElementById("orderBtn").addEventListener("click", () => {
-    if (<?php echo $total == 0 ? 'true':'false';?>) {
-        alert('Please place your order!');
-        return;
-    }
-    if (<?php echo $balance < $total ? 'true':'false';?>) {
-        alert('Your balance is less than your total order amount!');
-        return;
-    }
-});
-</script>
+    function subtractTb2OnTb1(){
+        $("#tbody2 tr .dishes").closest('tr').each (function() {
+            //tb2    
+            let tb2Tr = $(this);
+            let dish = tb2Tr.find('.dishes').text();
+            let quantity = parseInt(tb2Tr.find('.quantity').text());
+            
+            // original stock
+            $.ajax({
+                url: "ajax/customer_getStockOriginalValue.php",
+                method: "post",
+                data: {'data':dish},
+                success: function(originalStock){
+                    if((originalStock-quantity) < 0){
+                        tb2Tr.css("background-color", "#808080");    
+                    }
+                    else{
+                        tb2Tr.css("background-color", "#FFFFFF");
+                    }
+                }
+            });
 
-<script>
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
+        }); 
+    }
+
+    // increaseQuantity
+    function increaseQuantity(button){
+        // user_id, orderType, qty
+        var arrayCart = [];
+        arrayCart.push(<?php echo $_SESSION['user_id'];?>);
+        arrayCart.push(button.value);
+        arrayCart.push(1);
+        let dish = $(button).closest("tr").find('[name="dish"]').text();
+
+        // validation
+        let bg = $(button).closest('tr').css('background-color');
+        if(bg == 'rgb(128, 128, 128)'){
+            alert("Out of Stock!");
+            return;
+        }
+
+        $.ajax({
+            url: "ajax/customer_getStockOriginalValue.php",
+            method: "post",
+            data: {'data':dish},
+            success: function(originalStock){  
+                let quantityTd = $("#tbody2 tr:contains('"+dish+"')").find('.quantity');
+                let quantity = parseInt(quantityTd.text()) + 1;
+
+                let result = originalStock - quantity;
+                if(result < 0){
+                    alert('Out of Stock');
+                    return;
+                }
+                // add value in cart table in db
+                $.ajax({
+                    url: "ajax/customer_addToCartTable.php",
+                    method: "post",
+                    data: {'data':JSON.stringify(arrayCart)}
+                });
+
+                // update tb2 quantity
+                quantityTd.text(quantity);
+
+                // compute row price
+                $.ajax({
+                    url: "ajax/customer_getPriceOriginalValue.php",
+                    method: "post",
+                    data: {'data':dish},
+                    success: function(originalPrice){  
+                        // update tb2 price
+                        let priceTd2 = $("#tbody2 tr:contains('"+dish+"')").find('.price');
+                        let price2 = parseInt(priceTd2.text().slice(1));
+                        let p = price2+parseInt(originalPrice);
+                        priceTd2.text("₱"+p);
+                        computeTotal();
+                    }
+                });
+            }
+        });
+    }
+       
+    function computeTotal(){
+        let totalTr = $("#tbody2 tr").find("#total"); 
+        let total = 0;
+        $("#tbody2 tr .dishes").closest('tr').each (function() {
+            //tb2    
+            let tb2Tr = $(this);
+            let dish = tb2Tr.find('.dishes').text();
+            let price = parseInt(tb2Tr.find('.price').text().slice(1));
+            total += (price);
+        }); 
+        totalTr.text("₱"+total).css("font-weight", "bold");
+        if(total <= 0){
+            $("#tbody2 tr").find("#total").closest("tr").remove();
+        }
+    }
+
+    // decreaseQuantity
+    function decreaseQuantity(button){
+        // user_id, orderType, qty
+        var arrayCart = [];
+        arrayCart.push(<?php echo $_SESSION['user_id'];?>);
+        arrayCart.push(button.value);
+        arrayCart.push(1);
+        let dish = $(button).closest("tr").find('[name="dish"]').text();
+        let quantityTd = $("#tbody2 tr:contains('"+dish+"')").find('.quantity');
+        let quantity = parseInt(quantityTd.text()) - 1;
+
+        $.ajax({
+            url: "ajax/customer_getStockOriginalValue.php",
+            method: "post",
+            data: {'data':dish},
+            success: function(originalStock){  
+                let result = originalStock - quantity;
+                if(result < 0){
+                    $(button).closest('tr').css("background-color", "#808080"); 
+                }
+                else{
+                    $(button).closest('tr').css("background-color", "#FFFFFF"); 
+                }
+           
+            }
+        });
+
+        // update value in cart table in db
+        $.ajax({
+            url: "ajax/customer_subtractToCartTable.php",
+            method: "post",
+            data: {'data':JSON.stringify(arrayCart)},
+        });
+
+
+        // update tb2 quantity
+        if(quantity <= 0){
+            quantityTd.closest('tr').remove();
+        }
+        else{
+            quantityTd.text(quantity);
+        }
+
+
+        $.ajax({
+                url: "ajax/customer_getPriceOriginalValue.php",
+                method: "post",
+                data: {'data':dish},
+                success: function(originalStock){  
+                    // update tb2 price
+                    let priceTd2 = $("#tbody2 tr:contains('"+dish+"')").find('.price');
+                    let price2 = parseInt(priceTd2.text().slice(1));
+                    let p = price2-parseInt(originalStock);
+                    priceTd2.text("₱"+p);
+                    computeTotal();
+                }
+        });
+    }
+
+
+    //order button (js)
+    document.getElementById("orderBtn").addEventListener("click", () => {
+        let cont = true;
+        $("#tbody2 tr ").each (function() {
+            let bg = $(this).find('.dishes').closest('tr').css('background-color');
+            if(bg == 'rgb(128, 128, 128)'){
+                cont = false;
+            }
+        });
+
+        //check if you have order
+        if ((!$("#tbody2 tr").find("#total").length > 0)) {
+            alert('Please place your order!');
+            return;
+        }
+
+        //check if what you have in cart is still available
+        if(cont == false){
+            alert('Please decrease some order in your cart!');
+            return;
+        }
+
+        // check if  balance can order
+        let total = parseInt($("#tbody2 tr").find("#total").text().slice(1));
+        if (<?php echo $balance;?> < total) {
+            alert('Your balance is less than your total order amount!');
+            return;
+        }
+
+        // add value in cart table in db
+           $.ajax({
+            url: "ajax/customer_insertOrder.php",
+            method: "post",
+            data: {
+                'user_id':JSON.stringify(<?php echo $_SESSION['user_id'];?>),
+                'total':JSON.stringify(total)
+            },
+            success: function(res){  
+                alert("order success");
+                console.log(res);
+            }
+        });
+        
+    });
+
+    document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
+    document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
+    document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
+    document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
 </script>
 
 <?php 
   if(isset($_POST['logout'])){
-    $dishesArr = array();
-    $dishesQuantity = array();
-    if(isset($_SESSION['dishes'])){
-        for($i=0; $i<count($_SESSION['dishes']); $i++){
-            if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-              $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-            }
-            else{
-              array_push($dishesArr,$_SESSION['dishes'][$i]);
-            }
-        }
-        foreach(array_count_values($_SESSION['dishes']) as $count){
-          array_push($dishesQuantity,$count);
-        }
-        for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-          Query2($updateQuery);    
-        }
-    }
     session_destroy();
     echo "<script>window.location.replace('../general/login.php');</script>";
   }
