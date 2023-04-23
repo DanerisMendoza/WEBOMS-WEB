@@ -88,9 +88,6 @@
                 <div class="row justify-content-center">
 
                     <!-- serving table -->
-                    <?php   
-                        $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
-                        $resultSet = getQuery2($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12" id="tableServing">
                             <thead class="bg-success text-white">
@@ -101,8 +98,8 @@
                             <tbody>
                                 <!-- serving table -->
                                     <?php   
-                                        $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'serving' ORDER BY weboms_order_tb.id asc; ";
-                                        $resultSet = getQuery2($getPrepairingOrder);
+                                        $getServingOrder = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id WHERE b.status = 'serving' ORDER BY b.id asc; ";
+                                        $resultSet = getQuery2($getServingOrder);
                                         if($resultSet != null)
                                             foreach($resultSet as $row){ 
                                     ?>
@@ -116,9 +113,6 @@
                     </div>
 
                     <!-- prepairing table -->
-                    <?php   
-                        $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'prepairing' ORDER BY weboms_order_tb.id asc; ";
-                        $resultSet = getQuery2($getPrepairingOrder);?>
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12" id="prepairingTable">
                             <thead class="bg-danger text-white">
@@ -128,7 +122,7 @@
                             </thead>
                             <tbody>
                                 <?php   
-                                    $getPrepairingOrder = "select weboms_userInfo_tb.name, weboms_order_tb.* from weboms_userInfo_tb right join weboms_order_tb on weboms_userInfo_tb.user_id = weboms_order_tb.user_id  where status = 'preparing' ORDER BY weboms_order_tb.id asc; ";
+                                    $getPrepairingOrder = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id WHERE b.status = 'preparing'  ORDER BY b.id asc; ";
                                     $resultSet = getQuery2($getPrepairingOrder);
                                     if($resultSet != null)
                                         foreach($resultSet as $row){ 
