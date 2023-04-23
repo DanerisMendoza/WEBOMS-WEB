@@ -74,7 +74,7 @@
         <div class="row justify-content-center">
             <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
             <h1 class="form-control form-control-lg bg-light text-center "><?php echo $todayWithTime; ?></h1>
-            <h1 class="form-control form-control-lg mb-4 bg-light text-center">Balance:<?php echo ' ₱'.$balance; ?></h1>
+            <h1 id="h1Balance" class="form-control form-control-lg mb-4 bg-light text-center">Balance:<?php echo ' ₱'.$balance; ?></h1>
 
             <!-- table -->
             <div class="table-responsive col-lg-12">
@@ -374,6 +374,8 @@
                         $("#tbody2 tr").each (function() {
                             this.remove();
                         });
+                        let balance = parseInt($("#h1Balance").text().slice(10)) - total;
+                        $("#h1Balance").text("Balance: ₱"+balance);
                     }
                 });
             }
