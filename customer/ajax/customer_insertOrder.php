@@ -1,23 +1,23 @@
 <?php 
-    include('../method/query.php');
+    include('../../method/query.php');
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
-    if(isset($_POST['post']) == 'webomsMobile'){
-        $user_id = $_POST['user_id'];
-        $total = $_POST['total'];
-       
-        // $dishesArr = $_POST['dishesArr'];
-        // $priceArr  = $_POST['priceArr'];
-        // $orderType = $_POST['orderType'];
-        // $dishesQuantity = $_POST['dishesQuantity'];
-     
-
-        // $query = "INSERT INTO `try`(`user_id`, `dishesArr`, `priceArr`, `orderType`, `dishesQuantity`, `total`) 
-        // VALUES ('$user_id','$dishesArr','$priceArr','$orderType','$dishesQuantity','$total')";
-        // Query2($query);
-        
+    if(isset($_POST['post'])){
+        $total = json_decode($_POST['total']);
+        $user_id = json_decode($_POST['user_id']);
+        $dishesArr = $priceArr = $dishesQuantity = $orderType = array();
+        $query = "select a.*, b.* from weboms_menu_tb a inner join weboms_cart_tb b on a.orderType = b.orderType where b.user_id = '$user_id' ";
+        $resultSet = getQuery3($query); 
+        if($resultSet != null){
+            foreach($resultSet as $row){
+                array_push($dishesArr,$row['dish']);
+                array_push($priceArr,$row['price']);
+                array_push($dishesQuantity,$row['qty']);
+                array_push($orderType,$row['orderType']);
+            }
+        }
 
         // $dishesArr = explode(",",$dishesArr);
         // $priceArr  = explode(",",$priceArr );
@@ -25,9 +25,9 @@
         // $dishesQuantity = explode(",",$dishesQuantity);
 
         $query = "SELECT email FROM `weboms_userInfo_tb` WHERE user_id = '$user_id' ";
-        $email = getQueryOneVal2($query,'email');
+        $email = getQueryOneVal3($query,'email');
         $query = "SELECT name FROM `weboms_userInfo_tb` WHERE user_id = '$user_id' ";
-        $name = getQueryOneVal2($query,'name');
+        $name = getQueryOneVal3($query,'name');
         date_default_timezone_set('Asia/Manila');
         $date = new DateTime();
         $today =  $date->format('Y-m-d'); 
@@ -35,7 +35,7 @@
 
         //company variables init
         $query = "select * from weboms_company_tb";
-        $resultSet = getQuery2($query);
+        $resultSet = getQuery3($query);
         if($resultSet!=null)
             foreach($resultSet as $row){
             $companyName = $row['name'];
@@ -44,7 +44,7 @@
         }
 
         //or number process
-        $or_last = getQueryOneVal2("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
+        $or_last = getQueryOneVal3("select or_number from weboms_order_tb WHERE id = (SELECT MAX(ID) from weboms_order_tb)","or_number");
         if($or_last == null){
             $or_last = 1;
         }
@@ -60,7 +60,7 @@
         $or_number = $temp;
 
         //increment order id
-        $lastOrderId = getQueryOneVal2("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
+        $lastOrderId = getQueryOneVal3("select order_id from weboms_order_tb WHERE order_id = (SELECT MAX(order_id) from weboms_order_tb)","order_id");
         if($lastOrderId == null){
             $lastOrderId = rand(1111,9999);
         }
@@ -71,24 +71,24 @@
 
         // insert order
         $query1 = "insert into weboms_order_tb( user_id, order_id, or_number, status, date, totalOrder, payment, staffInCharge) values('$user_id', '$order_id', '$or_number', 'preparing', '$todayWithTime','$total','$total', 'online order')";
-        Query2($query1);
+        Query3($query1);
         // insert order details
         for($i=0; $i<count($dishesArr); $i++){
-            $query2 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
-            Query2($query2);
+            $Query3 = "insert into weboms_ordersDetail_tb(order_id, quantity, orderType) values('$order_id',$dishesQuantity[$i], $orderType[$i])";
+            Query3($Query3);
         }
         //update stock
         for($i=0; $i<count($dishesArr); $i++){
             $query3 = "UPDATE weboms_menu_tb SET stock = (stock - $dishesQuantity[$i]) WHERE dish= '$dishesArr[$i]' ";    
-            Query2($query3);
+            Query3($query3);
         }
         // update balance
         $query4 = "UPDATE weboms_userInfo_tb SET balance = (balance - '$total') where user_id = '$user_id' ";     
-        Query2($query4);
+        Query3($query4);
 
         //send receipt to email
         $total = number_format($total,2);
-        require_once('../TCPDF-main/tcpdf.php'); 
+        require_once('../../TCPDF-main/tcpdf.php'); 
 
         // pdf process 
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);  
@@ -149,14 +149,14 @@
         // ob_end_clean();
         $attachment = $pdf->Output('receipt.pdf', 'S');
         //Load Composer's autoloader
-        require '../vendor/autoload.php';
+        require '../../vendor/autoload.php';
         //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
         //Server settings
         $mail->SMTPDebug  = SMTP::DEBUG_OFF;                        //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        include_once('../general/mailerConfig.php');
+        include_once('../../general/mailerConfig.php');
         $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
         $mail->Port       =  465;    
         //Recipients

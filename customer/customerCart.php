@@ -360,11 +360,22 @@
             method: "post",
             data: {
                 'user_id':JSON.stringify(<?php echo $_SESSION['user_id'];?>),
-                'total':JSON.stringify(total)
+                'total':JSON.stringify(total),
+                'post':JSON.stringify('webomsMobile'),
             },
             success: function(res){  
                 alert("order success");
                 console.log(res);
+                $.ajax({
+                    url: "ajax/customer_clearCart.php",
+                    method: "post",
+                    data: {'data':JSON.stringify(<?php echo $_SESSION['user_id'];?>)},
+                    success: function(res){
+                        $("#tbody2 tr").each (function() {
+                            this.remove();
+                        });
+                    }
+                });
             }
         });
         
