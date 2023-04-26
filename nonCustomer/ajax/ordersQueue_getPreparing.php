@@ -10,6 +10,6 @@
         echo json_encode($orders);
     }
     else{
-        echo json_encode("null");
+        echo json_encode(null);
     }
 ?>

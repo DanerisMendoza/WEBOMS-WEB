@@ -1,5 +1,6 @@
 <?php 
   $page = 'notLogin';
+  $isFromLogin = true;
   include('../method/checkIfAccountLoggedIn.php');
   include('../method/query.php');
   include_once('connection.php');
@@ -36,90 +37,96 @@
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-    <div class="container py-3">
-        <a class="navbar-brand fs-4" href="#"><?php echo $name;?></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item me-2"><a class="nav-link" href="../index.php#home"><i class="bi bi-house-door"></i> HOME</a></li>
-                <li class="nav-item me-2"><a class="nav-link" href="../index.php#menu"><i class="bi bi-book"></i> MENU</a></li>
-                <li class="nav-item me-2"><a class="nav-link" href="../index.php#about"><i class="bi bi-info-circle"></i> ABOUT</a></li>
-                <li class="nav-item me-2"><a class="nav-link" href="ordersQueue.php"><i class="bi bi-hourglass-split"></i> Orders Queue</a></li>
-                <li class="nav-item me-2"><a class="nav-link" ><i class="bi bi-hourglass-split"></i> Orders Queue Online</a></li>
-            </ul>
-            <a class="btn btn-outline-light" type="button" href="login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+            <div class="container py-3">
+                <a class="navbar-brand fs-4" href="#"><?php echo $name;?></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item me-2"><a class="nav-link" href="../index.php#home"><i class="bi bi-house-door"></i> HOME</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="../index.php#menu"><i class="bi bi-book"></i> MENU</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="../index.php#about"><i class="bi bi-info-circle"></i> ABOUT</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="ordersQueue.php" ><i class="bi bi-hourglass-split"></i> Orders Queue</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" ><i class="bi bi-hourglass-split"></i> Orders Queue Online</a></li>
+                </ul>
+                <a class="btn btn-outline-light" type="button" href="login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
+            </div>
         </div>
-    </div>
-</nav>
-     <!-- content here -->
-     <div class="container-fluid text-center">
-            <div class="row justify-content-center">
-                <h1>(Online Order)</h1>
-                <!-- serving table -->
-                <div class="table-responsive col-lg-6">
-                    <table class="table table-bordered table-hover col-lg-12" id="tableServing">
-                        <thead class="bg-success text-white">
-                            <tr>
-                                <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- serving table -->
-                                <?php   
-                                    $getServingOrder = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id WHERE b.status = 'serving' and b.staffInCharge = 'online order' ORDER BY b.id asc; ";
-                                    $resultSet = getQuery2($getServingOrder);
-                                    if($resultSet != null)
-                                        foreach($resultSet as $row){ 
-                                ?>
-                                            <tr>
-                                                <!-- orders id -->
-                                                <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
-                                            </tr>
-                                <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
+    </nav>
+    <!-- content here -->
+    <div class="container-fluid text-center">
+        <div class="row justify-content-center">
+            <h1>(Online Order)</h1>
+            <!-- prepairing table -->
+            <div class="table-responsive col-lg-6">
+                <table class="table table-bordered table-hover col-lg-12" id="prepairingTable">
+                    <thead class="bg-danger text-white">
+                        <tr>
+                            <th scope="col"><h2><i class="bi bi-clock"></i> PREPARING</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody1">
+                
+                    </tbody>
+                </table>
+            </div>
 
-                <!-- prepairing table -->
-                <div class="table-responsive col-lg-6">
-                    <table class="table table-bordered table-hover col-lg-12" id="prepairingTable">
-                        <thead class="bg-danger text-white">
-                            <tr>
-                                <th scope="col"><h2><i class="bi bi-clock"></i> PREPARING</h2></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php   
-                                $getPrepairingOrder = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id WHERE b.status = 'preparing' and b.staffInCharge = 'online order' ORDER BY b.id asc; ";
-                                $resultSet = getQuery2($getPrepairingOrder);
-                                if($resultSet != null)
-                                    foreach($resultSet as $row){ 
-                            ?>
-                                        <tr>
-                                            <!-- orders id -->
-                                            <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
-                                        </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>
+            <!-- serving table -->
+            <div class="table-responsive col-lg-6">
+                <table class="table table-bordered table-hover col-lg-12" id="tableServing">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody2">
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </body>
 <script>
-// auto refresh 
-function autoRefresh_Tables() {
-    $("#tableServing").load("ordersQueueOnline.php #tableServing", function() {
-        setTimeout(autoRefresh_Tables, 2000);
+function updateTbody(){
+    //preparing
+    $.getJSON({
+            url: "ajax/ordersQueueOnline_getPreparing.php",
+            method: "post",
+            success: function(result){
+                $('#tbody1 tr').remove();
+                if(result!=null){
+                    let data = "";
+                    result.forEach(function(element) {
+                        data += "<tr>";
+                        data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
+                        data += "</tr>";
+                    });
+                    $('#tbody1').append(data);
+                }
+            }
     });
-    $("#prepairingTable").load("ordersQueueOnline.php #prepairingTable", function() {
-        setTimeout(autoRefresh_Tables, 2000);
-    });
+    //serving
+    $.getJSON({
+        url: "ajax/ordersQueueOnline_getServing.php",
+        method: "post",
+        success: function(result){
+            $('#tbody2 tr').remove();
+            if(result!=null){
+                let data = "";
+                result.forEach(function(element) {
+                    data += "<tr>";
+                    data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
+                    data += "</tr>";
+                });
+                $('#tbody2').append(data);
+            }
+        },complete: function(){
+            setTimeout(updateTbody, 2000);
+        }
+  });
 }
-autoRefresh_Tables();
+updateTbody();
 </script>

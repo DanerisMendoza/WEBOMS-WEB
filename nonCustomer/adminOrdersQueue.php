@@ -87,20 +87,6 @@
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
 
-                    <!-- serving table -->
-                    <div class="table-responsive col-lg-6">
-                        <table class="table table-bordered table-hover col-lg-12" id="tableServing">
-                            <thead class="bg-success text-white">
-                                <tr>
-                                    <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody1">
-                               
-                            </tbody>
-                        </table>
-                    </div>
-
                     <!-- prepairing table -->
                     <div class="table-responsive col-lg-6">
                         <table class="table table-bordered table-hover col-lg-12" id="prepairingTable">
@@ -109,13 +95,28 @@
                                     <th scope="col"><h2><i class="bi bi-clock"></i> PREPARING</h2></th>
                                 </tr>
                             </thead>
-                            <tbody id="tbody2">
+                            <tbody id="tbody1">
                        
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- serving table -->
+                    <div class="table-responsive col-lg-6">
+                        <table class="table table-bordered table-hover col-lg-12" id="tableServing">
+                            <thead class="bg-success text-white">
+                                <tr>
+                                    <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody2">
+                               
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -134,10 +135,29 @@ $(document).ready(function() {
 
 
 function updateTbody(){
+    //preparing
+    $.getJSON({
+        url: "ajax/ordersQueue_getPreparing.php",
+        method: "post",
+        success: function(result){
+            $('#tbody1 tr').remove();
+            if(result!=null){
+                let data = "";
+                result.forEach(function(element) {
+                    data += "<tr>";
+                    data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
+                    data += "</tr>";
+                });
+                $('#tbody1').append(data);
+            }
+        }
+  });
+  //serving
   $.getJSON({
         url: "ajax/ordersQueue_getServing.php",
         method: "post",
         success: function(result){
+            $('#tbody2 tr').remove();
             if(result!=null){
                 let data = "";
                 result.forEach(function(element) {
@@ -145,26 +165,6 @@ function updateTbody(){
                     data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
                     data += "</tr>";
                 });
-                $('#tbody1 tr').remove();
-                $('#tbody1').append(data);
-            }
-        },
-        complete: function(){
-            setTimeout(updateTbody, 2000);
-        }
-  });
-  $.getJSON({
-        url: "ajax/ordersQueue_getPreparing.php",
-        method: "post",
-        success: function(result){
-            if(result!=null){
-                let data = "";
-                result.forEach(function(element) {
-                    data += "<tr>";
-                    data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
-                    data += "</tr>";
-                });
-                $('#tbody2 tr').remove();
                 $('#tbody2').append(data);
             }
         },
