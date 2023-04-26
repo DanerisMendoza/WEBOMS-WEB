@@ -95,19 +95,8 @@
                                     <th scope="col"><h2><i class="bi bi-arrow-bar-left"></i> SERVING</h2></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <!-- serving table -->
-                                    <?php   
-                                        $getServingOrder = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id WHERE b.status = 'serving' ORDER BY b.id asc; ";
-                                        $resultSet = getQuery2($getServingOrder);
-                                        if($resultSet != null)
-                                            foreach($resultSet as $row){ 
-                                    ?>
-                                                <tr>
-                                                    <!-- orders id -->
-                                                    <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
-                                                </tr>
-                                    <?php } ?>
+                            <tbody id="tbody1">
+                               
                             </tbody>
                         </table>
                     </div>
@@ -120,18 +109,8 @@
                                     <th scope="col"><h2><i class="bi bi-clock"></i> PREPARING</h2></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php   
-                                    $getPrepairingOrder = "select a.name, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id WHERE b.status = 'preparing'  ORDER BY b.id asc; ";
-                                    $resultSet = getQuery2($getPrepairingOrder);
-                                    if($resultSet != null)
-                                        foreach($resultSet as $row){ 
-                                ?>
-                                            <tr>
-                                                <!-- orders id -->
-                                                <td><strong style="font-size: 35px;"><?php echo $row['order_id']; ?></strong></td>
-                                            </tr>
-                                <?php } ?>
+                            <tbody id="tbody2">
+                       
                             </tbody>
                         </table>
                     </div>
@@ -145,16 +124,6 @@
 </html>
 
 <script>
-// auto refresh 
-function autoRefresh_Tables() {
-    $("#tableServing").load("adminOrdersQueue.php #tableServing", function() {
-        setTimeout(autoRefresh_Tables, 2000);
-    });
-    $("#prepairingTable").load("adminOrdersQueue.php #prepairingTable", function() {
-        setTimeout(autoRefresh_Tables, 2000);
-    });
-}
-autoRefresh_Tables();
 
 // sidebar toggler
 $(document).ready(function() {
@@ -162,6 +131,50 @@ $(document).ready(function() {
         $('#sidebar').toggleClass('active');
     });
 });
+
+
+function updateTbody(){
+  $.getJSON({
+        url: "ajax/ordersQueue_getServing.php",
+        method: "post",
+        success: function(result){
+            if(result!=null){
+                let data = "";
+                result.forEach(function(element) {
+                    data += "<tr>";
+                    data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
+                    data += "</tr>";
+                });
+                $('#tbody1 tr').remove();
+                $('#tbody1').append(data);
+            }
+        },
+        complete: function(){
+            setTimeout(updateTbody, 2000);
+        }
+  });
+  $.getJSON({
+        url: "ajax/ordersQueue_getPreparing.php",
+        method: "post",
+        success: function(result){
+            if(result!=null){
+                let data = "";
+                result.forEach(function(element) {
+                    data += "<tr>";
+                    data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
+                    data += "</tr>";
+                });
+                $('#tbody2 tr').remove();
+                $('#tbody2').append(data);
+            }
+        },
+        complete: function(){
+            setTimeout(updateTbody, 2000);
+        }
+  });
+}
+updateTbody();
+
 </script>
 
 <?php 
