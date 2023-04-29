@@ -363,14 +363,20 @@ $(document).ready(function() {
 
 <script>
 var userId_Global = null;
+let rfidBlockExecuted = false;
 
 $("#rfid").on('shown.bs.modal', function(){
     $(this).find('input[type="text"]').val('');
     $(this).find('input[type="text"]').focus();
 });
 
+$("#rfid").on('hidden.bs.modal', function(){
+    rfidBlockExecuted = false;
+});
+
 $('#rfidInput').keyup(function(){
-    if($(this).val().length == 10){
+    if($(this).val().length == 10 && !rfidBlockExecuted){
+        rfidBlockExecuted = true;
         let arr = [];
         arr.push($(this).val());
         arr.push(userId_Global);
@@ -378,23 +384,44 @@ $('#rfidInput').keyup(function(){
         $.ajax({
             url: "ajax/accountManagement_checkIfRfidExist.php",
             method: "post",
-            data: {'arr':JSON.stringify(arr)},
-            success: function(res){  
+            data: {'rfid':JSON.stringify(arr[0])},
+            success: function(currentlyUsedByOtherUser){  
                 $(this).val('');
-                $('#rfid').modal('hide');
-                if(res){
-                    alert("RFID already Exist!");
-                    return;
-                }
-                // update rfid card
+                //check if rfid is already used before
                 $.ajax({
-                    url: "ajax/accountManagement_updateRfid.php",
+                    url: "ajax/accountManagement_checkIfRfidUsedBefore.php",
                     method: "post",
-                    data: {'arr':JSON.stringify(arr)},
-                    success: function(){  
-                        $(this).val('');
-                        $('#rfid').modal('hide');
-                        updateTbody();  
+                    data: {'rfid':JSON.stringify(arr[0])},
+                    success: function(alreadyUsedBefore){
+                        //validation
+                        if(currentlyUsedByOtherUser || alreadyUsedBefore){
+                            $('#rfid').modal('hide');
+                            alert("RFID already used!");
+                            return;
+                        }
+                        // update rfid card
+                        $.ajax({
+                            url: "ajax/accountManagement_updateRfid.php",
+                            method: "post",
+                            data: {'arr':JSON.stringify(arr)},
+                            success: function(){  
+                                $(this).val('');
+                                $('#rfid').modal('hide');
+                                updateTbody();  
+                                // add rfid to usedRfid_tb
+                                $.ajax({
+                                    url: "ajax/accountManagement_addToUsedRfid.php",
+                                    method: "post",
+                                    data: {'rfid':JSON.stringify(arr[0])},
+                                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                                        alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                                    }     
+                                });
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                                alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+                            }     
+                        });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
                         alert("Status: " + textStatus); alert("Error: " + errorThrown); 

@@ -83,7 +83,11 @@ $conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 		orderType int,
 		qty int)";
 
-		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb) && $conn->query($queryCreateCompany_tb) && $conn->query($queryCreateCart_tb)) {
+		//rfid
+		$queryCreateUsedRfid_tb = "create table if not exists weboms_usedRfid_tb(id int PRIMARY KEY AUTO_INCREMENT,
+		rfid varchar(255))";
+
+		if($conn->query($queryCreateMenu_tb)  && $conn->query($queryCreateUser_tb) && $conn->query($queryCreateUserInfo_tb)  && $conn->query($queryCreateOrder_tb) && $conn->query($queryCreateOrdersDetail_tb) && $conn->query($queryCreateFeedback_tb) && $conn->query($queryTopUp_tb) && $conn->query($queryCreateCompany_tb) && $conn->query($queryCreateCart_tb) && $conn->query($queryCreateUsedRfid_tb)) {
 			$checkQuery = "select * from weboms_user_tb";
 			if($resultSet = $conn->query($checkQuery)){  
 				if($resultSet->num_rows <= 0){

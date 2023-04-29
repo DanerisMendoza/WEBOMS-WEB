@@ -126,7 +126,7 @@
     }
     // reset database 
     if(isset($_POST['reset'])){
-        $query = "DROP TABLE `weboms_company_tb`, `weboms_feedback_tb`, `weboms_menu_tb`, `weboms_ordersDetail_tb`, `weboms_order_tb`, `weboms_topUp_tb`, `weboms_userInfo_tb`, `weboms_user_tb` , `weboms_cart_tb`";
+        $query = "DROP TABLE `weboms_company_tb`, `weboms_feedback_tb`, `weboms_menu_tb`, `weboms_ordersDetail_tb`, `weboms_order_tb`, `weboms_topUp_tb`, `weboms_userInfo_tb`, `weboms_user_tb` , `weboms_cart_tb`, `weboms_usedrfid_tb`";
         if(Query2($query)){
             // clear all pic in folders
             $arr = array('../dishesPic', '../payment', '../profilePic');
@@ -149,27 +149,7 @@
 
 <?php 
     // logout
-    // include('../method/query.php');
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
         session_destroy();
         echo "<script>window.location.replace('../index.php');</script>";
     }
