@@ -210,8 +210,10 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <button type='button' id="confirm" class="btn btn-lg btn-success col-12 mb-1">Confirm</button>
-                                <button type='button' id="cancel" class="btn btn-lg btn-danger col-12">Cancel</button>
+                                <div class="row">
+                                <button type='button' id="cancel" class="btn btn-lg btn-danger col-6">Cancel</button>
+                                <button type='button' id="confirm" class="btn btn-lg btn-success col-6 ">Confirm</button>
+                                </div>
                             </div>
                         </div>
                     </div>
