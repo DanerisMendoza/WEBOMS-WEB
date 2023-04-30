@@ -2,8 +2,6 @@
   $page = 'admin';
   include('../method/checkIfAccountLoggedIn.php');
   include_once('../method/query.php');
-  $query = "select a.name, b.feedback, b.id from  weboms_userInfo_tb a inner join weboms_feedback_tb b on a.user_id = b.user_id";
-  $resultSet =  getQuery2($query);
 ?>
 
 <!DOCTYPE html>
@@ -97,16 +95,8 @@
                                 <th scope="col">ACTION</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php
-                                if($resultSet!= null)
-                                foreach($resultSet as $row){ ?>
-                            <tr>
-                                <td><?php echo ucwords($row['name']); ?></td>
-                                <td><?php echo $row['feedback'];?></td>
-                                <td><a class="btn btn-danger" href="?delete=<?php echo $row['id'];?>" ><i class="bi bi-trash3"></i> Delete</a></td>
-                            </tr>
-                            <?php } ?>
+                        <tbody id="tbody1">
+                          
                         </tbody>
                     </table>
                     <?php ?>
@@ -129,48 +119,82 @@ $(document).ready(function() {
 </script>
 
 <?php
-// delete feedback
-if(isset($_GET['delete'])){
-    $id = $_GET['delete'];
-    $query = "update weboms_feedback_tb set feedback = 'Deleted due to inappropriate comment' WHERE id = '$id'";
-    if(Query2($query)){
-        echo "<script>alert('Success!'); window.location.replace('adminFeedbackList.php');</script>";
-    }
 
-} 
 // logout
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
         session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
 
 <script>
-    $(document).ready(function() {
-        $('#tb1').DataTable();
+    //get latestId
+    var latestId;
+    $.getJSON({
+    url: "ajax/feedback_getNewestFeedback.php",
+    method: "post",
+    success: function(res){
+        if(res == null){
+            latestId = 0;
+        }
+        else{
+            latestId = res;
+        }
+    }
     });
-    $('#tb1').dataTable({
-    "columnDefs": [
-        { "targets": [2], "orderable": false }
-    ]
-    });
+    
+    function checkIfDbChange(){
+        $.getJSON({
+            url: "ajax/feedback_getNewestFeedback.php",
+            method: "post",
+            success: function(res){
+                let result = parseInt(res) > parseInt(latestId);
+                if(result){
+                    updateTbody();
+                    latestId = res;
+                }
+              
+            },
+            complete: function(){
+                setTimeout(checkIfDbChange, 2000);
+            }
+        });
+    }
+    checkIfDbChange();
+   
+    function updateTbody(){
+        $.getJSON({
+            url: "ajax/feedback_getFeedback.php",
+            method: "post",
+            success: function(result){
+                $('#tbody1 tr').remove();
+                if(result!=null){
+                    let data = "";
+                    for(let i=0; i<result['name'].length; i++){
+                        data += "<tr>";
+                        data +=     "<td>"+result['name'][i]+"</td>";
+                        data +=     "<td>"+result['feedback'][i]+"</td>";
+                        data +=     "<td> <button type='button' class='btn btn-danger' onclick='deleteFeedback("+result['id'][i]+")' > Delete <i class='bi bi-trash3'></i> </button></td>";
+                        data += "</tr>";
+                    };
+                    $('#tb1').DataTable().clear().destroy();
+                    $('#tbody1').append(data);
+                    $('#tb1').dataTable({
+                    "columnDefs": [
+                        { "targets": [2], "orderable": false }
+                    ]
+                    });
+                }
+            },
+        });
+    }updateTbody();
+
+    
+    const deleteFeedback = (feedbackId) => {
+        $.post({
+            url: "ajax/feedback_deleteFeedBack.php",
+            method: "post",
+            data: {'feedbackId':JSON.stringify(feedbackId)}
+        });
+    };
 </script>
