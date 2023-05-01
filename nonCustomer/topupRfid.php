@@ -100,16 +100,25 @@
                 </div>
             </nav>
         <!-- content here -->
-            <select id="amount" class="form-control form-control-lg col-12 mb-4">
-                <option value="100">₱100.00</option>
-                <option value="300">₱300.00</option>
-                <option value="500">₱500.00</option>
-                <option value="1000">₱1000.00</option>
-                <option value="3000">₱3000.00</option>
-                <option value="5000">₱5000.00</option>
-            </select>
+
+            <div class="row ">
+                <h1 class="col-10 border border-dark">Amount: <span style="color: orange;">₱</span><span class="amountSpan" style="color: gray;">0</span></h1>
+                <button class="col-2 border border-dark mb-2" onclick="clearVal()">CLEAR</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(5)">5</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(10)">10</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(20)">20</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(30)">30</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(40)">40</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(50)">50</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(100)">100</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(300)">300</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(500)">500</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(1000)">1000</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(3000)">3000</button>
+                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(5000)">5000</button>
+            </div>
            
-            <div class="container-fluid text-center">
+            <div class="container-fluid text-center mt-2">
                 <div class="row justify-content-center">
 
             <div class="table-responsive col-lg-3">
@@ -184,6 +193,21 @@
     // global variable init
     var rfidGlobal;
 
+    addVal = (amount) =>{
+        let currentVal = parseInt($(".amountSpan").text());
+        $(".amountSpan").text(currentVal + amount);
+    }
+
+    clearVal = () => {$(".amountSpan").text("0")};
+
+    //amount dropdown change
+    $(document).ready(function() {
+        $('#amount').on('change', function() {
+            let amount = $(this).find(":selected").text();
+            $(".amountSpan").text(amount.substr(1));
+        });
+    });
+
     $(document).ready(function(){
         // modal trigger
         $("#scanRfid").click(function(){
@@ -195,7 +219,7 @@
                 return;
             }
             let arr = [];
-            let amount = parseInt($('#amount').find(":selected").text().substr(1));
+            let amount = parseInt(parseInt($(".amountSpan").text()));
             arr.push(amount);
             arr.push(rfidGlobal);
             $.ajax({
@@ -262,31 +286,18 @@
         });
         }
     });
+    // sidebar toggler
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+        });
+    });
 
 </script>
 
 <?php 
     // logout
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
         session_destroy();
         echo "<script>window.location.replace('../index.php');</script>";
     }
