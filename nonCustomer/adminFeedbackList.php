@@ -194,7 +194,10 @@ $(document).ready(function() {
         $.post({
             url: "ajax/feedback_deleteFeedBack.php",
             method: "post",
-            data: {'feedbackId':JSON.stringify(feedbackId)}
+            data: {'feedbackId':JSON.stringify(feedbackId)},
+            success: function(){
+                updateTbody();
+            }
         });
     };
 </script>
