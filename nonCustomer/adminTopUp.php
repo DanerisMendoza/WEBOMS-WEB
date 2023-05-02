@@ -87,10 +87,6 @@
             <!-- content here -->
             <div class="container-fluid text-center">
                 <div class="row justify-content-center">
-                    <?php
-                        $query = "SELECT a.*,b.name FROM `weboms_topUp_tb` a inner join weboms_userInfo_tb b on a.user_id = b.user_id";
-                        $resultSet =  getQuery2($query);
-                    ?>
                     <div class="table-responsive col-lg-12">
                         <table class="table table-bordered table-hover col-lg-12" id="tb1">
                             <thead class="table-dark">
@@ -103,29 +99,8 @@
                                     <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                    if($resultSet!= null)
-                                    foreach($resultSet as $row){ ?>
-                                <tr>
-                                    <td><?php echo ucwords($row['name']); ?></td>
-                                    <td><?php echo '₱'. number_format($row['amount'],2);?></td>
-                                    <td><?php echo ucwords($row['status']);?></td>
-                                    <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
-                                    <td>
-                                        <a class="btn btn-light" style="border:1px solid #cccccc;" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi bi-list"></i> View</a>
-                                    </td>
-                                    <!-- action -->
-                                    <?php if($row['status'] == 'pending') {?>
-                                    <td>
-                                        <a class="btn btn-success" href="?approve=<?php echo $row['id'].','.$row['user_id'].','.$row['amount'];?>"><i class="bi bi-check"></i> Approve</a>
-                                        <a class="btn btn-danger" href="?disapprove=<?php echo $row['id'];?>"><i class="bi bi-x"></i> Disapprove</a>
-                                    </td>
-                                    <?php } else {?>
-                                    <td class="text-danger">None</td>
-                                    <?php } ?>
-                                </tr>
-                                <?php } ?>
+                            <tbody id="tbody1">
+                              
                             </tbody>
                         </table>
                     </div>
@@ -135,7 +110,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content container">
                                 <div class="modal-body">
-                                    <?php  echo "<img src='../payment/$_GET[viewPic]' style=width:300px;height:550px>";?>
+                                    <img id="imgModal" style=width:300px;height:550px>
                                 </div>
                             </div>
                         </div>
@@ -149,75 +124,118 @@
 
 </html>
 <?php 
-    //view pic
-    if(isset($_GET['viewPic'])){
-        echo "<script>$('#viewPic').modal('show');</script>";
-    }
-    //approve
-    if(isset($_GET['approve'])){
-        $arr = explode(',',$_GET['approve']);
-        $id = $arr[0];
-        $user_id = $arr[1];
-        $amount = $arr[2];
-        $query = "UPDATE weboms_topUp_tb SET status='approved' WHERE id='$id' ";     
-        if(Query2($query)){
-            $query = "UPDATE weboms_userInfo_tb SET balance = (balance + '$amount') where user_id = '$user_id' ";     
-            if(Query2($query)){
-                echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('Success!');</SCRIPT>";
-            }
-        }
-
-    }
-    //disapprove
-    if(isset($_GET['disapprove'])){
-        $query = "UPDATE weboms_topUp_tb SET status='disapproved' WHERE id = '$_GET[disapprove]' ";     
-        if(Query2($query))
-            echo "<SCRIPT>  window.location.replace('adminTopUp.php'); alert('Success!');</SCRIPT>";
-    }
-?>
-
-<script>
-// sidebar toggler
-$(document).ready(function() {
-    $('#sidebarCollapse').on('click', function() {
-        $('#sidebar').toggleClass('active');
-    });
-});
-</script>
-
-
-<?php 
     if(isset($_POST['logout'])){
-        $dishesArr = array();
-        $dishesQuantity = array();
-        if(isset($_SESSION['dishes'])){
-            for($i=0; $i<count($_SESSION['dishes']); $i++){
-                if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-                    $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-                }
-                else{
-                    array_push($dishesArr,$_SESSION['dishes'][$i]);
-                }
-            }
-            foreach(array_count_values($_SESSION['dishes']) as $count){
-                array_push($dishesQuantity,$count);
-            }
-            for($i=0; $i<count($dishesArr); $i++){ 
-                $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-                Query2($updateQuery);    
-            }
-        }
         session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
 <script>
-    $(document).ready(function() {
-        $('#tb1').DataTable();
+    //get latestId
+    var latestId;
+    $.getJSON({
+    url: "ajax/topup_getNewestTopup.php",
+    method: "post",
+    success: function(res){
+        if(res == null){
+            latestId = 0;
+        }
+        else{
+            latestId = res;
+        }
+    }
     });
-    $('#tb1').dataTable({
-    "columnDefs": [
-        { "targets": [4,5], "orderable": false }
-    ]
+    
+    function checkIfDbChange(){
+        $.getJSON({
+            url: "ajax/topup_getNewestTopup.php",
+            method: "post",
+            success: function(res){
+                let result = parseInt(res) > parseInt(latestId);
+                if(result){
+                    UpdateTable();
+                    latestId = res;
+                }
+              
+            },
+            complete: function(){
+                setTimeout(checkIfDbChange, 2000);
+            }
+        });
+    }
+    checkIfDbChange();
+
+    function UpdateTable() {
+    $.getJSON({
+        url: 'ajax/topup_getTopup.php',
+        method: 'POST',
+        success: function(result) {
+        if (result != null) {
+            let data = "";
+            for (let i = 0; i < result['name'].length; i++) {
+            data += "<tr>";
+            data += "<td>" + result['name'][i] + "</td>";
+            data += "<td>" + '₱' + result['amount'][i] + "</td>";
+            data += "<td>" + result['status'][i] + "</td>";
+            data += "<td>" + result['date'][i] + "</td>";
+            data += "<td> <button type='button' class='btn btn-light' style='border:1px solid #cccccc;' onclick=viewPicture('"+result['proofOfPayment'][i]+"') > View <i class='bi bi-list'></i> </button></td>";
+            if (result['status'][i] == 'Pending') {
+                data += "<td>";
+                data += "<div style='display:flex; justify-content:space-between'>";
+                data += "<button type='button' class='btn btn-success' onclick=approvePayment('" + result['id'][i]+"','"+result['user_id'][i]+"','"+parseInt(result['amount'][i].replace(/,/g, ""))+"')> Approve <i class='bi bi-check'></i> </button>";
+                data += "<button type='button' class='btn btn-danger' onclick=disapprovePayment('" + result['id'][i] + "')> Disapprove <i class='bi bi-x'></i> </button>";
+                data += "</div>";
+                data += "</td>";
+            } else {
+                data += "<td class='text-danger'>None</td>";
+            }
+            data += "</tr>";
+            }
+            $('#tb1').DataTable().clear().destroy();
+            $('#tbody1').append(data);
+            $('#tb1').dataTable({
+            "columnDefs": [{
+                "targets": [4, 5],
+                "orderable": false
+            }]
+            });
+        }
+        }
+    });
+    }
+    UpdateTable();
+
+    function viewPicture(pictureUrl) {
+        $('#viewPic').modal('show');
+        $('#imgModal').attr('src', "../payment/"+pictureUrl);
+      
+    }
+
+    function approvePayment(paymentId, userId, amount) {
+        $.post({
+            url: "ajax/topup_approve.php",
+            method: "post",
+            data: {'paymentId':JSON.stringify(paymentId),'userId':JSON.stringify(userId),'amount':JSON.stringify(amount)},
+            success: function(res){
+                UpdateTable();
+            }
+        });
+    }
+
+    function disapprovePayment(paymentId) {
+        $.post({
+            url: "ajax/topup_disapprove.php",
+            method: "post",
+            data: {'paymentId':JSON.stringify(paymentId)},
+            success: function(res){
+                UpdateTable();
+            }
+        });
+    }
+
+    // sidebar toggler
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+        });
     });
 </script>
