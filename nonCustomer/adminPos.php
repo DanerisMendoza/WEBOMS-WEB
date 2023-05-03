@@ -142,9 +142,9 @@
                         </table>
                             <input  id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
                             <input  id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
-                            <button id="payThruRfid" type="submit" class="btn btn-lg btn-secondary col-12 mb-1" name="orderBtn">RFID Payment</button>
-                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-1" name="orderBtn">Place Order</button>
-                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">Clear Order</button>
+                            <button id="payThruRfid" type="submit" class="btn btn-lg btn-secondary col-12 mb-1" name="orderBtn">RFID PAYMENT</button>
+                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-1" name="orderBtn">PLACE ORDER</button>
+                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">CLEAR ORDER</button>
                     </div>
                 </div>
 

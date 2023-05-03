@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" href="../css/bootstrap 5/bootstrap.min.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/topup.css">
     <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <!-- online css bootsrap icon -->
@@ -102,20 +103,20 @@
         <!-- content here -->
 
             <div class="row ">
-                <h1 class="col-10 border border-dark">Amount: <span style="color: orange;">₱</span><span class="amountSpan" style="color: gray;">0</span></h1>
-                <button class="col-2 border border-dark mb-2" onclick="clearVal()">CLEAR</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(5)">5</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(10)">10</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(20)">20</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(30)">30</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(40)">40</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(50)">50</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(100)">100</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(300)">300</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(500)">500</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(1000)">1000</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(3000)">3000</button>
-                <button class="col-2 btn btn-secondary  border border-dark" onclick="addVal(5000)">5000</button>
+                <h1 class="col-10 border border-dark text-success">₱<span class="amountSpan">0</span></h1>
+                <button class="col-2 border border-dark bg-danger text-white mb-2 btnClear" onclick="clearVal()">CLEAR</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(5)">5</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(10)">10</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(20)">20</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(30)">30</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(40)">40</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(50)">50</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(100)">100</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(300)">300</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(500)">500</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(1000)">1000</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(3000)">3000</button>
+                <button class="col-2 btn btn-secondary btnNum me-1 mb-1" onclick="addVal(5000)">5000</button>
             </div>
            
             <div class="container-fluid text-center mt-2">
@@ -157,8 +158,8 @@
                 </div>
             </div>
             <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                <button class="btn btn-lg btn-primary col-6 mb-3" id="scanRfid"><i class="bi bi-credit-card"></i> RFID Scan</button>
-                <button class="btn btn-lg btn-success col-6 mb-3" id="topupButton"><i class="bi bi-cash-stack"></i> Top-Up</button>
+                <button class="btn btn-lg btn-primary col-6 mb-3" id="scanRfid"><i class="bi bi-vr"></i> RFID SCAN</button>
+                <button class="btn btn-lg btn-success col-6 mb-3" id="topupButton"><i class="bi bi-cash"></i> TOP-UP</button>
             </div>
         </div>
 

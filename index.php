@@ -40,11 +40,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-2"><a class="nav-link" href="#home"><i class="bi bi-house-door"></i> HOME</a></li>
-                    <li class="nav-item me-2"><a class="nav-link" href="#menu"><i class="bi bi-book"></i> MENU</a></li>
-                    <li class="nav-item me-2"><a class="nav-link" href="#about"><i class="bi bi-info-circle"></i> ABOUT</a></li>
-                    <li class="nav-item me-2"><a class="nav-link" href="general/ordersQueue.php"><i class="bi bi-hourglass-split"></i> Orders Queue</a></li>
-                    <li class="nav-item me-2"><a class="nav-link" href="general/ordersQueueOnline.php"><i class="bi bi-hourglass-split"></i> Orders Queue Online</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="#home"><i class="bi bi-house-door-fill"></i> HOME</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="#menu"><i class="bi bi-book-fill"></i> MENU</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="#about"><i class="bi bi-info-circle-fill"></i> ABOUT</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="general/ordersQueue.php"><i class="bi bi-clock-fill"></i> ORDERS QUEUE</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="general/ordersQueueOnline.php"><i class="bi bi-clock-fill"></i> ORDERS QUEUE ONLINE</a></li>
                 </ul>
                 <a class="btn btn-outline-light" type="button" href="general/login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
             </div>

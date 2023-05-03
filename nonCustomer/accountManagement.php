@@ -98,7 +98,7 @@
                                     <th scope="col">RFID<br>NO.</th>
                                     <th scope="col">CUSTOMER<br>INFO</th>
                                     <th scope="col">
-                                        <button id="addButton" type="button" onclick="clearField()" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#addNewAccountModal"><i class="bi bi-person-plus"></i> ADD NEW ACCOUNT</button>
+                                        <button id="addButton" type="button" onclick="clearField()" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#addNewAccountModal"><i class="bi bi-plus"></i> ADD NEW ACCOUNT</button>
                                     </th>
                                     <th scope="col" >OPTIONS</th>
                                     <th scope="col" ></th>
@@ -242,18 +242,18 @@ function updateTbody(){
             data +=     "<td>"+result['email'][i]+"</td>";
             data +=     "<td>"+result['accountType'][i]+"</td>";
             data +=     "<td>"+result['rfid'][i]+"</td>";
-            data +=     "<td><button class='btn btn-light' style='border:1px solid #cccccc;' onclick='viewCustomerInfo("+result['user_id'][i]+")'><i class='bi bi-list'>View</button></td>";
-            data +=     "<td><button class='btn btn-warning' style='border:1px solid #cccccc;' onclick=updateUser('"+result['username'][i]+"','"+result['email'][i]+"')> <i class='bi bi-arrow-repeat'></i>Update</button></td>";
+            data +=     "<td><button class='btn btn-light' style='border:1px solid #cccccc;' onclick='viewCustomerInfo("+result['user_id'][i]+")'><i class='bi bi-list'></i> VIEW</button></td>";
+            data +=     "<td><button class='btn btn-warning' onclick=updateUser('"+result['username'][i]+"','"+result['email'][i]+"')> <i class='bi bi-arrow-repeat'></i> UPDATE</button></td>";
             //add delete button if not admin
             if(result['accountType'][i] == 'admin'){
                 data += "<td><a class='text-danger'>You Cannot Delete This Account!</a></td>";
             }
             else{
-                data += "<td><button class='btn btn-danger' style='border:1px solid #cccccc;' onclick='deleteUser("+result['user_id'][i]+")'><i class='bi bi-trash3'></i>Delete</button></td>";
+                data += "<td><button class='btn btn-danger' onclick='deleteUser("+result['user_id'][i]+")'><i class='bi bi-trash3-fill'></i> DELETE</button></td>";
             }
             // add bind button if customer
             if(result['accountType'][i] == 'customer'){
-                data += "<td><button class='btn btn-primary' style='border:1px solid #cccccc;' onclick='rfid("+result['user_id'][i]+")'><i class='bi bi-credit-card'></i>Bind</button></td>";
+                data += "<td><button class='btn btn-primary' onclick='rfid("+result['user_id'][i]+")'><i class='bi bi-vr'></i> BIND</button></td>";
             }
             else{
                 data += "<td></td>";

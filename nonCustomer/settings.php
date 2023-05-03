@@ -99,11 +99,17 @@
                     <h4 class="text-start">COMPANY DESCRIPTION/HISTORY</h4>
                     
                     <textarea rows="8" name="description" placeholder="Enter new company description/history" class="form-control form-control-lg mb-4"  required><?php echo $description; ?></textarea>
-                    <button type="submit" name="update" class="btn btn-lg btn-warning col-12 mb-3"><i class="bi bi-arrow-repeat"></i> Update</button>
-                </form>
-                <!-- reset all button -->
-                <form method="post">
-                    <button type="submit" name="reset" class="btn btn-lg btn-danger col-12"><i class="bi bi-database-exclamation"></i>Reset Database</button>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="submit" name="update" class="btn btn-lg btn-warning col-12 mb-3"><i class="bi bi-arrow-repeat"></i> UPDATE</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- reset all button -->
+                                <button type="submit" name="reset" class="btn btn-lg btn-danger col-12"><i class="bi bi-database-fill"></i> RESET DATABASE</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

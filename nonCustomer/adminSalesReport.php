@@ -97,7 +97,7 @@
             <div class="container-fluid text-center">
                 <div class="row justify-content-center g-3">
                     <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                        <button class="btn btn-lg btn-danger" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
+                        <button class="btn btn-lg btn-danger" id="viewInPdf"><i class="bi bi-file-earmark-pdf-fill"></i> PDF</button>
                     </div>
 
                     <!-- table -->
@@ -106,12 +106,12 @@
                                 <tr>
                                     <td><h1 class="fw-normal h3 form-control form-control-lg">FROM:</h1></td>
                                     <td><input type="datetime-local" id="dateFetch1" class="form-control form-control-lg"></td>
-                                    <td><button type="button" onclick="updateTable1('showByTwoDate')" class="btn btn-lg btn-primary col-12"><i class="bi bi-arrow-bar-left"></i> Fetch (between)</button></td>
+                                    <td><button type="button" onclick="updateTable1('showByTwoDate')" class="btn btn-lg btn-primary col-12">FETCH</button></td>
                                 </tr>
                                 <tr>
                                     <td><h1 class="fw-normal h3 form-control form-control-lg">TO:</h1></td>
                                     <td><input type="datetime-local" id="dateFetch2" class="form-control form-control-lg"></td>
-                                    <td><button type="button" onclick="updateTable1('showAll')" class="btn btn-lg btn-primary col-12"><i class="bi bi-list"></i> Show All</button></td>
+                                    <td><button type="button" onclick="updateTable1('showAll')" class="btn btn-lg btn-primary col-12">SHOW ALL</button></td>
                                 </tr>
                             </table>
                         </div>
