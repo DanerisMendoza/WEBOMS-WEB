@@ -2,8 +2,6 @@
   $page = 'customer';
   include('../method/checkIfAccountLoggedIn.php');
   include_once('../method/query.php');
-  $query = "select a.name, b.feedback from  weboms_userInfo_tb a inner join weboms_feedback_tb b on a.user_id = b.user_id";
-  $resultSet =  getQuery2($query);
   $companyName = getQueryOneVal2('select name from weboms_company_tb','name');
 ?>
 
@@ -78,15 +76,8 @@
                                 <th scope="col">FEEDBACK</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php
-                                if($resultSet!= null)
-                                foreach($resultSet as $row){ ?>
-                            <tr>
-                                <td><?php echo ucwords($row['name']); ?></td>
-                                <td><?php echo $row['feedback'];?></td>
-                            </tr>
-                            <?php } ?>
+                        <tbody id="tbody1">
+                        
                         </tbody>
                     </table>
                     <?php ?>
@@ -98,39 +89,75 @@
 </html>
 
 <script>
+    //get latestId
+    var latestId;
+    $.getJSON({
+    url: "ajax/feedback_getNewestFeedback.php",
+    method: "post",
+    success: function(res){
+        if(res == null){
+            latestId = 0;
+        }
+        else{
+            latestId = res;
+        }
+    }
+    });
+
+    function checkIfDbChange(){
+        $.getJSON({
+            url: "ajax/feedback_getNewestFeedback.php",
+            method: "post",
+            success: function(res){
+                let result = parseInt(res) > parseInt(latestId);
+                if(result){
+                    updateTbody();
+                    latestId = res;
+                }
+              
+            },
+            complete: function(){
+                setTimeout(checkIfDbChange, 2000);
+            }
+        });
+    }
+    checkIfDbChange();
+
+      function updateTbody(){
+        $.getJSON({
+            url: "ajax/feedback_getFeedback.php",
+            method: "post",
+            success: function(result){
+                $('#tbody1 tr').remove();
+                if(result!=null){
+                    let data = "";
+                    for(let i=0; i<result['name'].length; i++){
+                        data += "<tr>";
+                        data +=     "<td>"+result['name'][i]+"</td>";
+                        data +=     "<td>"+result['feedback'][i]+"</td>";
+                        data += "</tr>";
+                    };
+                    $('#tb1').DataTable().clear().destroy();
+                    $('#tbody1').append(data);
+                    $('#tb1').DataTable();
+                }
+            },
+        });
+    }updateTbody();
+
+
     $(document).ready(function() {
         $('#tb1').DataTable();
     });
-</script>
 
-<script>
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
+    document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
+    document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
+    document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
+    document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
 </script>
 
 <?php 
   if(isset($_POST['logout'])){
-    $dishesArr = array();
-    $dishesQuantity = array();
-    if(isset($_SESSION['dishes'])){
-        for($i=0; $i<count($_SESSION['dishes']); $i++){
-            if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-              $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-            }
-            else{
-              array_push($dishesArr,$_SESSION['dishes'][$i]);
-            }
-        }
-        foreach(array_count_values($_SESSION['dishes']) as $count){
-          array_push($dishesQuantity,$count);
-        }
-        for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-          Query2($updateQuery);    
-        }
-    }
     session_destroy();
     echo "<script>window.location.replace('../general/login.php');</script>";
   }
