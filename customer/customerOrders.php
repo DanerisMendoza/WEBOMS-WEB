@@ -74,41 +74,8 @@
                 <th scope="col">ORDER DETAILS</th>
               </tr>
             </thead>
-            <tbody>
-              <?php
-                $user_id = $_SESSION["user_id"];  
-                $getCustomerOrders = "select a.name, a.email, b.* from weboms_userInfo_tb a inner join weboms_order_tb b on a.user_id = b.user_id where a.user_id = '$user_id' order by b.id desc;";
-                $resultSet = getQuery2($getCustomerOrders);
-                if($resultSet != null)
-                foreach($resultSet as $row){ ?>
-                <tr>	   
-                <td><?php echo ucwords($row['name']); ?></td>
-                <td><?php echo $row['order_id']; ?></td>
-                <td><?php echo ucwords($row['status']); ?></td>
-                <td><?php echo date('m/d/Y h:i:s a ', strtotime($row['date'])); ?></td>
-                <td>
-                  <?php 
-                  $order_id = $row['order_id'];
-                  $user_id = $row['user_id'];
-                  $checkIfAlreadyFeedback = "SELECT * FROM weboms_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
-                  $resultSet = getQuery2($checkIfAlreadyFeedback);
-                  if($row['status'] == 'complete' && $resultSet == null){
-                    ?>  <a class="btn btn-primary" href="customerFeedBack.php?ordersLinkIdAndUserLinkId=<?php echo $row['order_id'].','.$row['user_id']?>"><i class="bi bi-chat-square-text"></i></a>  <?php
-                  }
-                  elseif($row['status'] == 'complete'){
-                    echo "Feedback already sent!";
-                  }
-                  elseif($row['status'] == 'prepairing' || $row['status'] == 'serving'){
-                    echo "Please wait until order is complete!";
-                  }
-                  elseif($row['status'] == 'void'){
-                    echo "Order is void!";
-                  }
-                ?>
-                </td>
-                <td><a class="btn btn-light" style="border:1px solid #cccccc;" href="customerOrder_details.php?id=<?php echo $row['order_id'];?>"><i class="bi bi-list"></i> View</a></td>
-                </tr>
-                <?php } ?>
+            <tbody id="tbody1">
+             
             </tbody>
           </table>
         </div>
@@ -119,44 +86,93 @@
 </html>
 
 <script>
-document.getElementById("menu").onclick = function() { window.location.replace('customerMenu.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
+    let user_id = <?php echo $_SESSION['user_id']; ?>;
+    function updateTbody(){
+        //get cart attributes
+        $.getJSON({
+            url: "ajax/orders_getOrders.php",
+            method: "post",
+            data: {'user_id':user_id},
+            success: function(result){
+              if(result!=null){
+                let data = "";
+                for(let i=0; i<result['name'].length; i++){
+                    data += "<tr>";
+                    data +=     "<td>"+result['name'][i]+"</td>";
+                    data +=     "<td>"+result['order_id'][i]+"</td>";
+                    data +=     "<td>"+result['status'][i]+"</td>";
+                    data +=     "<td>"+result['date'][i]+"</td>";
+                    if(result['isAllowToFeedback'][i] == 'Allowed'){
+                      data +=   "<td></td>";
+                    }
+                    else{
+                      data +=   "<td>"+result['isAllowToFeedback'][i]+"</td>";
+                    }
+                    data += "<td><a class='btn btn-light' style='border:1px solid #cccccc;' href='customerOrder_details.php?id="+result['order_id'][i]+"'><i class='bi bi-list'></i> View</a></td>";
+                    data += "</tr>";
+                }
+                $('#tb1').DataTable().clear().destroy();
+                $('#tbody1').append(data);
+                $('#tb1').dataTable({
+                "columnDefs": [
+                    { "targets": [5], "orderable": false }
+                ]
+                });
+              }
+            },error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });   
+    }
+    updateTbody();
+
+    //get latestId
+    var latestId;
+    $.getJSON({
+    url: "ajax/orders_getNewestOrder.php",
+    method: "post",
+    data: {'user_id':user_id},
+    success: function(res){
+        if(res == null){
+            latestId = 0;
+        }
+        else{
+            latestId = res;
+        }
+    }
+    });
+   
+
+    function checkIfDbChange(){
+        $.getJSON({
+            url: "ajax/orders_getNewestOrder.php",
+            method: "post",
+            data: {'user_id':user_id},
+            success: function(res){
+                let result = parseInt(res) > parseInt(latestId);
+                if(result){
+                    updateTbody();
+                    latestId = res;
+                }
+              
+            },
+            complete: function(){
+                setTimeout(checkIfDbChange, 2000);
+            }
+        });
+    }
+    checkIfDbChange();
+   
+  //nav
+  document.getElementById("menu").onclick = function() { window.location.replace('customerMenu.php'); };
+  document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
+  document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
+  document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
 </script>
 
 <?php 
   if(isset($_POST['logout'])){
-    $dishesArr = array();
-    $dishesQuantity = array();
-    if(isset($_SESSION['dishes'])){
-        for($i=0; $i<count($_SESSION['dishes']); $i++){
-            if(in_array( $_SESSION['dishes'][$i],$dishesArr)){
-              $index = array_search($_SESSION['dishes'][$i], $dishesArr);
-            }
-            else{
-              array_push($dishesArr,$_SESSION['dishes'][$i]);
-            }
-        }
-        foreach(array_count_values($_SESSION['dishes']) as $count){
-          array_push($dishesQuantity,$count);
-        }
-        for($i=0; $i<count($dishesArr); $i++){ 
-          $updateQuery = "UPDATE weboms_menu_tb SET stock = (stock + '$dishesQuantity[$i]') WHERE dish= '$dishesArr[$i]' ";    
-          Query2($updateQuery);    
-        }
-    }
     session_destroy();
     echo "<script>window.location.replace('../general/login.php');</script>";
   }
 ?>
-<script>
-    $(document).ready(function() {
-        $('#tb1').DataTable();
-    });
-    $('#tb1').dataTable({
-    "columnDefs": [
-        { "targets": [5], "orderable": false }
-    ]
-    });
-</script>
