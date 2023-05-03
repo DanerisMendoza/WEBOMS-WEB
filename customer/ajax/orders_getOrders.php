@@ -12,7 +12,13 @@
             $orders['status'][$i] = $row['status'];
             $orders['date'][$i] = $row['date'];
             $orders['user_id'][$i] = $row['user_id'];
-            
+
+            $order_id = $row['order_id'];
+            $user_id = $row['user_id'];
+
+            $checkIfAlreadyFeedback = "SELECT * FROM weboms_feedback_tb WHERE order_id='$order_id' AND user_id = '$user_id' ";
+            $resultSet = getQuery3($checkIfAlreadyFeedback);
+
             if($row['status'] == 'complete' && $resultSet == null){
                 $orders['isAllowToFeedback'][$i] = 'Allowed';
             }

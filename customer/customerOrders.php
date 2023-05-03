@@ -103,7 +103,7 @@
                     data +=     "<td>"+result['status'][i]+"</td>";
                     data +=     "<td>"+result['date'][i]+"</td>";
                     if(result['isAllowToFeedback'][i] == 'Allowed'){
-                      data +=   "<td></td>";
+                      data += "<td><a class='btn btn-primary' style='border:1px solid #cccccc;' href='customerFeedBack.php?ordersLinkIdAndUserLinkId="+result['order_id'][i]+","+result['user_id'][i]+"'><i class='bi bi-chat-square-text'></i></a></td>";
                     }
                     else{
                       data +=   "<td>"+result['isAllowToFeedback'][i]+"</td>";
@@ -131,8 +131,8 @@
     $.getJSON({
     url: "ajax/orders_getNewestOrder.php",
     method: "post",
-    data: {'user_id':user_id},
     success: function(res){
+      console.log(res);
         if(res == null){
             latestId = 0;
         }
@@ -147,9 +147,9 @@
         $.getJSON({
             url: "ajax/orders_getNewestOrder.php",
             method: "post",
-            data: {'user_id':user_id},
             success: function(res){
-                let result = parseInt(res) > parseInt(latestId);
+              console.log(res);
+                let result = parseInt(res) != parseInt(latestId);
                 if(result){
                     updateTbody();
                     latestId = res;
