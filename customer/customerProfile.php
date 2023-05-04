@@ -36,19 +36,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> HOME</a>
+                        <a class="nav-link text-dark" href="customer.php"><i class="bi bi-house-door"></i> HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-person-circle"></i> PROFILE</a>
+                        <a class="nav-link text-danger" href="customerProfile.php"><i class="bi bi-person-circle"></i> PROFILE</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> MENU</a>
+                        <a class="nav-link text-dark" href="customerMenu.php"><i class="bi bi-book"></i> MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> TOP-UP</a>
+                        <a class="nav-link text-dark" href="customerTopUp.php"><i class="bi bi-cash-stack"></i> TOP-UP</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerOrder_details"><i class="bi bi-list"></i> VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="customerOrders.php"><i class="bi bi-list"></i> VIEW ORDERS</a>
                     </li>
                     <li>
                         <form method="post">
@@ -125,8 +125,10 @@
                     <?php } ?>
                 </tbody>
             </table>
-            <button class="btn btn-lg btn-warning col-12 mb-3" id="update"><i class="bi bi-info-circle"></i> Update Info</button>
-            <button class="btn btn-lg btn-warning col-12 mb-5" id="updatePassword"><i class="bi bi-lock"></i> Update Password</button>
+            <div class="input-group">
+                <button class="btn btn-lg btn-warning col-6 mb-5" id="update">UPDATE INFO</button>
+                <button class="btn btn-lg btn-secondary col-6 mb-5" id="updatePassword">UPDATE PASSWORD</button>
+            </div>
         </div>
     </div>
     

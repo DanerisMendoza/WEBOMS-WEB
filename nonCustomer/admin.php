@@ -36,10 +36,7 @@
 
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
-
         .h1Admin {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 13vw;
             font-weight: normal;
         }

@@ -22,6 +22,7 @@
     <title>Costumer</title>
 
     <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.css">
+    <link rel="stylesheet" href="../css/customer.css">
     <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.js"></script>
     <script type="text/javascript" src="js/bootstrap 5/bootstrap.js"></script>
@@ -54,19 +55,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-house-door"></i> HOME</a>
+                        <a class="nav-link text-danger" href="customer.php"><i class="bi bi-house-door"></i> HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="customerProfile"><i class="bi bi-person-circle"></i> PROFILE</a>
+                        <a class="nav-link text-dark" href="customerProfile.php"><i class="bi bi-person-circle"></i> PROFILE</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="menu"><i class="bi bi-book"></i> MENU</a>
+                        <a class="nav-link text-dark" href="customerMenu.php"><i class="bi bi-book"></i> MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="topUp"><i class="bi bi-cash-stack"></i> TOP-UP</a>
+                        <a class="nav-link text-dark" href="customerTopUp.php"><i class="bi bi-cash-stack"></i> TOP-UP</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#home" id="customerOrder_details"><i class="bi bi-list"></i> VIEW ORDERS</a>
+                        <a class="nav-link text-dark" href="customerOrders.php"><i class="bi bi-list"></i> VIEW ORDERS</a>
                     </li>
                 </ul>
                 <form method="post">
@@ -85,14 +86,6 @@
 </body>
 
 </html>
-
-
-<script>
-document.getElementById("menu").onclick = function() { window.location.replace('customerMenu.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-</script>
 
 <?php 
   if(isset($_POST['logout'])){

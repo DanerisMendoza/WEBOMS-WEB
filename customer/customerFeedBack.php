@@ -13,7 +13,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>View Orders - Feedback</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css"> 
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/customer.css"> 
     <!-- online css bootsrap icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
@@ -28,19 +29,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customer"><i class="bi bi-house-door"></i> HOME</a>
+                        <a class="nav-link text-dark" href="customer.php"><i class="bi bi-house-door"></i> HOME</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="customerProfile"><i class="bi bi-person-circle"></i> PROFILE</a>
+                        <a class="nav-link text-dark" href="customerProfile.php"><i class="bi bi-person-circle"></i> PROFILE</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="menu"><i class="bi bi-book"></i> MENU</a>
+                        <a class="nav-link text-dark" href="customerMenu.php"><i class="bi bi-book"></i> MENU</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="#" id="topUp"><i class="bi bi-cash-stack"></i> TOP-UP</a>
+                        <a class="nav-link text-dark" href="customerTopUp.php"><i class="bi bi-cash-stack"></i> TOP-UP</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="#"><i class="bi bi-list"></i> VIEW ORDERS</a>
+                        <a class="nav-link text-danger" href="customerOrders.php"><i class="bi bi-list"></i> VIEW ORDERS</a>
                     </li>
                     <li>
                         <form method="post">

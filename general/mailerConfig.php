@@ -1,6 +1,6 @@
 <?php 
 //hosting
-$mail->Host = '';		                //Set the SMTP server to send through
-$mail->Username   = '';              //from //SMTP username
-$mail->Password   = '';    			            //SMTP password		            //SMTP password	
+$mail->Host = 'mail.ucc-csd-bscs.com';		                //Set the SMTP server to send through
+$mail->Username   = 'weboms@ucc-csd-bscs.com';              //from //SMTP username
+$mail->Password   = 'MVn?Y==HWC=%';    			            //SMTP password
 ?>

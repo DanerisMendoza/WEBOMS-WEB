@@ -30,7 +30,7 @@
                         <form method="post" class="form2 px-md-2">
                             <h1 class="fw-normal text-center mb-4">Register your account</h1>
                             <!-- first name -->
-                            <div class="input-groupe mb-4">
+                            <div class="input-group mb-4">
                                 <input type="text" class="form-control form-control-lg" name="firstName" placeholder="First Name" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
                             </div>
                             <!-- middle name -->
