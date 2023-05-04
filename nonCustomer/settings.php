@@ -132,7 +132,7 @@
     }
     // reset database 
     if(isset($_POST['reset'])){
-        $query = "DROP TABLE `weboms_company_tb`, `weboms_feedback_tb`, `weboms_menu_tb`, `weboms_ordersDetail_tb`, `weboms_order_tb`, `weboms_topUp_tb`, `weboms_userInfo_tb`, `weboms_user_tb` , `weboms_cart_tb`, `weboms_usedrfid_tb`";
+        $query = "DROP TABLE `weboms_company_tb`, `weboms_feedback_tb`, `weboms_menu_tb`, `weboms_ordersDetail_tb`, `weboms_order_tb`, `weboms_topUp_tb`, `weboms_userInfo_tb`, `weboms_user_tb` , `weboms_cart_tb`, `weboms_usedRfid_tb`";
         if(Query2($query)){
             // clear all pic in folders
             $arr = array('../dishesPic', '../payment', '../profilePic');
