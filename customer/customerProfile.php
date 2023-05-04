@@ -272,13 +272,6 @@ document.getElementById("updatePassword").onclick = function () {
     });
 </script>
 
-<script>
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("menu").onclick = function() { window.location.replace('customerMenu.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
-</script>
-
 <?php 
   if(isset($_POST['logout'])){
     $dishesArr = array();

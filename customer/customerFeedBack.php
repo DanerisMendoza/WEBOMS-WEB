@@ -81,13 +81,6 @@
     }
 ?>
 
-<script>
-document.getElementById("menu").onclick = function() { window.location.replace('customerMenu.php'); };
-document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-</script>
-
 <?php 
   if(isset($_POST['logout'])){
     $dishesArr = array();

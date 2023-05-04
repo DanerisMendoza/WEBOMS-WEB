@@ -44,11 +44,6 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- customer.php
-            customerProfile.php
-            customerMenu.php
-            customerTopUp.php
-            customerOrders.php -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
@@ -213,13 +208,6 @@
         }
     }
 ?>
-
-<script>
-document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-document.getElementById("menu").onclick = function() { window.location.replace('customerMenu.php'); };
-document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
-</script>
 
 <?php 
   if(isset($_POST['logout'])){

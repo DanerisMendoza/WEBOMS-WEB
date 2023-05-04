@@ -382,11 +382,6 @@
         });
         
     });
-
-    document.getElementById("customer").onclick = function() { window.location.replace('customer.php'); };
-    document.getElementById("customerProfile").onclick = function() { window.location.replace('customerProfile.php'); };
-    document.getElementById("topUp").onclick = function() { window.location.replace('customerTopUp.php'); };
-    document.getElementById("customerOrder_details").onclick = function() { window.location.replace('customerOrders.php'); };
 </script>
 
 <?php 
