@@ -1,7 +1,10 @@
 <?php 
-  $page = 'admin';
-  include('../method/query.php');
-  include('../method/checkIfAccountLoggedIn.php');
+    $page = 'admin';
+    include('../method/query.php');
+    include('../method/checkIfAccountLoggedIn.php');
+
+    // redefining name
+    $_SESSION['name'] = getQueryOneVal2("select name from weboms_userInfo_tb where user_id = '$_SESSION[user_id]' ",'name');
 ?>
 
 <!DOCTYPE html>
@@ -206,9 +209,7 @@
 $(document).ready(function() {
     $('#tbl').DataTable();
 });
-</script>
 
-<script>
 // sidebar toggler
 $(document).ready(function() {
     $('#sidebarCollapse').on('click', function() {
