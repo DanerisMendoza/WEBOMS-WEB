@@ -2,7 +2,7 @@
   include_once('../general/connection.php');
   include_once('../method/query.php');
 
-	if(isset($_POST['post']) == 'webomsMobile') {
+	if(isset($_POST['post']) && $_POST['post'] == 'webomsMobile') {
 		$user_id = $_POST['user_id'];
         $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userInfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and a.user_id = '$user_id' ;";
         $resultSet = getQuery2($query);

@@ -4,7 +4,7 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
-    if(isset($_POST['post']) == 'webomsMobile'){
+    if(isset($_POST['post']) && $_POST['post'] == 'webomsMobile') {
         $user_id = $_POST['user_id'];
         $dishesArr = $_POST['dishesArr'];
         $priceArr  = $_POST['priceArr'];

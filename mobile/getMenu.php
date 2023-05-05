@@ -1,7 +1,7 @@
 <?php 
     include_once('../general/connection.php');
     include_once('../method/query.php');
-    if(isset($_POST['post']) == 'webomsMobile') {
+	if(isset($_POST['post']) && $_POST['post'] == 'webomsMobile') {
         $dishesArr = $priceArr = $stockArr = $orderTypeArr = $orderTypeArr = $picNameArr = array();
         $query = "SELECT * FROM `weboms_menu_tb`";
         $resultSet = getQuery2($query); 

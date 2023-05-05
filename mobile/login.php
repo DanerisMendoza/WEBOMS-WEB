@@ -5,7 +5,7 @@
 ?>
 
 <?php
-	if(isset($_POST['post']) == 'webomsMobile') {
+	if(isset($_POST['post']) && $_POST['post'] == 'webomsMobile') {
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 
