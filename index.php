@@ -45,6 +45,7 @@
                     <li class="nav-item me-2"><a class="nav-link" href="#about"><i class="bi bi-info-circle-fill"></i> ABOUT</a></li>
                     <li class="nav-item me-2"><a class="nav-link" href="general/ordersQueue.php"><i class="bi bi-clock-fill"></i> ORDERS QUEUE</a></li>
                     <li class="nav-item me-2"><a class="nav-link" href="general/ordersQueueOnline.php"><i class="bi bi-clock-fill"></i> ORDERS QUEUE ONLINE</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="general/qrcode.php"><i class="bi bi-qr-code-scan"></i> QR CODE PAGE</a></li>
                 </ul>
                 <a class="btn btn-outline-light" type="button" href="general/login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
             </div>
