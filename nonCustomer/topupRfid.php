@@ -171,7 +171,7 @@
                     <input type="text" id="rfidInput">                            
                         <div class="ocrloader">
                             <em></em>
-                            <div>Binding RFID</div>                                                               
+                            <div>Scanning RFID</div>                                                               
                             <span></span>
                         </div>
                         <div class="loading">
