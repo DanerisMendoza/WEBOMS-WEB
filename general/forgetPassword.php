@@ -83,12 +83,12 @@
         }
         //email exist
         else{
-            $forgetPasswordOtp = uniqid();
+            $forgetPasswordOtp = mt_rand(1000, 9999);
             $queryInsertForgetPasswordOtp = "UPDATE weboms_userInfo_tb SET forgetPasswordOtp = '$forgetPasswordOtp' WHERE email='$email' ";   
             if(Query2($queryInsertForgetPasswordOtp)){
                 echo "<script>$('#forgetPassModal').modal('show');</script>";
                 //Load Composer's autoloader
-                require 'vendor/autoload.php';
+                require '../vendor/autoload.php';
                 //Create an instance; passing `true` enables exceptions
                 $mail = new PHPMailer(true);
                 //Server settings

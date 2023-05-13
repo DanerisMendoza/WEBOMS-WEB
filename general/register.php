@@ -133,7 +133,7 @@
         if(getQuery2($query) != null)
           die ("<script>alert('Email already exist!');</script>");
         
-        $otp = uniqid();
+        $otp = mt_rand(1000, 9999);
         $hash = password_hash($password, PASSWORD_DEFAULT);
         
         //get two user id from different table

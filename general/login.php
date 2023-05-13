@@ -131,7 +131,7 @@
         }
         // resent otp
         if(isset($_POST['Resend'])){
-            $otp = uniqid();
+            $otp = mt_rand(1000, 9999);
             // email proccess
             //Load Composer's autoloader
             require '../vendor/autoload.php';
