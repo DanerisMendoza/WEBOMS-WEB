@@ -48,7 +48,7 @@
                       <li class="nav-item me-2"><a class="nav-link" href="../index.php#about"><i class="bi bi-info-circle"></i> ABOUT</a></li>
                       <li class="nav-item me-2"><a class="nav-link" href="ordersQueue.php" ><i class="bi bi-hourglass-split"></i> Orders Queue</a></li>
                       <li class="nav-item me-2"><a class="nav-link" href="ordersQueueOnline.php"><i class="bi bi-hourglass-split"></i> Orders Queue Online</a></li>
-                      <li class="nav-item me-2"><a class="nav-link" ><i class="bi bi-qr-code-scan"></i> Qr Code Page</a></li>
+                      <li class="nav-item me-2"><a class="nav-link" ><i class="bi bi-qr-code-scan"></i> Download Mobile/QR Code Page</a></li>
                   </ul>
                   <a class="btn btn-outline-light" type="button" href="login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
               </div>
@@ -58,12 +58,14 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6">
-            <img class="mobileapk img-fluid" src="mobile.png" style="width: auto; border: 1px solid black;">
-            <h2 class="font-weight-bold  ms-5" style="color:white;">Mobile Application</h2>
-          </div>
-          <div class="col-sm-6">
             <img class="register img-fluid " src="register.png" style="width: auto; border: 1px solid black;">
             <h2 class="font-weight-bold  ms-5" style="color:white;">Register Account</h2>
+          </div>
+          <div class="col-sm-6">
+            <img class="mobileapk img-fluid" src="mobile.png" style="width: auto; border: 1px solid black;">
+            <h2 class="font-weight-bold  ms-5" style="color:white;">Mobile Application</h2>
+            <a href="http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk" class="font-weight-bold ms-5" style="color:blue; background-color:gray; font-size: 20px; padding: 5px; margin-bottom: 10px;">http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk</a>
+            <br></br>
           </div>
         </div>
       </div>

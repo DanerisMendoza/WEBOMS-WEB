@@ -50,7 +50,7 @@
                     <li class="nav-item me-2"><a class="nav-link" href="../index.php#about"><i class="bi bi-info-circle"></i> ABOUT</a></li>
                     <li class="nav-item me-2"><a class="nav-link" href="ordersQueue.php" ><i class="bi bi-hourglass-split"></i> Orders Queue</a></li>
                     <li class="nav-item me-2"><a class="nav-link" ><i class="bi bi-hourglass-split"></i> Orders Queue Online</a></li>
-                    <li class="nav-item me-2"><a class="nav-link" href="qrcode.php"><i class="bi bi-qr-code-scan"></i> QR CODE PAGE</a></li>
+                    <li class="nav-item me-2"><a class="nav-link" href="qrcode.php"><i class="bi bi-qr-code-scan"></i> Download Mobile/QR Code Page</a></li>
                 </ul>
                 <a class="btn btn-outline-light" type="button" href="login.php"><i class="bi bi-person-circle"></i> LOGIN</a>
             </div>
