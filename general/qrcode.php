@@ -56,15 +56,15 @@
       </nav>
 
       <div class="container">
-        <div class="row">
+        <div class="row ms-5">
           <div class="col-sm-6">
-            <img class="register img-fluid " src="register.png" style="width: auto; border: 1px solid black;">
-            <h2 class="font-weight-bold  ms-5" style="color:white;">Register Account</h2>
+            <img class="register img-fluid " src="register.png" style="height:500px; width: auto; border: 1px solid black;">
+            <h2 class="font-weight-bold" style="color:white;">Register Account</h2>
           </div>
-          <div class="col-sm-6">
-            <img class="mobileapk img-fluid" src="mobile.png" style="width: auto; border: 1px solid black;">
-            <h2 class="font-weight-bold  ms-5" style="color:white;">Mobile Application</h2>
-            <a href="http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk" class="font-weight-bold ms-5" style="color:blue; background-color:gray; font-size: 20px; padding: 5px; margin-bottom: 10px;">http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk</a>
+          <div class="col-sm-6 ">
+            <img class="mobileapk img-fluid" src="mobile.png" style="height:500px; width: auto; border: 1px solid black;">
+            <h2 class="font-weight-bold" style="color:white;">Mobile Application</h2>
+            <a href="http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk" class="font-weight-bold" style="color:blue; background-color:gray; font-size: 20px; padding: 5px; margin-bottom: 10px;">http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk</a>
             <br></br>
           </div>
         </div>
