@@ -12,16 +12,21 @@
         $query = "select * from weboms_user_tb a RIGHT JOIN weboms_userInfo_tb b on a.user_id = b.user_id WHERE accountType = 'customer' and username = '$username' ;";
         $resultSet = getQuery2($query);
         $valid = false;
+        $isActivated = false;
 
         if(($resultSet && $resultSet->num_rows)  > 0){
             foreach($resultSet as $row){
                 $valid = password_verify($password, $row['password'])?true:false;
                 $accountType = $row['accountType'];
                 $user_id = $row['user_id'];
+                $isActivated = $row['otp'] == '' ? true:false;
             }
         }
-        if($valid){
+        if($valid && $isActivated){
             $result = array('result' => 'valid', 'user_id' => $user_id);
+        }
+        else if($valid && $isActivated == false){
+            $result = array('result' => 'Account is not activated, Please Verifiy in Our Website first!', 'user_id' => $user_id);
         }
         else{
             $result = array('result' => 'invalid');
