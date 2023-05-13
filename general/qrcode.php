@@ -56,14 +56,14 @@
       </nav>
 
       <div class="container">
-        <div class="row ms-5">
+        <div class="row">
           <div class="col-sm-6">
-            <img class="mobileapk img-fluid ms-4" src="mobile.png" style="max-width: 400px; border: 1px solid black;">
+            <img class="mobileapk img-fluid" src="mobile.png" style="width: auto; border: 1px solid black;">
             <h2 class="font-weight-bold  ms-5" style="color:white;">Mobile Application</h2>
           </div>
-        <div class="col-sm-6">
-          <img class="register img-fluid ms-4" src="register.png" style="max-width: 400px; border: 1px solid black;">
-          <h2 class="font-weight-bold  ms-5" style="color:white;">Register Account</h2>
+          <div class="col-sm-6">
+            <img class="register img-fluid " src="register.png" style="width: auto; border: 1px solid black;">
+            <h2 class="font-weight-bold  ms-5" style="color:white;">Register Account</h2>
           </div>
         </div>
       </div>
