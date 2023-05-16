@@ -8,9 +8,9 @@
 }
 
 .back-home {
-    text-decoration: none;
     color: #000000;
     font-size: 20px;
+    padding: 0 10px;
 }
 
 .back-home:hover {
@@ -20,6 +20,29 @@
 
 .bi-arrow-left {
     margin-right: 5px;
+}
+
+.back-home2,
+.mobile-here,
+.preparing-header,
+.register-here,
+.serving-header {
+    color: #FFFFFF;
+}
+
+.back-home,
+.mobile-link {
+    text-decoration: none;
+}
+
+.mobile-link {
+    color: #be2f32;
+    font-size: 20px;
+}
+
+.mobile-link:hover {
+    color: #be2f32;
+    text-decoration: underline;
 }
 
 .online-order {
@@ -35,13 +58,31 @@ th {
     background: #D2222D;
 }
 
-.preparing-header,
-.serving-header {
-    color: #FFFFFF;
+.qr-containter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.qr-bg {
+    background: #181C25;
 }
 
 .row {
     text-align: center;
+}
+
+.register,
+.mobileapk {
+    width: 90%;
+}
+
+.register-here,
+.mobile-here {
+    font-size: 30px;
+    margin-top: 20px;
+    font-weight: 900;
 }
 
 .serving-header {
