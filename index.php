@@ -53,14 +53,14 @@
         </nav>
 
         <section id="home" class="container">
-            <div id="carouselExampleCaptions" class="carousel slide animate__animated animate__fadeInRight" data-bs-ride="false">
+            <div id="carouselExampleCaptions" class="carousel slide animate__animated animate__fadeInRight" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item active shadow">
+                    <div class="carousel-item active" data-bs-interval="3000">
                         <img src="image/foods.png" class="carousel-slide-image shadow" alt="Foods">
                         <div class="carousel-caption">
                             <div class="card carousel-card">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item" data-bs-interval="3000">
                         <img src="image/foods.png" class="carousel-slide-image shadow" alt="Foods">
                         <div class="carousel-caption">
                             <div class="card carousel-card">
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item" data-bs-interval="3000">
                         <img src="image/foods.png" class="carousel-slide-image shadow" alt="Foods">
                         <div class="carousel-caption">
                             <div class="card carousel-card">
