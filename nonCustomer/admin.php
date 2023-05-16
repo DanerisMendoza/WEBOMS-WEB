@@ -17,7 +17,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 
 <head>
     <meta charset="UTF-8">
@@ -198,6 +198,14 @@
 
 </html>
 <script>
+
+    // sidebar toggler
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+    
     $(document).ready(function() {
     // Load the Visualization API and the corechart package
     google.charts.load('current', {'packages':['corechart']});

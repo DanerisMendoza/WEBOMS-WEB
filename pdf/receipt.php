@@ -32,10 +32,10 @@
     $pdf->SetAutoPageBreak(TRUE, 1);
 
     $pdf->AddPage('P','A6');
-    $pdf->SetFont('freemono', 'B', 25);
+    $pdf->SetFont('pdfahelvetica', 'B', 40);
     $pdf -> Cell(0,15,"ORDER#$_SESSION[order_id]", 0, 1,'C');
 
-    $pdf->SetFont('freemono', '', 13);
+    $pdf->SetFont('pdfahelvetica', '', 20);
     $pdf -> Cell(0,5,"$_SESSION[companyName]", 0, 1,'C');
     $pdf -> Cell(0,5,"$_SESSION[companyAddress]", 0, 1,'C');
     $pdf -> Cell(0,5,"$_SESSION[companyTel]", 0, 1,'C');
@@ -56,29 +56,29 @@
     }
     $pdf -> ln(8);
 
-    $pdf->SetFont('freemono', 'B', 18);
+    $pdf->SetFont('pdfahelvetica', 'B', 30);
     $pdf -> Cell(70,10,"TOTAL",'T','0','L');
-    $pdf -> Cell(33,10,"₱$total",'T','0','R');
-    $pdf -> ln(7);
-    $pdf->SetFont('freemono', '', 13);
+    $pdf -> Cell(33,10,"P$total",'T','0','R');
+    $pdf -> ln(10);
+    $pdf->SetFont('pdfahelvetica', '', 20);
     $pdf -> Cell(70,10,"PAYMENT",'','0','L');
-    $pdf -> Cell(33,10,"₱$cash",'','0','R');
+    $pdf -> Cell(33,10,"P$cash",'','0','R');
     $pdf -> ln(6);
     $pdf -> Cell(70,10,"CHANGE",'','0','L');
-    $pdf -> Cell(33,10,"₱$change",'','0','R');
-    $pdf -> ln(13);
+    $pdf -> Cell(33,10,"P$change",'','0','R');
+    $pdf -> ln(11);
 
     $pdf -> Cell(0,10,"CUSTOMER: $_SESSION[customerName]" ,'T','0','L');
-    $pdf -> ln(5);
+    $pdf -> ln(7);
     if($_SESSION['staffInCharge'] == 'online order'){
         $pdf -> Cell(0,10,"ORDER TYPE: ONLINE ORDER",'','0','L');
     }
     else{
         $pdf -> Cell(0,10,"ORDER TYPE: POS",'','0','L');
     }
-    $pdf -> ln(5);
+    $pdf -> ln(7);
     $pdf -> Cell(0,10,"ORDER NO.: $_SESSION[or_number] ",'','0','L');
-    $pdf -> ln(5);
+    $pdf -> ln(7);
     if($_SESSION['staffInCharge'] != 'online order'){
         $pdf -> Cell(0,10,"CASHIER: $_SESSION[name]",'','0','L');
     }
