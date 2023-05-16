@@ -201,13 +201,7 @@
 
     clearVal = () => {$(".amountSpan").text("0")};
 
-    //amount dropdown change
-    $(document).ready(function() {
-        $('#amount').on('change', function() {
-            let amount = $(this).find(":selected").text();
-            $(".amountSpan").text(amount.substr(1));
-        });
-    });
+  
 
     $(document).ready(function(){
         // modal trigger
@@ -224,7 +218,7 @@
             arr.push(amount);
             arr.push(rfidGlobal);
             $.ajax({
-            url: "ajax/topupRfid_updateBalance.php",
+            url: "ajax/topupRfid_updateBalanceAndAddRequest.php",
             type: "POST",
             data: {'data':JSON.stringify(arr)},
             success: function(attributes){  

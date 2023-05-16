@@ -177,7 +177,12 @@
             data += "<td>" + '₱' + result['amount'][i] + "</td>";
             data += "<td>" + result['status'][i] + "</td>";
             data += "<td>" + result['date'][i] + "</td>";
-            data += "<td> <button type='button' class='btn btn-light' style='border:1px solid #cccccc;' onclick=viewPicture('"+result['proofOfPayment'][i]+"') > View <i class='bi bi-list'></i> </button></td>";
+            if(result['proofOfPayment'][i] != ''){
+                data += "<td> <button type='button' class='btn btn-light' style='border:1px solid #cccccc;' onclick=viewPicture('"+result['proofOfPayment'][i]+"') > View <i class='bi bi-list'></i> </button></td>";
+            }
+            else{
+                data += "<td>Payment Through RFID</td>";
+            }
             if (result['status'][i] == 'Pending') {
                 data += "<td>";
                 data += "<div style='display:flex; justify-content:space-between'>";
