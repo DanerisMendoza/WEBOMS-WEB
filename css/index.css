@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body,
+.carousel-card {
+    background: #181C25;
+}
+
+#about,
+.btn-login,
+.company-name,
+footer,
+.footer-link,
+#menu,
+.mdbootstrap-link,
+.nav-link,
+.navbar-brand {
+    color: #FFFFFF;
+}
+
+.about-us,
+.our-menu {
+    font-size: 50px;
+    margin: 20px 0;
+}
+
+.about-us-photo,
+.carousel-slide-image {
+    height: 50vh;
+    width: 100%;
+}
+
+.about-card,
+.menu-card {
+    border-radius: 0;
+    border: 0;
+}
+
+.about-card,
+.card-body {
+    color: #000000;
+}
+
+.btn-login:hover,
+.mdbootstrap-link:hover {
+    color: #FFFFFF;
+}
+
+.company-name:hover,
+.company-name2:hover,
+.footer-link:hover,
+.nav-link:hover,
+.navbar-brand:hover {
+    color: #be2f32;
+    transition: .5s;
+}
+
+.company-name,
+.mdbootstrap-link {
+    text-decoration: none;
+}
+
+.card-title,
+.company-name,
+.company-name2 {
+    font-weight: 900;
+}
+
+.footer-link,
+.nav-link,
+.navbar-brand {
+    letter-spacing: 2px;
+    margin-right: 10px;
+}
+
+/* --------------------
+    NAVBAR
+-------------------- */
+
+.btn-login {
+    border-radius: 0;
+}
+
+.btn-login:hover {
+    background: #be2f32;
+    border: 1px solid #be2f32;
+}
+
+.navbar {
+    padding: 20px 0;
+}
+
+.navbar-toggler {
+    background: #2e3546;
+}
+
+/* --------------------
+    CAROUSEL IMAGE
+-------------------- */
+
+.address,
+.company-name,
+.telephone {
+    margin-bottom: 3px;
+}
+
+.carousel-card {
+    border-radius: 0;
+    border: 8px solid #2e3546;
+    padding: 5px 0;
+}
+
+.company-name {
+    font-size: 30px;
+}
+
+/* --------------------
+    MENU
+-------------------- */
+
+.card-title,
+.card-text {
+    margin: 0;
+}
+
+.menu-pic {
+    width: 100%;
+    height: 20vh;
+}
+
+/* --------------------
+    ABOUT
+-------------------- */
+
+#about {
+    margin-bottom: 50px;
+}
+
+.company-name2 {
+    margin: 20px 0;
+    font-size: 30px;
+}
+
+.description {
+    margin-bottom: 20px;
+}
+
+/* --------------------
+    FOOTER
+-------------------- */
+
+.mdbootstrap-link:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background: #2e3546;
+    padding: 20px;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .about-us-photo,
+    .carousel-slide-image {
+        height: 30vh;
+    }
+
+    .menu-pic {
+        height: 10vh;
+    }
+
+    /* --------------------
+        NAVBAR
+    -------------------- */
+    .navbar-collapse {
+        background: #2e3546;
+        padding-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+
+    .about-us-photo,
+    .carousel-slide-image {
+        height: 20vh;
+    }
+
+    /* --------------------
+        MENU
+    -------------------- */
+    .menu-card {
+        width: 60%;
+    }
+}
