@@ -6,97 +6,60 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css">
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/register.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </head>
+<body>
 
-<body class="bg-dark">
-
-    <div class="container mt-4">
-        <div class="row g-5 justify-content-center h-100">
-            <div class="col-lg-12 col-xl-8">
-                <div class="card" style="border-radius: 1rem;">
-                    <div class="card-body p-4 p-md-5">
-                        <form method="post" class="form2 px-md-2">
-                            <h1 class="fw-normal text-center mb-4">Register your account</h1>
-                            <!-- first name -->
-                            <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg" name="firstName" placeholder="First Name" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
-                            </div>
-                            <!-- middle name -->
-                            <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg" name="middleName" placeholder="Middle Name" value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>">
-                            </div>
-                            <!-- last name --> 
-                            <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg" name="lastName" placeholder="Last Name" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
-                            </div>
-                            <!-- email -->
-                            <div class="input-group mb-4">
-                                <input type="email" class="form-control form-control-lg" name="email" placeholder="Email" value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
-                            </div>
-                            <!-- username -->
-                            <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg" name="username" placeholder="Username" value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>" required>
-                            </div>
-                            <!-- password -->
-                            <div class="input-group mb-4">
-                                <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" required>
-                            </div>
-                            <div class="row mb-4">
-                                <!-- gender -->
-                                <div class="form-outline col-6">
-                                    <select name='gender' class="form-control form-control-lg">
-                                        <option value="null">Gender</option>
-                                        <option value="m">Male</option>
-                                        <option value="f">Female</option>
-                                        <option value="NA">Rather Not Say</option>
-                                    </select>
-                                </div>
-                                <!-- age -->
-                                <div class="form-outline col-6">
-                                    <input type="number" class="form-control form-control-lg" name="age" placeholder="Age" value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
-                                </div>
-                            </div>
-                            <!-- address -->
-                            <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg" name="address" placeholder="Address" value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
-                            </div>
-                            <!-- phone number -->
-                            <div class="input-group mb-4">
-                                <input type="number" class="form-control form-control-lg" id="phone" name="phone" placeholder="Phone Number" value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>" required>
-                            </div>
-                            <!-- create account button -->
-                            <div class="input-group mb-4">
-                                <button type="submit" class="btn btn-dark btn-lg col-12" id="createAccount" name="createAccount">
-                                    Create Account
-                                </button>
-                            </div>
-                            <!-- login here -->
-                            <div class="text-center text-muted">
-                                Have already an account? <a href="../general/login.php" class="login_link text-muted text-decoration-none">Log in here</a>
-                            </div>
-                        </form>
-                    </div>
+    <div class="container">
+        <div class="card">
+            <label for="" class="register">Register your account</label>
+            <form action="" method="post" class="form2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="First Name" name="firstName" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName']: ''?>" required>
+                    <input type="text" class="form-control" placeholder="Middle Name" name="middleName" value="<?php echo isset($_POST['middleName']) ? $_POST['middleName']: ''?>" required>
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastName" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName']: ''?>" required>
                 </div>
-            </div>
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email']: ''?>" required>
+                    <input type="number" class="form-control" placeholder="Phone Number" name="phone" id="phone" value="<?php echo isset($_POST['phone']) ? $_POST['phone']: ''?>" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Username" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username']: ''?>" required>
+                    <input type="password" class="form-control" placeholder="Password" name="password">
+                </div>
+                <div class="input-group">
+                    <div class="form-outline col-sm-6">
+                        <select name="gender" id="" class="form-control">
+                            <option value="nulll">Gender</option>
+                            <option value="m">Male</option>
+                            <option value="f">Female</option>
+                            <option value="NA">Rather Not Say</option>
+                        </select>
+                    </div>
+                    <input type="number" class="form-control" placeholder="Age" name="age" value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Address" name="addres" value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
+                </div>
+                <button type="submit" class="btn btn-create-account col-12" name="createAccount" id="createAccount">Create Account</button>
+            </form>
+            <label for="" class="account">Have an account already? <a href="login.php" class="login-here">Login here.</a></label>
         </div>
     </div>
 
 </body>
-
 </html>
-
 
 <?php
     use PHPMailer\PHPMailer\PHPMailer;

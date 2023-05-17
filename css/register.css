@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+    background: #181C25;
+}
+
+.account,
+.register {
+    text-align: center;
+}
+
+.btn-create-account {
+    background: #181C25;
+    color: #FFFFFF;
+}
+
+.btn-create-account,
+.card,
+.form-control {
+    border-radius: 0;
+}
+
+.btn-create-account:hover {
+    background: #be2f32;
+    color: #FFFFFF;
+}
+
+.card {
+    border: 0;
+    padding: 0 20px 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+}
+
+.form-control:focus {
+    border: 1px solid #be2f32;
+    box-shadow: none;
+}
+
+.btn-create-account,
+.form-control {
+    margin-bottom: 15px;
+}
+
+.login-here {
+    text-decoration: none;
+    color: #000000;
+}
+
+.login-here:hover {
+    color: #be2f32;
+}
+
+.register {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 100%;
+    }
+}
