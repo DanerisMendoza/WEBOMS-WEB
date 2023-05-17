@@ -16,7 +16,6 @@
     }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -27,6 +26,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/orders-queue.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -40,14 +40,14 @@
             <div class="row">
 
                 <!-- register qr -->
-                <div class="col-sm-6">
-                    <img src="register.png" class="register">
+                <div class="col-sm-6 animate__animated animate__fadeInLeft">
+                    <img src="../image/register.png" class="register">
                     <label for="" class="register-here">REGISTER HERE</label>
                 </div>
 
                 <!-- mobile apk -->
-                <div class="col-sm-6">
-                    <img src="mobile.png" class="mobileapk">
+                <div class="col-sm-6 animate__animated animate__fadeInRight"> 
+                    <img src="../image/mobile.png" class="mobileapk">
                     <label for="" class="mobile-here">MOBILE APPLICATION</label> <br>
                     <a href="http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk" class="mobile-link">http://ucc-csd-bscs.com/WEBOMS/WebomsMobile.apk</a>
                 </div>
