@@ -7,10 +7,40 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-table {
-    font-size: 20px;
+body {
+    background: #181C25;
 }
 
-a {
-    display: block;
+/* --------------------
+    NAVBAR
+-------------------- */
+
+.btn-logout {
+    border-radius: 0;
+}
+
+.btn-logout:hover {
+    background: #be2f32;
+    border: 1px solid #be2f32;
+}
+
+.btn-logout:hover,
+.navbar-brand,
+.nav-link {
+    color: #FFFFFF;
+}
+
+.navbar-brand,
+.nav-link {
+    margin-right: 10px;
+    letter-spacing: 1px;
+}
+
+.navbar {
+    padding: 20px 0;
+}
+
+.nav-link:hover {
+    color: #be2f32;
+    transition: .5s;
 }
