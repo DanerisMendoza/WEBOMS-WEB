@@ -8,6 +8,7 @@
 }
 
 body {
+    background: #181C25;
     background-image: url('../image/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
