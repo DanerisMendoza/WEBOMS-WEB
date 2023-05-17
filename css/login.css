@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+    background: #181C25;
+}
+
+.btn-resend,
+.btn-resend:hover,
+.btn-verify,
+.btn-verify:hover,
+.back-home,
+.btn-login {
+    color: #FFFFFF;
+}
+
+.back-home,
+.forgot-password,
+.register-here {
+    text-decoration: none;
+}
+
+.enter-otp,
+.login {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* --------------------
+    OTP MODAL
+-------------------- */
+
+.btn-verify,
+.btn-resend {
+    width: 100%;
+}
+
+.btn-verify {
+    background: #238823;
+}
+
+.btn-verify:hover {
+    background: #1a5e1a;
+}
+
+.btn-resend {
+    background: #D2222D;
+}
+
+.btn-resend:hover {
+    background: #8a171f;
+}
+
+.btn-verify,
+.otp-form {
+    margin-bottom: 10px;
+}
+
+.btn-verify,
+.btn-resend,
+.otp-form {
+    border-radius: 0;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* --------------------
+    LOGIN
+-------------------- */
+
+.account {
+    margin-bottom: 20px;
+}
+
+.back-home {
+    font-size: 20px;
+    margin: 0 10px;
+}
+
+.btn-login {
+    background: #181C25;
+    width: 100%;
+}
+
+.btn-login:hover {
+    background: #be2f32;
+    color: #FFFFFF;
+}
+
+.back-home:hover,
+.forgot-password:hover,
+.register-here:hover {
+    color: #be2f32;
+    transition: .5s;
+}
+
+.btn-login,
+.form-control,
+.login-card {
+    border-radius: 0;
+}
+
+.btn-login,
+.form-control,
+.forgot-password {
+    margin-bottom: 15px;
+}
+
+.forgot-password,
+.register-here {
+    color: #000000;
+}
+
+.forgot-password {
+    float: left;
+}
+
+.form-control:focus {
+    border-color: #181C25;
+    box-shadow: none;
+}
+
+.login-container {
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login {
+    margin: 20px 0;
+}
+
+.login-card {
+    border: 0;
+    padding: 20px 40px;
+    width: 70%;
+}
+
+@media only screen and (max-width: 600px) {
+    .login-card {
+        width: 100%;
+    }
+}

@@ -6,38 +6,36 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Log in</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css">
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>  
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </head>
+<body>
 
-<body class="bg-dark">
-
-        <!-- otp (Bootstrap MODAL) -->
-        <div class="modal fade" id="otpModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content container">
-                    <div class="modal-body">
-                        <form method="post" class="form-group">
-                            <h3 class="fw-normal mt-4 mb-4 ms-1">PLEASE ENTER YOUR OTP</h3>
-                            <input type="text" class="form-control form-control-lg mb-4" placeholder="OTP" name="otp">
-                            <input type="submit" value="Verify" name="Verify" class="btn btn-success btn-lg col-12 mb-2">
-                            <input type="submit" value="Resend" name="Resend" class="btn btn-primary btn-lg col-12 mb-2">
-                            <input data-dismiss="modal" type="submit" value="Cancel" name="Cancel" class="btn btn-danger btn-lg col-12 mb-4">
-                        </form>
-                    </div>
+    <!-- otp modal -->
+    <div class="modal fade" id="otpModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="post" class="form-group">
+                        <label for="" class="enter-otp">PLEASE ENTER YOUR OTP</label>
+                        <input type="text" name="otp" class="form-control otp-form">
+                        <input type="submit" value="VERIFY" name="Verify" class="btn btn-verify">
+                        <input type="submit" value="RESEND" name="Resend" class="btn btn-resend">
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
         
         <?php
         use PHPMailer\PHPMailer\PHPMailer;
@@ -59,48 +57,48 @@
                     $user_id = $row['user_id'];
                 }
                 if($valid){
-                  //setting credential if valid
-                  $query = "select * from weboms_userInfo_tb where user_id = '$user_id'";
-                  $resultSet = getQuery2($query);
-                  foreach($resultSet as $row){
-                    $_SESSION['name'] = $row['name'];
-                    $otp = $row['otp'];
-                    $email = $row['email'];
-                  }
-                  $_SESSION['email'] = $email;
-                  $_SESSION['user_id'] = $user_id;
-                  $_SESSION['accountType'] = $accountType;
-                  $_SESSION['username'] = $username;
-                  $_SESSION['account'] = 'valid';
-                  switch($accountType){
-                    case ('admin'):
-                      echo "<script>  window.location.replace('../nonCustomer/admin.php');</script>";
-                    break;
+                    //setting credential if valid
+                    $query = "select * from weboms_userInfo_tb where user_id = '$user_id'";
+                    $resultSet = getQuery2($query);
+                    foreach($resultSet as $row){
+                        $_SESSION['name'] = $row['name'];
+                        $otp = $row['otp'];
+                        $email = $row['email'];
+                    }
+                    $_SESSION['email'] = $email;
+                    $_SESSION['user_id'] = $user_id;
+                    $_SESSION['accountType'] = $accountType;
+                    $_SESSION['username'] = $username;
+                    $_SESSION['account'] = 'valid';
+                    switch($accountType){
+                        case ('admin'):
+                        echo "<script>  window.location.replace('../nonCustomer/admin.php');</script>";
+                        break;
 
-                    case ('manager'):
-                      echo "<script>  window.location.replace('../nonCustomer/admin.php');</script>";
-                    break;
+                        case ('manager'):
+                        echo "<script>  window.location.replace('../nonCustomer/admin.php');</script>";
+                        break;
 
-                    case 'cashier';
-                      echo "<script> window.location.replace('../nonCustomer/adminPos.php');</script>";
-                    break;
+                        case 'cashier';
+                        echo "<script> window.location.replace('../nonCustomer/adminPos.php');</script>";
+                        break;
 
-                    case 'customer':
-                      //if customer account is valid
-                      if($valid && $otp == ''){
-                        echo "<SCRIPT> window.location.replace('../customer/customer.php');  </SCRIPT>";
-                      }
-                      //if customer account need to validate first via otp
-                      else if($valid && $otp != ""){
-                        $_SESSION['account'] = '';
-                        echo "<script>$('#otpModal').modal('show');</script>";
-                      }
-                      //if customer password is wrong
-                      else{
-                        echo "<script>alert('Incorrect username or password!');</script>";
-                      }
-                    break;
-                  }
+                        case 'customer':
+                        //if customer account is valid
+                        if($valid && $otp == ''){
+                            echo "<SCRIPT> window.location.replace('../customer/customer.php');  </SCRIPT>";
+                        }
+                        //if customer account need to validate first via otp
+                        else if($valid && $otp != ""){
+                            $_SESSION['account'] = '';
+                            echo "<script>$('#otpModal').modal('show');</script>";
+                        }
+                        //if customer password is wrong
+                        else{
+                            echo "<script>alert('Incorrect username or password!');</script>";
+                        }
+                        break;
+                    }
                 }
                 else{
                     echo "<script>alert('Incorrect username or password!');</script>";
@@ -162,59 +160,25 @@
         }
     ?>
 
-        <!-- home button -->
-        <a href="../index.php" type="button" class="btn btn-lg btn-dark text-white"> <i class="bi bi-arrow-left-short"></i> Home</a>
-        
-        <!-- login form -->
-        <div class="container mt-5">
-            <div class="row g-5 justify-content-center h-100">
-                <div class="col col-xl-10">
-                    <div class="card mb-5" style="border-radius: 1rem;">
-                        <div class="row g-0">
-                            <!-- image -->
-                            <div class="col-md-6 col-lg-5">
-                                <img src="https://thumbs.dreamstime.com/b/dark-plate-italian-spaghetti-dark-tasty-appetizing-classic-italian-spaghetti-pasta-tomato-sauce-cheese-parmesan-119870253.jpg" alt="login form" class="img-fluid" style="border-radius: 1rem; width:auto; height:auto;" />
-                            </div>
-                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                                <div class="card-body p-4 p-lg-5 text-black">
-                                    <div class="container">
-                                        <div class="row justify-content-center">
-                                            <form method="post" class="form1">
-                                                <h1 class="fw-normal text-center mb-5 mt-3">Log in to your account</h1>
-                                                <!-- username -->
-                                                <div class="input-group mb-4">
-                                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Username" required>
-                                                </div>
-                                                <!-- password -->
-                                                <div class="input-group mb-4">
-                                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Password" required>
-                                                </div>
-                                                <!-- forgot password -->
-                                                <div class="input-group mb-4">
-                                                    <a href="forgetPassword.php" class="pass text-muted text-decoration-none">Forgot Password?</a>
-                                                </div>
-                                                <!-- login button -->
-                                                <div class="input-group mb-4">
-                                                    <button class="btn btn-dark btn-lg col-12" type="submit"name="Login" value="Login">Login</button>
-                                                </div>
-                                                <!-- sign up here -->
-                                                <div class="text-center text-muted mb-4">
-                                                    Dont'have an account yet? <a href="register.php" class="signup_link text-muted text-decoration-none">Sign up here</a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <a href="../index.php" type="button" class="back-home"><i class="bi bi-arrow-left"></i>BACK TO HOME</a>
+    <div class="container login-container">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card login-card">
+                        <form action="" method="post" class="form1">
+                            <label for="" class="login">Log in to your account</label>
+                            <input type="text" class="form-control" placeholder="Username" name="username" required>
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            <a href="forgetPassword.php" class="forgot-password">Forgot Password?</a>
+                            <button class="btn btn-login" type="submit" name="Login" value="Login">Log in</button>
+                            <label for="" class="account">Don't have an account yet? <a href="register.php" class="register-here">Register here.</a></label>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 </body>
-
 </html>
-
