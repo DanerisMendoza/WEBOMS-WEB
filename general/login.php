@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/login.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </head>
@@ -160,17 +159,29 @@
         }
     ?>
 
+    <!-- login form -->
     <a href="../index.php" type="button" class="back-home"><i class="bi bi-arrow-left"></i>BACK TO HOME</a>
-    <div class="container login-container">
-        <div class="card login-card shadow">
-            <form action="" method="post" class="form1">
-                <label for="" class="login">Log in to your account</label>
-                <input type="text" class="form-control" placeholder="Username" name="username" required>
-                <input type="password" class="form-control" placeholder="Password" name="password" required>
-                <a href="forgetPassword.php" class="forgot-password">Forgot Password?</a>
-                <button class="btn btn-login" type="submit" name="Login" value="Login">Log in</button>
-                <label for="" class="account">Don't have an account yet? <a href="register.php" class="register-here">Register here.</a></label>
-            </form>
+    <div class="container">
+        <div class="card login-card">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img src="../image/login.jpg" alt="Login Image" class="login-img">
+                    </div>
+                    <div class="col-sm-6 colum-right">
+                        <div class="card login-form">
+                            <label for="" class="login">Log in to your account</label>
+                            <form action="" method="post" class="form1">
+                                <input type="text" class="form-control username" placeholder="Username" name="username" required>
+                                <input type="password" class="form-control password" placeholder="Password" name="password" required>
+                                <a href="forgetPassword.php" class="forgot-password">Forgot Password?</a>
+                                <button class="btn btn-login" type="submit" name="Login" value="Login">Log in</button>
+                                <label for="" class="account">Don't have an account yet? <a href="register.php" class="register-here">Register here.</a></label>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
