@@ -161,7 +161,7 @@
 
     <!-- login form -->
     <a href="../index.php" type="button" class="back-home"><i class="bi bi-arrow-left"></i>BACK TO HOME</a>
-    <div class="container">
+    <div class="container login-container">
         <div class="card login-card">
             <div class="col-sm-12">
                 <div class="row">
@@ -176,8 +176,8 @@
                                 <input type="password" class="form-control password" placeholder="Password" name="password" required>
                                 <a href="forgetPassword.php" class="forgot-password">Forgot Password?</a>
                                 <button class="btn btn-login" type="submit" name="Login" value="Login">Log in</button>
-                                <label for="" class="account">Don't have an account yet? <a href="register.php" class="register-here">Register here.</a></label>
                             </form>
+                            <label for="" class="account">Don't have an account yet? <a href="register.php" class="register-here">Register here.</a></label>
                         </div>
                     </div>
                 </div>
