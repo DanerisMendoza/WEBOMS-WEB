@@ -41,7 +41,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active text-danger animate__animated animate__fadeInLeft" href="customer.php">HOME</a>
+                        <a class="nav-link text-danger animate__animated animate__fadeInLeft" href="customer.php">HOME</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link animate__animated animate__fadeInLeft" href="customerProfile.php">PROFILE</a>

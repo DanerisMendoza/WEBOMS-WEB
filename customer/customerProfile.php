@@ -16,118 +16,120 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
 
-    <!-- modal script -->
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css"> 
-    <link rel="stylesheet" type="text/css" href="../css/customer.css"> 
-    <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/customer-profile2.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 
-<body style="background:#e0e0e0">
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow">
-        <div class="container py-3">
-            <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand animate__animated animate__fadeInLeft" href="#"><?php echo strtoupper($companyName); ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customer.php"><i class="bi bi-house-door"></i> HOME</a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customer.php">HOME</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="customerProfile.php"><i class="bi bi-person-circle"></i> PROFILE</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger animate__animated animate__fadeInLeft" href="customerProfile.php">PROFILE</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customerMenu.php"><i class="bi bi-book"></i> MENU</a>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerMenu.php">MENU</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customerTopUp.php"><i class="bi bi-cash-stack"></i> TOP-UP</a>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerTopUp.php">TOP-UP</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customerOrders.php"><i class="bi bi-list"></i> VIEW ORDERS</a>
-                    </li>
-                    <li>
-                        <form method="post">
-                            <button class="btn btn-danger col-12" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
-                        </form>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerOrders.php">VIEW ORDERS</a>
                     </li>
                 </ul>
+                <form action="" method="post">
+                    <button class="btn btn-logout btn-outline-light animate__animated animate__fadeInLeft" id="Logout" name="logout">LOGOUT</button>
+                </form>
             </div>
         </div>
     </nav>
-    
-<div class="container text-center bg-white shadow mb-5" style="margin-top:175px;">
-    <div class="row g-5 justify-content-center">
-        <div class="table-responsive col-lg-12 px-5">
-            <table class="table table-bordered col-lg-12 mb-4">
-                <tbody>
-                    <?php
-                        if($resultSet!= null)
-                        foreach($resultSet as $row){ 
-                        // init
-                        $id = $row['id'];
-                        $name = $row['name'];
-                        $picName = $row['picName'];
-                        $username = $row['username'];
-                        $g = $row['gender'];
-                        $phoneNumber = $row['phoneNumber'];
-                        $address = $row['address'];
-                        $balance = $row['balance'];
-                        $email = $row['email'];
-                        //gender process
-                        $g = $row['gender'];
-                        if($g == 'm'){
-                            $gender = 'male';
-                            $genderIndex = 0;
-                        }
-                        elseif($g == 'f'){
-                            $gender = 'female';
-                            $genderIndex = 1;
-                        }else{
-                            $gender = 'NA';
-                            $genderIndex = 2;
-                        }
-                    ?>
-                    <tr>
-                        <?php if($picName != null){?>
-                        <img src="../profilePic/<?php echo $picName; ?>" style="width:300px; height:300px; border-radius:10rem;" class="mb-3"> <br>
+
+    <div class="container profile-container">
+        <div class="card profile-card">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <?php
+                            if($resultSet!= null)
+                            foreach($resultSet as $row){ 
+                            // init
+                            $id = $row['id'];
+                            $name = $row['name'];
+                            $picName = $row['picName'];
+                            $username = $row['username'];
+                            $g = $row['gender'];
+                            $phoneNumber = $row['phoneNumber'];
+                            $address = $row['address'];
+                            $balance = $row['balance'];
+                            $email = $row['email'];
+                            // gender process
+                            $g = $row['gender'];
+                            if($g == 'm'){
+                                $gender = 'male';
+                                $genderIndex = 0;
+                            }
+                            elseif($g == 'f'){
+                                $gender = 'female';
+                                $genderIndex = 1;
+                            }else{
+                                $gender = 'NA';
+                                $genderIndex = 2;
+                            }
+                        ?>
+                        <tr>
+                            <?php if($picName != null){?>
+                            <img src="../profilePic/<?php echo $picName; ?>" class="profile-img"><br>
+                            <?php } ?>
+                            <label for="" class="name"><?php echo strtoupper($name); ?></label>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>USERNAME</td>
+                            <td><?php echo $username;?></td>
+                        </tr>
+                        <tr>
+                            <td>EMAIL</td>
+                            <td><?php echo $email;?></td>
+                        </tr>
+                        <tr>
+                            <td>GENDER</td>
+                            <td><?php echo strtoupper($gender);?></td>
+                        </tr>
+                        <tr>
+                            <td>PHONE NUMBER</td>
+                            <td><?php echo $phoneNumber;?></td>
+                        </tr>
+                        <tr>
+                            <td>ADDRESS</td>
+                            <td><?php echo strtoupper($address);?></td>
+                        </tr>
+                        <tr class="bg-success text-white">
+                            <td>BALANCE</td>
+                            <td><?php echo '₱'. number_format($balance,2);?></td>
+                        </tr>
                         <?php } ?>
-                        <a class="h1 text-decoration-none text-dark"><?php echo strtoupper($name);?></a> <br><br>
-                    </tr>
-                    <tr>
-                        <td><b>USERNAME</b></td>
-                        <td><?php echo $username;?></td>
-                    </tr>
-                    <tr>
-                        <td><b>EMAIL</b></td>
-                        <td><?php echo $email;?></td>
-                    </tr>
-                    <tr>
-                        <td><b>GENDER</b></td>
-                        <td><?php echo ucfirst($gender);?></td>
-                    </tr>
-                    <tr>
-                        <td><b>PHONE NUMBER</b></td>
-                        <td><?php echo $phoneNumber;?></td>
-                    </tr>
-                    <tr>
-                        <td><b>ADDRESS</b></td>
-                        <td><?php echo ucwords($address);?></td>
-                    </tr>
-                    <tr class="bg-success text-white">
-                        <td><b>BALANCE</b></td>
-                        <td><b><?php echo '₱'. number_format($balance,2);?></b></td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-            <div class="input-group">
-                <button class="btn btn-lg btn-warning col-6 mb-5" id="update">UPDATE INFO</button>
-                <button class="btn btn-lg btn-secondary col-6 mb-5" id="updatePassword">UPDATE PASSWORD</button>
+                    </tbody>
+                </table>
+                <div class="input-group">
+                    <button class="btn btn-update-info" id="update">UPDATE INFO</button>
+                    <button class="btn btn-update-password" id="updatePassword">UPDATE PASSWORD</button>
+                </div>
             </div>
         </div>
     </div>
