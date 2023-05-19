@@ -44,27 +44,22 @@
         font-size: 31px;
     }
 
-    .navbar-toggler {
-        background: #2e3546;
-    }
-
-    .navbar-collapse {
-        background: #2e3546;
-        text-align: center;
-        padding: 0 0 10px;
-    }
-
     .words {
         font-size: 39px;
     }
 }
 
 @media only screen and (max-width: 600px) {
-    .content-container {
+
+    /* .content-container {
         position: absolute;
         top: 0;
         left: 0;
         transform: translate(0, 7%);
+    } */
+    .content-container {
+        position: relative;
+        margin-top: 640px;
     }
 
     .display4 {

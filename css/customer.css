@@ -11,11 +11,8 @@ body {
     background: #181C25;
 }
 
-/* --------------------
-    NAVBAR
--------------------- */
-
-.btn-logout {
+.btn-logout,
+.form-control {
     border-radius: 0;
 }
 
@@ -28,6 +25,11 @@ body {
 .navbar-brand,
 .nav-link {
     color: #FFFFFF;
+}
+
+.form-control:focus {
+    border-color: #be2f32;
+    box-shadow: none;
 }
 
 .navbar-brand,
@@ -43,4 +45,16 @@ body {
 .nav-link:hover {
     color: #be2f32;
     transition: .5s;
+}
+
+@media only screen and (max-width: 1200px) {
+    .navbar-toggler {
+        background: #2e3546;
+    }
+
+    .navbar-collapse {
+        background: #2e3546;
+        text-align: center;
+        padding: 0 0 10px;
+    }
 }

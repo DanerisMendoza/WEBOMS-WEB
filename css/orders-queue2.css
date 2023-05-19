@@ -7,21 +7,6 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-.back-home {
-    color: #000000;
-    font-size: 20px;
-    padding: 0 10px;
-}
-
-.back-home:hover {
-    color: #be2f32;
-    transition: .5s;
-}
-
-.bi-arrow-left {
-    margin-right: 5px;
-}
-
 .back-home2,
 .mobile-here,
 .preparing-header,
@@ -35,14 +20,30 @@
     text-decoration: none;
 }
 
-.mobile-link {
-    color: #be2f32;
-    font-size: 20px;
+.register,
+.mobileapk {
+    width: 90%;
 }
 
-.mobile-link:hover {
+.register-here,
+.mobile-here {
+    font-size: 30px;
+    margin-top: 20px;
+    font-weight: 900;
+}
+
+/* --------------------
+    ORDERS QUEUE
+-------------------- */
+
+.back-home {
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+.back-home:hover {
     color: #be2f32;
-    text-decoration: underline;
+    transition: .5s;
 }
 
 .online-order {
@@ -56,6 +57,32 @@ th {
 
 .preparing-header {
     background: #D2222D;
+}
+
+.serving-header {
+    background: #007000;
+}
+
+#tbody1 {
+    background: #d1c5c5;
+}
+
+#tbody2 {
+    background: #c4cfc4;
+}
+
+/* --------------------
+    QR CODE
+-------------------- */
+
+.mobile-link {
+    color: #be2f32;
+    font-size: 20px;
+}
+
+.mobile-link:hover {
+    color: #be2f32;
+    text-decoration: underline;
 }
 
 .qr-containter {
@@ -73,26 +100,9 @@ th {
     text-align: center;
 }
 
-.register,
-.mobileapk {
-    width: 90%;
-}
-
-.register-here,
-.mobile-here {
-    font-size: 30px;
-    margin-top: 20px;
-    font-weight: 900;
-}
-
-.serving-header {
-    background: #007000;
-}
-
-#tbody1 {
-    background: #d1c5c5;
-}
-
-#tbody2 {
-    background: #c4cfc4;
+@media only screen and (max-width: 600px) {
+    .qr-containter {
+        margin-top: 50px;
+        margin-bottom: 0;
+    }
 }

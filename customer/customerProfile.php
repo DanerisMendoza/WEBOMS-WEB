@@ -9,7 +9,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,12 +19,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-profile2.css">
+    <link rel="stylesheet" href="../css/customer-profile.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
-
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -93,12 +91,12 @@
                         ?>
                         <tr>
                             <?php if($picName != null){?>
-                            <img src="../profilePic/<?php echo $picName; ?>" class="profile-img"><br>
+                            <img src="../profilePic/<?php echo $picName; ?>" class="profile-img animate__animated animate__fadeInLeft"><br>
                             <?php } ?>
-                            <label for="" class="name"><?php echo strtoupper($name); ?></label>
+                            <label for="" class="name animate__animated animate__fadeInLeft"><?php echo strtoupper($name); ?></label>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="animate__animated animate__fadeInLeft">
                         <tr>
                             <td>USERNAME</td>
                             <td><?php echo $username;?></td>
@@ -126,7 +124,7 @@
                         <?php } ?>
                     </tbody>
                 </table>
-                <div class="input-group">
+                <div class="input-group animate__animated animate__fadeInLeft">
                     <button class="btn btn-update-info" id="update">UPDATE INFO</button>
                     <button class="btn btn-update-password" id="updatePassword">UPDATE PASSWORD</button>
                 </div>
@@ -135,61 +133,59 @@
     </div>
     
     <!-- userInfoUpdate -->
-    <div class="modal fade" role="dialog" id="userInfoUpdate">
+    <div class="modal" tabindex="-1" role="dialog" id="userInfoUpdate">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body ">
-                    <form method="post" class="form-group" enctype="multipart/form-data">
-                        <!-- profile pic -->
-                        <input type="file" class="form-control form-control-lg mb-3" name="fileInput">
-                        <input type="text" class="form-control form-control-lg mb-3" name="name" placeholder="Enter new name" required>
-                        <input type="text" class="form-control form-control-lg mb-3" name="username" placeholder="Enter new username" required>
-                        <input type="email" class="form-control form-control-lg mb-3" name="email" placeholder="Enter new email" required>
-                        <select name='gender' class="form-control form-control-lg mb-3" required>
+                <div class="modal-body">
+                    <form action="" method="post" class="form-group" enctype="multipart/form-data">
+                        <input type="file" class="form-control" name="fileInput">
+                        <input type="text" class="form-control" placeholder="Enter new name" name="name">
+                        <input type="text" class="form-control" placeholder="Enter new username" name="username">
+                        <input type="email" class="form-control" placeholder="Enter new email" name="email">
+                        <select name="gender" id="" class="form-control">
                             <option value="m">Male</option>
                             <option value="f">Female</option>
                             <option value="NA">Rather Not Say</option>
                         </select>
-                        <input type="text" class="form-control form-control-lg mb-3" name="address" placeholder="Enter new address" required>
-                        <input id="phone" type="number" class="form-control form-control-lg mb-3" name="phoneNumber" id="phoneNumber"  placeholder="Enter new phone number" required>
-                        <button type="submit" class="btn btn-lg btn-warning col-12" name="updateUserInfo"><i class="bi bi-arrow-repeat"></i> Update</button>
+                        <input type="text" class="form-control" placeholder="Enter new address" name="address">
+                        <input type="number" class="form-control" placeholder="Enter new phone number" name="phoneNumber" id="phoneNumber">
+                        <button class="btn btn-update" type="submit" name="updateUserInfo">UPDATE</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-      <!-- userPassword -->
-      <div class="modal fade" role="dialog" id="passwordUpdateModal">
+    <!-- userPassword -->
+    <div class="modal" tabindex="-1" role="dialog" id="passwordUpdateModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-body ">
-                    <form method="post" class="form-group">
-                        <input  type="password" class="form-control form-control-lg mb-3" name="password" placeholder="Enter new password" required>
-                        <button type="submit" class="btn btn-lg btn-warning col-12" name="updatePassword"><i class="bi bi-arrow-repeat"></i> Update</button>
+                <div class="modal-body">
+                    <form action="" method="post" class="form-group">
+                        <input type="password" class="form-control" placeholder="Enter new password" name="password">
+                        <button class="btn btn-update2" type="submit" name="updatePassword">UPDATE</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>
 
 <script>
-document.getElementById("update").onclick = function () {
-    $('#userInfoUpdate').modal('show'); 
-    document.forms[1].name.value = '<?php echo $name;?>';
-    document.forms[1].username.value = '<?php echo $username;?>';
-    document.forms[1].email.value = '<?php echo $email;?>';
-    document.forms[1].gender.selectedIndex  = <?php echo $genderIndex; ?>;
-    document.forms[1].address.value  = '<?php echo $address; ?>';
-    document.forms[1].phoneNumber.value  = '<?php echo $phoneNumber; ?>';
-}; 
-document.getElementById("updatePassword").onclick = function () {
-    $('#passwordUpdateModal').modal('show'); 
-}; 
+    document.getElementById("update").onclick = function () {
+        $('#userInfoUpdate').modal('show'); 
+        document.forms[1].name.value = '<?php echo $name;?>';
+        document.forms[1].username.value = '<?php echo $username;?>';
+        document.forms[1].email.value = '<?php echo $email;?>';
+        document.forms[1].gender.selectedIndex  = <?php echo $genderIndex; ?>;
+        document.forms[1].address.value  = '<?php echo $address; ?>';
+        document.forms[1].phoneNumber.value  = '<?php echo $phoneNumber; ?>';
+    }; 
+    document.getElementById("updatePassword").onclick = function () {
+        $('#passwordUpdateModal').modal('show'); 
+    }; 
 </script> 
 
 <?php 

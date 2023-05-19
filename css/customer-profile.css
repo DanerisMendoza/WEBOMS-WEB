@@ -19,7 +19,40 @@
 .btn-update-password,
 .btn-update-password:hover {
     width: 50%;
+}
+
+.btn-update-info,
+.btn-update-info:hover,
+.btn-update-password,
+.btn-update-password:hover,
+.btn-update,
+.btn-update:hover,
+.btn-update2,
+.btn-update2:hover {
     color: #FFFFFF;
+}
+
+.btn-update-info,
+.btn-update-password,
+.btn-update,
+.btn-update2,
+.profile-card {
+    border-radius: 0;
+}
+
+.btn-update,
+.btn-update2 {
+    background: #181C25;
+    width: 100%;
+}
+
+.btn-update:hover,
+.btn-update2:hover {
+    background: #343d50;
+}
+
+.form-control {
+    margin-bottom: 10px;
 }
 
 .name {
@@ -43,7 +76,6 @@
 
 .profile-card {
     border: 0;
-    border-radius: 0;
     background: #FFFFFF;
     text-align: center;
     justify-content: center;
@@ -52,4 +84,15 @@
 
 tbody {
     text-align: left;
+}
+
+@media only screen and (max-width: 1200px) {
+    .profile-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
