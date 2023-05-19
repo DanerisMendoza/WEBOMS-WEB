@@ -160,7 +160,7 @@
         $mail->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
         $mail->Port       =  465;    
         //Recipients
-        $mail->setFrom('weboms098@gmail.com', 'webBasedOrdering');
+        $mail->setFrom('weboms@ucc-csd-bscs.com', 'webBasedOrdering');
         $mail->addAddress("$email");                                //sent to
         //Content
         $mail->Subject = 'Receipt';
