@@ -11,7 +11,7 @@
     $companyName = getQueryOneVal2('select name from weboms_company_tb','name');
     $balance = $balance == null ? 0 : $balance;
 ?>
-
+ 
 <!DOCTYPE html>
 <html>
 <head>
