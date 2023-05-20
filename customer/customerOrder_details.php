@@ -55,10 +55,10 @@
 
     <div class="container">
         <div class="card">
-            <a href="customerOrders.php" class="back-menu"><i class="bi-arrow-left"></i>BACK TO ORDERS</a>
+            <a href="customerOrders.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO ORDERS</a>
             <div class="card">
-                <button class="btn btn-danger" id="viewInPdf">PDF</button>
-                <div class="table-responsive">
+                <button class="btn btn-danger animate__animated animate__fadeInLeft" id="viewInPdf">PDF</button>
+                <div class="table-responsive animate__animated animate__fadeInLeft">
                     <?php 
                         $id =  $_GET['id'];
                         $_SESSION['dishesArr'] = array();
