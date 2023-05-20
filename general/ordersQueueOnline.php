@@ -34,7 +34,7 @@
 <body>
 
     <div class="container-fluid">
-        <a href="../index.php" class="back-home"><i class="bi-arrow-left"></i>BACK TO HOME</a>
+        <a href="../index.php" class="back-home text-dark"><i class="bi-arrow-left"></i>BACK TO HOME</a>
         <div class="col-sm-12">
             <div class="row">
                 <label for="" class="online-order">(ONLINE ORDER)</label>
