@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../css/customer.css">
     <link rel="stylesheet" href="../css/customer-cart.css">
-
+    <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
@@ -60,7 +60,7 @@
                         <a class="nav-link animate__animated animate__fadeInLeft" href="customerTopUp.php">TOP-UP</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerOrders.php">VIEW ORDERS</a>
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerOrders.php">ORDERS</a>
                     </li>
                 </ul>
                 <form action="" method="post">

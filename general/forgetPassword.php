@@ -20,6 +20,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Forgot Password</title>
 
+    <link rel="icon" href="../image/weboms.png">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css">
     <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>

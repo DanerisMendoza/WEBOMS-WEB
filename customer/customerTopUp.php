@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/customer.css">
     <link rel="stylesheet" href="../css/customer-top-up.css">
-
+    <link rel="icon" href="../image/weboms.png">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
@@ -59,7 +59,7 @@
                         <a class="nav-link text-danger animate__animated animate__fadeInLeft" href="customerTopUp.php">TOP-UP</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerOrders.php">VIEW ORDERS</a>
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerOrders.php">ORDERS</a>
                     </li>
                 </ul>
                 <form action="" method="post">

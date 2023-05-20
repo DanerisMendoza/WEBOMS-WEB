@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/orders-queue2.css">
-
+    <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
@@ -101,7 +101,7 @@
                     let data = "";
                     result.forEach(function(element) {
                         data += "<tr>";
-                        data +=     "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
+                        data += "<td><strong style='font-size: 35px;'>"+element+"</strong></td>";
                         data += "</tr>";
                     });
                     $('#tbody2').append(data);

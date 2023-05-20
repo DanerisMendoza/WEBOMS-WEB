@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>View Orders</title>
+    <title>Orders</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
     <link rel="stylesheet" href="../css/customer-orders.css">
-
+    <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -51,7 +51,7 @@
                         <a class="nav-link animate__animated animate__fadeInLeft" href="customerTopUp.php">TOP-UP</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger animate__animated animate__fadeInLeft" href="customerOrders.php">VIEW ORDERS</a>
+                        <a class="nav-link text-danger animate__animated animate__fadeInLeft" href="customerOrders.php">ORDERS</a>
                     </li>
                 </ul>
                 <form action="" method="post">
