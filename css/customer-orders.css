@@ -1,0 +1,19 @@
+.btn-primary,
+.btn-light,
+.card {
+    border-radius: 0;
+    border: 0;
+}
+
+.btn-light {
+    border: 1px solid #CCCCCC;
+}
+
+.card {
+    padding: 20px;
+}
+
+thead {
+    background: #181C25;
+    color: #FFFFFF;
+}

@@ -117,7 +117,7 @@
                                                 <a class="btn btn-light" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi-list"></i></a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi-x"></i></a>
+                                                <a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi-x-lg"></i></a>
                                             </td>
                                             <?php }else if($row['proofOfPayment'] != ''){ ?>
                                             <td><a class="btn btn-light" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi-list"></i></a></td>
