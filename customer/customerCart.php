@@ -80,9 +80,9 @@
     </nav>
 
     <div class="container cart-container">
-        <div class="card back-menu-card">
-            <a href="customerMenu.php" class="back-menu"><i class="bi-arrow-left"></i>BACK TO MENU</a>
-            <div class="card cart-card">
+        <div class="card back-menu-card ">
+            <a href="customerMenu.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO MENU</a>
+            <div class="card cart-card animate__animated animate__fadeInLeft">
                 <div class="input-group ">
                     <label for="" class="form-control time"><?php echo $todayWithTime; ?></label>
                     <label for="" class="form-control balance bg-success" id="h1Balance"><?php echo '₱'.$balance; ?></label>
