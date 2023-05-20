@@ -1,0 +1,66 @@
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.back-menu:hover {
+    color: #be2f32;
+    transition: .5s;
+}
+
+.btn-place,
+.btn-clear {
+    width: 50%;
+}
+
+.btn-place,
+.btn-clear,
+.card,
+.form-control {
+    border-radius: 0;
+    border: 0;
+}
+
+.balance,
+.time {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.balance,
+thead {
+    color: #FFFFFF;
+}
+
+.back-menu-card {
+    padding: 10px;
+}
+
+.cart-card {
+    margin: 20px;
+}
+
+.cart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-bottom: 20px;
+}
+
+thead {
+    background: #181C25;
+}
+
+.time {
+    background: #e2e2e2;
+}
+
+@media only screen and (max-width: 1200px) {
+    .cart-container {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+    }
+}

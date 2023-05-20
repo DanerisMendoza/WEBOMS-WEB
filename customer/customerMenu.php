@@ -73,14 +73,14 @@
                 <div class="col-sm-10">
                     <div class="card menu-card">
                         <div class="table-responsive animate__animated animate__fadeInLeft">
-                            <table class="table table-bordered" id="tbl">
+                            <table class="table table-bordered table-striped" id="tbl">
                                 <thead style="background: #181C25; color: #FFFFFF;">
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Dish</th>
-                                        <th>Price</th>
-                                        <th>Stock</th>
-                                        <th>Add to cart</th>
+                                        <th>IMAGE</th>
+                                        <th>DISH</th>
+                                        <th>PRICE</th>
+                                        <th>STOCK</th>
+                                        <th>ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,7 +104,7 @@
                                             <td>
                                                 <center><?php $pic = $row['picName']; echo "<img src='../dishesPic/$pic' class='menu-img'";?></center>
                                             </td>
-                                            <td class="fw-bold"><?= strtoupper($row['dish']);?></td>
+                                            <td><?= strtoupper($row['dish']);?></td>
                                             <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                             <td class="stocks">
                                                 <?php 
