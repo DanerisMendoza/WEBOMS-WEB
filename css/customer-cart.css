@@ -40,27 +40,10 @@ thead {
     margin: 20px;
 }
 
-.cart-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin-bottom: 20px;
-}
-
 thead {
     background: #181C25;
 }
 
 .time {
     background: #e2e2e2;
-}
-
-@media only screen and (max-width: 1200px) {
-    .cart-container {
-        position: relative;
-        top: 0;
-        left: 0;
-        transform: translate(0, 0);
-    }
 }

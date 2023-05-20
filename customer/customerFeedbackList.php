@@ -1,68 +1,88 @@
 <?php
-  $page = 'customer';
-  include('../method/checkIfAccountLoggedIn.php');
-  include_once('../method/query.php');
-  $companyName = getQueryOneVal2('select name from weboms_company_tb','name');
+    $page = 'customer';
+    include('../method/checkIfAccountLoggedIn.php');
+    include_once('../method/query.php');
+    $companyName = getQueryOneVal2('select name from weboms_company_tb','name');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Menu - Feedback List</title>
-        <!-- for modal -->
-        <link rel="stylesheet" href="../css/bootstrap 5/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="../css/customer.css">
-        <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
-        <!-- online css bootsrap icon -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-        <!-- data table -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Feedback</title>
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/customer-feedback-list2.css">
 
-    <body style="background:#e0e0e0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+</head>
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow">
-        <div class="container py-3">
-            <a class="navbar-brand fs-4" href="#"><?php echo $companyName;?></a>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand animate__animated animate__fadeInLeft" href="#"><?php echo strtoupper($companyName); ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customer.php"><i class="bi bi-house-door"></i> HOME</a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customer.php">HOME</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customerProfile.php"><i class="bi bi-person-circle"></i> PROFILE</a>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerProfile.php">PROFILE</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-danger" href="customerMenu.php"><i class="bi bi-book"></i> MENU</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger animate__animated animate__fadeInLeft" href="customerMenu.php">MENU</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customerTopUp.php"><i class="bi bi-cash-stack"></i> TOP-UP</a>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerTopUp.php">TOP-UP</a>
                     </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link text-dark" href="customerOrders.php"><i class="bi bi-list"></i> VIEW ORDERS</a>
+                    <li class="nav-item">
+                        <a class="nav-link animate__animated animate__fadeInLeft" href="customerOrders.php">VIEW ORDERS</a>
                     </li>
                 </ul>
-                <form method="post">
-                    <button class="btn btn-danger" id="Logout" name="logout"><i class="bi bi-power"></i> LOGOUT</button>
+                <form action="" method="post">
+                    <button class="btn btn-logout btn-outline-light animate__animated animate__fadeInLeft" id="Logout" name="logout">LOGOUT</button>
                 </form>
             </div>
         </div>
     </nav>
 
-        <div class="container text-center" style="margin-top:130px;">
+    <div class="container feedback-container">
+        <div class="card">
+            <a href="customerMenu.php" class="back-menu"><i class="bi-arrow-left"></i>BACK TO MENU</a>
+            <div class="card feedback-card">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="tb1">
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>FEEDBACK</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- <div class="container text-center" style="margin-top:130px;">
             <div class="row justify-content-center">
 
-                <!-- table -->
+                table
                 <div class="table-responsive bg-white shadow p-5 col-lg-12">
-                    <!-- back button -->
+                    back button
                     <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
                     <script>
                     document.getElementById("back").onclick = function() {
@@ -83,9 +103,9 @@
                     <?php ?>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-    </body>
+</body>
 </html>
 
 <script>
@@ -114,7 +134,6 @@
                     updateTbody();
                     latestId = res;
                 }
-              
             },
             complete: function(){
                 setTimeout(checkIfDbChange, 2000);
@@ -123,7 +142,7 @@
     }
     checkIfDbChange();
 
-      function updateTbody(){
+    function updateTbody(){
         $.getJSON({
             url: "ajax/feedback_getFeedback.php",
             method: "post",
@@ -133,8 +152,8 @@
                     let data = "";
                     for(let i=0; i<result['name'].length; i++){
                         data += "<tr>";
-                        data +=     "<td>"+result['name'][i]+"</td>";
-                        data +=     "<td>"+result['feedback'][i]+"</td>";
+                        data += "<td>"+result['name'][i]+"</td>";
+                        data += "<td>"+result['feedback'][i]+"</td>";
                         data += "</tr>";
                     };
                     $('#tb1').DataTable().clear().destroy();
@@ -145,15 +164,14 @@
         });
     }updateTbody();
 
-
     $(document).ready(function() {
         $('#tb1').DataTable();
     });
 </script>
 
 <?php 
-  if(isset($_POST['logout'])){
-    session_destroy();
-    echo "<script>window.location.replace('../general/login.php');</script>";
-  }
+    if(isset($_POST['logout'])){
+        session_destroy();
+        echo "<script>window.location.replace('../general/login.php');</script>";
+    }
 ?>
