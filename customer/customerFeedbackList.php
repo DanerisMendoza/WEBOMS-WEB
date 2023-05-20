@@ -61,8 +61,8 @@
 
     <div class="container feedback-container">
         <div class="card">
-            <a href="customerMenu.php" class="back-menu"><i class="bi-arrow-left"></i>BACK TO MENU</a>
-            <div class="card feedback-card">
+            <a href="customerMenu.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO MENU</a>
+            <div class="card feedback-card animate__animated animate__fadeInLeft">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped" id="tb1">
                         <thead>
@@ -76,35 +76,7 @@
             </div>
         </div>
     </div>
-
-        <!-- <div class="container text-center" style="margin-top:130px;">
-            <div class="row justify-content-center">
-
-                table
-                <div class="table-responsive bg-white shadow p-5 col-lg-12">
-                    back button
-                    <button class="btn btn-lg btn-dark col-12 mb-4" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
-                    <script>
-                    document.getElementById("back").onclick = function() {
-                        window.location.replace('customerMenu.php');
-                    };
-                    </script>
-                    <table class="table table-bordered table-hover col-lg-12" id="tb1">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">NAME</th>
-                                <th scope="col">FEEDBACK</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody1">
-                        
-                        </tbody>
-                    </table>
-                    <?php ?>
-                </div>
-            </div>
-        </div> -->
-
+    
 </body>
 </html>
 
