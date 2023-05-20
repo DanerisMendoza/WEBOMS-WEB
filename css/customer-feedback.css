@@ -1,0 +1,28 @@
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.back-menu:hover {
+    color: #be2f32;
+    transition: .5s;
+}
+
+.btn-success,
+.card {
+    border-radius: 0;
+    border: 0;
+}
+
+.btn-success {
+    width: 100%;
+}
+
+.feedback-card,
+.feedback-card2 {
+    padding: 10px;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
