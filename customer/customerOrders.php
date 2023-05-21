@@ -87,6 +87,10 @@
 </html>
 
 <script>
+    $(document).ready(function() {
+        $('#tb1').DataTable();
+    });
+
     let user_id = <?php echo $_SESSION['user_id']; ?>;
     function updateTbody(){
         //get cart attributes
