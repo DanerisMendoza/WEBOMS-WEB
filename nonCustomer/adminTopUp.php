@@ -1,118 +1,102 @@
 <?php
-  $page = 'admin';
-  include('../method/checkIfAccountLoggedIn.php');
-  include_once('../method/query.php');
+    $page = 'admin';
+    include('../method/checkIfAccountLoggedIn.php');
+    include_once('../method/query.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top Up</title>
 
-    <link rel="stylesheet" href="../css/bootstrap 5/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/admin.css">
-    <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <!-- data table -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="../css/admin2.css">
+    <link rel="stylesheet" href="../css/admin-topup2.css">
+    <link rel="stylesheet" href="../css/rfid.css">
+    <link rel="icon" href="../image/weboms.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 </head>
-
 <body>
 
     <div class="wrapper">
-        <!-- Sidebar  -->
-     <nav id="sidebar" class="bg-dark">
-            <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin.php" class="account-type"><?php echo strtoupper($_SESSION['accountType']); ?></a>
             </div>
-            <ul class="list-unstyled components ms-3">
-                <li class="mb-2">
-                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
-                </li>
-                <li class="mb-2">
-                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
-                </li>
-            
-            <?php if($_SESSION['accountType'] != 'cashier'){?>
-                <li class="mb-2">
-                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
-                </li>
-                <li class="mb-2">
-                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
-                </li>
-                <li class="mb-2 active">
-                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
-                </li>
-                <li class="mb-1">
-                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
-                </li>
-            <?php } ?>
-                <li>
-                    <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
-                    </form>
-                </li>
+            <hr>
+            <ul class="list-unstyled components">
+                <li><a href="adminPos.php"><i class="bi-tag me-2"></i>POINT OF SALES</a></li>
+                <li><a href="adminOrders.php"><i class="bi-cart me-2"></i>ORDERS</a></li>
+                <li><a href="adminOrdersQueue.php"><i class="bi-clock me-2"></i>ORDERS QUEUE</a></li>
+                <li><a href="topupRfid.php"><i class="bi-credit-card me-2"></i>TOP-UP RFID</a></li>
+
+                <?php if($_SESSION['accountType'] != 'cashier'){?>
+                <li><a href="adminTopUp.php" class="active text-danger"><i class="bi-wallet me-2"></i>TOP-UP</a></li>
+                <li><a href="adminInventory.php"><i class="bi-box me-2"></i>INVENTORY</a></li>
+                <li><a href="adminSalesReport.php"><i class="bi-bar-chart me-2"></i>SALES REPORT</a></li>
+                <li><a href="adminFeedbackList.php"><i class="bi-chat-square-text me-2"></i>CUSTOMER FEEDBACK</a></li>
+                <li><a href="accountManagement.php"><i class="bi-person me-2"></i>ACCOUNT MANAGEMENT</a></li>
+                <li><a href="settings.php"><i class="bi-gear me-2"></i>SETTINGS</a></li>
+                <?php } ?>
             </ul>
         </nav>
 
-        <!-- Page Content  -->
         <div id="content">
-            <nav class="navbar navbar-expand-lg bg-light">
-                <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Toggle</button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                        <i class="bi-list"></i>
+                    </button>
+                    <button class="btn btn-toggle d-inline-block d-lg-none ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi-list text-danger"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ms-auto">
+                            <li>
+                                <form method="post">
+                                    <button class="btn text-danger" id="Logout" name="logout">LOGOUT</button>
+                                </form>
+                            </li>   
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
-            <!-- content here -->
-            <div class="container-fluid text-center">
-                <div class="row justify-content-center">
-                    <div class="table-responsive col-lg-12">
-                        <table class="table table-bordered table-hover col-lg-12" id="tb1">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">NAME</th>
-                                    <th scope="col">AMOUNT</th>
-                                    <th scope="col">STATUS</th>
-                                    <th scope="col">DATE & TIME (MM/DD/YYYY)</th>
-                                    <th scope="col">PAYMENT</th>
-                                    <th scope="col">ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody1">
-                              
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="container-fluid mt-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="tb1">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th>NAME</th>
+                                <th>AMOUNT</th>
+                                <th>STATUS</th>
+                                <th>DATE-TIME (MM/DD/YYYY)</th>
+                                <th>PAYMENT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody1">
 
-                    <!-- pic (Bootstrap MODAL) -->
-                    <div class="modal fade" id="viewPic" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content container">
-                                <div class="modal-body">
-                                    <img id="imgModal" style=width:300px;height:550px>
-                                </div>
-                            </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- view pic (modal) -->
+            <div class="modal fade" role="dialog" id="viewPic">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img src="" alt="" id="imgModal">
                         </div>
                     </div>
                 </div>
@@ -121,14 +105,15 @@
     </div>
 
 </body>
-
 </html>
+
 <?php 
     if(isset($_POST['logout'])){
         session_destroy();
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
+
 <script>
     //get latestId
     var latestId;
@@ -178,20 +163,18 @@
             data += "<td>" + result['status'][i] + "</td>";
             data += "<td>" + result['date'][i] + "</td>";
             if(result['proofOfPayment'][i] != ''){
-                data += "<td> <button type='button' class='btn btn-light' style='border:1px solid #cccccc;' onclick=viewPicture('"+result['proofOfPayment'][i]+"') > View <i class='bi bi-list'></i> </button></td>";
+                data += "<td><center><button type='button' class='btn btn-light' onclick=viewPicture('"+result['proofOfPayment'][i]+"') ><i class='bi-list'></i></button></center></td>";
             }
             else{
-                data += "<td>Payment Through RFID</td>";
+                data += "<td><center>Payment Through RFID</center></td>";
             }
             if (result['status'][i] == 'Pending') {
-                data += "<td>";
-                data += "<div style='display:flex; justify-content:space-between'>";
-                data += "<button type='button' class='btn btn-success' onclick=approvePayment('" + result['id'][i]+"','"+result['user_id'][i]+"','"+parseInt(result['amount'][i].replace(/,/g, ""))+"')> Approve <i class='bi bi-check'></i> </button>";
-                data += "<button type='button' class='btn btn-danger' onclick=disapprovePayment('" + result['id'][i] + "')> Disapprove <i class='bi bi-x'></i> </button>";
-                data += "</div>";
-                data += "</td>";
+                data += "<td><center>";
+                data += "<button type='button' class='btn btn-success me-1' onclick=approvePayment('" + result['id'][i]+"','"+result['user_id'][i]+"','"+parseInt(result['amount'][i].replace(/,/g, ""))+"')><i class='bi-check-lg'></i></button>";
+                data += "<button type='button' class='btn btn-danger' onclick=disapprovePayment('" + result['id'][i] + "')><i class='bi-x-lg'></i> </button>";
+                data += "</td></center>";
             } else {
-                data += "<td class='text-danger'>None</td>";
+                data += "<td class='text-danger'><center>None<center></td>";
             }
             data += "</tr>";
             }

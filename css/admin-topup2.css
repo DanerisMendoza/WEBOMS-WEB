@@ -1,0 +1,9 @@
+.btn-light {
+    border: 1px solid #CCCCCC;
+}
+
+img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10rem;
+}
