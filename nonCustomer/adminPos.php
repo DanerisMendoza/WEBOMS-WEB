@@ -11,7 +11,7 @@
     $_SESSION['refreshCount'] = 0;
     $_SESSION['multiArr'] = array();
     $_SESSION['fromReceipt'] = 'pos';
-    //company variables init
+    // company variables init
     $query = "select * from weboms_company_tb";
     $resultSet = getQuery2($query);
     if($resultSet!=null)
@@ -26,129 +26,117 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Point of Sales</title>
 
-    <link rel="stylesheet" href="../css/bootstrap 5/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/admin.css">
-    <script type="text/javascript" src="../js/bootstrap 5/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <!-- data tables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="../css/admin-pos.css">
+    <link rel="stylesheet" href="../css/rfid.css">
+    <link rel="icon" href="../image/weboms.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 </head>
-
 <body>
+
     <div class="wrapper">
-       <!-- Sidebar  -->
-       <nav id="sidebar" class="bg-dark">
-            <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin.php" class="account-type"><?php echo strtoupper($_SESSION['accountType']); ?></a>
             </div>
-            <ul class="list-unstyled components ms-3">
-                <li class="mb-2 active">
-                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
-                </li>
-                <li class="mb-2">
-                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
-                </li>
-            
-            <?php if($_SESSION['accountType'] != 'cashier'){?>
-                <li class="mb-2">
-                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
-                </li>
-                <li class="mb-2">
-                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
-                </li>
-                <li class="mb-1">
-                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
-                </li>
-            <?php } ?>
-                <li>
-                    <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
-                    </form>
-                </li>
+            <hr>
+            <ul class="list-unstyled components">
+                <li><a href="adminPos.php" class="active text-danger"><i class="bi-tag me-2"></i>POINT OF SALES</a></li>
+                <li><a href="adminOrders.php"><i class="bi-cart me-2"></i>ORDERS</a></li>
+                <li><a href="adminOrdersQueue.php"><i class="bi-clock me-2"></i>ORDERS QUEUE</a></li>
+                <li><a href="topupRfid.php"><i class="bi-credit-card me-2"></i>TOP-UP RFID</a></li>
+
+                <?php if($_SESSION['accountType'] != 'cashier'){?>
+                <li><a href="adminTopUp.php"><i class="bi-wallet me-2"></i>TOP-UP</a></li>
+                <li><a href="adminInventory.php"><i class="bi-box me-2"></i>INVENTORY</a></li>
+                <li><a href="adminSalesReport.php"><i class="bi-bar-chart me-2"></i>SALES REPORT</a></li>
+                <li><a href="adminFeedbackList.php"><i class="bi-chat-square-text me-2"></i>CUSTOMER FEEDBACK</a></li>
+                <li><a href="accountManagement.php"><i class="bi-person me-2"></i>ACCOUNT MANAGEMENT</a></li>
+                <li><a href="settings.php"><i class="bi-gear me-2"></i>SETTINGS</a></li>
+                <?php } ?>
             </ul>
         </nav>
 
-        <!-- Page Content  -->
         <div id="content">
-            <nav class="navbar navbar-expand-lg bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Toggle</button>
+                    <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                        <i class="bi-list"></i>
+                    </button>
+                    <button class="btn btn-toggle d-inline-block d-lg-none ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi-list text-danger"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ms-auto">
+                            <li>
+                                <form method="post">
+                                    <button class="btn text-danger" id="Logout" name="logout">LOGOUT</button>
+                                </form>
+                            </li>   
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
-            <!-- content here -->
-            <div class="container-fluid text-center">
-                <div class="row g-5 justify-content-center">
-                    <!-- admin -->
-                    <?php if($_SESSION['accountType'] != 'cashier'){?>
-                    <h1 class="text-center bg-dark text-white"><?php echo strtoupper($_SESSION['accountType']); ?></h1>
+            <div class="container-fluid mt-3">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="tbl1">
+                                    <thead class="bg-dark text-white">
+                                        <tr>
+                                            <th>DISH</th>
+                                            <th>PRICE</th>
+                                            <th>STOCK</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody1">
 
-                    <!-- cashier -->
-                    <?php } else{?>
-                    <h1 class="text-center bg-danger text-white">CASHIER</h1>
-                    <?php }?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 column-right">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>DISH</th>
+                                            <th>QUANTITY</th>
+                                            <th colspan="2">ACTION</th>
+                                            <th>PRICE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody2">
 
-                    <!-- table container -->
-                    <div class="table-responsive col-lg-7">
-                        <table class="table table-hover table-bordered col-lg-12" id="tbl1">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">DISH</th>
-                                    <th scope="col">PRICE</th>
-                                    <th scope="col">STOCK</th>
-                                    <th scope="col">ADD TO CART</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody1"></tbody>
-                        </table>
-                    </div>
-
-                    <!-- 2nd table container -->
-                    <div class="table-responsive col-lg-5 mb-5">
-                        <table class="table table-bordered table-hover col-lg-12 mb-4" id="tBody2">
-                            <thead>
-                                <tr>
-                                    <th scope="col">DISH</th>
-                                    <th scope="col" colspan="3">QUANTITY</th>
-                                    <th scope="col">PRICE</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody2"></tbody>
-                        </table>
-                            <input  id='customerName' placeholder='Customer Name (Optional)' type='text' class='form-control form-control-lg mb-3'>
-                            <input  id="cashNum" name="cash"  step=any placeholder="Cash Amount (₱)" type="number" class="form-control form-control-lg mb-4" required>
-                            <button id="payThruRfid" type="submit" class="btn btn-lg btn-secondary col-12 mb-1" name="orderBtn">RFID PAYMENT</button>
-                            <button id="orderBtn" type="submit" class="btn btn-lg btn-success col-12 mb-1" name="orderBtn">PLACE ORDER</button>
-                            <button type="submit" id="clear" class="btn btn-lg btn-danger col-12" name="clear">CLEAR ORDER</button>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Customer Name (Optional)" id="customerName">
+                            <input type="number" class="form-control mb-3" placeholder="₱0.00" id="cashNum" name="cash" step=any required>
+                            <button type="submit" class="btn btn-rfid btn-secondary mb-1" id="payThruRfid" name="orderBtn">RFID PAYMENT</button>
+                            <button type="submit" class="btn btn-place btn-success mb-1" id="orderBtn" name="orderBtn">PLACE ORDER</button>
+                            <button type="submit" class="btn btn-clear btn-danger mb-1" id="clear" name="clear">CLEAR ORDER</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- RFID SCANNER (modal)-->
+                <!-- rfid scanner (modal) -->
                 <div class="modal fade" role="dialog" id="rfid">
                     <div class="modal-dialog">
                         <div class="modal-content modal-content-scanner">
@@ -170,62 +158,58 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Crendential (modal)-->
+
+                <!-- credential (modal) -->
                 <div class="modal fade" role="dialog" id="credentialTable">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-body">
-                             <!-- profile pic -->
-                             <div class="table-responsive col-lg-12">
-                                    <table class="table table-bordered table-hover col-lg-12" id="tableProfile">
-                                        <tbody>
-                                            <img id="profilePic" src="../pic/unknown.png" style="width:200px;height:200px;border-radius:10rem;" class="mb-3"> 
-                                        </tbody>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tableProfile">
+                                        <center><img src="../pic/unknown.png" alt="" id="profilePic"></center>
                                     </table>
                                 </div>
-
-                                <!-- customer credential table-->
-                                <div class="table-responsive col-lg-12">
-                                    <table class="table table-bordered table-hover col-lg-12" id="tableInformation">
-                                        <thead class="table-dark text-white">
-                                            <th>Name</th>
-                                            <th>Username</th>
-                                            <th>Email</th>
-                                            <th>Gender</th>
-                                            <th>Phone Number</th>
-                                            <th>Address</th>
-                                            <th>Balance</th>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tableInformation">
+                                        <thead class="bg-dark text-white">
+                                            <tr>
+                                                <th>NAME</th>
+                                                <th>USERNAME</th>
+                                                <th>EMAIL</th>
+                                                <th>GENDER</th>
+                                                <th>PHONE NO.</th>
+                                                <th>ADDRESS</th>
+                                                <th>BALANCE</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr class="bg-light">
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
+                                                <td class="text-success fw-bold"></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row">
-                                <button type='button' id="cancel" class="btn btn-lg btn-danger col-6">Cancel</button>
-                                <button type='button' id="confirm" class="btn btn-lg btn-success col-6 ">Confirm</button>
-                                </div>
+                                <div class="input-group">
+                                    <button type="button" id="cancel" class="btn btn-cancel btn-danger">CANCEL</button>
+                                    <button type="button" id="confirm" class="btn btn-confirm btn-success">CONFIRM</button>
+                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
 </body>
-
 </html>
+
 <script>
     var customer,cash,otherAttributes = [];
     var userIdAndTotal = [];
@@ -241,7 +225,6 @@
             otherAttributes = [];     // staff, customer, cash, total
             otherAttributes.push('<?php echo $_SESSION['name']; ?>');
             otherAttributes.push(customer);
-         
             
             let cont = true;
 
@@ -410,7 +393,7 @@
                         "<td class='price' >" +'₱'+ multiArrCart[1][i] + "</td>" +
                         "<td class ='stocks'>" + multiArrCart[2][i] + "</td>" +
                         "<td><input type='number' placeholder='Quantity' name='qty' class='form-control' value='1' id='qty' >" + 
-                        "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-light col-12'  style='border:1px solid #cccccc;' >" + "<i class='bi bi-cart-plus'></i>" + "</button></td>" +
+                        "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-add-to-cart'>" + "ADD TO CART" + "</button></td>" +
                     "</tr>";
                     }
                     $("#tbody1 tr").remove();
@@ -448,17 +431,18 @@
                     tbody2 +=
                     "<tr>" +
                         "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
-                        "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
-                        "<td> <button class='btn btn-success mx-1' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi-plus'></i></button>" +
-                        "       <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12'> <i class='bi bi bi-dash'></i></button> </td>" +
-                        "<td> <button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light col-12' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>" +
+                        "<td class ='quantity' name='quantity'>" + multiArrCart[2][i] + "</td>" +
+                        "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi-plus-lg'></i></button>" +
+                        "       <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi-dash-lg'></i></button></td>" +
+                        "<td><button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>" +
                         "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>"
                     "</tr>";
                     }
 
                     tbody2 += 
                     "<tr>"+
-                        "<td colspan='4'> <b>Total Amount:</b> </td>" +
+                        "<td colspan='2'></td>"+
+                        "<td colspan='2'><b>TOTAL AMOUNT:</b></td>" +
                         "<td id='total'><b>₱"+total+"</b></td>"
                     "</tr>";
                     $("#tbody2 tr").remove();
@@ -864,9 +848,7 @@
                 computeTotal();
             }
         });
-        
     }
-    
 </script>
 
 <?php 
@@ -876,152 +858,6 @@
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
+
 <style>
-   .modal-content-scanner{
-        width: 800px;
-        height: 500px;
-        position: absolute;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.9);
-        color: #fff;
-        font-family: Sans-Serif;
-        font-size: 30px;  
-        top: 120px;           
-    }
-
-    .ocrloader { 
-        position: relative;
-        width: 300px;
-        height: 300px;
-        background: url(rfid01.png);
-        background-size: 300px;    
-    }
-    .ocrloader:before {
-        content:'';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%; 
-        background: url(rfid02.png);
-        background-size: 300px;
-        filter: drop-shadow(0 0 3px #00FFFF) drop-shadow(0 0 7px #00FFFF);
-        overflow: hidden;
-        animation: animate 2s linear infinite;
-    }
-    @keyframes animate
-    {
-        0%, 50%, 100%
-        {
-            height: 0%;
-        }
-        50%
-        {
-            height: 70%;
-        }
-        75%
-        {
-            height: 100%;
-        }
-    }
-    .ocrloader span {
-        content:'';
-        position: absolute;
-        inset: 1px;
-        width: calc(100% - 2px);
-        height: 3px;
-        background-color: #fff;
-        animation: animateLine 2s linear infinite;
-    }
-    @keyframes animateLine{
-        0%
-        {
-            top: 1px;
-        }
-        50%
-        {
-            top: 225px;
-        }
-        75%
-        {
-            top: 300px;
-        }
-    }
-    *{margin: 0; padding: 0;}
-    .loading span {
-        position: relative;
-        left: 220px;
-        top: 35px;       
-        width: 10px;
-        height: 10px;       
-        background-color: #fff;
-        border-radius: 50%;
-        display: inline-block;
-        animation-name: dots;
-        animation-duration: 2s;
-        animation-iteration-count: infinite;
-        animation-timing-function: ease-in-out;
-        filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #fff);
-    }
-
-    .loading span:nth-child(2){
-        animation-delay: 0.4s;
-    }
-    .loading span:nth-child(3){
-        animation-delay: 0.8s;
-    }
-
-    @keyframes dots{
-        50%{
-            opacity: 0;
-            transform: scale(0.7) translateY(10px);
-        }
-    }
-    .ocrloader > div {
-        z-index: 1;
-        position: absolute;
-        left: 62%;
-        top: 120%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        backface-visibility: hidden;
-        filter: drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px #fff);
-    }
-    .ocrloader em:after,
-    .ocrloader em:before {
-        border-color: #fff;
-        content: "";
-        position: absolute;
-        width: 19px;
-        height: 16px;
-        border-style: solid;
-        border-width: 0px;
-    }
-    .ocrloader:before {
-        left: 0;
-        top: 0;
-        border-left-width: 1px;
-        border-top-width: 1px;
-    }
-    .ocrloader:after {
-        right: 0;
-        top: 0;
-        border-right-width: 1px;
-        border-top-width: 1px;
-    }
-    .ocrloader em:before {
-        left: 0;
-        bottom: 0;
-        border-left-width: 1px;
-        border-bottom-width: 1px;
-    }
-    .ocrloader em:after {
-        right: 0;
-        bottom: 0;
-        border-right-width: 1px;
-        border-bottom-width: 1px;
-    }
-    
-    #rfidInput{
-        opacity: 0;
-    }
 </style>

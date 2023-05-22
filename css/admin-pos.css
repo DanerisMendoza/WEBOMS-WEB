@@ -1,0 +1,34 @@
+.btn-add-to-cart {
+    background: #181C25;
+    width: 100%;
+}
+
+.btn-add-to-cart:hover {
+    background: #be2f32;
+}
+
+.btn-add-to-cart,
+.btn-add-to-cart:hover {
+    color: #FFFFFF;
+}
+
+.btn-rfid,
+.btn-place,
+.btn-clear {
+    width: 100%;
+}
+
+.btn-cancel,
+.btn-confirm {
+    width: 50%;
+}
+
+.column-right {
+    margin-top: 43px;
+}
+
+img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10rem;
+}
