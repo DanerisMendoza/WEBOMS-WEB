@@ -31,39 +31,39 @@
             $staffInCharge = $row['staffInCharge'] == 'online order' ?    ucwords($row['staffInCharge']) : ucwords($row['staffInCharge']) .' via POS' ;
             $tBody .= "<td>$staffInCharge</td>";
             //order details button
-            $tBody .= "<td><a class='btn btn-light' style='border:1px solid #cccccc;' href='adminOrder_details.php?order_id=$row[order_id]'> <i class='bi bi-list'></i> View</a></td>";
+            $tBody .= "<td><center><a class='btn btn-light' href='adminOrder_details.php?order_id=$row[order_id]'><i class='bi-list'></i></a></center></td>";
             //show customer info button when it is online order
             if($row['staffInCharge'] == 'online order'){
-                $tBody .= "<td> <button type='button' class='btn btn-primary' onclick='profileModal($row[user_id])' > View <i class='bi bi-list'></i> </button></td>";                
+                $tBody .= "<td><center><button type='button' class='btn btn-info' onclick='profileModal($row[user_id])'><i class='bi-list'></i></button></center></td>";                
                 if($row['status'] == 'preparing'){
-                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='serve($row[order_id])' > Serve <i class='bi bi-arrow-bar-left'></i> </button></td>";                
+                    $tBody .= "<td><center><button type='button' class='btn btn-success' onclick='serve($row[order_id])'>SERVE</button></center></td>";                
                 }
                 else if($row['status'] == 'serving'){
-                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='complete($row[order_id])' ><i class='bi bi-check'></i>Order Complete</button></td>";                
+                    $tBody .= "<td><center><button type='button' class='btn btn-success' onclick='complete($row[order_id])'>COMPLETE</button></center></td>";                
                 }
                 else if($row['status'] == 'complete' || $row['status'] == 'void'){
-                    $tBody .= " <td><a class='text-danger'>None</a></td>";
+                    $tBody .= "<td><center><a class='text-danger'>None</a></center></td>";
                 }
             }
             //pos
             else{
-                $tBody .= "<td><a class=text-danger>None</a></td>";
+                $tBody .= "<td><center><a class='text-danger'>None</a></center></td>";
                 if($row['status'] == 'preparing'){
-                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='serve($row[order_id])' > Serve <i class='bi bi-arrow-bar-left'></i> </button></td>";                
+                    $tBody .= "<td><center><button type='button' class='btn btn-success' onclick='serve($row[order_id])'>SERVE</button></center></td>";                
                 }
                 else if($row['status'] == 'serving'){
-                    $tBody .= "<td> <button type='button' class='btn btn-success' onclick='complete($row[order_id])' ><i class='bi bi-check'></i>Order Complete</button></td>";                
+                    $tBody .= "<td><center><button type='button' class='btn btn-success' onclick='complete($row[order_id])'>COMPLETE</button></center></td>";                
                 }
                 else if($row['status'] == 'complete' || $row['status'] == 'void'){
-                    $tBody .= "<td><a class='text-danger'>None</a></td>";
+                    $tBody .= "<td><center><a class='text-danger'>None</a></center></td>";
                 }
             }
             //void
             if($row['status'] != 'void' && $_SESSION['accountType'] != 'cashier'){
-                $tBody .= "<td> <button type='button' class='btn btn-danger' onclick='voidOrder($row[order_id], $row[user_id], $row[totalOrder])' ><i class='bi bi-circle'></i>Void</button></td>";                
+                $tBody .= "<td><button type='button' class='btn btn-danger' onclick='voidOrder($row[order_id], $row[user_id], $row[totalOrder])'><i class='bi-dash-circle'></i></button></td>";                
             }
             else{
-                $tBody .= "<td><a class=text-danger>None</a></td>";
+                $tBody .= "<td><center><a class=text-danger>None</a><center></td>";
             }
             
           $tBody .= "</tr>";
