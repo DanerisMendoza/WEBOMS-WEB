@@ -11,7 +11,7 @@
             $i = 0;
             foreach($resultSet as $row){
                 $orders['dishesArr'][$i] = $row['dish'];
-                $orders['priceArr'][$i] = "₱".$row['price'];
+                $orders['priceArr'][$i] = $row['price'];
                 $orders['dishesQuantity'][$i] = $row['quantity'];
                 $i++;
             }
