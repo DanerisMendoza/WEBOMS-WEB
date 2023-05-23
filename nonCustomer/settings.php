@@ -77,46 +77,51 @@
 
             <div class="container-fluid mt-3">
                 <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label for="">COMPANY NAME</label>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="">COMPANY NAME</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control form-control-lg" placeholder="Enter new company name" name="name" value="<?php echo strtoupper($name); ?>" required>
+                            </div>
                         </div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-lg" placeholder="Enter new company name" name="name" value="<?php echo strtoupper($name); ?>" required>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="">COMPANY ADDRESS</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control form-control-lg" placeholder="Enter new company address" name="address" value="<?php echo strtoupper($address); ?>" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label for="">COMPANY ADDRESS</label>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="">COMPANY TELEPHONE</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control form-control-lg" placeholder="Enter new company telephone number" name="tel" value="<?php echo $tel; ?>" required>
+                            </div>
                         </div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-lg" placeholder="Enter new company address" name="address" value="<?php echo strtoupper($address); ?>" required>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="">COMPANY DESCRIPTION</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <textarea name="description" class="form-control form-control-lg" rows="8" placeholder="Enter new company description" required><?php echo strtoupper($description); ?></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label for="">COMPANY TELEPHONE</label>
-                        </div>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control form-control-lg" placeholder="Enter new company telephone number" name="tel" value="<?php echo $tel; ?>" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label for="">COMPANY DESCRIPTION</label>
-                        </div>
-                        <div class="col-sm-10">
-                            <textarea name="description" class="form-control form-control-lg" rows="8" placeholder="Enter new company description" required><?php echo strtoupper($description); ?></textarea>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <form method='post' .>
-                            <center>
-                                <button type="submit" class="btn btn-lg btn-warning " name="update">UPDATE</button>
-                                <button type="submit" class="btn btn-lg btn-danger " name="reset">RESET DATABASE</button>
-                            </center>
-                        </form>
-                    </div>
+                        <center>
+                            <button type="submit" class="btn btn-lg btn-warning " name="update">UPDATE</button>
+                        </center>
+                    </form>
+
+        
+                    <form method='post'>
+                        <center>
+                            <button type="submit" class="btn btn-lg btn-danger " name="reset">RESET DATABASE</button>
+                        </center>
+                    </form>
+            
                 </div>
             </div>
         </div>

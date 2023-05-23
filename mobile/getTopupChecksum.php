@@ -1,7 +1,7 @@
 <?php 
     if(isset($_POST['post']) && $_POST['post'] == 'webomsMobile') {
         include_once('../method/query.php');
-        $query = "CHECKSUM TABLE weboms_topup_tb;";
+        $query = "CHECKSUM TABLE weboms_topUp_tb;";
         $resultSet = getQuery2($query); 
         if($resultSet != null){
             foreach($resultSet as $row){
