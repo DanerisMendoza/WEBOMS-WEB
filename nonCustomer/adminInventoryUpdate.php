@@ -2,6 +2,7 @@
     $page = 'admin';
     include('../method/checkIfAccountLoggedIn.php');
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,118 +11,99 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Inventory - Update</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.css">
-    <link rel="stylesheet" href="../css/admin.css">
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/admin2.css">
+    <link rel="icon" href="../image/weboms.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <body>
 
-    <div class="wrapper">
-    <!-- Sidebar  -->
-    <nav id="sidebar" class="bg-dark">
-            <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+<div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin.php" class="account-type"><?php echo strtoupper($_SESSION['accountType']); ?></a>
             </div>
-            <ul class="list-unstyled components ms-3">
-                <li class="mb-2">
-                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
-                </li>
-                <li class="mb-2">
-                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
-                </li>
-            
-            <?php if($_SESSION['accountType'] != 'cashier'){?>
-                <li class="mb-2 active">
-                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
-                </li>
-                <li class="mb-2">
-                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
-                </li>
-                <li class="mb-1">
-                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
-                </li>
-            <?php } ?>
-                <li>
-                    <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
-                    </form>
-                </li>
+            <hr>
+            <ul class="list-unstyled components">
+                <li><a href="adminPos.php"><i class="bi-tag me-2"></i>POINT OF SALES</a></li>
+                <li><a href="adminOrders.php"><i class="bi-cart me-2"></i>ORDERS</a></li>
+                <li><a href="adminOrdersQueue.php"><i class="bi-clock me-2"></i>ORDERS QUEUE</a></li>
+                <li><a href="topupRfid.php"><i class="bi-credit-card me-2"></i>TOP-UP RFID</a></li>
+
+                <?php if($_SESSION['accountType'] != 'cashier'){?>
+                <li><a href="adminTopUp.php"><i class="bi-wallet me-2"></i>TOP-UP</a></li>
+                <li><a href="adminInventory.php" class="active text-danger"><i class="bi-box me-2"></i>INVENTORY</a></li>
+                <li><a href="adminSalesReport.php"><i class="bi-bar-chart me-2"></i>SALES REPORT</a></li>
+                <li><a href="adminFeedbackList.php"><i class="bi-chat-square-text me-2"></i>CUSTOMER FEEDBACK</a></li>
+                <li><a href="accountManagement.php"><i class="bi-person me-2"></i>ACCOUNT MANAGEMENT</a></li>
+                <li><a href="settings.php"><i class="bi-gear me-2"></i>SETTINGS</a></li>
+                <?php } ?>
             </ul>
         </nav>
 
-        <!-- Page Content  -->
         <div id="content">
-            <nav class="navbar navbar-expand-lg bg-light">
-                <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Toggle (Inventory Update)</button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                        <i class="bi-list"></i>
+                    </button>
+                    <button class="btn btn-toggle d-inline-block d-lg-none ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi-list text-danger"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ms-auto">
+                            <li>
+                                <form method="post">
+                                    <button class="btn text-danger" id="Logout" name="logout">LOGOUT</button>
+                                </form>
+                            </li>   
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
-            <!-- content here -->
-            <div class="container-fluid text-center">
-                <div class="row justify-content-center">
-                    <?php
-                        $idAndPicname = explode(',',$_GET['idAndPicnameUpdate']);    
-                        $id = $idAndPicname[0];
-                        $dishOriginal = $idAndPicname[1];
-                        $priceOriginal = $idAndPicname[2];
-                        $picNameOriginal = $idAndPicname[3];
-                        $stockOriginal = $idAndPicname[4];
-                        $name = $_SESSION['name'];
-                    ?>
-
-                    <div class="table-responsive col-lg-12 mb-4">
-                        <table class="table table-bordered col-lg-12">
-                            <tr>
-                                <td><b>DISH:</b></td>
-                                <td><?php echo ucwords($dishOriginal); ?></td>
-                            </tr>
-                            <tr>
-                                <td><b>PRICE:</b></td>
-                                <td><?php echo '₱'.number_format($priceOriginal,2); ?></td>
-                            </tr>
-                            <tr>
-                                <td><b>STOCK:</b></td>
-                                <td><?php echo $stockOriginal ?></td>
-                            </tr>
-                            <tr>
-                                <td><b>IMAGE (FILE NAME):</b></td>
-                                <td><?php echo $picNameOriginal ?></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="container-fluid">
-                        <form method="post" class="form-group" enctype="multipart/form-data">
-                            <input type="text" class="form-control form-control-lg mb-3" name="dish" placeholder="Enter new dish name">
-                            <input type="number" class="form-control form-control-lg mb-3" name="price" placeholder="Enter new price">
-                            <input type="number" class="form-control form-control-lg mb-3" name="stock" placeholder="Enter new number of stock">
-                            <input type="file" class="form-control form-control-lg mb-3" name="fileInput">
-                            <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                                <button type="submit" class="btn btn-lg btn-warning col-12" name="update"><i class="bi bi-arrow-repeat"></i> Update</button>
-                                <button type="button" class="btn btn-lg btn-danger col-12" id="cancel"><i class="bi bi-x-circle"></i> Cancel</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="container-fluid mt-3">
+                <?php
+                    $idAndPicname = explode(',',$_GET['idAndPicnameUpdate']);    
+                    $id = $idAndPicname[0];
+                    $dishOriginal = $idAndPicname[1];
+                    $priceOriginal = $idAndPicname[2];
+                    $picNameOriginal = $idAndPicname[3];
+                    $stockOriginal = $idAndPicname[4];
+                    $name = $_SESSION['name'];
+                ?>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>DISH:</td>
+                            <td><?php echo strtoupper($dishOriginal); ?></td>
+                        </tr>
+                        <tr>
+                            <td>PRICE:</td>
+                            <td><?php echo '₱'.number_format($priceOriginal,2); ?></td>
+                        </tr>
+                        <tr>
+                            <td>STOCK:</td>
+                            <td><?php echo $stockOriginal; ?></td>
+                        </tr>
+                        <tr>
+                            <td>IMAGE:</td>
+                            <td><?php echo $picNameOriginal; ?></td>
+                        </tr>
+                    </table>
                 </div>
+                <form action="" method="post" class="form-group" enctype="multipart/form-data">
+                    <input type="text" class="form-control" placeholder="Enter new dish name" name="dish">
+                    <input type="number" class="form-control" placeholder="Enter new price" name="price">
+                    <input type="number" class="form-control" placeholder="Enter new stock" name="stock">
+                    <input type="file" class="form-control" name="fileInput">
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-warning w-50" name="update">UPDATE</button>
+                        <button type="button" class="btn btn-danger w-50" id="cancel">CANCEL</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

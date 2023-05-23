@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/admin-topup2.css">
+    <link rel="stylesheet" href="../css/admin-topup3.css">
     <link rel="stylesheet" href="../css/rfid.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -96,7 +96,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <img src="" alt="" id="imgModal">
+                            <center><img src="" alt="" id="imgModal"></center>
                         </div>
                     </div>
                 </div>

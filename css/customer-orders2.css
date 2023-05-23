@@ -17,3 +17,10 @@ thead {
     background: #181C25;
     color: #FFFFFF;
 }
+
+table,
+tr,
+th,
+td {
+    text-transform: uppercase;
+}

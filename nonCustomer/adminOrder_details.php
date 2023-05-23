@@ -1,219 +1,202 @@
 <?php      
-  $page = 'cashier';
-  include('../method/checkIfAccountLoggedIn.php');
-  include('../method/query.php');
-  $arr = explode(',',$_GET['order_id']);
-  $id = $arr[0];
-  $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
-  $resultSet = getQuery2($query); 
-  if($resultSet != null){
-    foreach($resultSet as $row){ 
-        //init
-        $_SESSION['order_id'] = $row['order_id'];
-    
-        $or_last = $row['or_number'];
-        $inputSize = strlen(strval($or_last));
-        if($inputSize > 4)
-            $str_length = $inputSize;
-        else
-            $str_length = 4;
-        $temp = substr("0000{$or_last}", -$str_length);
-        $_SESSION['or_number'] = $or_number = $temp;
+    $page = 'cashier';
+    include('../method/checkIfAccountLoggedIn.php');
+    include('../method/query.php');
+    $arr = explode(',',$_GET['order_id']);
+    $id = $arr[0];
+    $query = "select a.*, b.* from weboms_userInfo_tb a right join weboms_order_tb b on a.user_id = b.user_id  where b.order_id = '$id' " ;
+    $resultSet = getQuery2($query); 
+    if($resultSet != null){
+        foreach($resultSet as $row){ 
+            //init
+            $_SESSION['order_id'] = $row['order_id'];
+        
+            $or_last = $row['or_number'];
+            $inputSize = strlen(strval($or_last));
+            if($inputSize > 4)
+                $str_length = $inputSize;
+            else
+                $str_length = 4;
+            $temp = substr("0000{$or_last}", -$str_length);
+            $_SESSION['or_number'] = $or_number = $temp;
 
-        $_SESSION['customerName'] = $row['name'];
-        $_SESSION['date'] = $row['date'];
-        $_SESSION['cash'] = $row['payment'];
-        $_SESSION['total'] = $row['totalOrder'];
-        $_SESSION['name'] = $row['staffInCharge'];
-        $_SESSION['staffInCharge'] = $row['staffInCharge'];
-        $customerName = $row['name'];
+            $_SESSION['customerName'] = $row['name'];
+            $_SESSION['date'] = $row['date'];
+            $_SESSION['cash'] = $row['payment'];
+            $_SESSION['total'] = $row['totalOrder'];
+            $_SESSION['name'] = $row['staffInCharge'];
+            $_SESSION['staffInCharge'] = $row['staffInCharge'];
+            $customerName = $row['name'];
+        }
     }
-}
 ?>
+
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Orders - Order Details</title>
 
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/admin.css">
-    <script type="text/javascript" src="../js/jquery-3.6.1.min.js"></script>  
-    <script src="../js/bootstrap 5/bootstrap.min.js"></script>
-    <!-- online css bootsrap icon -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/admin2.css">
+    <link rel="icon" href="../image/weboms.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
-
 <body>
 
     <div class="wrapper">
-     <!-- Sidebar  -->
-     <nav id="sidebar" class="bg-dark">
-            <div class="sidebar-header bg-dark">
-                <h3 class="mt-3"><a href="../admin.php"><?php echo ucwords($_SESSION['accountType']); ?></a></h3>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="admin.php" class="account-type"><?php echo strtoupper($_SESSION['accountType']); ?></a>
             </div>
-            <ul class="list-unstyled components ms-3">
-                <li class="mb-2">
-                    <a href="adminPos.php"><i class="bi bi-tag me-2"></i>Point of Sales</a>
-                </li>
-                <li class="mb-2 active">
-                    <a href="adminOrders.php"><i class="bi bi-minecart me-2"></i>Orders</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminOrdersQueue.php"><i class="bi bi-clock me-2"></i>Orders Queue</a>
-                </li>
-                <li class="mb-2">
-                    <a href="topupRfid.php"><i class="bi bi-credit-card me-2"></i>Top-Up RFID</a>
-                </li>
-            
-            <?php if($_SESSION['accountType'] != 'cashier'){?>
-                <li class="mb-2">
-                    <a href="adminInventory.php"><i class="bi bi-box-seam me-2"></i>Inventory</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminSalesReport.php"><i class="bi bi-bar-chart me-2"></i>Sales Report</a>
-                </li>
-                <li class="mb-2">
-                    <a href="accountManagement.php"><i class="bi bi-person-circle me-2"></i>Account Management</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminFeedbackList.php"><i class="bi bi-chat-square-text me-2"></i>Customer Feedback</a>
-                </li>
-                <li class="mb-2">
-                    <a href="adminTopUp.php"><i class="bi bi-cash-stack me-2"></i>Top-Up</a>
-                </li>
-                <li class="mb-1">
-                    <a href="settings.php"><i class="bi bi-gear me-2"></i>Settings</a>
-                </li>
-            <?php } ?>
+            <hr>
+            <ul class="list-unstyled components">
+                <li><a href="adminPos.php"><i class="bi-tag me-2"></i>POINT OF SALES</a></li>
+                <li><a href="adminOrders.php" class="active text-danger"><i class="bi-cart me-2"></i>ORDERS</a></li>
+                <li><a href="adminOrdersQueue.php"><i class="bi-clock me-2"></i>ORDERS QUEUE</a></li>
+                <li><a href="topupRfid.php"><i class="bi-credit-card me-2"></i>TOP-UP RFID</a></li>
 
-                <li>
-                    <form method="post">
-                        <button class="btn btnLogout btn-dark text-danger" id="Logout" name="logout"><i class="bi bi-power me-2"></i>Logout</button>
-                    </form>
-                </li>
+                <?php if($_SESSION['accountType'] != 'cashier'){?>
+                <li><a href="adminTopUp.php"><i class="bi-wallet me-2"></i>TOP-UP</a></li>
+                <li><a href="adminInventory.php"><i class="bi-box me-2"></i>INVENTORY</a></li>
+                <li><a href="adminSalesReport.php"><i class="bi-bar-chart me-2"></i>SALES REPORT</a></li>
+                <li><a href="adminFeedbackList.php"><i class="bi-chat-square-text me-2"></i>CUSTOMER FEEDBACK</a></li>
+                <li><a href="accountManagement.php"><i class="bi-person me-2"></i>ACCOUNT MANAGEMENT</a></li>
+                <li><a href="settings.php"><i class="bi-gear me-2"></i>SETTINGS</a></li>
+                <?php } ?>
             </ul>
         </nav>
 
-        <!-- Page Content  -->
         <div id="content">
-            <nav class="navbar navbar-expand-lg bg-light">
-                <div class="container-fluid bg-transparent">
-                    <button type="button" id="sidebarCollapse" class="btn" style="font-size:20px;"><i class="bi bi-list"></i> Toggle (Order Details)</button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                        <i class="bi-list"></i>
+                    </button>
+                    <button class="btn btn-toggle d-inline-block d-lg-none ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi-list text-danger"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ms-auto">
+                            <li>
+                                <form method="post">
+                                    <button class="btn text-danger" id="Logout" name="logout">LOGOUT</button>
+                                </form>
+                            </li>   
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
-            <!-- content here -->
-            <div class="container-fluid text-center">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12 cont2">
-                        <div class="btn-group container-fluid" role="group" aria-label="Basic mixed styles example">
-                            <button class="btn btn-lg btn-dark col-6 mb-3" id="back"><i class="bi bi-arrow-left-short"></i> Back</button>
-                            <?php if(!($customerName == '' && $_SESSION['staffInCharge'] == 'online order')){?>
-                            <button class="btn btn-lg btn-danger col-6 mb-3" id="viewInPdf"><i class="bi bi-file-pdf"></i> PDF</button>
-                            <?php } ?>
-                        </div>
-                        <!-- table -->
-                        <div class="table-responsive col-lg-12">
+            <div class="container-fluid mt-3">
+                <div class="input-group">
+                    <button class="btn btn-dark w-50" id="back"><i class="bi-arrow-left"></i>BACK</button>
+                    <?php if(!($customerName == '' && $_SESSION['staffInCharge'] == 'online order')){?>
+                    <button class="btn btn-danger w-50" id="viewInPdf">PDF</button>
+                    <?php } ?>
+                </div>
+                <div class="table-responsive mt-3">
+                    <?php 
+                        $_SESSION['dishesArr'] = array();
+                        $_SESSION['priceArr'] = array();
+                        $_SESSION['dishesQuantity'] = array();
+
+                            //company variables init
+                        $query = "select * from weboms_company_tb";
+                        $resultSet = getQuery2($query);
+                        if($resultSet!=null){
+                            foreach($resultSet as $row){
+                            $_SESSION['companyName'] = $row['name'];
+                            $_SESSION['companyAddress'] = $row['address'];
+                            $_SESSION['companyTel'] = $row['tel'];
+                            }
+                        }
+
+                        $query = "select a.*, b.* from weboms_menu_tb a inner join weboms_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$id' ";
+                        $resultSet = getQuery2($query); 
+                    ?>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>DISH</th>
+                                <th>QUANTITY</th>
+                                <th>PRICE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php 
-                                $_SESSION['dishesArr'] = array();
-                                $_SESSION['priceArr'] = array();
-                                $_SESSION['dishesQuantity'] = array();
+                                $total = 0;
+                                if($resultSet != null)
+                                foreach($resultSet as $row){ ?>
+                            <tr>
+                                <?php 
+                                array_push($_SESSION['dishesArr'],$row['dish']);
+                                $price = ($row['price']*$row['quantity']);  $total += $price;
+                                array_push($_SESSION['priceArr'],$price);
+                                array_push($_SESSION['dishesQuantity'],$row['quantity']);
+                                ?>
 
-                                 //company variables init
-                                $query = "select * from weboms_company_tb";
-                                $resultSet = getQuery2($query);
-                                if($resultSet!=null){
-                                    foreach($resultSet as $row){
-                                    $_SESSION['companyName'] = $row['name'];
-                                    $_SESSION['companyAddress'] = $row['address'];
-                                    $_SESSION['companyTel'] = $row['tel'];
-                                    }
-                                }
-
-                                $query = "select a.*, b.* from weboms_menu_tb a inner join weboms_ordersDetail_tb b on a.orderType = b.orderType where b.order_id = '$id' ";
-                                $resultSet = getQuery2($query); 
-                            ?>
-                            <table class="table table-bordered table-hover col-lg-12">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">DISH</th>
-                                        <th scope="col">QUANTITY</th>
-                                        <th scope="col">PRICE</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                        $total = 0;
-                                        if($resultSet != null)
-                                        foreach($resultSet as $row){ ?>
-                                    <tr>
-                                        <?php 
-                                        array_push($_SESSION['dishesArr'],$row['dish']);
-                                        $price = ($row['price']*$row['quantity']);  $total += $price;
-                                        array_push($_SESSION['priceArr'],$price);
-                                        array_push($_SESSION['dishesQuantity'],$row['quantity']);
-                                        ?>
-
-                                        <td><?php echo ucwords($row['dish']); ?></td>
-                                        <td><?php echo $row['quantity']; ?></td>
-                                        <td><?php echo '₱'. number_format($price,2)?></td>
-                                    </tr>
-                                    <?php }?>
-                                    <tr>
-                                        <td colspan="2"><b>Total Amount:</b></td>
-                                        <td><b>₱<?php echo number_format($total,2)?></b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><b>Payment:</b></td>
-                                        <?php $payment = getQueryOneVal2("SELECT a.payment FROM weboms_order_tb a where a.order_id = '$id' ",'payment');?>
-                                        <td><b>₱<?php echo number_format($payment,2); ?></b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><b>Change:</b></td>
-                                        <td><b>₱<?php echo number_format($payment-$total,2); ?></b></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                <td><?php echo ucwords($row['dish']); ?></td>
+                                <td><?php echo $row['quantity']; ?></td>
+                                <td><?php echo '₱'. number_format($price,2)?></td>
+                            </tr>
+                            <?php }?>
+                            <tr>
+                                <td></td>
+                                <td><b>Total Amount:</b></td>
+                                <td><b>₱<?php echo number_format($total,2)?></b></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Payment:</b></td>
+                                <?php $payment = getQueryOneVal2("SELECT a.payment FROM weboms_order_tb a where a.order_id = '$id' ",'payment');?>
+                                <td><b>₱<?php echo number_format($payment,2); ?></b></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Change:</b></td>
+                                <td><b>₱<?php echo number_format($payment-$total,2); ?></b></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-</body>
 
+</body>
 </html>
 
 <script>
-//order button (js)
-var viewInPdf = document.getElementById("viewInPdf");
-viewInPdf.addEventListener("click", () => {
-        window.open("../pdf/receipt.php");
-});
-</script>
-
-
-<script>
-var from = "<?php echo $_SESSION['from'];?>";
-document.getElementById("back").onclick = function() {
-    if (from == 'adminSalesReport')
-        window.location.replace('adminSalesReport.php');
-    else
-        window.location.replace('adminOrders.php');
-}
-</script>
-
-<script>
-// sidebar toggler
-$(document).ready(function() {
-    $('#sidebarCollapse').on('click', function() {
-        $('#sidebar').toggleClass('active');
+    //order button (js)
+    var viewInPdf = document.getElementById("viewInPdf");
+    viewInPdf.addEventListener("click", () => {
+            window.open("../pdf/receipt.php");
     });
-});
+</script>
+
+
+<script>
+    var from = "<?php echo $_SESSION['from'];?>";
+    document.getElementById("back").onclick = function() {
+        if (from == 'adminSalesReport')
+            window.location.replace('adminSalesReport.php');
+        else
+            window.location.replace('adminOrders.php');
+    }
+</script>
+
+<script>
+    // sidebar toggler
+    $(document).ready(function() {
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').toggleClass('active');
+        });
+    });
 </script>
 
 <?php 
