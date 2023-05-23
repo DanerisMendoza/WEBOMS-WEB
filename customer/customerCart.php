@@ -96,8 +96,9 @@
                     </table>
                 </div>
                 <div class="input-group">
-                    <button class="btn btn-place btn-success" id="orderBtn">PLACE ORDER</button>
                     <button class="btn btn-clear btn-danger" id="clear">CLEAR ORDER</button>
+                    <button class="btn btn-place btn-success" id="orderBtn">PLACE ORDER</button>
+             
                 </div>
             </div>
         </div>
