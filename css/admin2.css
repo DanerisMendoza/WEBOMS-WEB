@@ -106,6 +106,10 @@ a:focus {
     CONTENT
 -------------------- */
 
+.btn-light {
+    border: 1px solid #CCCCCC;
+}
+
 #content {
     width: 100%;
     min-height: 100vh;
