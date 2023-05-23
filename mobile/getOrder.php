@@ -13,7 +13,7 @@
                 $orders['name'][$i] = $row['name'];
                 $orders['order_id'][$i] = "#".$row['order_id'];
                 $orders['status'][$i] = $row['status'];
-                $orders['date'][$i] = $row['date'];
+                $orders['date'][$i] =  date('m/d/Y h:i a ', strtotime($row['date']));
                 $orders['user_id'][$i] = $row['user_id'];
                 $orders['totalOrder'][$i] = "₱".$row['totalOrder'];
                 $order_id = $row['order_id'];
