@@ -50,7 +50,7 @@
                     <input type="number" class="form-control" placeholder="Age" name="age" value="<?php echo isset($_POST['age']) ? $_POST['age']: ''?>" required>
                 </div>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Address" name="addres" value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
+                    <input type="text" class="form-control" placeholder="Address" name="address" value="<?php echo isset($_POST['address']) ? $_POST['address']: ''?>" required>
                 </div>
                 <button type="submit" class="btn btn-create-account col-12" name="createAccount" id="createAccount">Create Account</button>
             </form>

@@ -110,8 +110,12 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <button type="submit" class="btn btn-lg btn-warning w-50" name="update">UPDATE</button>
-                        <button type="submit" class="btn btn-lg btn-danger w-50" name="reset">RESET DATABASE</button>
+                        <form method='post' .>
+                            <center>
+                                <button type="submit" class="btn btn-lg btn-warning " name="update">UPDATE</button>
+                                <button type="submit" class="btn btn-lg btn-danger " name="reset">RESET DATABASE</button>
+                            </center>
+                        </form>
                     </div>
                 </div>
             </div>
