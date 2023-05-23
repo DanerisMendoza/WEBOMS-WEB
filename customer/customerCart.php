@@ -76,7 +76,7 @@
             <div class="card cart-card animate__animated animate__fadeInLeft">
                 <div class="input-group ">
                     <label for="" class="form-control time"><?php echo $todayWithTime; ?></label>
-                    <label for="" class="form-control balance bg-success" id="h1Balance"><?php echo '₱'.$balance; ?></label>
+                    <label for="" class="form-control balance bg-success" id="h1Balance"><?php echo 'Balance: ₱'.$balance; ?></label>
                 </div>
 
                 <!-- table -->
@@ -321,8 +321,14 @@
         });
     }
 
+
+    var alreadyClick = false;
     //order button (js)
     document.getElementById("orderBtn").addEventListener("click", () => {
+        if(alreadyClick){
+            return;
+        }
+
         let cont = true;
         $("#tbody2 tr ").each (function() {
             let bg = $(this).find('.dishes').closest('tr').css('background-color');
@@ -349,6 +355,8 @@
             alert('Your balance is less than your total order amount!');
             return;
         }
+
+        alreadyClick = true;
 
         // add value in cart table in db
            $.ajax({
