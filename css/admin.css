@@ -7,13 +7,17 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-.btn {
-    border: 0;
-}
-
 .btn,
 .form-control {
     border-radius: 0;
+}
+
+.preparing,
+.serving,
+#sidebar,
+#sidebar ul li a,
+#sidebar ul li a:hover {
+    color: #FFFFFF;
 }
 
 /* --------------------
@@ -61,12 +65,6 @@ a:focus {
     min-width: 280px;
     max-width: 280px;
     transition: .3s;
-}
-
-#sidebar,
-#sidebar ul li a,
-#sidebar ul li a:hover {
-    color: #FFFFFF;
 }
 
 #sidebar,
@@ -125,18 +123,111 @@ a:focus {
     margin-bottom: 5px;
 }
 
+.profile-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 10rem;
+}
+
+.proof-img {
+    width: 300px;
+    height: 600px;
+}
+
 table,
+thead,
+tbody,
 tr,
 td,
 th {
     text-transform: uppercase;
 }
 
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
+/* --------------------
+    ADMIN DASHBOARD
+-------------------- */
 
-@media (max-width: 768px) {
+.chart {
+    width: 100%;
+    min-height: 400px;
+}
+
+/* --------------------
+    ADMIN ORDERS QUEUE
+-------------------- */
+
+.preparing,
+.serving,
+.tbody-prearing,
+.tbody-serving {
+    font-size: 30px;
+    text-align: center;
+}
+
+/* --------------------
+    ADMIN TOP-UP RFID
+-------------------- */
+
+.btn-topup-clear {
+    width: 20%;
+}
+
+.btn-number {
+    width: 8.39%;
+    font-size: 20px;
+}
+
+.btn-number,
+#input1 {
+    border: 1px solid #CCCCCC;
+}
+
+.form-money {
+    border: 0;
+    font-size: 25px;
+}
+
+/* --------------------
+    ADMIN INVENTORY
+-------------------- */
+
+.inventory {
+    width: auto;
+    height: 15vh;
+}
+
+/* --------------------
+    ADMIN SALES REPORT
+-------------------- */
+
+.btn-pdf {
+    width: 10%;
+}
+
+/* --------------------
+    ADMIN SETTINGS
+-------------------- */
+
+.company {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+@media (max-width: 1200px) {
+    .btn-pdf {
+        width: 20%;
+    }
+}
+
+@media (max-width: 600px) {
+    .btn-number {
+        width: auto;
+    }
+
+    .btn-pdf {
+        width: 30%;
+    }
+
     #sidebar {
         margin-left: -280px;
     }

@@ -11,13 +11,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders | Order Details</title>
+    <title>ORDERS | ORDER DETAILS</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-order-details.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
@@ -55,10 +54,10 @@
     </nav>
 
     <div class="container">
-        <div class="card">
+        <div class="card orders-outer-card">
             <a href="customerOrders.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO ORDERS</a>
-            <div class="card">
-                <button class="btn btn-danger animate__animated animate__fadeInLeft" id="viewInPdf">PDF</button>
+            <div class="card orders-card2">
+                <button class="btn btn-pdf mb-3 btn-danger animate__animated animate__fadeInLeft" id="viewInPdf">PDF</button>
                 <div class="table-responsive animate__animated animate__fadeInLeft">
                     <?php 
                         $id =  $_GET['id'];
@@ -95,7 +94,7 @@
                         $resultSet =  getQuery2($query); 
                     ?>
                     <table class="table table-bordered table-striped">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>DISH</th>
                                 <th>QUANTITY</th>
@@ -113,7 +112,7 @@
                             ?>
                             <tr>	   
                                 <?php $price = ($row['price']*$row['quantity']);  $total += $price;?>
-                                <td><?php echo strtoupper($row['dish']); ?></td>
+                                <td><?php echo $row['dish']; ?></td>
                                 <td><?php echo $row['quantity']; ?></td>
                                 <td><?php echo '₱'.number_format($price, 2); ?></td>
                             </tr>

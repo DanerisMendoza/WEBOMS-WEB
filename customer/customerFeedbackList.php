@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu | Feedback</title>
+    <title>MENU | FEEDBACK</title>
  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-feedback-list2.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -60,12 +59,12 @@
     </nav>
 
     <div class="container feedback-container">
-        <div class="card">
+        <div class="card feedback-outer-card">
             <a href="customerMenu.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO MENU</a>
             <div class="card feedback-card animate__animated animate__fadeInLeft">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped" id="tb1">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>NAME</th>
                                 <th>FEEDBACK</th>

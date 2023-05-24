@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Orders</title>
+    <title>ORDERS</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-orders2.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -62,10 +61,10 @@
     </nav>
 
     <div class="container">
-        <div class="card">
+        <div class="card orders-card">
             <div class="table-responsive animate__animated animate__fadeInLeft">
                 <table class="table table-bordered table-striped" id="tb1">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>NAME</th>
                             <th>ORDER NO.</th>
@@ -108,12 +107,12 @@
                     data += "<td>"+result['status'][i]+"</td>";
                     data += "<td>"+result['date'][i]+"</td>";
                     if(result['isAllowToFeedback'][i] == 'Allowed'){
-                      data += "<td><a class='btn btn-primary' href='customerFeedBack.php?ordersLinkIdAndUserLinkId="+result['order_id'][i]+","+result['user_id'][i]+"'><i class='bi-pencil-square'></i></a></td>";
+                      data += "<td><center><a class='btn btn-primary' href='customerFeedBack.php?ordersLinkIdAndUserLinkId="+result['order_id'][i]+","+result['user_id'][i]+"'><i class='bi-pencil-square'></i></a></center></td>";
                     }
                     else{
                       data += "<td>"+result['isAllowToFeedback'][i]+"</td>";
                     }
-                    data += "<td><a class='btn btn-light'' href='customerOrder_details.php?id="+result['order_id'][i]+"'><i class='bi-list'></i></a></td>";
+                    data += "<td><center><a class='btn btn-light'' href='customerOrder_details.php?id="+result['order_id'][i]+"'><i class='bi-list'></i></a></center></td>";
                     data += "</tr>";
                 }
                 $('#tb1').DataTable().clear().destroy();

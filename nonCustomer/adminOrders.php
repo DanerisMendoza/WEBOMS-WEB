@@ -11,14 +11,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
+    <title>ORDERS</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/admin-orders.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -214,7 +213,7 @@
                 // id, name, picName, username, phone number, address, balance, email, gender
                 let data ="";
                 if(res[2] != null){
-                    data += "<tr><th colspan=2><center><img src='../profilePic/"+res[2]+"'></center></th></tr>";
+                    data += "<tr><th colspan=2><center><img src='../profilePic/"+res[2]+"' class='profile-img'></center></th></tr>";
                 }
                     data+= "<tr><td>Name: </td><td>"+res[1]+"</td></tr>";
                     data+= "<tr><td>Username: </td><td>"+res[3]+"</td></tr>";

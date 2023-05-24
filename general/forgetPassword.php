@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Forgot Password</title>
+    <title>FORGOT PASSWORD</title>
 
     <link rel="icon" href="../image/weboms.png">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap 5/bootstrap.min.css">

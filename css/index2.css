@@ -175,9 +175,6 @@ footer {
         height: 10vh;
     }
 
-    /* --------------------
-        NAVBAR
-    -------------------- */
     .navbar-collapse {
         background: #2e3546;
         padding-bottom: 10px;
@@ -185,16 +182,11 @@ footer {
 }
 
 @media only screen and (max-width: 600px) {
-
-    .about-us-photo,
-    .carousel-slide-image {
-        height: 20vh;
-    }
-
-    /* --------------------
-        MENU
-    -------------------- */
     .menu-card {
         width: 60%;
+    }
+
+    .menu-pic {
+        height: 20vh;
     }
 }

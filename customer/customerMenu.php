@@ -18,14 +18,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Menu</title>
+    <title>MENU</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-menu.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -102,7 +101,7 @@
                                             <td>
                                                 <center><?php $pic = $row['picName']; echo "<img src='../dishesPic/$pic' class='menu-img'";?></center>
                                             </td>
-                                            <td><?= strtoupper($row['dish']);?></td>
+                                            <td><?= $row['dish'];?></td>
                                             <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                             <td class="stocks">
                                                 <?php 
@@ -130,7 +129,7 @@
                                                 <input type="hidden" name="order" value="<?php echo $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock']?>">
                                                 <input type="number" placeholder="QUANTIY" name="qty" class="form-control" value="1">
                                                 <?php $value = $row['dish'].",".$row['price'].",".$row['orderType'].",".$row['stock'];?>
-                                                <button type="button" onclick="AddToCart(this)" value='<?php echo $value;?>'; class="btn btn-add-to-cart">ADD TO CART</button>
+                                                <button type="button" onclick="AddToCart(this)" value='<?php echo $value;?>'; class="btn btn-dark w-100">ADD TO CART</button>
                                                 <?php } ?>
                                             </td>
                                         </tr>
@@ -141,8 +140,8 @@
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <a href="customerCart.php" class="btn btn-cart animate__animated animate__fadeInLeft">CART</a>
-                    <a href="customerFeedbackList.php" class="btn btn-feedback animate__animated animate__fadeInLeft">FEEDBACK</a>
+                    <a href="customerCart.php" class="btn btn-cart btn-success w-100 animate__animated animate__fadeInLeft">CART</a>
+                    <a href="customerFeedbackList.php" class="btn btn-feedback btn-primary w-100 animate__animated animate__fadeInLeft">FEEDBACK</a>
                 </div>
             </div>
         </div>

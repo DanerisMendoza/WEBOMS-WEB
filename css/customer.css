@@ -7,14 +7,53 @@
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
 body {
     background: #181C25;
 }
 
-.btn-logout,
+.btn,
+.card,
 .form-control {
     border-radius: 0;
 }
+
+.back-menu:hover {
+    color: #be2f32;
+    transition: .5s;
+}
+
+.balance-topup,
+.top-up,
+.form-control {
+    margin-bottom: 5px;
+}
+
+table,
+thead,
+tbody,
+tr,
+th,
+td {
+    text-transform: uppercase;
+}
+
+.btn-light {
+    border: 1px solid #CCCCCC;
+}
+
+.proof-img {
+    width: 300px;
+    height: 600px;
+}
+
+/* --------------------
+    CUSTOMER NAVBAR
+-------------------- */
 
 .btn-logout:hover {
     background: #be2f32;
@@ -22,6 +61,8 @@ body {
 }
 
 .btn-logout:hover,
+.balance2,
+.content-container,
 .navbar-brand,
 .nav-link {
     color: #FFFFFF;
@@ -47,7 +88,186 @@ body {
     transition: .5s;
 }
 
+/* --------------------
+    CUSTOMER HOME
+-------------------- */
+
+.content-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.display-card {
+    border: 0;
+    background: transparent;
+}
+
+.display4 {
+    height: 24vh;
+}
+
+.name,
+.balance {
+    font-size: 50px;
+}
+
+.words {
+    font-weight: 900;
+    font-size: 70px;
+    color: #be2f32;
+}
+
+/* --------------------
+    CUSTOMER PROFILE
+-------------------- */
+
+.name2 {
+    font-size: 45px;
+    font-weight: 700;
+}
+
+.profile-container {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.profile-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 10rem;
+}
+
+.profile-card {
+    border: 0;
+    text-align: center;
+    justify-content: center;
+    padding: 20px 30px;
+}
+
+.tbody-profile {
+    text-align: left;
+}
+
+/* --------------------
+    CUSTOMER MENU
+-------------------- */
+
+.btn-cart,
+.btn-feedback {
+    font-size: 30px;
+    font-weight: 700;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.menu-card {
+    border: 0;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.menu-img {
+    width: auto;
+    height: 15vh;
+}
+
+/* --------------------
+    CUSTOMER MENU | CART
+-------------------- */
+
+.balance2,
+.time {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.back-menu-card {
+    padding: 10px;
+}
+
+.cart-card {
+    margin: 20px;
+    border: 0;
+}
+
+/* --------------------
+    CUSTOMER MENU | FEEDBACK
+-------------------- */
+
+.feedback-outer-card {
+    padding: 10px;
+}
+
+.feedback-card {
+    border: 0;
+    margin: 10px;
+}
+
+/* --------------------
+    CUSTOMER TOP-UP
+-------------------- */
+
+.balance-topup,
+.top-up {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.top-up-card {
+    padding: 10px 20px 20px;
+}
+
+/* --------------------
+    CUSTOMER ORDERS
+-------------------- */
+
+.orders-card {
+    padding: 20px;
+}
+
+/* --------------------
+    CUSTOMER ORDER | FEEDBACK
+-------------------- */
+
+.feedback-outer-card2,
+.feedback-card2 {
+    padding: 10px;
+    border: 0;
+}
+
+/* --------------------
+    CUSTOMER ORDER | ORDER DETAILS
+-------------------- */
+
+.btn-pdf {
+    width: 10%;
+}
+
+.orders-outer-card {
+    padding: 10px;
+}
+
+.orders-card2 {
+    margin: 10px;
+    border: 0;
+}
+
 @media only screen and (max-width: 1200px) {
+    .display4 {
+        height: 12vh;
+    }
+
+    .name,
+    .balance {
+        font-size: 31px;
+    }
+
+    .words {
+        font-size: 39px;
+    }
+
     .navbar-toggler {
         background: #2e3546;
     }
@@ -56,5 +276,33 @@ body {
         background: #2e3546;
         text-align: center;
         padding: 0 0 10px;
+    }
+
+    .profile-container {
+        width: 100%;
+    }
+
+    .btn-pdf {
+        width: 20%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .content-container {
+        position: relative;
+        margin-top: 640px;
+    }
+
+    .display4 {
+        height: 30vh;
+        margin-bottom: 20px;
+    }
+
+    .balance-topup {
+        margin-top: 20px
+    }
+
+    .btn-pdf {
+        width: 30%;
     }
 }

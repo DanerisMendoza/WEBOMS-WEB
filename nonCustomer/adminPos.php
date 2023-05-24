@@ -30,14 +30,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Point of Sales</title>
+    <title>POINT OF SALES</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/admin-pos.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/rfid.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -95,9 +94,9 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-7">
-                            <div class="table-responsive">
+                            <div class="table-responsive mb-4">
                                 <table class="table table-bordered table-striped" id="tbl1">
-                                    <thead class="bg-dark text-white">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>DISH</th>
                                             <th>PRICE</th>
@@ -127,11 +126,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <input type="text" class="form-control" placeholder="Customer Name (Optional)" id="customerName">
+                            <input type="text" class="form-control" placeholder="CUSTOMER NAME (OPTIONAL)" id="customerName">
                             <input type="number" class="form-control mb-3" placeholder="₱0.00" id="cashNum" name="cash" step=any required>
-                            <button type="submit" class="btn btn-rfid btn-secondary mb-1" id="payThruRfid" name="orderBtn">RFID PAYMENT</button>
-                            <button type="submit" class="btn btn-place btn-success mb-1" id="orderBtn" name="orderBtn">PLACE ORDER</button>
-                            <button type="submit" class="btn btn-clear btn-danger mb-1" id="clear" name="clear">CLEAR ORDER</button>
+                            <button type="submit" class="btn btn-secondary w-100 mb-1" id="payThruRfid" name="orderBtn">RFID PAYMENT</button>
+                            <button type="submit" class="btn btn-success w-100 mb-1" id="orderBtn" name="orderBtn">PLACE ORDER</button>
+                            <button type="submit" class="btn btn-danger w-100 mb-1" id="clear" name="clear">CLEAR ORDER</button>
                         </div>
                     </div>
                 </div>
@@ -166,7 +165,7 @@
                             <div class="modal-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="tableProfile">
-                                        <center><img src="../pic/unknown.png" alt="" id="profilePic"></center>
+                                        <center><img src="../pic/unknown.png" class="profile-img" alt="" id="profilePic"></center>
                                     </table>
                                 </div>
                                 <div class="table-responsive">
@@ -196,8 +195,8 @@
                                     </table>
                                 </div>
                                 <div class="input-group">
-                                    <button type="button" id="cancel" class="btn btn-cancel btn-danger">CANCEL</button>
-                                    <button type="button" id="confirm" class="btn btn-confirm btn-success">CONFIRM</button>
+                                    <button type="button" id="cancel" class="btn btn-danger w-50">CANCEL</button>
+                                    <button type="button" id="confirm" class="btn btn-success w-50">CONFIRM</button>
                                  </div>
                             </div>
                         </div>
@@ -393,7 +392,7 @@
                         "<td class='price' >" +'₱'+ multiArrCart[1][i] + "</td>" +
                         "<td class ='stocks'>" + multiArrCart[2][i] + "</td>" +
                         "<td><input type='number' placeholder='Quantity' name='qty' class='form-control' value='1' id='qty' >" + 
-                        "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-add-to-cart'>" + "ADD TO CART" + "</button></td>" +
+                        "<button type='button' name='addToCartSubmit' onclick='AddToCart(this)' value='"+multiArrCart[4][i]+"' class='btn btn-dark w-100'>" + "ADD TO CART" + "</button></td>" +
                     "</tr>";
                     }
                     $("#tbody1 tr").remove();
@@ -434,7 +433,7 @@
                         "<td class ='quantity' name='quantity'>" + multiArrCart[2][i] + "</td>" +
                         "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi-plus-lg'></i></button>" +
                         "       <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi-dash-lg'></i></button></td>" +
-                        "<td><button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light' style='border:1px solid #cccccc;'> <i class='bi bi-cart-x-fill'></i></button> </td>" +
+                        "<td><button type='button' name='addToCartSubmit' onclick='removeRow(this)' value='"+multiArrCart[3][i]+"' class='btn btn-light'> <i class='bi bi-cart-x-fill'></i></button> </td>" +
                         "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>"
                     "</tr>";
                     }
@@ -858,6 +857,3 @@
         echo "<script>window.location.replace('../general/login.php');</script>";
     }
 ?>
-
-<style>
-</style>

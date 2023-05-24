@@ -23,14 +23,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Menu | Cart</title>
+    <title>MENU | CART</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-cart.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -71,18 +70,18 @@
     </nav>
 
     <div class="container cart-container">
-        <div class="card back-menu-card ">
+        <div class="card back-menu-card">
             <a href="customerMenu.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO MENU</a>
             <div class="card cart-card animate__animated animate__fadeInLeft">
-                <div class="input-group ">
+                <div class="input-group">
                     <label for="" class="form-control time"><?php echo $todayWithTime; ?></label>
-                    <label for="" class="form-control balance bg-success" id="h1Balance"><?php echo 'Balance: ₱'.$balance; ?></label>
+                    <label for="" class="form-control balance2 bg-success" id="h1Balance"><?php echo 'Balance: ₱'.$balance; ?></label>
                 </div>
 
                 <!-- table -->
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 <th>DISH</th>
                                 <th>QUANTITY</th>
@@ -96,9 +95,8 @@
                     </table>
                 </div>
                 <div class="input-group">
-                    <button class="btn btn-clear btn-danger" id="clear">CLEAR ORDER</button>
-                    <button class="btn btn-place btn-success" id="orderBtn">PLACE ORDER</button>
-             
+                    <button class="btn btn-danger w-50" id="clear">CLEAR ORDER</button>
+                    <button class="btn btn-success w-50" id="orderBtn">PLACE ORDER</button>
                 </div>
             </div>
         </div>
@@ -132,7 +130,7 @@
                         "<tr>" +
                             "<td class='dishes' name='dish'>" + multiArrCart[0][i] + "</td>" +
                             "<td class ='quantity' name='quantity' >" + multiArrCart[2][i] + "</td>" +
-                            "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi-plus'></i></button> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi bi-dash'></i></button> </td>" +
+                            "<td> <button class='btn btn-success' type='button' name='addToCartSubmit' onclick='increaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi-plus-lg'></i></button> <button class='btn btn-danger' type='button' name='addToCartSubmit' onclick='decreaseQuantity(this)' value='"+multiArrCart[3][i]+"'><i class='bi bi-dash-lg'></i></button> </td>" +
                             "<td class='price'>" +'₱'+ multiArrCart[1][i]*multiArrCart[2][i] + "</td>"
                         "</tr>";
                     }

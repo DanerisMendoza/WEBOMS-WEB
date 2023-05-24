@@ -10,12 +10,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topup RFID</title>
+    <title>TOP-UP RFID</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/admin-topup.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/rfid2.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -70,34 +69,34 @@
 
             <div class="container-fluid mt-3">
                 <div class="input-group mb-2" id="input1">
-                    <label for="" class="form-control text-success">₱<span class="amountSpan">0.00</span></label>
-                    <button class="btn btn-clear btn-lg btn-danger" onclick="clearVal()">CLEAR</button>
+                    <label for="" class="form-control form-money text-success">₱<span class="amountSpan">0.00</span></label>
+                    <button class="btn btn-topup-clear btn-lg btn-danger" onclick="clearVal()">CLEAR</button>
                 </div>
                 <div class="input-group mb-5">
-                    <button class="btn btn-light" onclick="addVal(5)">5</button>
-                    <button class="btn btn-light" onclick="addVal(10)">10</button>
-                    <button class="btn btn-light" onclick="addVal(20)">20</button>
-                    <button class="btn btn-light" onclick="addVal(30)">30</button>
-                    <button class="btn btn-light" onclick="addVal(40)">40</button>
-                    <button class="btn btn-light" onclick="addVal(50)">50</button>
-                    <button class="btn btn-light" onclick="addVal(100)">100</button>
-                    <button class="btn btn-light" onclick="addVal(300)">300</button>
-                    <button class="btn btn-light" onclick="addVal(500)">500</button>
-                    <button class="btn btn-light" onclick="addVal(1000)">1000</button>
-                    <button class="btn btn-light" onclick="addVal(3000)">3000</button>
-                    <button class="btn btn-light" onclick="addVal(5000)">5000</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(5)">5</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(10)">10</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(20)">20</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(30)">30</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(40)">40</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(50)">50</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(100)">100</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(300)">300</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(500)">500</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(1000)">1000</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(3000)">3000</button>
+                    <button class="btn btn-light btn-number" onclick="addVal(5000)">5000</button>
                 </div>
                 
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <table class="table table-bordered" id="tableProfile">
                                 <thead>
-                                    <center><img src="../pic/unknown.png" alt="" id="profilePic"></center>
+                                    <center><img src="../pic/unknown.png" class="profile-img" alt="" id="profilePic"></center>
                                 </thead>
                             </table>
                         </div>
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="tableInformation">
                                     <thead class="bg-dark text-white">
@@ -128,8 +127,8 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <button class="btn btn-lg btn-primary" id="scanRfid">RFID SCAN</button>
-                    <button class="btn btn-lg btn-success" id="topupButton">TOP-UP</button>
+                    <button class="btn btn-lg btn-primary w-50" id="scanRfid">RFID SCAN</button>
+                    <button class="btn btn-lg btn-success w-50" id="topupButton">TOP-UP</button>
                 </div>
 
                 <!-- scan rfid (modal) -->

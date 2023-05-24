@@ -18,13 +18,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Costumer</title>
+    <title>HOME</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-home2.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -68,17 +67,17 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label for="" class="name animate__animated animate__fadeInLeft">Hi <?php echo ucwords($_SESSION['name']); ?>!</label><br>
-                    <label for="" class="balance animate__animated animate__fadeInLeft">Your balance is <span class="money">₱<?php echo number_format($balance, 2); ?></span></label><br>
+                    <label for="" class="balance animate__animated animate__fadeInLeft">Your balance is <span class="text-success">₱<?php echo number_format($balance, 2); ?></span></label><br>
                     <label for="" class="words animate__animated animate__fadeInLeft"><span id="typewriter"></span></label>
                 </div>
                 <div class="col-sm-3">
-                    <div class="card">
+                    <div class="card display-card">
                         <img src="../image/display.jpg" alt="" class="display animate__animated animate__fadeInLeft">
                         <img src="../image/display2.jpg" alt="" class="display2 animate__animated animate__fadeInLeft">
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="card">
+                    <div class="card display-card">
                         <img src="../image/display3.jpg" alt="" class="display3 animate__animated animate__fadeInLeft">
                         <img src="../image/display4.jpg" alt="" class="display4 animate__animated animate__fadeInLeft">
                     </div>

@@ -22,11 +22,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders Queue</title>
+    <title>ORDERS QUEUE</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/orders-queue2.css">
+    <link rel="stylesheet" href="../css/orders-queue.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -34,19 +34,19 @@
 <body>
 
     <div class="container-fluid">
-        <a href="../index.php" class="back-home text-black"><i class="bi-arrow-left"></i>BACK TO HOME</a>
+        <a href="../index.php" class="back-home"><i class="bi-arrow-left"></i>BACK TO HOME</a>
         <div class="col-sm-12">
             <div class="row">
             
                 <!-- prepairing table -->
                 <div class="col-sm-6 table-responsive">
                     <table class="table table-bordered" id="prepairingTable">
-                        <thead class="preparing-header">
+                        <thead class="bg-danger">
                             <tr>
-                                <th scope="col">PREPARING</th>
+                                <th>PREPARING</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody1">
+                        <tbody id="tbody1" class="table-danger">
                         
                         </tbody>
                     </table>
@@ -55,12 +55,12 @@
                 <!-- serving table -->
                 <div class="col-sm-6 table-responsive">
                     <table class="table table-bordered" id="tableServing">
-                        <thead class="serving-header">
+                        <thead class="bg-success">
                             <tr>
-                                <th scope="col">SERVING</th>
+                                <th>SERVING</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody2">
+                        <tbody id="tbody2" class="table-success">
                                 
                         </tbody>
                     </table>

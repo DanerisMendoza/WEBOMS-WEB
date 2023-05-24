@@ -10,11 +10,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Log in</title>
+    <title>LOG IN</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/login2.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
@@ -29,8 +29,8 @@
                     <form method="post" class="form-group">
                         <label for="" class="enter-otp">PLEASE ENTER YOUR OTP</label>
                         <input type="text" name="otp" class="form-control otp-form">
-                        <input type="submit" value="VERIFY" name="Verify" class="btn btn-verify">
-                        <input type="submit" value="RESEND" name="Resend" class="btn btn-resend">
+                        <input type="submit" value="VERIFY" name="Verify" class="btn btn-success w-100 mb-2">
+                        <input type="submit" value="RESEND" name="Resend" class="btn btn-danger w-100">
                     </form>
                 </div>
             </div>

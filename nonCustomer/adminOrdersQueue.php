@@ -10,12 +10,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders Queue</title>
+    <title>ORDERS QUEUE</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/admin-orders-queue.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -71,24 +70,24 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <table class="table table-bordered">
-                                <thead class="bg-danger text-white">
+                                <thead class="bg-danger preparing">
                                     <tr>
                                         <th>PREPARING</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbody1">
+                                <tbody id="tbody1" class="table-danger tbody-prearing">
 
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-sm-6">
                             <table class="table table-bordered">
-                                <thead class="bg-success text-white">
+                                <thead class="bg-success serving">
                                     <tr>
                                         <th>SERVING</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbody2">
+                                <tbody id="tbody2" class="table-success tbody-serving">
 
                                 </tbody>
                             </table>

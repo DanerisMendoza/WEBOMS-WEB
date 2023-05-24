@@ -16,18 +16,13 @@ body {
     background: #181C25;
 }
 
-.btn-resend,
-.btn-resend:hover,
-.btn-verify,
-.btn-verify:hover,
 .btn-login,
 .btn-login:hover,
 .back-home {
     color: #FFFFFF;
 }
 
-.btn-verify,
-.btn-resend,
+.btn,
 .btn-login,
 .form-control,
 .login-card,
@@ -40,28 +35,6 @@ body {
     OTP MODAL
 -------------------- */
 
-.btn-verify,
-.btn-resend {
-    width: 100%;
-}
-
-.btn-verify {
-    background: #238823;
-}
-
-.btn-verify:hover {
-    background: #1a5e1a;
-}
-
-.btn-resend {
-    background: #D2222D;
-}
-
-.btn-resend:hover {
-    background: #8a171f;
-}
-
-.btn-verify,
 .otp-form {
     margin-bottom: 10px;
 }

@@ -19,12 +19,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
+    <title>SETTINGS</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/settings.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -80,7 +79,7 @@
                     <form method="post">
                         <div class="row">
                             <div class="col-sm-2">
-                                <label for="">COMPANY NAME</label>
+                                <label for="" class="company">COMPANY NAME</label>
                             </div>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-lg" placeholder="Enter new company name" name="name" value="<?php echo strtoupper($name); ?>" required>
@@ -88,7 +87,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label for="">COMPANY ADDRESS</label>
+                                <label for="" class="company">COMPANY ADDRESS</label>
                             </div>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-lg" placeholder="Enter new company address" name="address" value="<?php echo strtoupper($address); ?>" required>
@@ -96,7 +95,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label for="">COMPANY TELEPHONE</label>
+                                <label for="" class="company">COMPANY TELEPHONE</label>
                             </div>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control form-control-lg" placeholder="Enter new company telephone number" name="tel" value="<?php echo $tel; ?>" required>
@@ -104,21 +103,21 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <label for="">COMPANY DESCRIPTION</label>
+                                <label for="" class="company">COMPANY DESCRIPTION</label>
                             </div>
                             <div class="col-sm-10">
                                 <textarea name="description" class="form-control form-control-lg" rows="8" placeholder="Enter new company description" required><?php echo strtoupper($description); ?></textarea>
                             </div>
                         </div>
                         <center>
-                            <button type="submit" class="btn btn-lg btn-warning " name="update">UPDATE</button>
+                            <button type="submit" class="btn btn-lg btn-warning w-100 mt-2 mb-2" name="update">UPDATE</button>
                         </center>
                     </form>
 
         
                     <form method='post'>
                         <center>
-                            <button type="submit" class="btn btn-lg btn-danger " name="reset">RESET DATABASE</button>
+                            <button type="submit" class="btn btn-lg btn-danger w-100" name="reset">RESET DATABASE</button>
                         </center>
                     </form>
             

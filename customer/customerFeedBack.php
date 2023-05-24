@@ -11,13 +11,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Orders | Feedback</title>
+    <title>ORDERS | FEEDBACK</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-feedback.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
@@ -55,12 +54,12 @@
     </nav>
 
     <div class="container">
-        <div class="card feedback-card">
-            <a href="customerOrders.php" class="back-menu"><i class="bi-arrow-left"></i>BACK TO ORDERS</a>
-            <div class="card feedback-card2">
+        <div class="card feedback-outer-card2">
+            <a href="customerOrders.php" class="back-menu animate__animated animate__fadeInLeft"><i class="bi-arrow-left"></i>BACK TO ORDERS</a>
+            <div class="card feedback-card2 animate__animated animate__fadeInLeft">
                 <form action="" method="post">
                     <textarea name="feedback" id="" cols="" rows="10" type="text" placeholder="Enter your feedback" class="form-control" required></textarea>
-                    <button type="submit" name="submit" class="btn btn-success">SUBMIT</button>
+                    <button type="submit" name="submit" class="btn btn-success w-100">SUBMIT</button>
                 </form>
             </div>
         </div>

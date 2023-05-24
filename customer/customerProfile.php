@@ -13,13 +13,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
+    <title>PROFILE</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-profile2.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -54,7 +53,7 @@
                     <button class="btn btn-logout btn-outline-light animate__animated animate__fadeInLeft" id="Logout" name="logout">LOGOUT</button>
                 </form>
             </div>
-        </div>
+        </div> 
     </nav>
 
     <div class="container profile-container">
@@ -93,10 +92,10 @@
                             <?php if($picName != null){?>
                             <img src="../profilePic/<?php echo $picName; ?>" class="profile-img animate__animated animate__fadeInLeft"><br>
                             <?php } ?>
-                            <label for="" class="name animate__animated animate__fadeInLeft"><?php echo strtoupper($name); ?></label>
+                            <label for="" class="name2 animate__animated animate__fadeInLeft"><?php echo strtoupper($name); ?></label>
                         </tr>
                     </thead>
-                    <tbody class="animate__animated animate__fadeInLeft">
+                    <tbody class="tbody-profile animate__animated animate__fadeInLeft">
                         <tr>
                             <td>USERNAME</td>
                             <td><?php echo $username;?></td>
@@ -107,7 +106,7 @@
                         </tr>
                         <tr>
                             <td>GENDER</td>
-                            <td><?php echo strtoupper($gender);?></td>
+                            <td><?php echo $gender;?></td>
                         </tr>
                         <tr>
                             <td>PHONE NUMBER</td>
@@ -115,7 +114,7 @@
                         </tr>
                         <tr>
                             <td>ADDRESS</td>
-                            <td><?php echo strtoupper($address);?></td>
+                            <td><?php echo $address;?></td>
                         </tr>
                         <tr class="bg-success text-white">
                             <td>BALANCE</td>
@@ -125,8 +124,8 @@
                     </tbody>
                 </table>
                 <div class="input-group animate__animated animate__fadeInLeft">
-                    <button class="btn btn-update-info" id="update">UPDATE INFO</button>
-                    <button class="btn btn-update-password" id="updatePassword">UPDATE PASSWORD</button>
+                    <button class="btn btn-dark w-50" id="update">UPDATE INFO</button>
+                    <button class="btn btn-danger w-50" id="updatePassword">UPDATE PASSWORD</button>
                 </div>
             </div>
         </div>
@@ -149,7 +148,7 @@
                         </select>
                         <input type="text" class="form-control" placeholder="Enter new address" name="address">
                         <input type="number" class="form-control" placeholder="Enter new phone number" name="phoneNumber" id="phoneNumber">
-                        <button class="btn btn-update" type="submit" name="updateUserInfo">UPDATE</button>
+                        <button class="btn btn-dark w-100" type="submit" name="updateUserInfo">UPDATE</button>
                     </form>
                 </div>
             </div>
@@ -163,7 +162,7 @@
                 <div class="modal-body">
                     <form action="" method="post" class="form-group">
                         <input type="password" class="form-control" placeholder="Enter new password" name="password">
-                        <button class="btn btn-update2" type="submit" name="updatePassword">UPDATE</button>
+                        <button class="btn btn-dark w-100" type="submit" name="updatePassword">UPDATE</button>
                     </form>
                 </div>
             </div>

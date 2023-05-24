@@ -13,14 +13,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory</title>
+    <title>INVENTORY</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="../css/admin2.css">
-    <link rel="stylesheet" href="../css/admin-inventory.css">
+    <link rel="stylesheet" href="../css/admin.css">
     <link rel="stylesheet" href="../css/rfid.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
@@ -94,7 +93,7 @@
                                 if($resultSet != null){
                                 foreach($resultSet as $row){?>
                                 <tr>
-                                    <td><center><?php $pic = $row['picName']; echo "<img src='../dishesPic/$pic'>";?></center></td>
+                                    <td><center><?php $pic = $row['picName']; echo "<img src='../dishesPic/$pic' class='inventory'>";?></center></td>
                                     <td><?php echo ucwords($row['dish']);?></td>
                                     <td><?php echo '₱'. number_format($row['price'],2); ?></td>
                                     <td><?php echo $row['stock']; ?></td>

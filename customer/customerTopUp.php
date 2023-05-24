@@ -20,7 +20,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up</title>
+    <title>TOP-UP</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/customer.css">
-    <link rel="stylesheet" href="../css/customer-top-up.css">
     <link rel="icon" href="../image/weboms.png">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -86,14 +85,14 @@
                             </select>
                             <label for="">PROOF OF PAYMENT:</label>
                             <input type="file" class="form-control" name="fileInput" required>
-                            <button class="btn btn-submit btn-success" name="submit">SUBMIT</button>
+                            <button class="btn btn-success w-100" name="submit">SUBMIT</button>
                         </form> 
                     </div>
                     <div class="col-sm-8 animate__animated animate__fadeInLeft">
-                        <center><label for="" class="balance text-success">BALANCE: P<?php echo number_format($balance, 2); ?></label></center>
+                        <center><label for="" class="balance-topup text-success">BALANCE: P<?php echo number_format($balance, 2); ?></label></center>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="tb1">
-                                <thead>
+                                <thead class="table-dark">
                                     <tr>
                                         <th>NAME</th>
                                         <th>AMOUNT</th>
@@ -108,16 +107,16 @@
                                         if($resultSet!= null)
                                         foreach($resultSet as $row){ ?>
                                         <tr>
-                                            <td><?php echo strtoupper($row['name']); ?></td>
+                                            <td><?php echo $row['name']; ?></td>
                                             <td><?php echo '₱'.number_format($row['amount'],2);?></td>
-                                            <td><?php echo strtoupper($row['status']);?></td>
+                                            <td><?php echo $row['status'];?></td>
                                             <td><?php echo date('m/d/Y h:i a ', strtotime($row['date']));?></td>
                                             <?php if($row['status'] != 'approved' && $row['status'] != 'disapproved'){?>
                                             <td>
-                                                <a class="btn btn-light" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi-list"></i></a>
+                                                <center><a class="btn btn-light" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi-list"></i></a></center>
                                             </td>
                                             <td>
-                                                <a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi-x-lg"></i></a>
+                                                <center><a class="btn btn-danger" href="?cancel=<?php echo $row['id'].','.$row['proofOfPayment'];?>"><i class="bi-x-lg"></i></a></center>
                                             </td>
                                             <?php }else if($row['proofOfPayment'] != ''){ ?>
                                             <td><a class="btn btn-light" href="?viewPic=<?php echo $row['proofOfPayment'];?>"><i class="bi-list"></i></a></td>
