@@ -167,7 +167,7 @@
         $(".amountSpan").text(currentVal + amount);
     }
 
-    clearVal = () => {$(".amountSpan").text("0")};
+    clearVal = () => {$(".amountSpan").text("0.00")};
 
     $(document).ready(function(){
         // modal trigger
@@ -177,6 +177,10 @@
         $("#topupButton").click(function(){
             if(rfidGlobal == null){
                 alert("Please Scan your Rfid Card");
+                return;
+            }
+            if($(".amountSpan").text() == "0.00"){
+                alert("Please Add amount!");
                 return;
             }
             let arr = [];
